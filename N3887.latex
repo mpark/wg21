@@ -16,6 +16,7 @@
   morecomment=[f][\color{magenta}]{---},  % diff header lines
   morecomment=[f][\color{magenta}]{+++},  %
 }
+
 \lstset{
   basicstyle=\footnotesize\ttfamily,
 }
@@ -229,3 +230,4 @@ Thanks to Walter E. Brown for encouraging me to write this paper.
 \end{thebibliography}
 
 \end{document}
+
