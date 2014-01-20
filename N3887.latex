@@ -10,11 +10,11 @@
 \title{Consistent Metafunction Aliases}
 
 \lstdefinelanguage{diff}{
-  morecomment=[f][\color{blue}]{@@},      % group identifier
-  morecomment=[f][\color{red}]{-},        % deleted lines
-  morecomment=[f][\color{green!50!black}]{+},      % added lines
-  morecomment=[f][\color{magenta}]{---},  % diff header lines
-  morecomment=[f][\color{magenta}]{+++},  %
+  morecomment=[f][\color{blue}]{@@},           % group identifier
+  morecomment=[f][\color{red}]{-},             % deleted lines
+  morecomment=[f][\color{green!50!black}]{+},  % added lines
+  morecomment=[f][\color{magenta}]{---},       % diff header lines
+  morecomment=[f][\color{magenta}]{+++},
 }
 
 \lstset{
@@ -30,7 +30,7 @@
 
 \begin{flushright}
   \begin{tabular}{ll}
-  Document \#:&D0000\\
+  Document \#:&N3887\\
   Date:       &\date{2013-12-26}\\
   Project:    &Programming Language C++\\
               &Library Evolution Group\\
