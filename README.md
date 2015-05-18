@@ -1,4 +1,3 @@
-std-proposals
-=============
+# wg21
 
-LaTeX source code for the C++ standards committee papers I've written.
+WG21 Submissions - C++ Standards Committee Papers
