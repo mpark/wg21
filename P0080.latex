@@ -67,13 +67,13 @@
 
 \lstdefinelanguage{plus}{
   basicstyle=\footnotesize\ttfamily\color{green!50!black},
-  emph={see,below,deduce_t,TypeSwitch,unspecified},
+  emph={see,below,TypeSwitch,unspecified},
   emphstyle=\itshape
 }
 
 \lstdefinelanguage{signature}{
   basicstyle=\ttfamily\color{green!50!black},
-  emph={see,below,deduce_t,TypeSwitch,unspecified},
+  emph={see,below,TypeSwitch,unspecified},
   emphstyle=\itshape
 }
 
@@ -86,6 +86,8 @@
 \newcommand{\returns}{\desc{Returns}}
 \newcommand{\remarks}{\desc{Remarks}}
 \newcommand{\exceptionsafety}{\desc{Exception Safety}}
+
+\newcommand{\fullref}[1]{\ref{#1} \nameref{#1}}
 
 \date{}
 \title{Variant: Discriminated Union with Value Semantics}
@@ -204,7 +206,7 @@ enum class Color { Blue, Green, Red };
 \end{lstlisting}
 
 This paper proposes a library solution for a generic, type-safe discriminated
-union with value semantics with the class template \texttt{variant<Ts...>}.
+union with value semantics with the class template \texttt{variant<Types...>}.
 
 The following is an example of how the library may be used:
 
@@ -408,7 +410,7 @@ namespace std {
   template <class... Types> struct hash<variant<Types...>>;
 
   // 20.N.11 visitation:
-  template <class R = unspecified:deduce_t, class... Variants>
+  template <class R = unspecified:deduce_tag, class... Variants>
   unspecified:TypeSwitch<R, Variants...> type_switch(Variants&&...);
 }
 \end{lstlisting}
@@ -1435,8 +1437,8 @@ Let \texttt{I} be the index of \texttt{T} in \texttt{Types...}.
 
 \begin{lstlisting}[language=signature]
 template <class... Types>
-constexpr bool operator==(const std::variant<Types...>&lhs,
-                          const std::variant<Types...>&rhs);
+constexpr bool operator==(const variant<Types...>&lhs,
+                          const variant<Types...>&rhs);
 \end{lstlisting}
 
 {
@@ -1456,8 +1458,8 @@ constexpr bool operator==(const std::variant<Types...>&lhs,
 
 \begin{lstlisting}[language=signature]
 template <class... Types>
-constexpr bool operator<(const std::variant<Types...>&lhs,
-                         const std::variant<Types...>&rhs);
+constexpr bool operator<(const variant<Types...>&lhs,
+                         const variant<Types...>&rhs);
 \end{lstlisting}
 
 {
@@ -1612,14 +1614,14 @@ Let \texttt{Types\textsubscript{I}...} be the template parameter pack
   operator()<Is...>(get<Is>(vs)...)} if it is a valid expression, otherwise
   equivalent to \texttt{invoke(forward<F>(f), get<Is>(vs)...)};
 
-\remarks: If \texttt{!is\_same\_v<R, deduce\_t>} is \texttt{true},
+\remarks: If \texttt{is\_same\_v<R, deduce\_t>} is \texttt{false},
   the return type of this function is \texttt{R}.
 
   Otherwise, if \texttt{decay\_t<F>} contains a member typedef
   \texttt{result\_type}, the return type is
   \texttt{typename decay\_t<F>::result\_type}.
 
-  Otherwise, the return type is \texttt{decltype(auto)}.
+  Otherwise, the return type is deduced by \texttt{decltype(auto)}.
 
 \end{adjustwidth}
 }
@@ -1673,7 +1675,7 @@ conceptual emptiness of a variant. All operations are valid.
 For example, the user must explicitly handle the null case for
 the visitation operation.
 
-\subsection{Valid but Unspecified State}
+\subsection{Valid, but Unspecified State}
 \label{emptyvbus}
 A state in which the \texttt{variant} has none of its alternatives constructed,
 but the discriminator of the \texttt{variant} is in a specified state.
@@ -1681,10 +1683,11 @@ The valid operations in this state are: assignment (e.g. \texttt{operator=},
 \texttt{emplace}), destruction, observation (e.g. \texttt{index}, \texttt{valid}),
 copy and move construction.
 
-[ \textit{Example}: if object \texttt{v} of type
-\texttt{std::variant<Ts...>} is in valid but unspecified state,
+[ \textit{Example}: If an object \texttt{v} of type
+\texttt{std::variant<Types...>} is in a valid, but unspecified state,
 \texttt{v.index()} can be called unconditionally, but \texttt{get<I>(v)} can be
-called only if \texttt{v.index()} returns >= 0. --- \textit{end example} ]
+called only if \texttt{v.index() >= 0} is \texttt{true}.
+--- \textit{end example} ]
 
 \subsection{Indeterminate State}
 A state in which the \texttt{variant} has none of its alternatives constructed,
@@ -1697,9 +1700,9 @@ have undefined behavior.
 \label{designdecisions}
 
 \subsection{Empty State}
-As defined in \nameref{terminology}, an empty state of a \texttt{variant} is a
-state where none of the alternatives are constructed. The following is an example
-that illustrates the problem:
+As defined in \fullref{terminology}, an empty state of a
+\texttt{variant} is a state where none of the alternatives are constructed.
+The following is an example that illustrates the problem:
 
 \begin{lstlisting}[language=cpp]
 std::variant<T, U> v(T(/* ... */));
@@ -1715,12 +1718,12 @@ an empty state, since it has already destroyed the initial value of type \texttt
 The following subsections describe the various strategies considered to handle
 the exceptional case which can arise when some alternatives have move
 constructors that can throw. Note that out of all the design discussions of a
-standardized \texttt{variant}, this is the most contentious issue. Each approach has at
-least one disadvantage which is absolutely unacceptable to a group of people.
-The goal of this paper is to choose a design that minimize the compromises, and
-also to leave enough room for extensibility for those who absolutely do not
-agree. The strategy proposed in this paper is mentioned last, highlighted in
-{\color{solarized@blue}blue}.
+standardized \texttt{variant}, this is the most contentious issue. Each approach
+has at least one disadvantage which is claimed absolutely unacceptable to a
+group of people. The goal of this paper is to choose a design that minimize the
+compromises, and also to leave enough room for extensibility for those who
+absolutely do not agree. The strategy proposed in this paper is mentioned last,
+highlighted in {\color{solarized@blue}blue}.
 
 \subsubsection{Additional Requirements on Alternatives}
 The general theme of this subsection is to enforce additional requirements on
@@ -1729,8 +1732,10 @@ to varying degrees.
 
 For example, we could add additional requirements such as (1) all alternatives must be
 nothrow move constructible, or (2) all alternatives must be nothrow default constructible
-and nothrow swappable. If the additional requirements are not satisfied,
-we could (1) disallow \texttt{variant} as a whole, or (2) delete the assignment operations.
+and nothrow swappable.
+
+If the additional requirements are not satisfied, we could (1) disallow
+\texttt{variant} as a whole, or (2) delete the assignment operations.
 
 \textbf{Exception Safety}: Strong
 
@@ -1771,10 +1776,11 @@ least \texttt{two} alternatives can throw during move construction.
 \textbf{Exception Safety}: Strong
 
 \textbf{Pros}: Under conditions in which double storage is required, people
-should accept that their in paying for the performance penalties. Also, this is
-an issue that can be deferred as an implementation detail which will continue to
-improve over time, and such implementation detail should not hinder the
-interface.
+should accept their fate in having to pay for the performance penalties.
+
+Also, this is an issue that can be deferred as an implementation detail which
+will continue to improve over time, and such implementation detail should not
+hinder the interface.
 
 \textbf{Cons}: While the double storage strategy could be seen as an implementation detail
 that should not affect the interface, I would argue that \texttt{std::vector}'s
@@ -1798,7 +1804,7 @@ The point is that giving up single storage in some cases for \texttt{std::varian
 be analogous to giving up contiguous memory in some cases for \texttt{std::vector}.
 
 \subsubsection{Null State as a Required Alternative}
-As defined in \nameref{terminology}, a null state is a state in which
+As defined in \fullref{terminology}, a null state is a state in which
 \texttt{variant} contains a value that represents the conceptual emptiness of a
 \texttt{variant}. This approach is to make the null state a required state of a
 \texttt{variant}. This requirement could be enforced implicitly or explicitly:
@@ -1830,7 +1836,7 @@ it would be preferred to introduce non-null semantics by default.
 Since opting in for the null state given non-null semantics is trivial,
 while the converse is not.
 
-\subsubsection{Valid but Unspecified State}
+\subsubsection{Valid, but Unspecified State}
 A state in which the \texttt{variant} has none of its alternatives constructed, but the
 discriminator of the \texttt{variant} is in a specified state. This state was introduced
 at WG21's 2015 Lenexa meeting, and is the approach taken by \cite{N4542}.
@@ -1860,9 +1866,9 @@ void F(variant<T, U>& v, const variant<T, U>& w) {
     v = w;
   } catch (const std::exception& ex) {
     if (!v.valid()) {
-    // Failed during in-place construction, old value is unknown.
+      // Failed during in-place construction, old value is unknown.
     } else {
-    // Failed during temporary construction, old value is in `v`.
+      // Failed during temporary construction, old value is in `v`.
     }
   }
 }
@@ -1881,9 +1887,9 @@ void H(variant<T, U>& v, const variant<T, U>& w) {
     G(v, w);
   } catch (const std::exception& ex) {
     if (!v.valid()) {
-    // Failed during in-place construction, old value is unknown.
+      // Failed during in-place construction, old value is unknown.
     } else {
-    // Failed during temporary construction, old value is in `v`.
+      // Failed during temporary construction, old value is in `v`.
     }
   }
 }
@@ -1918,8 +1924,9 @@ void F(variant<T, U>& v) {
 
 Ideally, we should eliminate the unintended usage of the \texttt{valid()} function.
 
-{\color{solarized@blue}\subsubsection{Indeterminate State}}
-\label{indeterminate}
+{\color{solarized@blue}
+\subsubsection{Indeterminate State}
+\label{indeterminate}}
 A state in which the \texttt{variant} has none of its alternatives constructed, and the
 discriminator of the \texttt{variant} is also in an unspecified state. The only valid
 operations in this state are: assignment (e.g. \texttt{operator=}, \texttt{emplace}),
@@ -1990,11 +1997,11 @@ constructed state proposed in this paper is mentioned last, highlighted in
 \label{firsttype}
 This is the design that LEWG opted for at the WG21's 2015 Lenexa meeting. This is the
 behavior of a \texttt{union} when value initialized, and it makes sense for a
-\texttt{variant} if the assumption is that it should be modelled after
+\texttt{variant} if the assumption is that it should be modeled after
 \texttt{union}.
 
 \textbf{Pros}: This is what makes the most sense if we \textbf{had to} default construct
-one of the types, and this state initializes to a fully formed state.
+one of the types, and this state initializes to a fully valid state.
 
 \textbf{Cons}:
 
@@ -2019,25 +2026,25 @@ instantiations with different types.
 
 \subsubsection{Valid, but Unspecified State}
 \label{defaultvbus}
+\cite{N4542} mentions that LEWG has opted against default constructing into
+a valid, but unspecified state in order to limit the paths of getting into such
+a state to the exceptional cases.
 
-\cite{N4542} mentions that LEWG has opted against default constructing into a valid,
-but unspecified state in order to limit the paths of getting into such a state to
-the exceptional cases.
-
-\textbf{Pros}: Under the assumption that default construction of
-\texttt{variant} is desirable,
-it would be desirable for \textbf{any} \texttt{variant} to be default constructible.
-Default constructing into the valid, but unspecified state is one option that allows
-any \texttt{variant} to be default constructible regardless of the types it contains.
+\textbf{Pros}: Under the assumption that default construction of \texttt{variant}
+is desirable, it would be desirable for \textbf{any} \texttt{variant} to be
+default constructible. Default constructing into the valid, but unspecified state
+is one option that allows any \texttt{variant} to be default constructible
+regardless of the types it contains.
 
 By default constructing into this state, the behavior of default construction stays
 consistent for any \texttt{variant}, provides the \texttt{noexcept} guarantee,
 and constant runtime complexity guarantee.
 
-\textbf{Cons}: As discussed in \nameref{emptyvbus}, recall that a valid, but unspecified
-state is visible. As such, default constructing into this state would make it a
-common state that users can and would be required to check for outside of the
-\texttt{catch} clause. That is, the following code becomes perfectly valid:
+\textbf{Cons}: As discussed in \fullref{emptyvbus}, recall that a
+valid, but unspecified state is visible. As such, default constructing into this
+state would make it a common state that users can and would be required to check
+for outside of the \texttt{catch} clause. That is, the following code becomes
+perfectly valid:
 
 \begin{lstlisting}[language=cpp]
 void F(variant<T, U>& v) {
@@ -2054,21 +2061,21 @@ int main() {
 }
 \end{lstlisting}
 
-In order to avoid such code, the user would have to add the following
-precondition to function \texttt{F}: \texttt{v.valid()} is \texttt{true}.
-Naturally, this precondition would exist for all operations of \texttt{variant}
-except assignment
+In order to avoid such code, the user would have to add the "\texttt{v.valid()} is
+\texttt{true}" precondition to function \texttt{F}. Naturally, this precondition
+would exist for all operations of \texttt{variant} except assignment
 (e.g. \texttt{operator=}, \texttt{emplace}), destruction, observation (e.g.
-\texttt{index}, \texttt{valid}) and copy and move construction. This design would
+\texttt{index}, \texttt{valid}), and copy and move construction. This design would
 only be slightly better than requiring the null state to always exist, or deferring
-to using \texttt{std::optional<variant<Ts...>{}>}.
+to using \texttt{std::optional<variant<Types...>{}>}.
 
 {\color{solarized@blue}\subsubsection{Indeterminate State}}
-\textbf{Pros}: Refer to \nameref{indeterminate} and \nameref{defaultvbus}.
+\textbf{Pros}: Refer to \fullref{indeterminate} and \fullref{defaultvbus} for
+previous discussions regarding the advantages of having this kind of state.
 
 Unlike the valid, but unspecified state, the only valid operations of this state are
 assignment (e.g. \texttt{operator=}, \texttt{emplace}), and destruction. As mentioned
-in \nameref{indeterminate}, this means that functions can make stronger assumptions about
+in \fullref{indeterminate}, this means that functions can make stronger assumptions about
 the state of a \texttt{variant} object.
 
 Note that this behavior is similar how \texttt{int} behaves:
@@ -2098,35 +2105,36 @@ Color color;  // uninitialized
 color = Color::Blue;  // assigned
 \end{lstlisting}
 
-Another argument is one of efficiency. Given a size \texttt{N}, following are different
-ways to initialize an \texttt{std::array<int, N>}, and \texttt{std::vector<int>}
-of size \texttt{N}:
+Another argument is one of efficiency. Given a size \texttt{N}, the following are
+different ways to initialize a \texttt{std::array<int, N>}, and
+\texttt{std::vector<int>} of size \texttt{N}:
 
 \begin{lstlisting}[language=cpp]
-// Uninitialized
-std::array<int, 10> v;
-// Initialized to 0
-std::array<int, 10> v = {};
+std::array<int, N> v;  // uninitialized
+
+std::array<int, N> v = {};  // initialized to 0
 \end{lstlisting}
 
 \begin{lstlisting}[language=cpp]
-// Uninitialized
+// avoid initialization of N integers
 std::vector<int> v;
 v.reserve(N);
-// Initialized to 0
+
+// initialized to 0
 std::vector<int> v(N);
 \end{lstlisting}
 
-It's common practice to use the pattern to keep the int uninitialized for performance
-benefit. The argument here is that if there is a performance benefit from
-keeping \texttt{int} uninitialized, there is also a performance benefit from
-disallow \texttt{variant} from default constructing the first type.
+It's common practice to avoid the cost of initialization for performance gains.
+The argument here is that if there are performance gains from not
+initializing \texttt{int} to \texttt{0}, there must also be performance gains
+from not default constructing the first type of \texttt{variant}.
 
 This design has the following properties:
 
 \begin{itemize}
-  \item Any \texttt{variant<Ts...>} is default constructible.
-  \item Consistent behavior of default construction for all \texttt{variant<Ts...>}.
+  \item Any \texttt{variant<Types...>} is default constructible.
+  \item Consistent behavior of default construction for all
+    \texttt{variant<Types...>}.
   \item \texttt{noexcept} exception-safety guarantee.
   \item Constant runtime complexity guarantee.
 \end{itemize}
@@ -2137,7 +2145,7 @@ between default initialization and value initialization.
 
 \begin{lstlisting}[language=cpp]
 int x;  // uninitialized
-int y{};  // == 0
+int y{};  // initialized to 0
 \end{lstlisting}
 
 \begin{lstlisting}[language=cpp]
@@ -2153,8 +2161,9 @@ std::atomic<int> x;  // uninitialized
 std::atomic<int> y{};  // uninitialized
 \end{lstlisting}
 
-Lastly, one of the rules of the C++ Core Guidelines is
-\textbf{ES.20: Always initialize an object}, which recommends to avoid uninitialized state.
+Lastly, it goes against one of the guidelines given in the \cite{CCG}:
+\textbf{ES.20: Always initialize an object} which recommends to avoid
+uninitialized state.
 
 \subsection{Null State}
 This section discusses the approaches in which the null state could be handled
@@ -2168,7 +2177,7 @@ a null state by specifying \texttt{std::nullvar\_t} as one of the alternatives.
 
 Furthermore, \texttt{variant} does not provide special behavior for
 \texttt{std::nullvar\_t}. The main motivation is to keep consistent behavior of
-\texttt{variant<Ts...>}. As mentioned in \nameref{firsttype}, there is an expectation that
+\texttt{variant<Types...>}. As mentioned in \fullref{firsttype}, there is an expectation that
 a class template has consistent behavior across instantiations with different types.
 This follows that design principle of not introducing special behavior due to involvement
 of a type that we consider special. This, in turn, facilitates generic programming.
@@ -2180,7 +2189,7 @@ of a type that we consider special. This, in turn, facilitates generic programmi
     \begin{itemize}
       \item (\texttt{std::nullvar\_t}, \texttt{std::variant})
       \item (\texttt{std::nullopt\_t}, \texttt{std::optional})
-      \item (\texttt{std::nullptr\_t}, \texttt{pointer})
+      \item (\texttt{std::nullptr\_t}, \texttt{T*})
     \end{itemize}
   \item Since there is no special behavior provided for \texttt{std::nullvar\_t},
     users are free to provide a custom type that represents the null state within
@@ -2201,26 +2210,27 @@ std::type_switch (x, y, z) (
   [](std::size_t   , int                 , std::nullptr_t) { /* ... */ },
   [](std::size_t   , const std::string&  , int           ) { /* ... */ },
   [](std::size_t   , const std::string&  , std::nullptr_t) { /* ... */ },
-  [](std::size_t   , const std::nullvar_t, int           ) { /* ... */ },
-  [](std::size_t   , const std::nullvar_t, std::nullptr_t) { /* ... */ },
+  [](std::size_t   , std::nullvar_t      , int           ) { /* ... */ },
+  [](std::size_t   , std::nullvar_t      , std::nullptr_t) { /* ... */ },
   [](std::nullopt_t, int                 , int           ) { /* ... */ },
   [](std::nullopt_t, int                 , std::nullptr_t) { /* ... */ },
   [](std::nullopt_t, const std::string&  , int           ) { /* ... */ },
   [](std::nullopt_t, const std::string&  , std::nullptr_t) { /* ... */ },
-  [](std::nullopt_t, const std::nullvar_t, int           ) { /* ... */ },
-  [](std::nullopt_t, const std::nullvar_t, std::nullptr_t) { /* ... */ }
+  [](std::nullopt_t, std::nullvar_t      , int           ) { /* ... */ },
+  [](std::nullopt_t, std::nullvar_t      , std::nullptr_t) { /* ... */ }
 );
 \end{lstlisting}
 
-\subsubsection{\texttt{std::optional<std::variant<Ts...>{}>}}
+\subsubsection{\texttt{std::optional<std::variant<Types...>{}>}}
 \label{ov}
-This is an intuitive approach since \texttt{std::optional} exists to provide the notion
-of a null state. Wrapping the \texttt{variant} inside of an optional would augment the
-null state to a list of types \texttt{Ts...} as desired. However, this introduces an
-extra level of indirection that needs to be observed and dereferenced. This
-matters because generally flat control flow is more readable and easier to
-reason about compared to nested control flow. Consider the following control
-flow with \texttt{std::optional<std::variant<int, std::string>{}>}:
+This is an intuitive approach since \texttt{std::optional} exists to provide the
+notion of a null state. Wrapping the \texttt{variant} inside of an
+\texttt{optional} would augment the null state to a list of types
+\texttt{Types...} as desired. However, this introduces an extra level of
+indirection that needs to be observed and dereferenced. This matters because
+generally flat control flow is more readable and easier to reason about compared
+to nested control flow. Consider the following control flow with
+\texttt{std::optional<std::variant<int, std::string>{}>}:
 
 \begin{lstlisting}[language=cpp]
 std::optional<std::variant<int, std::string>> x, y;
@@ -2283,19 +2293,21 @@ state of any kind (e.g. valid, but unspecified, indeterminate) need not exist.
 There are at least 2 possible interfaces:
 
 \begin{enumerate}
-  \item Essentially an alias for \texttt{std::optional<std::variant<Ts...>{}>}
-  \item Modified behavior based on \texttt{std::variant<std::nullvar\_t, Ts...>}
+  \item Essentially an alias for \texttt{std::optional<std::variant<Types...>{}>}
+  \item Modified behavior based on \texttt{std::variant<std::nullvar\_t, Types...>}
 \end{enumerate}
 
-The disadvantages of (1) are discussed in \nameref{ov}. For (2):
+The disadvantages of (1) are discussed in \fullref{ov}.
+
+For (2) the main disadvantages are:
 
 \begin{itemize}
   \item \texttt{std::nullvar\_t} becomes special which disallows the use of a
     custom null type.
   \item Either \texttt{std::nullvar\_t} is disallowed for \texttt{variant}, or
     users need to be aware of the subtle differences between
-    \texttt{variant<std::nullvar\_t, Ts...>} vs
-    \texttt{nullable\_variant<Ts...>}.
+    \texttt{variant<std::nullvar\_t, Types...>} vs
+    \texttt{nullable\_variant<Types...>}.
   \item In generic programming, it would be required to handle \texttt{variant} and
     \texttt{nullable\_variant} separately even in cases where it can be handled generically.
 \end{itemize}
@@ -2308,10 +2320,11 @@ highlighted in {\color{solarized@blue}blue}.
 \subsubsection{Name}
 When identifiers are used to distinguish the members of a discriminated union,
 it is a sum type. This approach is used by \texttt{union} for example, where each member
-of a \texttt{union} has an associated identifier. Given \texttt{union { T t; U
-u; };}, \texttt{x} and \texttt{y} are distinct because the identifier is the discriminator.
+of a \texttt{union} has an associated identifier. Given
+\texttt{union \{ T t; U u; \};}, \texttt{x} and \texttt{y} are distinct because
+the identifier is the discriminator.
 Since there are no identifiers involved in \texttt{variant<T, U>}, in order to support
-this feature, \texttt{variant}w would need to be introduced at the language-level rather
+this feature, \texttt{variant} would need to be introduced at the language-level rather
 than at the library-level.
 
 \subsubsection{Type}
@@ -2336,7 +2349,7 @@ support index-based operations such as \texttt{variant(in\_place<0>, 42)} and
 
 \textbf{Cons}: The notion of a named discriminator and the corresponding type
 are conflated into a single type. It also leads to the question: should multiple
-occurrences of a single type \texttt{T} in \texttt{Ts...} (e.g.
+occurrences of a single type \texttt{T} in \texttt{Types...} (e.g.
 \texttt{variant<T, T>}) be disallowed, or allowed, but do not represent distinct states?
 
 Neither of these definitions are accurate in terms of a discriminated union from
@@ -2349,11 +2362,11 @@ than being part of library design.
 This approach uses the index of an alternative as the discriminator. This behavior of
 implicitly assigned indices is consistent with \texttt{std::tuple}, where the elements of
 \texttt{std::tuple} can be referred to with its their indices, or by their type if the
-type is unique.
+type is unique within \texttt{Types...}.
 
 \textbf{Pros}: This definition is accurate to the definition of discriminated union,
 and the interface is consistent with \texttt{std::tuple}. The workaround technique of
-introducing new types and using the type-based operations are still supported.
+introducing new types and using the type-based operations are still applicable.
 
 \textbf{Cons}: While using the indices may seem essentially equivalent to using associated
 names, a significant difference is that the \textit{order} of types become
@@ -2365,8 +2378,8 @@ retrieved.
 This is contrary to using the name as the discriminator. Consider \texttt{union}
 as the example of name being used as the discriminator (except union does not keep track
 of the discriminator itself). Regardless of whether the type of \texttt{u} in the
-expression \texttt{u.x} is \texttt{union { X x; Y y; };} or \texttt{union { Y y;
-X x; };}, the member of type \texttt{X} is retrieved.
+expression \texttt{u.x} is \texttt{union \{ X x; Y y; \};} or
+\texttt{union \{ Y y; X x; \};}, the member of type \texttt{X} is retrieved.
 
 This is an inherent difference in the meaning of the expressions \texttt{get<0>(v)} and
 \texttt{u.x}, the former says "get me whatever is the first alternative" whereas the
@@ -2377,23 +2390,24 @@ This section describes a possible visitation mechanism and does not preclude oth
 mechanisms. For example, \cite{P0050} is a draft of a pattern matching proposal at the
 library-level, while \cite{Mach7} is an experimental library solution to
 \cite{N3449} which aims to bring pattern matching at the language-level.
-The mechanism being proposed here is a type switch which is much simpler than general
-pattern matching, and only specifies the aspects involving \texttt{variant}.
+The mechanism being proposed here is a type switch which is much simpler than
+generalized pattern matching, and only specifies the aspects involving
+\texttt{variant}.
 
 \subsubsection{\texttt{visit(F, Variants...);}}
 
 \cite{N3915} proposed \texttt{apply} which takes a function object \texttt{F}
 and a tuple \texttt{Tuple}, and dispatches \texttt{F} with the elements of
 \texttt{Tuple}. This function is similar, but for \texttt{variant}. That is,
-visit takes a function object \texttt{F} and \texttt{Variants...}, and
+\texttt{visit} takes a function object \texttt{F} and \texttt{Variants...}, and
 dispatches \texttt{F} with the content of each the \texttt{Variants...}.
 
 Although the similarity to \texttt{apply} seem desirable for consistency, I
 believe there are major drawbacks at the callsite. The inherent difference
 between \texttt{apply} and \texttt{visit} is that \texttt{apply} only requires a
-single handler that handles the elements of the tuple, whereas \texttt{visit}
-(almost always) requires many handlers that handle the cartesian product of the
-alternatives of the \texttt{variant} objects.
+single handler that handles the elements of the \texttt{tuple}, whereas
+\texttt{visit} (almost always) requires many handlers that handle the
+cartesian product of the alternatives of the \texttt{variant} objects.
 
 Consider a few sample usages of visiting a \texttt{variant<int, std::string>}
 The following are 3 of the possible ways to provide the handlers via the
@@ -2419,7 +2433,7 @@ int main() {
   // Generic lambda to provide a generic handler inline.
   std::visit([](const auto& value) { std::cout << value; }, v);
 
-  // `overload` to provide specific handlers inline.  P0051
+  // `overload` to provide specific handlers inline.  // P0051
   std::visit(
     overload([](int value) { std::cout << "int: " << value; }
              [](const std::string& value) { std::cout << "string: " << value; }),
@@ -2458,15 +2472,15 @@ int main() {
 }
 \end{lstlisting}
 
-This approach is favored over the \texttt{visit} function with the inherent
-difference that \texttt{variant} visitation require multiple handlers in overwhelming
-number of cases. It is also more reminiscent of existing language constructs such as the
-\texttt{switch} statement in C++ and various forms of \texttt{match} statements in
-functional languages such as OCaml. The name \texttt{type\_switch} was chosen over
-\texttt{match} to
+This approach is favored over the \texttt{visit} function considering the inherent
+difference that \texttt{variant} visitation require multiple handlers in
+overwhelming number of cases. It is also more reminiscent of existing language
+constructs such as the \texttt{switch} statement in C++ and various forms of
+\texttt{match} statements in functional languages such as OCaml.
+The name \texttt{type\_switch} was chosen over \texttt{match} to
 
 \begin{itemize}
-  \item leave match available for language-level pattern matching
+  \item leave \texttt{match} available for language-level pattern matching
   \item avoid potential confusion with the \texttt{match}-related names in
     the \texttt{<regex>} library.
 \end{itemize}
@@ -2492,7 +2506,8 @@ The approach here is to deduce the final return type as the common type of
 return types of each of the handlers. While this approach may seem reasonable,
 it is quite dangerous as we can very easily have loss of data and/or precision.
 For example, the deduced return type of the example above would be
-\texttt{std::size\_t} which is likely a silent error if the int handler a negative number.
+\texttt{std::size\_t} which is likely to be a silent error if the \texttt{int}
+handler returns a negative value.
 
 \subsubsection{\texttt{std::variant<return\_types...>}}
 In order to prevent data loss and type information, we could try to deduce the
@@ -2501,16 +2516,16 @@ example, the return type would be \texttt{std::variant<int, std::size\_t>}.
 
 The immediately obvious disadvantage of this approach is that even if all return
 types are \texttt{T}, the final return type is \texttt{variant<T>} if duplicates removed,
-or \texttt{variant<T, T, ..., T>}, rather than \texttt{T}. While this can be mitigated
-by adding it as a special rule, it immediately starts to add complexity to the
-return type deduction rule for a \texttt{variant}.
+or \texttt{variant<T, T, ..., T>} otherwise, rather than \texttt{T}.
+While this can be mitigated by adding it as a special rule, it immediately starts
+to add complexity to the return type deduction rule for a \texttt{variant}.
 
 Another case to keep in mind is the presence of \texttt{void}-returning functions.
 Consider a function object where the return types of \texttt{operator()} are:
 \texttt{int, std::string, void}. Since \texttt{void} does not add additional state
 to a variant, naively deducing the return type to be
 \texttt{variant<int, std::string, void>} is not sufficient. The actual deduced
-return type should be \texttt{variant<int, std::string, std::nullvar\_t>}.
+return type needs to be \texttt{variant<int, std::string, std::nullvar\_t>}.
 
 Other situations that may or may not require special rules:
 
@@ -2571,8 +2586,8 @@ using Triangle = variant<RightTriangle, AcuteTriangle>;
 template <class... Types>
 double get_area(const std::variant<Types...>& shape) {
   return type_switch (shape) (
-    [](const Circle  & that) { /* ... */ },
-    [](const Square & that) { /* ... */ },
+    [](const Circle& that) { /* ... */ },
+    [](const Square& that) { /* ... */ },
     [](const Rectangle& that) { /* ... */ },
     [](const Rhombus& that) { /* ... */ },
     [](const RightTriangle& that) { /* ... */ },
@@ -2600,8 +2615,8 @@ type_switch (v) (
 \end{lstlisting}
 
 This may seem crazy at first, but consider a common use case of the default
-handler that takes matches anything with \texttt{auto\&\&}, as well as the using
-constrained function templates with SFINAE, or with Concepts to match a family
+handler that matches anything with \texttt{auto\&\&}, as well as the use of
+constrained function templates with SFINAE or Concepts to match a family
 of types.
 
 \begin{lstlisting}[language=cpp]
@@ -2632,10 +2647,10 @@ type_switch (v) ( handler{} );
 The expectation is that a handler is expected to generically handle whatever type it matches,
 and this is consistent even in the presence of duplicate types.
 
-In the rare cases where it is useful to know the original type in which the value came from,
-a index-aware handler can be provided to retrieve the indices of the originating types.
-This situation can arise from duplicate types, but also from the consequence of allowing
-references.
+In the rare cases where it is useful to know the original type in which the value
+came from, an index-aware handler can be provided to retrieve the indices of the
+originating types. This situation can arise from duplicate types, but also from
+the consequence of allowing references.
 
 \begin{lstlisting}[language=cpp]
 int x = 42;
@@ -2654,25 +2669,25 @@ type_switch (v) ( index_aware{} );
 \end{lstlisting}
 
 Since non-deduced template parameters cannot be specified in a lambda, the
-implication here is that an index aware handler must be defined as a function
-object. However, considering that this is likely a rare use case, it is unlikely
-to be a big deal.
+implication here is that an index aware handler must be defined as an
+out-of-line function object. However, considering that this is likely a
+rare use case, it is unlikely to be a big deal.
 
 \subsection{Miscellaneous}
 
 \subsubsection{\texttt{constexpr}}
 This proposal stays consistent with \texttt{std::optional} in terms of its
-\texttt{constexpr}-ness. There are sophisticated conditions such as
-\texttt{std::is\_trivially\_copy\_constructible\_v} to increase its
-\texttt{constexpr}-ness.
+\texttt{constexpr}-ness. More sophisticated conditions such as
+\texttt{std::is\_trivially\_copy\_constructible\_v} to increase the
+\texttt{constexpr}-ness is not considered in this proposal.
 
 \subsubsection{\texttt{void}}
-\texttt{void} is allowed, and adds no state. This result is followed from the fact that
+\texttt{void} is allowed, and adds no state. This result follows from the fact that
 the proposed \texttt{variant} design accurately models the formal definition of a
 discriminated union. Since the \texttt{void} type has an empty set of values (i.e. 0
 states), it has a + 0 effect on the number of states of a \texttt{variant} object.
 
-The above is a theoretical argument. The practical argument is that it is not
+While this is a theoretical argument, the practical argument is that it is not
 possible to use \texttt{void} as a match type for multi-visitation. Consider a single
 visitation scenario where \texttt{void} is used to indicate the null state.
 
@@ -2694,7 +2709,7 @@ type_switch (v, w) (
   [](int , int)  { /* ... */ },
   [](int , void) { /* ... */ },  // invalid
   [](void, int)  { /* ... */ },  // invalid
-  [](void, void) { /* ... */ }  // invalid
+  [](void, void) { /* ... */ }   // invalid
 );
 \end{lstlisting}
 
@@ -2708,11 +2723,11 @@ References are allowed as an alternative.
 
 This section exists to demonstrate how this \texttt{variant} design can be extended to
 support various features desired by polarizing groups. It is intentionally
-separated out from \nameref{designdecisions}, since extensibility in itself was not a
-driving factor in the proposed design. However, it is evident that starting from
-the proposed design, those who want different semantics can extend the proposed
-design to get the semantics they want, whereas trying to extend to this design
-based on other alternatives would be much more difficult.
+separated out from \fullref{designdecisions}, since extensibility in itself was
+not a driving factor in the proposed design. However, it is evident that starting
+from the proposed design, those who want different semantics can extend it to get
+the semantics they want, whereas trying to arrive at this design based on other
+alternatives would be much more difficult.
 
 \subsection{Default Construct the First Type}
 Given a \texttt{variant} that default constructs to the first type,
@@ -2732,7 +2747,7 @@ class Variant : public std::variant<Head, Tail...> {
 \label{turnoffassignment}
 Given a \texttt{variant} that has assignment turned off, users who want assignment would
 need to implement their own. However, the converse scenario of turning off given
-functionality is easier.
+functionality is very easy.
 
 \begin{lstlisting}[language=cpp]
 template <class... Types>
@@ -2756,11 +2771,11 @@ class NonAssignableVariant : public std::variant<Types...> {
 };
 \end{lstlisting}
 
-\subsection{Turn off Assignment if Any of the Types Can Throw During Move Construction}
+\subsection{Turn off Assignment under Certain Conditions}
 Given a \texttt{variant} where assignment is turned off in some cases, users who want
 assignment even in those cases would need to override the behavior with their
-own implementation of assignment. Leveraging \nameref{turnoffassignment}, the converse scenario
-remains to be easier.
+own implementation of assignment. Leveraging \fullref{turnoffassignment},
+the converse scenario remains very simple.
 
 \begin{lstlisting}[language=cpp]
 template <class... Types>
@@ -2780,11 +2795,11 @@ null state to a non-null \texttt{variant} and providing augmented behavior was
 not as trivial as I thought it would be, but it's still doable.
 
 \begin{lstlisting}[language=cpp]
-template <class... Ts>
-class Variant : public std::variant<std::nullvar_t, Ts...> {
+template <class... Types>
+class Variant : public std::variant<std::nullvar_t, Types...> {
   public:
 
-  using super = std::variant<std::nullvar_t, Ts...>;
+  using super = std::variant<std::nullvar_t, Types...>;
 
   Variant() : super(std::nullvar) {}
 
@@ -2845,7 +2860,8 @@ Using double storage to achieve strong exception safety guarantee may be a
 tradeoff that many people are willing to make. For those users, we can augment
 the proposed \texttt{variant} with another storage and implement the double
 storage mechanism. Again, the converse scenario would be much more difficult
-since the user would have to take space away from an existing object.
+since there is no easy way to \textbf{remove} space from an existing
+object whereas augmenting one to \textbf{add} space is very easy.
 
 \begin{lstlisting}[language=cpp]
 template <class.... Types>
@@ -2874,6 +2890,7 @@ class Variant {
   void emplace(Args &&... args) {
     try_([&] {
       storage[!which].template emplace<I>(std::forward<Args>(args)...);
+      storage[which] = {};
       which = !which;
     });
   }
@@ -2882,16 +2899,19 @@ class Variant {
 
   template <class U>  // SFINAE
   Variant &operator=(U &&u) {
-    try_([&] { storage[!which] = std::forward<U>(u); which = !which; });
+    using T = get_best_match_t<Types..., U&&>;
+    if (index() == find_index<T, Types...>{}) {
+      storage[which] = std::forward<U>(u);
+    } else {
+      emplace<T>(std::forward<U>(u));
+    }
     return *this;
   }
 
-  Variant &operator=(const Variant &that) {
-    try_([&] { storage[!which] = that.storage[that.which]; which = !which; });
-    return *this;
-  }
-
-  /* Variant &operator=(Variant &&that); */
+  /*
+  Variant &operator=(const Variant &that);
+  Variant &operator=(Variant &&that);
+  */
 
   constexpr int index() const noexcept { return storage[which].index(); }
 
@@ -2933,15 +2953,21 @@ An implementation of the proposed \texttt{variant} design is available at \cite{
     \cite{Boost.Variant}.
   \item \textbf{Agust\'in Berg\'e} (a.k.a K-ballo) for the development of
     \cite{Eggs.Variant}.
-  \item \textbf{Axel Naumann} for writing \cite{N4542} and its predecessors which started
-    the discussion.
-  \item \textbf{Eric Niebler} for letting me know that submitting a proposal is a must in
-    order to be considered for standardization.
-  \item \textbf{Geoffrey Romer} for encouraging me to write this paper since CppCon 2014.
+  \item \textbf{Axel Naumann} for writing \cite{N4542} and its predecessors
+    which started the discussion.
   \item \textbf{David Sankel} for deep design discussions and encouraging me to
     present my ideas during CppCon 2015.
-  \item Everyone on \textbf{std-proposals} mailing list sharing their thoughts
-    and ideas.
+  \item \textbf{Kirk Shoop} for design discussions at CppCon 2015.
+  \item \textbf{Eric Niebler} for letting me know that submitting a proposal is a
+    must in order to be considered for standardization.
+  \item \textbf{Geoffrey Romer} for encouraging me to write this paper since
+    CppCon 2014.
+  \item \textbf{Andrei Alexandrescu} for starting the work on \texttt{variant}
+    and writing Dr. Dobb's articles back in 2002, and for encouraging me to
+    write this paper.
+  \item Everyone on \textbf{std-proposals} mailing list who passionately share
+    their thoughts, ideas, and opinions.
+
 \end{itemize}
 
 A special thank you to \textbf{Jason Lucas} for initially introducing me to the
@@ -2991,6 +3017,10 @@ past few years!
     Michael Park,
     \emph{Variant: Discriminated Union with Value Semantics}\newline
     \url{https://github.com/mpark/variant}
+  \bibitem[C++ Core Guidelines]{CCG}
+    Bjarne Stroustrup, Herb Sutter
+    \emph{C++ Core Guidelines}\newline
+    \url{https://github.com/isocpp/CppCoreGuidelines}
 \end{thebibliography}
 
 \end{document}
