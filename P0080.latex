@@ -1614,8 +1614,8 @@ Let \texttt{Types\textsubscript{I}...} be the template parameter pack
   operator()<Is...>(get<Is>(vs)...)} if it is a valid expression, otherwise
   equivalent to \texttt{invoke(forward<F>(f), get<Is>(vs)...)};
 
-\remarks: If \texttt{is\_same\_v<R, deduce\_t>} is \texttt{false},
-  the return type of this function is \texttt{R}.
+\remarks: If \texttt{!is\_same\_v<R, \textit{unspecified}:deduce\_tag>} is
+  \texttt{true}, the return type of this function is \texttt{R}.
 
   Otherwise, if \texttt{decay\_t<F>} contains a member typedef
   \texttt{result\_type}, the return type is
@@ -2962,8 +2962,8 @@ An implementation of the proposed \texttt{variant} design is available at \cite{
     must in order to be considered for standardization.
   \item \textbf{Geoffrey Romer} for encouraging me to write this paper since
     CppCon 2014.
-  \item \textbf{Andrei Alexandrescu} for starting the work on \texttt{variant}
-    and writing Dr. Dobb's articles back in 2002, and for encouraging me to
+  \item \textbf{Andrei Alexandrescu} for starting the work on \texttt{variant},
+    writing Dr. Dobb's articles back in 2002, and for encouraging me to
     write this paper.
   \item Everyone on \textbf{std-proposals} mailing list who passionately share
     their thoughts, ideas, and opinions.
@@ -2971,8 +2971,8 @@ An implementation of the proposed \texttt{variant} design is available at \cite{
 \end{itemize}
 
 A special thank you to \textbf{Jason Lucas} for initially introducing me to the
-multi-method problem, and the endless design and tradeoff discussions over the
-past few years!
+multi-method problem, and for the endless design and tradeoff discussions over
+the past few years!
 
 \section{References}
 \renewcommand{\section}[2]{}%
