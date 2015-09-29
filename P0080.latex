@@ -336,10 +336,10 @@ namespace std {
   constexpr remove_reference_t<const tuple_element_t<I, tuple<Types...>>>* get(
       const variant<Types...>*) noexcept;
 
-  template <class T, class... Types> // only if \textit{see below}
+  template <class T, class... Types>  // only if see below
   constexpr remove_reference_t<T>* get(variant<Types...>*) noexcept;
 
-  template <class T, class... Types> // only if see below
+  template <class T, class... Types>  // only if see below
   constexpr remove_reference_t<const T>* get(const variant<Types...>*) noexcept;
 
   template <size_t I, class... Types>
@@ -428,7 +428,7 @@ namespace std {
     explicit constexpr variant(in_place_t (&)(integral_constant<size_t, I>),
                                Args&&...);
 
-    template <size_t I, class U, class... Args> // only if see below
+    template <size_t I, class U, class... Args>  // only if see below
     explicit constexpr variant(in_place_t (&)(integral_constant<size_t, I>),
                                initializer_list<U>,
                                Args&&...);
@@ -437,7 +437,7 @@ namespace std {
     explicit constexpr variant(in_place_t (&)(T), Args&&...);
 
 
-    template <class T, class U, class... Args> // only if see below
+    template <class T, class U, class... Args>  // only if see below
     explicit constexpr variant(in_place_t (&)(T), initializer_list<U>, Args&&...);
 
     template <class U> constexpr variant(U&&);  // only if see below
@@ -519,7 +519,7 @@ this constructor shall be a \texttt{constexpr} constructor.
 }
 
 \begin{lstlisting}[language=signature]
-template <size_t I, class U, class... Args> // only if see below
+template <size_t I, class U, class... Args>  // only if see below
 explicit constexpr variant(in_place_t (&ip)(integral_constant<size_t, I>),
                            initializer_list<U> init,
                            Args&&... args);
@@ -575,7 +575,7 @@ this constructor shall be a \texttt{constexpr} constructor.
 }
 
 \begin{lstlisting}[language=signature]
-template <class T, class U, class... Args> // only if see below
+template <class T, class U, class... Args>  // only if see below
 explicit constexpr variant(in_place_t (&ip)(T),
                            initializer_list<U> init,
                            Args&&... args);
