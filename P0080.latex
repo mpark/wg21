@@ -116,7 +116,7 @@
 This paper is an alternative proposal to \cite{N4542}, which proposes a design
 for a discriminated union. This topic has been discussed \textbf{extensively}
 within the ISO C++ Standards Committee as well as \textbf{std-proposals} mailing
-list. The goal of this paper to identify the concerns of the polarizing groups,
+list. The goal of this paper is to identify the concerns of the polarizing groups,
 and to propose a solution that would address them with minimal compromise.
 
 \section{Motivation and Scope}
@@ -244,7 +244,7 @@ int main() {
   try {
     v = 42;
   } catch (const std::bad_variant_assign& ex) {
-    // v is valid, unspecified.
+    // v is in an indeterminate state.
     // The exception thrown by the move constructor is available as ex.nested_ptr.
   } catch (const std::exception& ex) {
     // v is valid.
@@ -302,8 +302,9 @@ Add a new subclause \texttt{20.N Variants} under \texttt{20 General utilities li
 \paragraph{20.N.1 In general}\hfill\textbf{[variant.general]}
 
 This subclause describes the \texttt{variant} library that provides a
-discriminated union as the class template variant. Each template argument
-specifies the type of an element that can be stored in the variant.
+discriminated union as the class template \texttt{variant}. Each template argument
+specifies the type of an element that can be stored in the \texttt{variant}
+object.
 
 Header \texttt{<variant>} synopsis:
 }
@@ -477,8 +478,8 @@ namespace std {
 {\color{green!50!black}
 \paragraph{20.N.2.1 Construction}\hfill\textbf{[variant.cnstr]}
 
-For each variant constructor, an exception is thrown only if the construction of
-one of the types in \texttt{Types...} throws an exception.
+For each \texttt{variant} constructor, an exception is thrown only if the
+construction of one of the types in \texttt{Types...} throws an exception.
 }
 
 \begin{lstlisting}[language=signature]
