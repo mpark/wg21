@@ -246,8 +246,8 @@ int main() {
   try {
     v = 42;
   } catch (const std::bad_variant_assign& ex) {
-    // v is in an indeterminate state.
-    // The exception thrown by the move constructor is available as ex.nested_ptr.
+    // `v` is in an indeterminate state. The exception thrown by the move
+    // constructor is available as `ex.nested_ptr`.
   } catch (const std::exception& ex) {
     // v is valid.
   }
@@ -1216,7 +1216,7 @@ for in-place construction.
 }
 
 {\color{green!50!black}
-\paragraph{20.N.6 Nullvar}\hfill\textbf{[variant.nullvar]}
+\paragraph{20.N.6 Null Variant}\hfill\textbf{[variant.nullvar]}
 }
 
 \begin{lstlisting}[language=signature]
@@ -2669,13 +2669,13 @@ the consequence of allowing references.
 
 \begin{lstlisting}[language=cpp]
 int x = 42;
-variant<int, int &> v(in_place<1>, x);
-type_switch (v) ( [](int &) { /* matches both int, and int& */ );
+variant<int, int&> v(in_place<1>, x);
+type_switch (v) ( [](int&) { /* matches both int, and int& */ );
 
 // index-aware handler
 struct index_aware {
   template <size_t I>
-  void operator()(int &) const {
+  void operator()(int&) const {
     /* still matches both int, and int&, but `I` tells you which one. */
   }
 };
@@ -2752,8 +2752,7 @@ uninitialized. However, the converse is trivial.
 \begin{lstlisting}[language=cpp]
 template <class Head, class... Tail>
 class Variant : public std::variant<Head, Tail...> {
-  public:
-
+public:
   Variant() : std::variant<Head, Tail...>(Head{}) {}
 };
 \end{lstlisting}
@@ -2767,8 +2766,7 @@ functionality is very easy.
 \begin{lstlisting}[language=cpp]
 template <class... Types>
 class NonAssignableVariant : public std::variant<Types...> {
-  public:
-
+public:
   template <std::size_t I, class... Args> void emplace(Args&&...) = delete;
 
   template <std::size_t I, class U, class... Args>
@@ -2812,8 +2810,7 @@ not as trivial as I thought it would be, but it's still doable.
 \begin{lstlisting}[language=cpp]
 template <class... Types>
 class Variant : public std::variant<std::nullvar_t, Types...> {
-  public:
-
+public:
   using super = std::variant<std::nullvar_t, Types...>;
 
   Variant() : super(std::nullvar) {}
@@ -2856,8 +2853,7 @@ class Variant : public std::variant<std::nullvar_t, Types...> {
     return *this;
   }
 
-  private:
-
+private:
   template <class F>
   void try_(F&& f) {
     try {
@@ -2881,31 +2877,33 @@ object whereas augmenting one to \textbf{add} space is very easy.
 \begin{lstlisting}[language=cpp]
 template <class.... Types>
 class Variant {
-  public:
-
-  constexpr Variant() noexcept : which{-1}, storage{} {}
+public:
+  constexpr Variant() noexcept
+      : which{-1}, storage{{std::nullvar, std::nullvar}} {}
 
   template <std::size_t I, class... Args>
   explicit constexpr Variant(
-      in_place_t (&tag)(std::integral_constant<std::size_t, I>), Args &&... args)
-      : which{0}, storage{{tag, std::forward<Args>(args)...}, {}} {}
+      in_place_t (&tag)(std::integral_constant<std::size_t, I>), Args&&... args)
+      : which{0}, storage{{{tag, std::forward<Args>(args)...}, std::nullvar}} {}
 
   /* ... other in-place constructors ... */
 
   template <class U>  // SFINAE
-  constexpr Variant(U &&u) : which{0}, storage{{std::forward<U>(u)}, {}} {}
+  constexpr Variant(U&& u)
+      : which{0}, storage{{{std::forward<U>(u)}, std::nullvar}} {}
 
-  Variant(const Variant &that) : which{0}, storage{{that.storage[that.which]}, {}} {}
+  Variant(const Variant& that)
+      : which{0}, storage{{that.storage[that.which], std::nullvar}} {}
 
-  /* Variant(Variant &&that); */
+  /* Variant(Variant&& that); */
 
   ~Variant() = default;
 
   template <size_t I, class... Args>
-  void emplace(Args &&... args) {
+  void emplace(Args&&... args) {
     try_([&] {
       storage[!which].template emplace<I>(std::forward<Args>(args)...);
-      storage[which] = {};
+      storage[which] = std::nullvar;
       which = !which;
     });
   }
@@ -2913,7 +2911,7 @@ class Variant {
   /* ... other emplace ... */
 
   template <class U>  // SFINAE
-  Variant &operator=(U &&u) {
+  Variant& operator=(U&& u) {
     using T = get_best_match_t<Types..., U&&>;
     if (index() == find_index<T, Types...>{}) {
       storage[which] = std::forward<U>(u);
@@ -2924,37 +2922,34 @@ class Variant {
   }
 
   /*
-  Variant &operator=(const Variant &that);
-  Variant &operator=(Variant &&that);
+  Variant& operator=(const Variant& that);
+  Variant& operator=(Variant&& that);
   */
 
   constexpr int index() const noexcept { return storage[which].index(); }
 
-  constexpr const std::type_info &type() const noexcept {
+  constexpr const std::type_info& type() const noexcept {
     return storage[which].type();
   }
 
-  void swap(Variant &that)
+  void swap(Variant& that)
       noexcept(noexcept(swap(storage[which], that.storage[that.which]))) {
     swap(storage[which], that.storage[that.which]);
   }
 
-  private:
-
+private:
   template <class F>
-  void try_(F &&f) {
+  void try_(F&& f) {
     try {
       std::forward<F>(f)();
-    } catch (const std::bad_variant_assign &ex) {
+    } catch (const std::bad_variant_assign& ex) {
       ex.rethrow_nested();
     }
   }
 
-  private:
-
   int which;
 
-  std::array<std::variant<Types...>, 2> storage;
+  std::array<std::variant<std::nullvar_t, Types...>, 2> storage;
 };
 \end{lstlisting}
 
