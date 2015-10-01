@@ -1107,11 +1107,11 @@ suitable for conversion and display as a \texttt{wstring} (21.3, 22.4.1.4).
 namespace std {
   class bad_variant_assign : public exception, public nested_exception {
   public:
-    bad_variant_assign() noexcept;
+    bad_variant_assign(void*) noexcept;
     bad_variant_assign(const bad_variant_assign&) noexcept;
     bad_variant_assign& operator=(const bad_variant_assign&) noexcept;
-    virtual const char* what() const noexcept;
     void* variant_ptr() const noexcept;
+    virtual const char* what() const noexcept;
   };
 }
 \end{lstlisting}
@@ -1129,7 +1129,7 @@ and is left in an indeterminate state.
 }
 
 \begin{lstlisting}[language=signature]
-bad_variant_assign() noexcept;
+bad_variant_assign(void* v_ptr) noexcept;
 \end{lstlisting}
 
 {
@@ -1137,6 +1137,8 @@ bad_variant_assign() noexcept;
 \color{green!50!black}
 
 \effects: Constructs an object of class \texttt{bad\_variant\_assign}.
+
+\postcondition: \texttt{variant\_ptr() == v\_ptr}.
 
 \end{adjustwidth}
 }
@@ -1156,22 +1158,6 @@ bad_variant_assign& operator=(const bad_variant_assign&) noexcept;
 }
 
 \begin{lstlisting}[language=signature]
-virtual const char* what() const noexcept;
-\end{lstlisting}
-
-{
-\begin{adjustwidth}{2em}{}
-\color{green!50!black}
-
-\returns: An implementation-defined NTBS.
-
-\remarks: The message may be a null-terminated multibyte string (17.5.2.1.4.2),
-suitable for conversion and display as a \texttt{wstring} (21.3, 22.4.1.4).
-
-\end{adjustwidth}
-}
-
-\begin{lstlisting}[language=signature]
 void* variant_ptr() const noexcept;
 \end{lstlisting}
 
@@ -1184,6 +1170,22 @@ void* variant_ptr() const noexcept;
 \remarks: If multiple \texttt{variant} objects are left in the indeterminate state
 during the propagation of \texttt{bad\_variant\_assign}, the pointers to those
 variants will be captured within nested \texttt{bad\_variant\_assign} exceptions.
+
+\end{adjustwidth}
+}
+
+\begin{lstlisting}[language=signature]
+virtual const char* what() const noexcept;
+\end{lstlisting}
+
+{
+\begin{adjustwidth}{2em}{}
+\color{green!50!black}
+
+\returns: An implementation-defined NTBS.
+
+\remarks: The message may be a null-terminated multibyte string (17.5.2.1.4.2),
+suitable for conversion and display as a \texttt{wstring} (21.3, 22.4.1.4).
 
 \end{adjustwidth}
 }
