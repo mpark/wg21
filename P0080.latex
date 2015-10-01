@@ -2744,6 +2744,19 @@ from the proposed design, those who want different semantics can extend it to ge
 the semantics they want, whereas trying to arrive at this design based on other
 alternatives would be much more difficult.
 
+\subsection{Disallow Default Construction}
+Given a \texttt{variant} that deletes the default constructor, it would be very
+difficult to extend that \texttt{variant} and make it default constructible.
+However, the converse is trivial.
+
+\begin{lstlisting}[language=cpp]
+template <class... Types>
+class Variant : public std::variant<Types...> {
+public:
+  Variant() = delete;
+};
+\end{lstlisting}
+
 \subsection{Default Construct the First Type}
 Given a \texttt{variant} that default constructs to the first type,
 it would be very difficult to extend that \texttt{variant} and keep it
