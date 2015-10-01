@@ -611,7 +611,7 @@ this constructor shall be a \texttt{constexpr} constructor.
 
 \begin{lstlisting}[language=signature]
 template <class U>
-constexpr variant(U&& t);  // only if see below
+constexpr variant(U&& u);  // only if see below
 \end{lstlisting}
 
 {
