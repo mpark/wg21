@@ -1023,10 +1023,12 @@ noexcept(iter\_swap(declval<U*>(), declval<U*>))} for all \texttt{U} in
 \begin{adjustwidth}{2em}{}
 \begin{lstlisting}[language=signature]
 namespace std {
-  class bad_variant_access : public logic_error {
+  class bad_variant_access : public exception {
   public:
-    explicit bad_variant_access(const string& what_arg);
-    explicit bad_variant_access(const char* what_arg);
+    explicit bad_variant_access();
+    bad_variant_access(const bad_variant_access&) noexcept;
+    bad_variant_access& operator=(const bad_variant_access&) noexcept;
+    virtual const char* what() const noexcept;
   };
 }
 \end{lstlisting}
@@ -1048,13 +1050,11 @@ Given an object \texttt{v} of type \texttt{variant<Types...>},
   \item For type-based operations, \texttt{get<T>(v)} is invalid if
     \texttt{get<T>(\&v) == nullptr}
 \end{itemize}
-
-The value of \texttt{what\_arg} is implementation defined.
 \end{adjustwidth}
 }
 
 \begin{lstlisting}[language=signature]
-explicit bad_variant_access(const string& what_arg);
+explicit bad_variant_access();
 \end{lstlisting}
 
 {
@@ -1063,22 +1063,35 @@ explicit bad_variant_access(const string& what_arg);
 
 \effects: Constructs an object of class \texttt{bad\_variant\_access}.
 
-\postcondition: \texttt{strcmp(what(), what\_arg.c\_str()) == 0}.
-
 \end{adjustwidth}
 }
 
 \begin{lstlisting}[language=signature]
-explicit bad_variant_access(const char* what_arg);
+bad_variant_access(const bad_variant_access&) noexcept;
+bad_variant_access& operator=(const bad_variant_access&) noexcept;
 \end{lstlisting}
 
 {
 \begin{adjustwidth}{2em}{}
 \color{green!50!black}
 
-\effects: Constructs an object of class \texttt{bad\_variant\_access}.
+\effects: Copies an object of class \texttt{bad\_variant\_access}.
 
-\postcondition: \texttt{strcmp(what(), what\_arg) == 0}.
+\end{adjustwidth}
+}
+
+\begin{lstlisting}[language=signature]
+virtual const char* what() const noexcept;
+\end{lstlisting}
+
+{
+\begin{adjustwidth}{2em}{}
+\color{green!50!black}
+
+\returns: An implementation-defined NTBS.
+
+\remarks: The message may be a null-terminated multibyte string (17.5.2.1.4.2),
+suitable for conversion and display as a \texttt{wstring} (21.3, 22.4.1.4).
 
 \end{adjustwidth}
 }
@@ -1349,7 +1362,7 @@ constexpr const tuple_element_t<I, tuple<Types...>>& get(
 \begin{adjustwidth}{2em}{}
 \begin{lstlisting}[language=signature]
 auto *result = get<I>(&v);
-return result ? *result : throw bad_variant_access(/* NTBS */);
+return result ? *result : throw bad_variant_access{};
 \end{lstlisting}
 \end{adjustwidth}
 }
