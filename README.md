@@ -1,3 +1,9 @@
-# wg21
+# WG21: C++ Standards Committee Papers
 
-WG21 Submissions - C++ Standards Committee Papers
+- [N3887]: Consistent Metafunction Aliases
+- [P0080R0]: Variant: Discriminated Union with Value Semantics
+- [D0080R1]: Tweaks to the Kona Variant
+
+[N3887]: N3887.pdf
+[P0080R0]: P0080R0.pdf
+[D0080R1]: D0080R1.pdf
