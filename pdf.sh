@@ -1,10 +1,11 @@
 #!/usr/bin/env bash
 
-pandoc ${1}.md \
-       --filter pandoc-citeproc \
-       --standalone \
+pandoc template/header.yaml \
+       ${1}.md \
        --number-section \
-       --csl template/acm.csl \
-       --template template/paper.latex \
-       template/common.yaml \
+       --highlight-style=kate \
+       --filter pandoc-citeproc \
+       --syntax-definition template/cpp.xml \
+       --syntax-definition template/diff.xml \
+       --template template/wg21.latex \
        -o pdf/${1}.pdf
