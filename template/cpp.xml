@@ -38,6 +38,7 @@
       <item>for</item>
       <item>goto</item>
       <item>if</item>
+      <item>inspect</item>
       <item>return</item>
       <item>switch</item>
       <item>throw</item>
