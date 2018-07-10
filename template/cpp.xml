@@ -27,6 +27,12 @@
     http://kde-files.org/content/show.php?content=90660
   -->
   <highlighting>
+    <list name="annotation">
+      <item>see</item>
+      <item>below</item>
+      <item>unspecified</item>
+      <item>INVOKE</item>
+    </list>
     <list name="controlflow">
       <item>break</item>
       <item>case</item>
@@ -217,6 +223,7 @@
         <!-- Match keywords -->
         <keyword attribute="Control Flow" context="#stay" String="controlflow" />
         <keyword attribute="Keyword" context="#stay" String="keywords" />
+        <keyword attribute="Annotation" context="#stay" String="annotation" />
         <!-- Detect attributes -->
         <Detect2Chars attribute="Symbol" context="Attribute" char="[" char1="[" />
         <!-- Match numbers -->
@@ -497,6 +504,7 @@
       <itemData name="Preprocessor"       defStyleNum="dsPreprocessor" spellChecking="false" />
       <itemData name="Prep. Lib"          defStyleNum="dsImport"   spellChecking="false" />
       <itemData name="Error"              defStyleNum="dsError"    spellChecking="false" />
+      <itemData name="Annotation"         defStyleNum="dsAnnotation" />
     </itemDatas>
   </highlighting>
   <general>
