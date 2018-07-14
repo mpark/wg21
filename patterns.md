@@ -70,9 +70,76 @@ the __structured bindings__. The proposed direction of this paper is to
 introduce an `inspect` statement as the third selection statement to fill
 the gap between the `switch` statement and the `if` statement.
 
----
+# Design Overview
 
-https://wandbox.org/permlink/okgMcTpzXqcvN700
+## Basic Structure
+
+```cpp
+inspect (init-statement_opt expression) {
+  pattern_0 guard_0: statement_0
+  pattern_1 guard_1: statement_1
+  /* ... */
+}
+```
+
+## Types of Patterns
+
+### Constant pattern
+
+Constant patterns have the form:
+
+> _constant-expression_
+
+A constant pattern with _constant-expression_ `c` matches a value `v`
+if `v == c` is `true`.
+
+```cpp
+int factorial(int n) {
+  inspect (n) {
+    0: return 1;
+//  ^ constant pattern
+    _: return n * factorial(n - 1);
+  }
+}
+```
+
+### Identifier Pattern
+
+An identifier pattern is denoted by any valid identifier. It matches any value
+and binds it to the provided identifier.
+
+```cpp
+int i = 101;
+inspect (i) {
+  x: cout << x; // prints 101
+}
+```
+
+### Tuple Pattern
+
+Syntax: `[`_pattern_$_0$, _pattern_$_1$, ..., _pattern_$_N$`]`
+
+Matches values that fulfill the structured bindings protocol.
+
+_pattern_$_i$ matches 
+
+### Variant Pattern
+
+```cpp
+std::variant<T, U> v;
+inspect (v) {
+  <T> t: /* ... */
+  <U> u: /* ... */
+}
+```
+
+```cpp
+const Base& b = /* ... */;
+inspect (v) {
+  <Derived1> d1: /* ... */
+  <Derived2> d2: /* ... */
+}
+```
 
 Match the following values:
   - Scalar
@@ -80,25 +147,6 @@ Match the following values:
   - Closed Polymorphism (e.g., `variant`)
   - Range (e.g., `string`)
   - Open Polymorphism (e.g., `std::any`, abstract base class)
-
-## Product Type
-
-We refer to a product type as a type that can used in structured bindings.
-That is, `T` is a product type if the following statement is valid for
-a variable `t` of type `T`: `auto&& [...xs] = t;`.
-
-```cpp
-void fizzbuzz() {
-  for (int i = 1; i <= 100; ++i) {
-    inspect (std::pair(i % 3, i % 5)) {
-      [0, 0]: std::cout << "fizzbuzz\n";
-      [0, _]: std::cout << "fizz\n";
-      [_, 0]: std::cout << "buzz\n";
-      [_, _]: std::cout << i << '\n';
-    }
-  }
-}
-```
 
 ## Matching strings
 
@@ -126,6 +174,8 @@ inspect (int i = 42) {
   1: std::cout << "bar";
 }
 ```
+
+https://wandbox.org/permlink/okgMcTpzXqcvN700
 
 # Design Decisions
 
