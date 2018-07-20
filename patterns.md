@@ -72,19 +72,33 @@ the gap between the `switch` statement and the `if` statement.
 
 # Design Overview
 
-## Basic Structure
+## Basic Syntax
 
 ```cpp
-inspect (init-statement_opt expression) {
-  pattern_0 guard_0: statement_0
-  pattern_1 guard_1: statement_1
+inspect (init-statement(optional) condition) {
+  pattern_0 guard_0(optional): statement_0
+  pattern_1 guard_1(optional): statement_1
   /* ... */
 }
 ```
 
+## Basic Model
+
+Within the parenthesis, the `inspect` statement is equivalent to `if` and
+`switch` statements except that no conversion nor promotion takes place
+in evaluating the value of its condition.
+
+When the `inspect` statement is executed, its condition is evaluated and matched
+against each pattern in order. If a pattern is successfully matched with the
+value of the condition, control is passed to the statement following the matched
+pattern label. If no pattern matches, then none of the statements are executed.
+
+A name introduced by a pattern is in scope from its point of declaration until
+the end of the statement following the pattern label.
+
 ## Types of Patterns
 
-### Constant pattern
+### Constant Pattern
 
 Constant patterns have the form:
 
@@ -105,8 +119,10 @@ int factorial(int n) {
 
 ### Identifier Pattern
 
-An identifier pattern is denoted by any valid identifier. It matches any value
-and binds it to the provided identifier.
+An identifier pattern is denoted by any valid unparenthesized _identifier_.
+It matches any value `v` and the introduced name is an lvalue referring to `v`.
+The introduced name is in scope from its point of declaration until the end of
+the statement following the pattern label.
 
 ```cpp
 int i = 101;
