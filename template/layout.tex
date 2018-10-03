@@ -32,42 +32,13 @@
 %%--------------------------------------------------
 %% Paragraph and bullet numbering
 
-\usepackage{chngcntr}
-
-\newcounter{Paras}
-% \counterwithin{Paras}{chapter}
-\counterwithin{Paras}{section}
-\counterwithin{Paras}{subsection}
-\counterwithin{Paras}{subsubsection}
-\counterwithin{Paras}{paragraph}
-\counterwithin{Paras}{subparagraph}
-
-\newcounter{Bullets1}[Paras]
-\newcounter{Bullets2}[Bullets1]
-\newcounter{Bullets3}[Bullets2]
-\newcounter{Bullets4}[Bullets3]
-
 \makeatletter
-\newcommand{\parabullnum}[2]{%
-\stepcounter{#1}%
-\noindent\makebox[0pt][l]{\makebox[#2][r]{%
-\scriptsize\raisebox{.7ex}%
-{%
-\ifnum \value{Paras}>0
-\ifnum \value{Bullets1}>0 (\fi%
-                          \arabic{Paras}%
-\ifnum \value{Bullets1}>0 .\arabic{Bullets1}%
-\ifnum \value{Bullets2}>0 .\arabic{Bullets2}%
-\ifnum \value{Bullets3}>0 .\arabic{Bullets3}%
-\fi\fi\fi%
-\ifnum \value{Bullets1}>0 )\fi%
-\fi%
-}%
+\newcommand{\pnum}[1]{%
+\noindent\makebox[0pt][l]{\makebox[0pt][r]{%
+\scriptsize\raisebox{.7ex}{#1}%
 \hspace{\@totalleftmargin}\quad%
 }}}
 \makeatother
-
-\def\pnum{\parabullnum{Paras}{0pt}}
 
 % Leave more room for section numbers in TOC
 % \cftsetindents{section}{1.5em}{3.0em}
