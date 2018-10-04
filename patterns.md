@@ -13,30 +13,32 @@ author:
 # Introduction
 
 As algebraic data types gain better support in C++ with facilities such as
-`std::tuple` and `std::variant`, the importance of mechanisms to interact with
-them have increased. While mechanisms such as `std::apply` and `std::visit`
-have been added, they leave much to be desired. Pattern matching is a mechanism
-that has been widely adopted across many programming languages. These include
-text-based languages such as SNOBOL back in the 1960s, functional languages such
-as Haskell and OCaml, and "mainstream" languages such as Scala, Swift, and Rust.
+`tuple` and `variant`, the importance of mechanisms to interact with them have
+increased. While mechanisms such as `apply` and `visit` have been added, they
+often lead to complex code even for simple tasks. Pattern matching is a widely
+adopted mechanism across many programming languages to interact with algebraic
+data types that can help greatly simplify C++. Examples of programming languages
+include text-based languages such as SNOBOL back in the 1960s, functional
+languages such as Haskell and OCaml, and "mainstream" languages such as Scala,
+Swift, and Rust.
 
-Inspired by P0095 [@P0095], which proposed pattern matching and language-level
-variant simulteneously, this paper explores a possible full solution for pattern
+Inspired by P0095 [@P0095] (which proposed pattern matching and language-level
+variant simulteneously), this paper explores a possible direction for pattern
 matching only, and does not address language-level variant design. This is in
-correspondence with a straw poll from Kona 2015, which encouraged exploration of
-a full solution for pattern matching. SF: 16, WF: 6, N: 5, WA: 1, SA: 0.
+correspondence with a straw poll from Kona 2015, which encouraged exploration
+of a full solution for pattern matching. SF: 16, WF: 6, N: 5, WA: 1, SA: 0.
 
 # Motivation and Scope
 
 Virtually every program involves branching on some predicates applied to a value
 and conditionally binding names to its components for use in subsequent logic.
 Today, C++ provides two types of selection statements which choose between one of
-several flows of control: the `switch` statement and the `if` statement.
+several flows of control: the `if` statement and the `switch` statement.
+
 Since `switch` statements can only operate on a _single_ integral value and
 `if` statements operate on an _arbitrarily_ complex boolean expression, there is
 a significant gap between the two constructs even for inspection of 
-the "vocabulary types" provided by the standard library such as `tuple`,
-`variant`, `string`, and `vector`.
+the "vocabulary types" provided by the standard library.
 
 Consider a variable `p` of type `Point` and a function `position` which
 prints whether `p` is positioned at the origin, on the _x_-axis or _y_-axis,
@@ -81,89 +83,105 @@ the gap between the `switch` statement and the `if` statement.
 > |     ...
 > | `}`
 
+> | _guard:_
+> |     `if (` _expression_ `)`
+
 ## Basic Model
 
-Within the parenthesis, the `inspect` statement is equivalent to `if` and
+Within the parentheses, the `inspect` statement is equivalent to `if` and
 `switch` statements except that no conversion nor promotion takes place
 in evaluating the value of its condition.
 
 When the `inspect` statement is executed, its condition is evaluated and matched
-against each pattern in order (first match). If a pattern is successfully
-matched with the value of the condition, control is passed to the statement
-following the matched pattern label. If there is a guard present, the boolean
-expression must evaluate to true in order for control to be passed to the
-statement following the label. If no pattern matches, then none of
-the statements are executed.
+against each pattern in order (first match semantics). If a pattern is
+successfully matched with the value of the condition, control is passed to
+the statement following the matched pattern label. If there is a guard present,
+the expression must evaluate to `true` in order for control to be passed
+to the statement following the matched pattern label. If no pattern matches,
+none of the statements are executed.
 
 A name introduced by a pattern is in scope from its point of declaration until
 the end of the statement following the pattern label.
 
-## Requirements
+## Types of Patterns
 
-Each pattern enforces a set of compile-time requirements that, if violated,
-results in the program being ill-formed.
+### Primary Patterns
 
-## Primitive Patterns
-
-### Constant Pattern
+#### Constant Pattern
 
 The constant pattern has the form:
 
 > _constant-expression_
 
-Let `c` be the constant pattern and `v` the value being matched.
+Let `c` be the constant expression and `v` the value being matched.
 
-_Requires:_ The expression `compare_3way(c, v)` must return `std::strong_equality`.
+_Requires:_ The expression `strong_equal(c, v)` is valid.
 
-_Matches:_ If `compare_3way(c, v) == 0` is `true`.
+_Matches:_ If `strong_equal(c, v) == strong_equality::equal` is `true`.
 
 ```cpp
-int factorial(int n) {
-  inspect (n) {
-    0: return 1;
+inspect (n) {
+    0: cout << "got zero!";
 //  ^ constant pattern
-    _: return n * factorial(n - 1);
-  }
 }
 ```
 
-### Identifier Pattern
+#### Identifier Pattern
 
 The identifier pattern has the form:
 
-> unparenthesized _identifier_
+> _identifier_
 
-Let `id` be the identifier pattern and `v` the value being matched.
+Let `id` be the identifier and `v` the value being matched.
 
 _Requires:_ None.
 
 _Matches:_ Any value `v`. `id` is an lvalue referring to `v`, and is in scope
 from its point of declaration until the end of the statement following
-the pattern label. This implies that identifiers cannot be repeated within
-he same pattern but can reused in the subsequent pattern.
+the pattern label.
 
 ```cpp
-int n = 101;
-inspect (n) {
-  x: cout << x; // prints 101
+inspect (v) {
+    x: cout << x;
+//  ^ identifier pattern
 }
 ```
 
-## Compound Patterns
+[ _Note:_ This implies that identifiers cannot be repeated within
+          the same pattern but can reused in the subsequent pattern. ]
 
-### Structured Binding Pattern
+[ _Note:_ If the identifier pattern appears at the top-level, it shares the same
+syntax as the `goto` label syntax. ]
+
+### Compound Patterns
+
+#### Structured Binding Pattern
 
 The structured binding pattern has the form:
 
-> `[`_pattern_~0~, _pattern_~1~, ..., _pattern_~N~`]`
+> `[` _pattern_~0~`,` _pattern_~1~`,` ...`,` _pattern_~N~` ]`
 
-Let `v` the value being matched.
+Let `v` be the value being matched.
 
-_Requires:_ `std::tuple_size_v<std::remove_cv_t<decltype(v)>> == N`
+_Requires:_ The declaration `auto&&[e`~0~`, e`~1~`,` ...`, e`~N~`] = v;`
+            must be valid, where each `e`_~i~_ is a unique _identifier_.
 
-_Matches:_ If _pattern_~i~ matches `GET<i>(v)` for all $0 \leq i < N$.
+_Matches:_ If _pattern_~i~ matches `e`~i~ for all $0 \leq i < N$ in
+           `auto&&[e`~0~`, e`~1~`,` ...`, e`~N~`] = v;`.
 
-### Alternative Pattern
+```cpp
+inspect (point) {
+    [0, 0]: cout << "origin\n";
+    [0, y]: cout << "on x-axis\n";
+//   ^ constant pattern
+    [x, 0]: cout << "on y-axis\n";
+//   ^ identifier pattern
+    [x, y]: cout << x << ',' << y << '\n';
+//  ^^^^^^ structured binding pattern
+}
+```
+
+#### Alternative Pattern
 
 The alternative pattern has the form:
 
@@ -210,31 +228,31 @@ This is a language extension to introduce a new selection statement: `inspect`.
 
 Add to __\S8.4 [stmt.select]__ of ...
 
-> \pnum{1} Selection statements choose one of several flows of control.
->
-> > > | _selection-statement:_
-> > > |     `if constexpr`_~opt~_ `(` _init-statement~opt~_ _condition_ `)` _statement_
-> > > |     `if constexpr`_~opt~_ `(` _init-statement~opt~_ _condition_ `)` _statement_ `else` _statement_
-> > > |     `switch (` _init-statement~opt~_ _condition_ `)` _statement_
-> > > |     \added `inspect (` _init-statement~opt~_ _condition_ `) {` _inspect-case-seq_ `}` \unchanged
+\pnum{1}Selection statements choose one of several flows of control.
+
+> | _selection-statement:_
+> |     `if constexpr`_~opt~_ `(` _init-statement~opt~_ _condition_ `)` _statement_
+> |     `if constexpr`_~opt~_ `(` _init-statement~opt~_ _condition_ `)` _statement_ `else` _statement_
+> |     `switch (` _init-statement~opt~_ _condition_ `)` _statement_
+> |     \added `inspect (` _init-statement~opt~_ _condition_ `) {` _inspect-case-seq_ `}` \unchanged
 >
 > \added
-> > > | _inspect-case-seq:_
-> > > |     _inspect-case_
-> > > |     _inspect-case-seq_ _inspect-case_
+> | _inspect-case-seq:_
+> |     _inspect-case_
+> |     _inspect-case-seq_ _inspect-case_
 >
-> > > | _inspect-case:_
-> > > |     _attribute-specifier-seq~opt~_ _inspect-pattern_ _inspect-guard~opt~_ `:` _statement_
+> | _inspect-case:_
+> |     _attribute-specifier-seq~opt~_ _inspect-pattern_ _inspect-guard~opt~_ `:` _statement_
 >
-> > > | _inspect-pattern:_
-> > > |     _identifier_
-> > > |     _constant-expression_
-> > > |     _wildcard-pattern_
-> > > |     _structured-binding-pattern_
-> > > |     _alternative-pattern_
+> | _inspect-pattern:_
+> |     _constant-pattern_
+> |     _identifier_
+> |     _wildcard-pattern_
+> |     _structured-binding-pattern_
+> |     _alternative-pattern_
 >
-> > > | _inspect-guard:_
-> > > |     `if (` _condition_ `)`
+> | _inspect-guard:_
+> |     `if (` _condition_ `)`
 > \unchanged
 
 # Design Decisions
@@ -252,10 +270,11 @@ the `switch` statement for the following reasons:
 
   - `switch` allows the `case` labels to appear anywhere, which hinders pattern
     matching's aim for __structured__ inspection.
-  - The fall-through semantics of `switch` requires `break`
+  - The fall-through semantics of `switch` generally results in `break` being
+    attached to every case.
   - `switch` is purposely restricted to integrals for __guaranteed__ efficiency.
-    The primary goal of pattern matching is expressivity, while being as
-    efficient as hand-written code.
+    The primary goal of pattern matching in this paper is expressivity, while
+    being at least as efficient as the naively hand-written code.
 
 ## Statement vs Expression
 
