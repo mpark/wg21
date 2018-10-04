@@ -10,14 +10,15 @@
 [D0080R1]: pdf/D0080R1.pdf
 [P0655R1]: pdf/P0655R1.pdf
 
-## Generating the PDF
+## Generation
 
 ```bash
-make PxxxxRn.pdf  // Generates `pdf/PxxxxRn.pdf` from `PxxxxRn.md`
+make <paper>.latex  // Generates `latex/<paper>.latex` from `<paper>.md`
+make <paper>.pdf    // Generates `pdf/<paper>.pdf` from `<paper>.md`
 ```
 
 ## Requirements
 
-  - pandoc 2
-  - pandoc-citeproc
-  - pdflatex
+  - `pandoc 2`
+  - `pandoc-citeproc`
+  - `pdflatex`
