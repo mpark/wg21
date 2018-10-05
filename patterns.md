@@ -164,9 +164,9 @@ The structured binding pattern has the form:
 Let `v` be the value being matched.
 
 _Requires:_ The declaration `auto&&[e`~0~`, e`~1~`,` ...`, e`~N~`] = v;`
-            must be valid, where each `e`_~i~_ is a unique _identifier_.
+            shall be valid, where each `e`_~i~_ is a unique _identifier_.
 
-_Matches:_ If _pattern_~i~ matches `e`~i~ for all $0 \leq i < N$ in
+_Matches:_ If _pattern_~i~ matches `e`~i~ for all $0 \leq i \leq N$ in
            `auto&&[e`~0~`, e`~1~`,` ...`, e`~N~`] = v;`.
 
 ```cpp
@@ -187,36 +187,43 @@ The alternative pattern has the form:
 
 > `<Alternative>` _pattern_
 
-Let `v` the value being matched and `V` be `std::remove_cv_t<decltype(v)>`.
+Let `v` be the value being matched and `V` be its type.
 
-_Requires:_
-  - `std::variant_size_v<V>` is defined.
-  - `discriminator(v)` is a valid expression returning an integral, enumeration,
-    or a class type contextually convertible to an integral type.
-  - `std::variant_discriminator_v<Alternative, V>` is defined and is an
-    integral, enumaration, or a class type contextually convertible to
-    an integral type.
-  - `get<std::variant_discriminator_v<Alternative, V>>(v)` is defined.
+__Case 1: Variant-Like__
 
-_Matches:_ If `discriminator(v)` has the same value as
-`std::variant_discriminator_v<Alternative, V>`, and
-_pattern_ matches `get<std::variant_discriminator_v<Alternative, V>>(v)`.
+> If `std::variant_size<V>` is a complete type, the expression `std::variant_size<V>::value`
+> shall be a well-formed integral constant expression.
+> 
+> Let `D(v)` be a member `v.discriminator()` or else a non-member ADL-only `discriminator(v)`.
+> 
+> Let `G<I>(v)` be a member `v.get<I>()` or else a non-member ADL-only `get<I>(v)`.
+> 
+> [ _Note:_ These are similar to how `get` is looked up for structured binding declarations. ]
+> 
+> Let `d` be the value of `D(v)`, and `alternative` be a reference to the stored
+> alternative of type `std::variant_alternative_t<d, V>` initialized by `G<d>(v)`.
+> 
+> _Matches:_ We have the following 4 cases:
+> 
+> __Case 1.1: `Alternative` is a value__
+>
+> > If `d` has the same value as `Alternative` and _pattern_ matches `alternative`.
+> 
+> __Case 1.2: `Alternative` is a type__ 
+>
+> > If `std::is_same<std::variant_alternative_t<d, V>, Alternative>::value` is `true` and _pattern_ matches `alternative`.
+>
+> __Case 1.3: `Alternative` is a concept__ 
+>
+> > If `Alternative<std::variant_alternative_t<d, V>>()` is `true` and _pattern_ matches `alternative`.
+>
+> __Case 1.4: `Alternative` is `auto`__ 
+>
+> > If _pattern_ matches `alternative`.
 
-```cpp
-std::variant<T, U> v;
-inspect (v) {
-  <T> t: /* ... */
-  <U> u: /* ... */
-}
-```
+__Case 2: Polymorphic Type__
 
-```cpp
-const Base& b = /* ... */;
-inspect (v) {
-  <Derived1> d1: /* ... */
-  <Derived2> d2: /* ... */
-}
-```
+...
 
 # Impact on the Standard
 
