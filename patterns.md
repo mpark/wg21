@@ -8,70 +8,151 @@ author:
     email: <mcypark@gmail.com>
 ---
 
-\hypersetup{linkcolor=black}\tableofcontents
-
 # Introduction
 
 As algebraic data types gain better support in C++ with facilities such as
 `tuple` and `variant`, the importance of mechanisms to interact with them have
-increased. While mechanisms such as `apply` and `visit` have been added, they
-often lead to complex code even for simple tasks. Pattern matching is a widely
-adopted mechanism across many programming languages to interact with algebraic
-data types that can help greatly simplify C++. Examples of programming languages
-include text-based languages such as SNOBOL back in the 1960s, functional
-languages such as Haskell and OCaml, and "mainstream" languages such as Scala,
-Swift, and Rust.
+increased. While mechanisms such as `apply` and `visit` have been added, their
+usage is quite complex and limited even for simple cases. Pattern matching is
+a widely adopted mechanism across many programming languages to interact with
+algebraic data types that can help greatly simplify C++. Examples of programming
+languages include text-based languages such as SNOBOL back in the 1960s,
+functional languages such as Haskell and OCaml, and "mainstream" languages such
+as Scala, Swift, and Rust.
 
-Inspired by P0095 [@P0095] (which proposed pattern matching and language-level
-variant simulteneously), this paper explores a possible direction for pattern
-matching only, and does not address language-level variant design. This is in
-correspondence with a straw poll from Kona 2015, which encouraged exploration
-of a full solution for pattern matching. SF: 16, WF: 6, N: 5, WA: 1, SA: 0.
+Inspired by P0095 [@P0095] --- which proposed pattern matching and
+language-level variant simulteneously --- this paper explores a possible
+direction for pattern matching only, and does not address language-level
+variant design. This is in correspondence with a straw poll from Kona 2015,
+which encouraged exploration of a full solution for pattern matching.
+SF: 16, WF: 6, N: 5, WA: 1, SA: 0.
 
 # Motivation and Scope
 
 Virtually every program involves branching on some predicates applied to a value
-and conditionally binding names to its components for use in subsequent logic.
-Today, C++ provides two types of selection statements which choose between one of
-several flows of control: the `if` statement and the `switch` statement.
+and conditionally binding names to some of its components for use in subsequent
+logic. Today, C++ provides two types of selection statements: the `if` statement
+and the `switch` statement.
 
 Since `switch` statements can only operate on a _single_ integral value and
 `if` statements operate on an _arbitrarily_ complex boolean expression, there is
-a significant gap between the two constructs even for inspection of 
+a significant gap between the two constructs even in inspection of
 the "vocabulary types" provided by the standard library.
 
-Consider a variable `p` of type `Point` and a function `position` which
-prints whether `p` is positioned at the origin, on the _x_-axis or _y_-axis,
-or not on any axes.
+In C++17, structured binding declarations [@P0144] introduced the ability to
+concisely bind names to components of a `tuple`-like value. The proposed
+direction of this paper aims to naturally extend this notion by performing
+__structured inspection__ prior to forming the __structured bindings__ with
+a third selection statement: the `inspect` statement. The goal of the `inspect`
+statement is to bridge the gap between `switch` and `if` statements with
+a __declarative__, __structured__, __cohesive__, and __composable__ mechanism.
 
-+---------------------------------+----------------------------------------+
-| __Before__                      | __After__                              |
-+---------------------------------+----------------------------------------+
-| ```cpp                                                                   |
-| struct Point { int x; int y; };                                          |
-| ```                                                                      |
-+---------------------------------+----------------------------------------+
-| ```cpp                          | ```cpp                                 |
-| void position(const Point& p) { | void position(const Point& p) {        |
-|   if (p.x == 0 && p.y == 0) {   |   inspect (p) {                        |
-|     cout << "at the origin";    |     [0, 0]: cout << "at the origin";   |
-|   } else if (p.x == 0) {        |     [0, y]: cout << "on the x-axis";   |
-|     cout << "on the x-axis";    |     [x, 0]: cout << "on the y-axis";   |
-|   } else if (p.y == 0) {        |     [x, y]: cout << "not on any axes"; |
-|     cout << "on the y-axis";    |   }                                    |
-|   } else {                      | }                                      |
-|     cout << "not on any axes";  | ```                                    |
-|   }                             |                                        |
-| }                               |                                        |
-| ```                             |                                        |
-+---------------------------------+----------------------------------------+
+# Before/After Comparisons
 
-Structured binding declarations [@P0144] in C++17 introduced the ability to
-concisely bind names to components of a value. Pattern matching aims to
-naturally extend this notion by performing __structured inspection__ prior to
-forming the __structured bindings__. The proposed direction of this paper is to
-introduce an `inspect` statement as the third selection statement to fill
-the gap between the `switch` statement and the `if` statement.
+## Matching Integrals
+
++------------------------------------------------+-------------------------------------------------+
+| __Before__                                     | __After__                                       |
++================================================+=================================================+
+| ```cpp                                         | ```cpp                                          |
+| switch (x) {                                   | inspect (x) {                                   |
+|   case 0: std::cout << "Got zero";             |   0: std::cout << "Got zero";                   |
+|   case 1: std::cout << "Got one";              |   1: std::cout << "Got one";                    |
+|   default: std::cout << "Don't care";          |   _: std::cout << "Don't care";                 |
+| }                                              | }                                               |
+| ```                                            | ```                                             |
++------------------------------------------------+-------------------------------------------------+
+
+## Matching Strings
+
++--------------------------------------+----------------------------------------+
+| __Before__                           | __After__                              |
++======================================+========================================+
+| ```cpp                               | ```cpp                                 |
+| if (s == "A") {                      | inspect (s) {                          |
+|   std::cout << "Got A";              |   "A": std::cout << "Got A";           |
+| } else if (s == "B") {               |   "B": std::cout << "Got B";           |
+|   std::cout << "Got B";              | }                                      |
+| }                                    | ```                                    |
+| ```                                  |                                        |
++--------------------------------------+----------------------------------------+
+
+## Matching Tuples
+
++--------------------------------------+----------------------------------------+
+| __Before__                           | __After__                              |
++======================================+========================================+
+| ```cpp                               | ```cpp                                 |
+| auto&& [x, y] = t;                   | inspect (t) {                          |
+| if (x == 0 && y == 0) {              |   [0, 0]: std::cout << "On origin";    |
+|   std::cout << "On origin";          |   [0, y]: std::cout << "On x-axis";    |
+| } else if (x == 0) {                 |   [x, 0]: std::cout << "On y-axis";    |
+|   std::cout << "On x-axis";          |   [x, y]: std::cout << x << ',' << y;  |
+| } else if (y == 0) {                 | }                                      |
+|   std::cout << "On y-axis";          | ```                                    |
+| } else {                             |                                        |
+|   std::cout << x << ',' << y;        |                                        |
+| }                                    |                                        |
+| ```                                  |                                        |
++--------------------------------------+----------------------------------------+
+
+\pagebreak
+
+## Matching Variants
+
++------------------------------------------------+-------------------------------------------------+
+| __Before__                                     | __After__                                       |
++================================================+=================================================+
+| ```cpp                                         | ```cpp                                          |
+| struct visitor {                               | inspect (v) {                                   |
+|   void operator()(int i) const {               |   <int> i: strm << "Got int: " << i;            |
+|     strm_ << "Got int: " << i;                 |   <float> f: strm << "Got float: " << f;        |
+|   }                                            | }                                               |
+|   void operator()(float f) const {             | ```                                             |
+|     strm_ << "Got float: " << f;               |                                                 |
+|   }                                            |                                                 |
+|   std::ostream& strm_;                         |                                                 |
+| };                                             |                                                 |
+| std::visit(visitor{strm}, v);                  |                                                 |
+| ```                                            |                                                 |
++------------------------------------------------+-------------------------------------------------+
+
+## Evaluating Expressions
+
+Given the following definition:
+
+```cpp
+struct Expr;
+struct Neg { std::shared_ptr<Expr> expr; };
+struct Add { std::shared_ptr<Expr> lhs, rhs; };
+struct Mul { std::shared_ptr<Expr> lhs, rhs; };
+struct Expr : std::variant<int, Neg, Add, Mul> {
+  using variant::variant;
+};
+```
+
++--------------------------------------------+-------------------------------------------------+
+| __Before__                                 | __After__                                       |
++============================================+=================================================+
+| ```cpp                                     | ```cpp                                          |
+| int eval(const Expr& expr) {               | int eval(const Expr& expr) {                    |
+|   struct visitor {                         |   inspect (expr) {                              |
+|     int operator()(int i) const {          |     <int> i: return i;                          |
+|       return i;                            |     <Neg> [e]: return -eval(*e);                |
+|     }                                      |     <Add> [l, r]: return eval(*l) + eval(*r);   |
+|     int operator()(const Neg& n) const {   |     <Mul> [l, r]: return eval(*l) * eval(*r);   |
+|       return -eval(*n.expr);               |   }                                             |
+|     int operator()(const Add& a) const {   | }                                               |
+|       return eval(*a.lhs) + eval(*a.rhs);  | ```                                             |
+|     }                                      |                                                 |
+|     int operator()(const Mul& m) const {   |                                                 |
+|       return eval(*m.lhs) * eval(*m.rhs);  |                                                 |
+|     }                                      |                                                 |
+|   };                                       |                                                 |
+|   return std::visit(visitor{}, expr);      |                                                 |
+| }                                          |                                                 |
+| ```                                        |                                                 |
++--------------------------------------------+-------------------------------------------------+
 
 # Design Overview
 
@@ -93,25 +174,51 @@ Within the parentheses, the `inspect` statement is equivalent to `if` and
 in evaluating the value of its condition.
 
 When the `inspect` statement is executed, its condition is evaluated and matched
-against each pattern in order (first match semantics). If a pattern is
-successfully matched with the value of the condition, control is passed to
-the statement following the matched pattern label. If there is a guard present,
-the expression must evaluate to `true` in order for control to be passed
-to the statement following the matched pattern label. If no pattern matches,
+in order (first match semantics) against each pattern. If a pattern successfully
+matches the value of the condition and the boolean expression in the guard
+evalutes to `true` (or if there is no guard at all), control is passed to the
+statement following the matched pattern label. If the guard expression evaluates
+to `false`, control flows to test the subsequent pattern. If no pattern matches,
 none of the statements are executed.
-
-A name introduced by a pattern is in scope from its point of declaration until
-the end of the statement following the pattern label.
 
 ## Types of Patterns
 
 ### Primary Patterns
+
+#### Identifier Pattern
+
+The identifier pattern has the form:
+
+> _identifier_
+
+_Requirements:_ None.
+
+_Matches:_ Any value.
+
+The introduced names are lvalues referring to corresponding components.
+The name is in scope from its point of declaration until the end of
+the statement following the pattern label. Identifiers therefore cannot be
+repeated within the same pattern but can reused in the subsequent pattern.
+
+```cpp
+inspect (v) {
+    x: cout << x;
+//  ^ identifier pattern
+}
+```
+
+[ _Note:_ If the identifier pattern is used as a top-level pattern,
+          it has the same syntax as a `goto` label. ]
 
 #### Constant Pattern
 
 The constant pattern has the form:
 
 > _constant-expression_
+
+except the _id-expression_, due to its ambiguity with the identifier pattern.
+
+`(id)` or `+id` can be used for disambiguation.
 
 Let `c` be the constant expression and `v` the value being matched.
 
@@ -122,36 +229,10 @@ _Matches:_ If `strong_equal(c, v) == strong_equality::equal` is `true`.
 ```cpp
 inspect (n) {
     0: cout << "got zero!";
+    1: cout << "got one!";
 //  ^ constant pattern
 }
 ```
-
-#### Identifier Pattern
-
-The identifier pattern has the form:
-
-> _identifier_
-
-Let `id` be the identifier and `v` the value being matched.
-
-_Requires:_ None.
-
-_Matches:_ Any value `v`. `id` is an lvalue referring to `v`, and is in scope
-from its point of declaration until the end of the statement following
-the pattern label.
-
-```cpp
-inspect (v) {
-    x: cout << x;
-//  ^ identifier pattern
-}
-```
-
-[ _Note:_ This implies that identifiers cannot be repeated within
-          the same pattern but can reused in the subsequent pattern. ]
-
-[ _Note:_ If the identifier pattern appears at the top-level, it shares the same
-syntax as the `goto` label syntax. ]
 
 ### Compound Patterns
 
@@ -163,19 +244,19 @@ The structured binding pattern has the form:
 
 Let `v` be the value being matched.
 
-_Requires:_ The declaration `auto&&[e`~0~`, e`~1~`,` ...`, e`~N~`] = v;`
-            shall be valid, where each `e`_~i~_ is a unique _identifier_.
+_Requires:_ The declaration `auto&& [e`~0~`, e`~1~`,` ...`, e`~N~`] = v;`
+            is valid, where each `e`_~i~_ is a unique _identifier_.
 
 _Matches:_ If _pattern_~i~ matches `e`~i~ for all $0 \leq i \leq N$ in
-           `auto&&[e`~0~`, e`~1~`,` ...`, e`~N~`] = v;`.
+           `auto&& [e`~0~`, e`~1~`,` ...`, e`~N~`] = v;`.
 
 ```cpp
 inspect (point) {
     [0, 0]: cout << "origin\n";
     [0, y]: cout << "on x-axis\n";
-//   ^ constant pattern
+//      ^ identifier pattern
     [x, 0]: cout << "on y-axis\n";
-//   ^ identifier pattern
+//      ^ constant pattern
     [x, y]: cout << x << ',' << y << '\n';
 //  ^^^^^^ structured binding pattern
 }
@@ -193,31 +274,31 @@ __Case 1: Variant-Like__
 
 > If `std::variant_size<V>` is a complete type, the expression `std::variant_size<V>::value`
 > shall be a well-formed integral constant expression.
-> 
+>
 > Let `D(v)` be a member `v.discriminator()` or else a non-member ADL-only `discriminator(v)`.
-> 
+>
 > Let `G<I>(v)` be a member `v.get<I>()` or else a non-member ADL-only `get<I>(v)`.
-> 
+>
 > [ _Note:_ These are similar to how `get` is looked up for structured binding declarations. ]
-> 
+>
 > Let `d` be the value of `D(v)`, and `alternative` be a reference to the stored
 > alternative of type `std::variant_alternative_t<d, V>` initialized by `G<d>(v)`.
-> 
+>
 > _Matches:_ We have the following 4 cases:
-> 
+>
 > __Case 1.1: `Alternative` is a value__
 >
 > > If `d` has the same value as `Alternative` and _pattern_ matches `alternative`.
-> 
-> __Case 1.2: `Alternative` is a type__ 
+>
+> __Case 1.2: `Alternative` is a type__
 >
 > > If `std::is_same<std::variant_alternative_t<d, V>, Alternative>::value` is `true` and _pattern_ matches `alternative`.
 >
-> __Case 1.3: `Alternative` is a concept__ 
+> __Case 1.3: `Alternative` is a concept__
 >
 > > If `Alternative<std::variant_alternative_t<d, V>>()` is `true` and _pattern_ matches `alternative`.
 >
-> __Case 1.4: `Alternative` is `auto`__ 
+> __Case 1.4: `Alternative` is `auto`__
 >
 > > If _pattern_ matches `alternative`.
 
@@ -314,6 +395,20 @@ There have been three popular pattern matching libraries in existence today.
 The issue of introducing identifiers is burdensome enough that I believe it
 justifies a language feature.
 
+## Optimizations
+
+Comparison elision?
+
+...
+
+## Ranges
+
+...
+
+## User-defined Patterns
+
+...
+
 # Examples
 
 ## Matching strings
@@ -321,8 +416,8 @@ justifies a language feature.
 ```cpp
 std::string s = "hello";
 inspect (s) {
-  "hello": std::cout << "hello";
-  "world": std::cout << "world";
+    "hello": std::cout << "hello";
+    "world": std::cout << "world";
 }
 ```
 
@@ -395,7 +490,7 @@ references:
       month: 3
     author:
       - family: Sutter
-        given: Herb 
+        given: Herb
       - family: Stroustrup
         given: Bjarne
       - family: Dos Reis
@@ -510,16 +605,10 @@ variant<Email, PhoneNumber> parse(string_view sv) {
   }
 }
 
-- Patterns are composed of compile-time values.
-  - Optimization(?)
-  - But if we keep the existing protocol, is this even possible?
-  - We have to execute `operator==` which may not be `constexpr`.
-  - Invocations of `get` cannot be counted, same as copy constructor
-    calls cannot be counted due to optimizations.
 - Syntax for matching `std::variant` and base class.
   - Given `inspect (v) { int n: stmt1; double d : stmt2;}`,
     `int n` and `double d` looks like declarations, but they are not.
-- In order, determine if it's a match (e.g., dynamic type checking), then 
+- In order, determine if it's a match (e.g., dynamic type checking), then
   transform (e.g., dynamic_cast), coupling the "is-as" pattern.
   So, given a string, why not match if it's the form of email, then transform,
   into 2 parts then continue matching?
@@ -606,10 +695,10 @@ struct variant_access<optional<T>, some> {
 template <typename... Ts, typename Alt>
 struct variant_access<variant<Ts...>, Alt>
   static constexpr int index = index_of<Alt, list<Ts...>>;
-  
+
   auto&& get(variant<Ts...> const& v) { return get<Alt>(v); }
 };
-  
+
 template <typename... Ts, size_t I>
 struct variant_access<variant<Ts...>, I>
   static constexpr int index = I;

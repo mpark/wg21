@@ -7,6 +7,7 @@
           --syntax-definition template/cpp.xml \
           --syntax-definition template/diff.xml \
           --template template/wg21.latex \
+          --toc \
           -o pdf/$@
 
 %.latex: %.md
@@ -18,4 +19,5 @@
           --syntax-definition template/cpp.xml \
           --syntax-definition template/diff.xml \
           --template template/wg21.latex \
+          --toc \
           -o latex/$@
