@@ -1,6 +1,6 @@
 ---
 title: "Pattern Matching"
-document: DxxxxR0
+document: D1260R0
 date: 2018-05-22
 audience: Evolution
 author:
