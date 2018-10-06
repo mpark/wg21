@@ -56,47 +56,47 @@ a __declarative__, __structured__, __cohesive__, and __composable__ mechanism.
 +================================================+=================================================+
 | ```cpp                                         | ```cpp                                          |
 | switch (x) {                                   | inspect (x) {                                   |
-|   case 0: std::cout << "Got zero";             |   0: std::cout << "Got zero";                   |
-|   case 1: std::cout << "Got one";              |   1: std::cout << "Got one";                    |
-|   default: std::cout << "Don't care";          |   _: std::cout << "Don't care";                 |
+|   case 0: std::cout << "got zero";             |   0: std::cout << "got zero";                   |
+|   case 1: std::cout << "got one";              |   1: std::cout << "got one";                    |
+|   default: std::cout << "don't care";          |   _: std::cout << "don't care";                 |
 | }                                              | }                                               |
 | ```                                            | ```                                             |
 +------------------------------------------------+-------------------------------------------------+
 
 ## Matching Strings
 
-+--------------------------------------+----------------------------------------+
-| __Before__                           | __After__                              |
-+======================================+========================================+
-| ```cpp                               | ```cpp                                 |
-| if (s == "A") {                      | inspect (s) {                          |
-|   std::cout << "Got A";              |   "A": std::cout << "Got A";           |
-| } else if (s == "B") {               |   "B": std::cout << "Got B";           |
-|   std::cout << "Got B";              | }                                      |
-| }                                    | ```                                    |
-| ```                                  |                                        |
-+--------------------------------------+----------------------------------------+
++--------------------------------------+---------------------------------------+
+| __Before__                           | __After__                             |
++======================================+=======================================+
+| ```cpp                               | ```cpp                                |
+| if (s == "foo") {                    | inspect (s) {                         |
+|   std::cout << "got foo";            |   "foo": std::cout << "got foo";      |
+| } else if (s == "bar") {             |   "bar": std::cout << "got bar";      |
+|   std::cout << "got bar";            |   _: std::cout << "don't care";       |
+| } else {                             | }                                     |
+|   std::cout << "don't care";         | ```                                   |
+| }                                    |                                       |
+| ```                                  |                                       |
++--------------------------------------+---------------------------------------+
 
 ## Matching Tuples
 
-+--------------------------------------+----------------------------------------+
-| __Before__                           | __After__                              |
-+======================================+========================================+
-| ```cpp                               | ```cpp                                 |
-| auto&& [x, y] = t;                   | inspect (t) {                          |
-| if (x == 0 && y == 0) {              |   [0, 0]: std::cout << "On origin";    |
-|   std::cout << "On origin";          |   [0, y]: std::cout << "On x-axis";    |
-| } else if (x == 0) {                 |   [x, 0]: std::cout << "On y-axis";    |
-|   std::cout << "On x-axis";          |   [x, y]: std::cout << x << ',' << y;  |
-| } else if (y == 0) {                 | }                                      |
-|   std::cout << "On y-axis";          | ```                                    |
-| } else {                             |                                        |
-|   std::cout << x << ',' << y;        |                                        |
-| }                                    |                                        |
-| ```                                  |                                        |
-+--------------------------------------+----------------------------------------+
-
-\pagebreak
++--------------------------------------+---------------------------------------+
+| __Before__                           | __After__                             |
++======================================+=======================================+
+| ```cpp                               | ```cpp                                |
+| auto&& [x, y] = p;                   | inspect (p) {                         |
+| if (x == 0 && y == 0) {              |   [0, 0]: std::cout << "on origin";   |
+|   std::cout << "on origin";          |   [0, y]: std::cout << "on y-axis";   |
+| } else if (x == 0) {                 |   [x, 0]: std::cout << "on x-axis";   |
+|   std::cout << "on y-axis";          |   [x, y]: std::cout << x << ',' << y; |
+| } else if (y == 0) {                 | }                                     |
+|   std::cout << "on x-axis";          | ```                                   |
+| } else {                             |                                       |
+|   std::cout << x << ',' << y;        |                                       |
+| }                                    |                                       |
+| ```                                  |                                       |
++--------------------------------------+---------------------------------------+
 
 ## Matching Variants
 
@@ -105,13 +105,13 @@ a __declarative__, __structured__, __cohesive__, and __composable__ mechanism.
 +================================================+=================================================+
 | ```cpp                                         | ```cpp                                          |
 | struct visitor {                               | inspect (v) {                                   |
-|   void operator()(int i) const {               |   <int> i: strm << "Got int: " << i;            |
-|     strm_ << "Got int: " << i;                 |   <float> f: strm << "Got float: " << f;        |
+|   void operator()(int i) const {               |   <int> i: strm << "got int: " << i;            |
+|     os << "got int: " << i;                    |   <float> f: strm << "got float: " << f;        |
 |   }                                            | }                                               |
 |   void operator()(float f) const {             | ```                                             |
-|     strm_ << "Got float: " << f;               |                                                 |
+|     os << "got float: " << f;                  |                                                 |
 |   }                                            |                                                 |
-|   std::ostream& strm_;                         |                                                 |
+|   std::ostream& os;                            |                                                 |
 | };                                             |                                                 |
 | std::visit(visitor{strm}, v);                  |                                                 |
 | ```                                            |                                                 |
@@ -123,12 +123,12 @@ Given the following definition:
 
 ```cpp
 struct Expr;
+
 struct Neg { std::shared_ptr<Expr> expr; };
 struct Add { std::shared_ptr<Expr> lhs, rhs; };
 struct Mul { std::shared_ptr<Expr> lhs, rhs; };
-struct Expr : std::variant<int, Neg, Add, Mul> {
-  using variant::variant;
-};
+
+struct Expr : std::variant<int, Neg, Add, Mul> { using variant::variant; };
 ```
 
 +--------------------------------------------+-------------------------------------------------+
@@ -169,17 +169,17 @@ struct Expr : std::variant<int, Neg, Add, Mul> {
 
 ## Basic Model
 
-Within the parentheses, the `inspect` statement is equivalent to `if` and
-`switch` statements except that no conversion nor promotion takes place
-in evaluating the value of its condition.
+Within the parentheses, the `inspect` statement is equivalent to `switch` and
+`if` statements except that no conversion nor promotion takes place in
+evaluating the value of its condition.
 
 When the `inspect` statement is executed, its condition is evaluated and matched
 in order (first match semantics) against each pattern. If a pattern successfully
 matches the value of the condition and the boolean expression in the guard
 evalutes to `true` (or if there is no guard at all), control is passed to the
 statement following the matched pattern label. If the guard expression evaluates
-to `false`, control flows to test the subsequent pattern. If no pattern matches,
-none of the statements are executed.
+to `false`, control flows to the subsequent pattern. If no pattern matches, none
+of the statements are executed.
 
 ## Types of Patterns
 
@@ -191,18 +191,15 @@ The identifier pattern has the form:
 
 > _identifier_
 
-_Requirements:_ None.
-
-_Matches:_ Any value.
-
-The introduced names are lvalues referring to corresponding components.
-The name is in scope from its point of declaration until the end of
-the statement following the pattern label. Identifiers therefore cannot be
-repeated within the same pattern but can reused in the subsequent pattern.
+and matches any value `v`. The introduced name behaves as an lvalue
+referring to `v`, and is in scope from its point of declaration until
+the end of the statement following the pattern label.
 
 ```cpp
+int v = /* ... */;
+
 inspect (v) {
-    x: cout << x;
+    x: std::cout << x;
 //  ^ identifier pattern
 }
 ```
@@ -216,21 +213,30 @@ The constant pattern has the form:
 
 > _constant-expression_
 
-except the _id-expression_, due to its ambiguity with the identifier pattern.
-
-`(id)` or `+id` can be used for disambiguation.
-
-Let `c` be the constant expression and `v` the value being matched.
-
-_Requires:_ The expression `strong_equal(c, v)` is valid.
-
-_Matches:_ If `strong_equal(c, v) == strong_equality::equal` is `true`.
+and matches value `v` if `std::strong_equal(c, v) == std::strong_equality::equal`
+is `true` where `c` is the constant expression.
 
 ```cpp
-inspect (n) {
-    0: cout << "got zero!";
-    1: cout << "got one!";
+int v = /* ... */;
+
+inspect (v) {
+    0: std::cout << "got zero";
+    1: std::cout << "got one";
 //  ^ constant pattern
+}
+```
+
+[ _Note:_ The _id-expression_ is overriden by the identifier pattern.
+          `+id` or `(id)` is needed for disambiguation. ]
+
+```cpp
+static constexpr int zero = 0, one = 1;
+int v = /* ... */;
+
+inspect (v) {
+    +zero: std::cout << "got zero";
+    (one): std::cout << "got one";
+//  ^^^^^ constant pattern
 }
 ```
 
@@ -238,26 +244,25 @@ inspect (n) {
 
 #### Structured Binding Pattern
 
-The structured binding pattern has the form:
+The structured binding pattern has `N` _pattern_ instances with the form:
 
-> `[` _pattern_~0~`,` _pattern_~1~`,` ...`,` _pattern_~N~` ]`
+> `[` _pattern_~0~`,` _pattern_~1~`,` ...`,` _pattern_~N-1~ `]`
 
-Let `v` be the value being matched.
-
-_Requires:_ The declaration `auto&& [e`~0~`, e`~1~`,` ...`, e`~N~`] = v;`
-            is valid, where each `e`_~i~_ is a unique _identifier_.
-
-_Matches:_ If _pattern_~i~ matches `e`~i~ for all $0 \leq i \leq N$ in
-           `auto&& [e`~0~`, e`~1~`,` ...`, e`~N~`] = v;`.
+and matches value `v` if each _pattern~i~_ matches the _i_^th^ component of `v`.
+The components of `v` are determined by the structured binding declaration:
+`auto&& [__e`~0~`, __e`~1~`,` ...`, __e`~N-1~`] = v;` where each `__e`_~i~_
+are unique exposition-only identifiers.
 
 ```cpp
-inspect (point) {
-    [0, 0]: cout << "origin\n";
-    [0, y]: cout << "on x-axis\n";
+std::pair<int, int> p = /* ... */;
+
+inspect (p) {
+    [0, 0]: std::cout << "on origin";
+    [0, y]: std::cout << "on y-axis";
 //      ^ identifier pattern
-    [x, 0]: cout << "on y-axis\n";
+    [x, 0]: std::cout << "on x-axis";
 //      ^ constant pattern
-    [x, y]: cout << x << ',' << y << '\n';
+    [x, y]: std::cout << x << ',' << y;
 //  ^^^^^^ structured binding pattern
 }
 ```
@@ -266,45 +271,48 @@ inspect (point) {
 
 The alternative pattern has the form:
 
-> `<Alternative>` _pattern_
+> `<Alt>` _pattern_
 
-Let `v` be the value being matched and `V` be its type.
+Let `v` be the value being matched and `V` be its type. There are two cases we consider:
 
-__Case 1: Variant-Like__
+1. __Variant-Like__
 
-> If `std::variant_size<V>` is a complete type, the expression `std::variant_size<V>::value`
-> shall be a well-formed integral constant expression.
->
-> Let `D(v)` be a member `v.discriminator()` or else a non-member ADL-only `discriminator(v)`.
->
-> Let `G<I>(v)` be a member `v.get<I>()` or else a non-member ADL-only `get<I>(v)`.
->
-> [ _Note:_ These are similar to how `get` is looked up for structured binding declarations. ]
->
-> Let `d` be the value of `D(v)`, and `alternative` be a reference to the stored
-> alternative of type `std::variant_alternative_t<d, V>` initialized by `G<d>(v)`.
->
-> _Matches:_ We have the following 4 cases:
->
-> __Case 1.1: `Alternative` is a value__
->
-> > If `d` has the same value as `Alternative` and _pattern_ matches `alternative`.
->
-> __Case 1.2: `Alternative` is a type__
->
-> > If `std::is_same<std::variant_alternative_t<d, V>, Alternative>::value` is `true` and _pattern_ matches `alternative`.
->
-> __Case 1.3: `Alternative` is a concept__
->
-> > If `Alternative<std::variant_alternative_t<d, V>>()` is `true` and _pattern_ matches `alternative`.
->
-> __Case 1.4: `Alternative` is `auto`__
->
-> > If _pattern_ matches `alternative`.
+   If `std::variant_size_v<V>` is well-formed and evaluates to an integral,
+   the alternative pattern matches `v` if `Alt` is compatible with the current
+   index of `v` and _pattern_ matches the active alternative of `v`.
 
-__Case 2: Polymorphic Type__
+   Let `I` be the current index of `v` given by a member `v.index()` or else
+   a non-member ADL-only `index(v)`. The current alternative of `v` behaves as
+   a reference of type `std::variant_alternative_t<I, V>` initialized by
+   a member `v.get<I>()` or else a non-member ADL-only `get<I>(v)`.
 
-...
+   `Alt` is compatible with `I` if one of the following four cases is true:
+
+     a. If `Alt` is __`auto`__
+     a. If `Alt` is a __concept__ and `Alt<std::variant_alternative_t<I, V>>()`
+     a. If `Alt` is a __type__ and `std::is_same_v<Alt, std::variant_alternative_t<I, V>>`
+     a. If `Alt` is a __value__ and is the same value as `I`.
+
+   ```cpp
+   std::variant<int, float> v = /* ... */;
+
+   inspect (v) {
+       <int> i: std::cout << "got int: " << i;
+       <float> f: std::cout << "got float: " << f;
+   }
+   ```
+   ```cpp
+   std::variant<int, int> v = /* ... */;
+
+   inspect (v) {
+       <0> x: std::cout << "got first int: " << x;
+       <1> x: std::cout << "got second int: " << x;
+   }
+   ```
+
+2. __Polymorphic__
+
+// TODO
 
 # Impact on the Standard
 
@@ -364,6 +372,10 @@ the `switch` statement for the following reasons:
     The primary goal of pattern matching in this paper is expressivity, while
     being at least as efficient as the naively hand-written code.
 
+## First Match vs Best Match
+
+// TODO
+
 ## Statement vs Expression
 
 This paper diverges from P0095 [@P0095] in that it proposes to add `inspect` as
@@ -388,6 +400,7 @@ every other statement in C++ today.
 ## Language vs Library
 
 There have been three popular pattern matching libraries in existence today.
+
   - Mach7
   - Simple Match by jbandela
   - MPark.Patterns
@@ -411,15 +424,7 @@ Comparison elision?
 
 # Examples
 
-## Matching strings
-
-```cpp
-std::string s = "hello";
-inspect (s) {
-    "hello": std::cout << "hello";
-    "world": std::cout << "world";
-}
-```
+...
 
 # Other Languages and Libraries
 
@@ -504,87 +509,6 @@ Consistent Comparisons: http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2017/
 Class Types in Non-Type Template Parameters: http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p0732r0.pdf
 From F# to Scala Extractors: https://theburningmonk.com/2017/01/from-f-to-scala-extractors/
 
-
-```
-inspect (int i = 42) {
-  0: std::cout << "foo";
-  1: std::cout << "bar";
-}
-```
-
-```
-[&] -> std::string {
-  inspect (i) {
-    0: return "foo";
-    1: return "bar";
-  }
-}()
-```
-
-```
-inspect (std::lock_guard lock(mutex); i) {
-  0 => std::cout << "foo";
-  1 => std::cout << "bar";
-}
-```
-
-```
-inspect (pair<int, int> p = ...; p) {
-  [x, 0]: { std::cout << "foo"; x; y; }
-  [0, y]: std::cout << "bar";
-  _: /* ... */;
-}
-```
-
-```
-inspect (std::variant<int, double> v = ...; v) {
-  [0]: std::cout << "foo";
-  // <pair<int, int>> [x, y]: std::cout << "bar";
-}
-```
-
-```
-inspect (std::variant<int, pair<int, int>> v = ...; v) {
-  <int> x: std::cout << "foo";
-  <pair<int, int>> [x, y]: std::cout << "bar";
-}
-```
-
-```
-inspect (std::variant<int, int> v = ...; v) {
-  <0> x: std::cout << "foo";
-  <1> x: std::cout << "bar";
-}
-```
-
-```
-inspect (const Base& b = ...) {
-  <D1> [x] => std::cout << "foo";
-  <D2> [x, y] => std::cout << "bar";
-}
-```
-
-inspect (f()) {
-  pair [int x, int y]
-
-```
-inspect (std::variant<int, pair<int, int>> v = ..., w = ...; std::make_tuple(v, w)) {
-  [<0> x, <int> y]: std::cout << "foo";
-  [<int> x, <pair<int, int>> [y, 0]]: std::cout << "bar";
-  [<pair<int, int>> p, <int> y]: std::cout << "bar";
-  [<pair<int, int>> [x, y], <pair<int, int>> p]: std::cout << "bar";
-}
-```
-
-```
-inspect (s) {
-  "hello": ...;
-  "foobar": ...;
-  "(foo)*bar"reg: ...;
-  std::string_view sv:
-}
-```
-
 ```
 inspect (s) {
   email [local, domain]: ...;
@@ -592,18 +516,14 @@ inspect (s) {
 }
 ```
 
-optional<Email> email(string_view);
-optional<PhoneNumber> us_phone_number(string_view);
+struct Email {
+  using is_pattern = void () const volatile;
 
-variant_of(email, us_phone_number);
+  std::optional<tuple<std::string_view, std::string_view>> operator()(
+      std::string_view sv) const;
+};
 
-variant<Email, PhoneNumber> parse(string_view sv) {
-  if (auto x = email(sv)) {
-    return *x;
-  } else if (auto y = us_phone_number(sv)) {
-    reutrn *y;
-  }
-}
+Email? [address, domain]
 
 - Syntax for matching `std::variant` and base class.
   - Given `inspect (v) { int n: stmt1; double d : stmt2;}`,
@@ -656,23 +576,6 @@ variant<Email, PhoneNumber> parse(string_view sv) {
   }
 ```
 
-```
-  if (holds_alternative<int>(v)) {  // is
-    int x = get<int>(v);  // as
-  }
-
-  Base& b = ...;
-  if (auto* d_ptr = dynamic_cast<const Derived*>(&b)) {  // almost is-as
-    const Derived& d = *d_ptr;  // as
-  }
-
-  variant<int, string> v = ...;
-  if (int* i = get_if<int>(&v)) {  // almost is-as
-    int x = *i;  // as
-  }
-```
-
-```
 template <typename T>
 auto variant_index(T* p) { return p != nullptr; }
 
@@ -706,14 +609,23 @@ struct variant_access<variant<Ts...>, I>
   auto&& get(variant<Ts...> const& v) { return get<I>(v); }
 };
 
-inspect (v) {
-  <int> x: ...
-  <string>: ...
-}
+## Fixed ranges
 
-inspect (tuple{o, o}) {
-  [<some> x, <some> y]: ...
-  none: ...
+We propose to first support matching ranges with a fixed length.
+The most obvious use-case is to allow matching strings.
+
+The fixed-range pattern is denoted by `{x, y}`. It requires that
+the have functions `size()`, `operator[]`. The pattern first checks
+that `size()` matches the # of elements inside `{}` then unpacks
+the range via `operator[]`. For example, given:
+
+```
+inspect (s) {
+  {x, y}: s0;
 }
 ```
+
+`s0` is executed if `s.size()` == 2, `x` is `s[0]` and `y` is `s[1]`.
+If constants appear within the pattern, the matched component must
+subsequently match the pattern.
 -->
