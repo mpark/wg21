@@ -21,7 +21,7 @@ functional languages such as Haskell and OCaml, and "mainstream" languages such
 as Scala, Swift, and Rust.
 
 Inspired by P0095 [@P0095] --- which proposed pattern matching and
-language-level variant simulteneously --- this paper explores a possible
+language-level variant simultaneously --- this paper explores a possible
 direction for pattern matching only, and does not address language-level
 variant design. This is in correspondence with a straw poll from Kona 2015,
 which encouraged exploration of a full solution for pattern matching.
@@ -40,7 +40,7 @@ a significant gap between the two constructs even in inspection of
 the "vocabulary types" provided by the standard library.
 
 In C++17, structured binding declarations [@P0144] introduced the ability to
-concisely bind names to components of a `tuple`-like value. The proposed
+concisely bind names to components of `tuple`-like values. The proposed
 direction of this paper aims to naturally extend this notion by performing
 __structured inspection__ prior to forming the __structured bindings__ with
 a third selection statement: the `inspect` statement. The goal of the `inspect`
@@ -119,7 +119,7 @@ a __declarative__, __structured__, __cohesive__, and __composable__ mechanism.
 
 ## Evaluating Expressions
 
-Given the following definition:
+Given the following definition of an `Expr` class hierarchy:
 
 ```cpp
 struct Expr;
@@ -176,7 +176,7 @@ evaluating the value of its condition.
 When the `inspect` statement is executed, its condition is evaluated and matched
 in order (first match semantics) against each pattern. If a pattern successfully
 matches the value of the condition and the boolean expression in the guard
-evalutes to `true` (or if there is no guard at all), control is passed to the
+evaluates to `true` (or if there is no guard at all), control is passed to the
 statement following the matched pattern label. If the guard expression evaluates
 to `false`, control flows to the subsequent pattern. If no pattern matches, none
 of the statements are executed.
@@ -226,8 +226,7 @@ inspect (v) {
 }
 ```
 
-[ _Note:_ The _id-expression_ is overriden by the identifier pattern.
-          `+id` or `(id)` is needed for disambiguation. ]
+[ _Note:_ `+id` or `(id)` is needed to disambiguate with the identifier pattern. ]
 
 ```cpp
 static constexpr int zero = 0, one = 1;
@@ -273,7 +272,8 @@ The alternative pattern has the form:
 
 > `<Alt>` _pattern_
 
-Let `v` be the value being matched and `V` be its type. There are two cases we consider:
+Let `v` be the value being matched and `V` be `std::remove_cv_t<decltype(v)>`.
+We consider two cases:
 
 1. __Variant-Like__
 
@@ -282,37 +282,106 @@ Let `v` be the value being matched and `V` be its type. There are two cases we c
    index of `v` and _pattern_ matches the active alternative of `v`.
 
    Let `I` be the current index of `v` given by a member `v.index()` or else
-   a non-member ADL-only `index(v)`. The current alternative of `v` behaves as
-   a reference of type `std::variant_alternative_t<I, V>` initialized by
+   a non-member ADL-only `index(v)`. The active alternative of `v` behaves as
+   a reference to `std::variant_alternative_t<I, V>` initialized by
    a member `v.get<I>()` or else a non-member ADL-only `get<I>(v)`.
 
    `Alt` is compatible with `I` if one of the following four cases is true:
 
-     a. If `Alt` is __`auto`__
-     a. If `Alt` is a __concept__ and `Alt<std::variant_alternative_t<I, V>>()`
-     a. If `Alt` is a __type__ and `std::is_same_v<Alt, std::variant_alternative_t<I, V>>`
-     a. If `Alt` is a __value__ and is the same value as `I`.
+     a. `Alt` is __`auto`__
+     a. `Alt` is a __concept__ and `Alt<std::variant_alternative_t<I, V>>()` is `true`
+     a. `Alt` is a __type__ and `std::is_same_v<Alt, std::variant_alternative_t<I, V>>` is `true`
+     a. `Alt` is a __value__ and is the same value as `I`.
+
+   +------------------------------------------------+-------------------------------------------------+
+   | __Before__                                     | __After__                                       |
+   +================================================+=================================================+
+   | ```cpp                                         | ```cpp                                          |
+   | std::visit([&](auto&& x) {                     | inspect (v) {                                   |
+   |   strm << "got auto: " << x;                   |   <auto> x: strm << "got auto: " << x;          |
+   | }, v);                                         | }                                               |
+   | ```                                            | ```                                             |
+   +------------------------------------------------+-------------------------------------------------+
+   | ```cpp                                         | ```cpp                                          |
+   | std::visit([&](auto&& x) {                     | inspect (v) {                                   |
+   |   using X = std::remove_cv_t<decltype(x)>;     |   <C1> c1: strm << "got C1: " << c1;            |
+   |   if constexpr (C1<X>()) {                     |   <C2> c2: strm << "got C2: " << c2;            |
+   |     strm << "got C1: " << x;                   | }                                               |
+   |   } else if constexpr (C2<X>()) {              | ```                                             |
+   |     strm << "got C2: " << x;                   |                                                 |
+   |   }                                            |                                                 |
+   | }, v);                                         |                                                 |
+   | ```                                            |                                                 |
+   +------------------------------------------------+-------------------------------------------------+
+   | ```cpp                                         | ```cpp                                          |
+   | std::visit([&](auto&& x) {                     | inspect (v) {                                   |
+   |   using X = std::remove_cv_t<decltype(x)>;     |   <int> i: strm << "got int: " << i;            |
+   |   if constexpr (std::is_same_v<int, X>) {      |   <float> f: strm << "got float: " << f;        |
+   |     strm << "got int: " << x;                  | }                                               |
+   |   } else if constexpr (                        | ```                                             |
+   |       std::is_same_v<float, X>) {              |                                                 |
+   |     strm << "got float: " << x;                |                                                 |
+   |   }                                            |                                                 |
+   | }, v);                                         |                                                 |
+   | ```                                            |                                                 |
+   +------------------------------------------------+-------------------------------------------------+
+   | ```cpp                                         | ```cpp                                          |
+   | std::variant<int, int> v = /* ... */;          | std::variant<int, int> v = /* ... */;           |
+   |                                                |                                                 |
+   | std::visit([&](int x) {                        | inspect (v) {                                   |
+   |   strm << "got int: " << x;                    |   <int> x: strm << "got int: " << x;            |
+   | }, v);                                         | }                                               |
+   | ```                                            | ```                                             |
+   +------------------------------------------------+-------------------------------------------------+
+   | ```cpp                                         | ```cpp                                          |
+   | std::variant<int, int> v = /* ... */;          | std::variant<int, int> v = /* ... */;           |
+   |                                                |                                                 |
+   | std::visit([&](auto&& x) {                     | inspect (v) {                                   |
+   |   switch (v.index()) {                         |   <0> x: strm << "got first: " << x;            |
+   |     case 0: {                                  |   <1> x: strm << "got second: " << x;           |
+   |       strm << "got first: " << x;              | }                                               |
+   |       break;                                   | ```                                             |
+   |     }                                          |                                                 |
+   |     case 1: {                                  |                                                 |
+   |       strm << "got second: " << x;             |                                                 |
+   |       break;                                   |                                                 |
+   |     }                                          |                                                 |
+   |   }                                            |                                                 |
+   | }, v);                                         |                                                 |
+   | ```                                            |                                                 |
+   +------------------------------------------------+-------------------------------------------------+
+
+2. __Polymorphic Types__
+
+   If `std::is_polymorphic_v<V>` is true, let `p` be
+   `dynamic_cast<`_cv_ `Alt*>(&v)` where _cv_ `Alt` is `Alt` with
+   the same _cv_-qualification as `v`. The altnernative pattern matches `v` if
+   `p` is not `nullptr` and _pattern_ matches `*p`.
+
+   Given the following definition of a `Shape` class hierarchy:
 
    ```cpp
-   std::variant<int, float> v = /* ... */;
+   struct Shape { virtual ~Shape() = default; };
 
-   inspect (v) {
-       <int> i: std::cout << "got int: " << i;
-       <float> f: std::cout << "got float: " << f;
-   }
-   ```
-   ```cpp
-   std::variant<int, int> v = /* ... */;
-
-   inspect (v) {
-       <0> x: std::cout << "got first int: " << x;
-       <1> x: std::cout << "got second int: " << x;
-   }
+   struct Circle : Shape { int radius, };
+   struct Rectangle : Shape { int width, height; };
    ```
 
-2. __Polymorphic__
-
-// TODO
+   +------------------------------------------------+-------------------------------------------------+
+   | __Before__                                     | __After__                                       |
+   +================================================+=================================================+
+   | ```cpp                                         | ```cpp                                          |
+   | virtual int Shape::get_area() const = 0;       | int get_area(const Shape& shape) {              |
+   |                                                |   inspect (shape) {                             |
+   | int Circle::get_area() const override {        |     <Circle> [r]: return 3.14 * r * r;          |
+   |   return 3.14 * radius * radius;               |     <Rectangle> [w, h]: return w * h;           |
+   | }                                              |   }                                             |
+   |                                                | }                                               |
+   | int Rectangle::get_area() const override {     | ```                                             |
+   |   return width * height;                       |                                                 |
+   | }                                              |                                                 |
+   | ```                                            |                                                 |
+   +------------------------------------------------+-------------------------------------------------+
 
 # Impact on the Standard
 
@@ -452,9 +521,9 @@ Matching Objects with Patterns: https://infoscience.epfl.ch/record/98468/files/M
 # Acknowledgements
 
 Thank you to Agustín Bergé, Ori Bernstein, Alexander Chow, Louis Dionne,
-Michał Dominiak, Eric Fiselier, Zach Laine, Jason Lucas, David Sankel,
-Tony Van Eerd, and everyone else who contributed to the discussions, and
-encouraged me to write this paper.
+Matt Calabrese, Michał Dominiak, Eric Fiselier, Zach Laine, Jason Lucas,
+David Sankel, Tony Van Eerd, and everyone else who contributed to
+the discussions, and encouraged me to write this paper.
 
 ---
 references:
@@ -506,7 +575,6 @@ references:
 
 <!--
 Consistent Comparisons: http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2017/p0515r3.pdf
-Class Types in Non-Type Template Parameters: http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p0732r0.pdf
 From F# to Scala Extractors: https://theburningmonk.com/2017/01/from-f-to-scala-extractors/
 
 ```
@@ -515,8 +583,28 @@ inspect (s) {
   us_phone_number [area_code, _, _]: ...;
 }
 ```
+template <auto c>
+struct C {
+  using is_pattern = void () const volatile;
+
+
+
+  template <typename V>
+  std::optional<std::tuple<const T&>> try_match(const V& v) const {
+    return strong_equal(c, v);
+  }
+};
+
+X ? _pattern_
 
 struct Email {
+  using is_pattern = void () const volatile;
+
+  std::optional<tuple<std::string_view, std::string_view>> operator()(
+      std::string_view sv) const;
+};
+
+struct AnyOf {
   using is_pattern = void () const volatile;
 
   std::optional<tuple<std::string_view, std::string_view>> operator()(
