@@ -248,7 +248,7 @@ The structured binding pattern has `N` _pattern_ instances with the form:
 > `[` _pattern_~0~`,` _pattern_~1~`,` ...`,` _pattern_~N-1~ `]`
 
 and matches value `v` if each _pattern~i~_ matches the _i_^th^ component of `v`.
-The components of `v` are determined by the structured binding declaration:
+The components of `v` are given by the structured binding declaration:
 `auto&& [__e`~0~`, __e`~1~`,` ...`, __e`~N-1~`] = v;` where each `__e`_~i~_
 are unique exposition-only identifiers.
 
@@ -272,116 +272,116 @@ The alternative pattern has the form:
 
 > `<Alt>` _pattern_
 
-Let `v` be the value being matched and `V` be `std::remove_cv_t<decltype(v)>`.
+Let `v` be the value being matched and `V` be `std::remove_cvref_t<decltype(v)>`.
 We consider two cases:
 
-1. __Variant-Like__
+##### Variant-Like
 
-   If `std::variant_size_v<V>` is well-formed and evaluates to an integral,
-   the alternative pattern matches `v` if `Alt` is compatible with the current
-   index of `v` and _pattern_ matches the active alternative of `v`.
+If `std::variant_size_v<V>` is well-formed and evaluates to an integral,
+the alternative pattern matches `v` if `Alt` is compatible with the current
+index of `v` and _pattern_ matches the active alternative of `v`.
 
-   Let `I` be the current index of `v` given by a member `v.index()` or else
-   a non-member ADL-only `index(v)`. The active alternative of `v` behaves as
-   a reference to `std::variant_alternative_t<I, V>` initialized by
-   a member `v.get<I>()` or else a non-member ADL-only `get<I>(v)`.
+Let `I` be the current index of `v` given by a member `v.index()` or else
+a non-member ADL-only `index(v)`. The active alternative of `v` is given by
+`std::variant_alternative_t<I, V>&` initialized by a member `v.get<I>()` or
+else a non-member ADL-only `get<I>(v)`.
 
-   `Alt` is compatible with `I` if one of the following four cases is true:
+`Alt` is compatible with `I` if one of the following four cases is true:
 
-     a. `Alt` is __`auto`__
-     a. `Alt` is a __concept__ and `Alt<std::variant_alternative_t<I, V>>()` is `true`
-     a. `Alt` is a __type__ and `std::is_same_v<Alt, std::variant_alternative_t<I, V>>` is `true`
-     a. `Alt` is a __value__ and is the same value as `I`.
+  - `Alt` is __`auto`__
+  - `Alt` is a __concept__ and `Alt<std::variant_alternative_t<I, V>>()` is `true`
+  - `Alt` is a __type__ and `std::is_same_v<Alt, std::variant_alternative_t<I, V>>` is `true`
+  - `Alt` is a __value__ and is the same value as `I`.
 
-   +------------------------------------------------+-------------------------------------------------+
-   | __Before__                                     | __After__                                       |
-   +================================================+=================================================+
-   | ```cpp                                         | ```cpp                                          |
-   | std::visit([&](auto&& x) {                     | inspect (v) {                                   |
-   |   strm << "got auto: " << x;                   |   <auto> x: strm << "got auto: " << x;          |
-   | }, v);                                         | }                                               |
-   | ```                                            | ```                                             |
-   +------------------------------------------------+-------------------------------------------------+
-   | ```cpp                                         | ```cpp                                          |
-   | std::visit([&](auto&& x) {                     | inspect (v) {                                   |
-   |   using X = std::remove_cv_t<decltype(x)>;     |   <C1> c1: strm << "got C1: " << c1;            |
-   |   if constexpr (C1<X>()) {                     |   <C2> c2: strm << "got C2: " << c2;            |
-   |     strm << "got C1: " << x;                   | }                                               |
-   |   } else if constexpr (C2<X>()) {              | ```                                             |
-   |     strm << "got C2: " << x;                   |                                                 |
-   |   }                                            |                                                 |
-   | }, v);                                         |                                                 |
-   | ```                                            |                                                 |
-   +------------------------------------------------+-------------------------------------------------+
-   | ```cpp                                         | ```cpp                                          |
-   | std::visit([&](auto&& x) {                     | inspect (v) {                                   |
-   |   using X = std::remove_cv_t<decltype(x)>;     |   <int> i: strm << "got int: " << i;            |
-   |   if constexpr (std::is_same_v<int, X>) {      |   <float> f: strm << "got float: " << f;        |
-   |     strm << "got int: " << x;                  | }                                               |
-   |   } else if constexpr (                        | ```                                             |
-   |       std::is_same_v<float, X>) {              |                                                 |
-   |     strm << "got float: " << x;                |                                                 |
-   |   }                                            |                                                 |
-   | }, v);                                         |                                                 |
-   | ```                                            |                                                 |
-   +------------------------------------------------+-------------------------------------------------+
-   | ```cpp                                         | ```cpp                                          |
-   | std::variant<int, int> v = /* ... */;          | std::variant<int, int> v = /* ... */;           |
-   |                                                |                                                 |
-   | std::visit([&](int x) {                        | inspect (v) {                                   |
-   |   strm << "got int: " << x;                    |   <int> x: strm << "got int: " << x;            |
-   | }, v);                                         | }                                               |
-   | ```                                            | ```                                             |
-   +------------------------------------------------+-------------------------------------------------+
-   | ```cpp                                         | ```cpp                                          |
-   | std::variant<int, int> v = /* ... */;          | std::variant<int, int> v = /* ... */;           |
-   |                                                |                                                 |
-   | std::visit([&](auto&& x) {                     | inspect (v) {                                   |
-   |   switch (v.index()) {                         |   <0> x: strm << "got first: " << x;            |
-   |     case 0: {                                  |   <1> x: strm << "got second: " << x;           |
-   |       strm << "got first: " << x;              | }                                               |
-   |       break;                                   | ```                                             |
-   |     }                                          |                                                 |
-   |     case 1: {                                  |                                                 |
-   |       strm << "got second: " << x;             |                                                 |
-   |       break;                                   |                                                 |
-   |     }                                          |                                                 |
-   |   }                                            |                                                 |
-   | }, v);                                         |                                                 |
-   | ```                                            |                                                 |
-   +------------------------------------------------+-------------------------------------------------+
++-----------------------------------------------------+----------------------------------------------+
+| __Before__                                          | __After__                                    |
++=====================================================+==============================================+
+| ```cpp                                              | ```cpp                                       |
+| std::visit([&](auto&& x) {                          | inspect (v) {                                |
+|   strm << "got auto: " << x;                        |   <auto> x: strm << "got auto: " << x;       |
+| }, v);                                              | }                                            |
+| ```                                                 | ```                                          |
++-----------------------------------------------------+----------------------------------------------+
+| ```cpp                                              | ```cpp                                       |
+| std::visit([&](auto&& x) {                          | inspect (v) {                                |
+|   using X = std::remove_cvref_t<decltype(x)>;       |   <C1> c1: strm << "got C1: " << c1;         |
+|   if constexpr (C1<X>()) {                          |   <C2> c2: strm << "got C2: " << c2;         |
+|     strm << "got C1: " << x;                        | }                                            |
+|   } else if constexpr (C2<X>()) {                   | ```                                          |
+|     strm << "got C2: " << x;                        |                                              |
+|   }                                                 |                                              |
+| }, v);                                              |                                              |
+| ```                                                 |                                              |
++-----------------------------------------------------+----------------------------------------------+
+| ```cpp                                              | ```cpp                                       |
+| std::visit([&](auto&& x) {                          | inspect (v) {                                |
+|   using X = std::remove_cvref_t<decltype(x)>;       |   <int> i: strm << "got int: " << i;         |
+|   if constexpr (std::is_same_v<int, X>) {           |   <float> f: strm << "got float: " << f;     |
+|     strm << "got int: " << x;                       | }                                            |
+|   } else if constexpr (                             | ```                                          |
+|       std::is_same_v<float, X>) {                   |                                              |
+|     strm << "got float: " << x;                     |                                              |
+|   }                                                 |                                              |
+| }, v);                                              |                                              |
+| ```                                                 |                                              |
++-----------------------------------------------------+----------------------------------------------+
+| ```cpp                                              | ```cpp                                       |
+| std::variant<int, int> v = /* ... */;               | std::variant<int, int> v = /* ... */;        |
+|                                                     |                                              |
+| std::visit([&](int x) {                             | inspect (v) {                                |
+|   strm << "got int: " << x;                         |   <int> x: strm << "got int: " << x;         |
+| }, v);                                              | }                                            |
+| ```                                                 | ```                                          |
++-----------------------------------------------------+----------------------------------------------+
+| ```cpp                                              | ```cpp                                       |
+| std::variant<int, int> v = /* ... */;               | std::variant<int, int> v = /* ... */;        |
+|                                                     |                                              |
+| std::visit([&](auto&& x) {                          | inspect (v) {                                |
+|   switch (v.index()) {                              |   <0> x: strm << "got first: " << x;         |
+|     case 0: {                                       |   <1> x: strm << "got second: " << x;        |
+|       strm << "got first: " << x;                   | }                                            |
+|       break;                                        | ```                                          |
+|     }                                               |                                              |
+|     case 1: {                                       |                                              |
+|       strm << "got second: " << x;                  |                                              |
+|       break;                                        |                                              |
+|     }                                               |                                              |
+|   }                                                 |                                              |
+| }, v);                                              |                                              |
+| ```                                                 |                                              |
++-----------------------------------------------------+----------------------------------------------+
 
-2. __Polymorphic Types__
+##### Open Class Hierarchy
 
-   If `std::is_polymorphic_v<V>` is true, let `p` be
-   `dynamic_cast<`_cv_ `Alt*>(&v)` where _cv_ `Alt` is `Alt` with
-   the same _cv_-qualification as `v`. The altnernative pattern matches `v` if
-   `p` is not `nullptr` and _pattern_ matches `*p`.
+If `std::is_polymorphic_v<V>` is `true` and `std::is_convertible_v<V*, Alt*>` is
+`true`, the alternative pattern matches `v` if `&typeid(Alt) == &typeid(v)` is `true`
+and _pattern_ matches `static_cast<`_cv_ `Alt&>(v)` where _cv_ `Alt` is `Alt` with
+the same _cv_-qualification as `v`.
 
-   Given the following definition of a `Shape` class hierarchy:
+Given the following definition of a `Shape` class hierarchy:
 
-   ```cpp
-   struct Shape { virtual ~Shape() = default; };
+```cpp
+struct Shape { virtual ~Shape() = default; };
 
-   struct Circle : Shape { int radius, };
-   struct Rectangle : Shape { int width, height; };
-   ```
+struct Circle : Shape { int radius, };
+struct Rectangle : Shape { int width, height; };
+```
 
-   +------------------------------------------------+-------------------------------------------------+
-   | __Before__                                     | __After__                                       |
-   +================================================+=================================================+
-   | ```cpp                                         | ```cpp                                          |
-   | virtual int Shape::get_area() const = 0;       | int get_area(const Shape& shape) {              |
-   |                                                |   inspect (shape) {                             |
-   | int Circle::get_area() const override {        |     <Circle> [r]: return 3.14 * r * r;          |
-   |   return 3.14 * radius * radius;               |     <Rectangle> [w, h]: return w * h;           |
-   | }                                              |   }                                             |
-   |                                                | }                                               |
-   | int Rectangle::get_area() const override {     | ```                                             |
-   |   return width * height;                       |                                                 |
-   | }                                              |                                                 |
-   | ```                                            |                                                 |
-   +------------------------------------------------+-------------------------------------------------+
++------------------------------------------------+-------------------------------------------------+
+| __Before__                                     | __After__                                       |
++================================================+=================================================+
+| ```cpp                                         | ```cpp                                          |
+| virtual int Shape::get_area() const = 0;       | int get_area(const Shape& shape) {              |
+|                                                |   inspect (shape) {                             |
+| int Circle::get_area() const override {        |     <Circle> [r]: return 3.14 * r * r;          |
+|   return 3.14 * radius * radius;               |     <Rectangle> [w, h]: return w * h;           |
+| }                                              |   }                                             |
+|                                                | }                                               |
+| int Rectangle::get_area() const override {     | ```                                             |
+|   return width * height;                       |                                                 |
+| }                                              |                                                 |
+| ```                                            |                                                 |
++------------------------------------------------+-------------------------------------------------+
 
 # Impact on the Standard
 
