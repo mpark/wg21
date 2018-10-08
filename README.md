@@ -4,11 +4,13 @@
 - [P0080R0]: Variant: Discriminated Union with Value Semantics
 - [D0080R1]: Tweaks to the Kona Variant
 - [P0655R1]: `visit<R>`: Explicit Return Type for `visit`
+- [P1260R0]: Pattern Matching
 
 [N3887]: pdf/N3887.pdf
 [P0080R0]: pdf/P0080R0.pdf
 [D0080R1]: pdf/D0080R1.pdf
 [P0655R1]: pdf/P0655R1.pdf
+[P1260R0]: pdf/P1260R0.pdf
 
 ## Generation
 
