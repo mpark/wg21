@@ -2,7 +2,7 @@
 <!DOCTYPE language SYSTEM "language.dtd"
 [
     <!ENTITY space " ">
-    <!ENTITY separators "@,&#59;">
+    <!ENTITY separators ",&#59;">
     <!ENTITY ns_punctuators "!&#37;&space;&amp;()+-/.*&lt;=&gt;?[]{|}~^&separators;">
     <!ENTITY punctuators ":&ns_punctuators;">
     <!-- printf-like format strings conversion specifiers -->
