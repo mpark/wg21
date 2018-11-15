@@ -23,4 +23,6 @@ make <paper>.pdf    // Generates `pdf/<paper>.pdf` from `<paper>.md`
 
   - `pandoc 2`
   - `pandoc-citeproc`
+  - `panflute`
   - `pdflatex`
+  - `python3`
