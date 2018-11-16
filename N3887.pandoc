@@ -2,9 +2,7 @@
 title: "Consistent Metafunction Aliases"
 document: N3887
 date: 2013-12-26
-project:
-  - Programming Language C++
-  - Library Evolution Group
+audience: Library Evolution Group
 author:
   - name: Michael Park
     email: <mcypark@gmail.com>
@@ -108,6 +106,8 @@ template <size_t I, class ... Types>
 
 [^1]: Note the removal of explicit `std::` namespace qualifiers and
       a standardized placement of `const` as a drive-by-fix.
+
+\pagebreak
 
 # Design Decisions
 

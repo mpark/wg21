@@ -123,7 +123,7 @@ such a use case and the complexity of a potential solution.
 Finally, note that this is not a new problem since `bind` already uses
 the same pattern to support `bind<R>`:
 
-```diff
+```cpp
   template <class F, class... BoundArgs>
     unspecified bind(F&&, BoundArgs&&...);
   template <class R, class F, class... BoundArgs>
