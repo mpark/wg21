@@ -1,32 +1,22 @@
 ---
 title: "Pattern Matching"
-document: D1260R1
-date: 2018-11-09
+document: DxxxxR0
+date: 2018-11-16
 audience: Evolution
 author:
+  - name: Sergei Murzin
+    email: <smurzin@bloomberg.net>
   - name: Michael Park
     email: <mcypark@gmail.com>
   - name: David Sankel
     email: <dsankel@bloomberg.net>
   - name: Dan Sarginson
     email: <dsarginson@bloomberg.net>
-  - name: Sergei Murzin
-    email: <smurzin@bloomberg.net>
 ---
 
 # Revision History
 
-  - R1
-      - Added an [Examples] section
-      - Strong support for pattern matching in EWGI, San Diego.\newline
-        "Should we commit additional committee time to pattern matching?"\newline
-        SF: 14, WF: 0, N: 1, WA: 0, SA: 0
-      - Added the expression form of `inspect`
-      - Added the dereference (`*`) pattern
-      - Added the designated (`.field`) extractors
-      - Added the pin (`^`) operator for the expression pattern
-      - Used `<>` for `std::any`-like and polymorphic types
-  - R0 --- Initial Draft
+  - R0 --- Merged P1260 [@P1260] and P1308 [@P1308]
 
 # Introduction
 
@@ -1232,6 +1222,16 @@ references:
         given: Gabriel Dos
     container-title: P0144
     URL: http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2016/p0144r2.pdf
+  - id: P1260
+    title: "Pattern Matching"
+    issued:
+      year: 2018
+      month: 5
+    author:
+      - family: Park
+        given: Michael
+    container-title: P1260
+    URL: http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p1260r0.pdf
   - id: P1308
     title: "Pattern Matching"
     issued:
