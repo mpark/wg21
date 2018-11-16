@@ -64,7 +64,7 @@ Add to `<tuple>` synopsis of N3797 [@N3797]:
 +using tuple_element_t = typename tuple_element <I, T>::type;
 ```
 
-The definition of `get` functions in __\S20.3.4__, and __\S20.4.2.6__ of
+The definition of `get` functions in __§20.3.4__, and __§20.4.2.6__ of
 N3797 [@N3797] can be simplified as follows[^1]:
 
 ```diff

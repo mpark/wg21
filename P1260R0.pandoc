@@ -730,7 +730,7 @@ attribute to request for implementation-defined exhaustiveness checking.
 
 The following is the beginning of an attempt at a syntactic structure.
 
-Add to __\S8.4 [stmt.select]__ of ...
+Add to __§8.4 [stmt.select]__ of ...
 
 \pnum{1}Selection statements choose one of several flows of control.
 

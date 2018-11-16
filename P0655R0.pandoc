@@ -50,7 +50,7 @@ This proposal is a pure library extension.
 
 # Proposed Wording
 
-Modify __\S23.7.2 [variant.syn]__ of N4687 [@N4687] as indicated:
+Modify __§23.7.2 [variant.syn]__ of N4687 [@N4687] as indicated:
 
 ```diff
   // 23.7.7, visitation
@@ -60,7 +60,7 @@ Modify __\S23.7.2 [variant.syn]__ of N4687 [@N4687] as indicated:
 +    constexpr R visit(Visitor&&, Variants&&...);
 ```
 
-Add new paragraphs to __\S23.7.7 [variant.visit]__ of N4687 [@N4687]:
+Add new paragraphs to __§23.7.7 [variant.visit]__ of N4687 [@N4687]:
 
 > \added
 > ```
