@@ -12,11 +12,18 @@
 [P0080R0]: https://wg21.link/P0080
 [N3887]: https://wg21.link/N3887
 
+## Framework
+
+__TL;DR__: Written in [Pandoc Markdown], generated into PDF via [Pandoc].
+
+[Pandoc Markdown]: https://pandoc.org/MANUAL.html#pandocs-markdown
+[Pandoc]: https://pandoc.org/
+
 ## Generation
 
 ```bash
 make <paper>.md    // Generates `github/<paper>.md` from `<paper>.pandoc`
-make <paper>.pdf    // Generates `pdf/<paper>.pdf` from `<paper>.pandoc`
+make <paper>.pdf   // Generates `pdf/<paper>.pdf` from `<paper>.pandoc`
 ```
 
 ## Requirements
