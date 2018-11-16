@@ -51,13 +51,14 @@ import html
 import panflute as pf
 
 def build_header(elem, format):
+    width = float(elem.attributes['width']) if 'width' in elem.attributes else 0
     header = pf.stringify(elem)
     if format != 'gfm':
-        return pf.Plain(pf.Strong(pf.Str(header)))
+        return pf.Plain(pf.Strong(pf.Str(header))), width
     # We use a `pf.RawBlock` here because setting the `align`
     # attribute on a `pf.Div` does not work for some reason.
     header = '<div align="center"><strong>{}</strong></div>'.format(header)
-    return pf.RawBlock(header)
+    return pf.RawBlock(header), width
 
 def build_code(elem, format):
     if (format != 'gfm'):
@@ -75,32 +76,42 @@ def action(table, doc):
 
     rows = []
 
+    kwargs = {}
+
     headers = []
+    widths = []
     examples = []
 
     header = pf.Null()
+    width = 0
     table.content.append(pf.HorizontalRule())
     for elem in table.content:
         if isinstance(elem, pf.Header):
-            header = build_header(elem, doc.format)
+            header, width = build_header(elem, doc.format)
         elif isinstance(elem, pf.CodeBlock):
             headers.append(header)
+            widths.append(width)
             header = pf.Null()
+            width = 0
 
             examples.append(build_code(elem, doc.format))
         elif isinstance(elem, pf.HorizontalRule) and examples:
             if not all(isinstance(header, pf.Null) for header in headers):
                 rows.append(build_row(headers))
 
+            if 'width' not in kwargs:
+                kwargs['width'] = widths
+
             rows.append(build_row(examples))
 
             headers = []
+            widths = []
             examples = []
         else:
             pf.debug("[Warning] The following is ignored by a TonyTable:",
                      pf.stringify(elem))
 
-    return pf.Table(*rows)
+    return pf.Table(*rows, **kwargs)
 
 if __name__ == '__main__':
     pf.run_filter(action)

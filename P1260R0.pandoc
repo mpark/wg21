@@ -55,71 +55,114 @@ a __declarative__, __structured__, __cohesive__, and __composable__ mechanism.
 
 ## Matching Integrals
 
-+------------------------------------------------+-------------------------------------------------+
-| __Before__                                     | __After__                                       |
-+================================================+=================================================+
-| ```cpp                                         | ```cpp                                          |
-| switch (x) {                                   | inspect (x) {                                   |
-|   case 0: std::cout << "got zero";             |   0: std::cout << "got zero";                   |
-|   case 1: std::cout << "got one";              |   1: std::cout << "got one";                    |
-|   default: std::cout << "don't care";          |   _: std::cout << "don't care";                 |
-| }                                              | }                                               |
-| ```                                            | ```                                             |
-+------------------------------------------------+-------------------------------------------------+
+::: TonyTable
+
+### Before
+```cpp
+switch (x) {
+  case 0: std::cout << "got zero";
+  case 1: std::cout << "got one";
+  default: std::cout << "don't care";
+}
+```
+
+### After
+```cpp
+inspect (x) {
+  0: std::cout << "got zero";
+  1: std::cout << "got one";
+  _: std::cout << "don't care";
+}
+```
+
+:::
 
 ## Matching Strings
 
-+--------------------------------------+---------------------------------------+
-| __Before__                           | __After__                             |
-+======================================+=======================================+
-| ```cpp                               | ```cpp                                |
-| if (s == "foo") {                    | inspect (s) {                         |
-|   std::cout << "got foo";            |   "foo": std::cout << "got foo";      |
-| } else if (s == "bar") {             |   "bar": std::cout << "got bar";      |
-|   std::cout << "got bar";            |   _: std::cout << "don't care";       |
-| } else {                             | }                                     |
-|   std::cout << "don't care";         | ```                                   |
-| }                                    |                                       |
-| ```                                  |                                       |
-+--------------------------------------+---------------------------------------+
+::: TonyTable
+
+### Before
+```cpp
+if (s == "foo") {
+  std::cout << "got foo";
+} else if (s == "bar") {
+  std::cout << "got bar";
+} else {
+  std::cout << "don't care";
+}
+```
+
+### After
+```cpp
+inspect (s) {
+  "foo": std::cout << "got foo";
+  "bar": std::cout << "got bar";
+  _: std::cout << "don't care";
+}
+```
+
+:::
 
 ## Matching Tuples
 
-+--------------------------------------+---------------------------------------+
-| __Before__                           | __After__                             |
-+======================================+=======================================+
-| ```cpp                               | ```cpp                                |
-| auto&& [x, y] = p;                   | inspect (p) {                         |
-| if (x == 0 && y == 0) {              |   [0, 0]: std::cout << "on origin";   |
-|   std::cout << "on origin";          |   [0, y]: std::cout << "on y-axis";   |
-| } else if (x == 0) {                 |   [x, 0]: std::cout << "on x-axis";   |
-|   std::cout << "on y-axis";          |   [x, y]: std::cout << x << ',' << y; |
-| } else if (y == 0) {                 | }                                     |
-|   std::cout << "on x-axis";          | ```                                   |
-| } else {                             |                                       |
-|   std::cout << x << ',' << y;        |                                       |
-| }                                    |                                       |
-| ```                                  |                                       |
-+--------------------------------------+---------------------------------------+
+::: TonyTable
+
+### Before
+```cpp
+auto&& [x, y] = p;
+if (x == 0 && y == 0) {
+  std::cout << "on origin";
+} else if (x == 0) {
+  std::cout << "on y-axis";
+} else if (y == 0) {
+  std::cout << "on x-axis";
+} else {
+  std::cout << x << ',' << y;
+}
+```
+
+### After
+```cpp
+inspect (p) {
+  [0, 0]: std::cout << "on origin";
+  [0, y]: std::cout << "on y-axis";
+  [x, 0]: std::cout << "on x-axis";
+  [x, y]: std::cout << x << ',' << y;
+}
+```
+
+:::
+
+\pagebreak
 
 ## Matching Variants
 
-+------------------------------------------------+-------------------------------------------------+
-| __Before__                                     | __After__                                       |
-+================================================+=================================================+
-| ```cpp                                         | ```cpp                                          |
-| struct visitor {                               | inspect (v) {                                   |
-|   void operator()(int i) const {               |   <int> i: strm << "got int: " << i;            |
-|     os << "got int: " << i;                    |   <float> f: strm << "got float: " << f;        |
-|   }                                            | }                                               |
-|   void operator()(float f) const {             | ```                                             |
-|     os << "got float: " << f;                  |                                                 |
-|   }                                            |                                                 |
-|   std::ostream& os;                            |                                                 |
-| };                                             |                                                 |
-| std::visit(visitor{strm}, v);                  |                                                 |
-| ```                                            |                                                 |
-+------------------------------------------------+-------------------------------------------------+
+::: TonyTable
+
+### Before
+```cpp
+struct visitor {
+  void operator()(int i) const {
+    os << "got int: " << i;
+  }
+  void operator()(float f) const {
+    os << "got float: " << f;
+  }
+  std::ostream& os;
+};
+std::visit(visitor{strm}, v);
+```
+
+
+### After
+```cpp
+inspect (v) {
+  <int> i: strm << "got int: " << i;
+  <float> f: strm << "got float: " << f;
+}
+```
+
+:::
 
 ## Matching Polymorphic Types
 
@@ -129,20 +172,31 @@ struct Circle : Shape { int radius; };
 struct Rectangle : Shape { int width, height; };
 ```
 
-+------------------------------------------------+-------------------------------------------------+
-| __Before__                                     | __After__                                       |
-+================================================+=================================================+
-| ```cpp                                         | ```cpp                                          |
-| virtual int Shape::get_area() const = 0;       | int get_area(const Shape& shape) {              |
-|                                                |   inspect (shape) {                             |
-| int Circle::get_area() const override {        |     (as<Circle> ? [r]): return 3.14 * r * r;    |
-|   return 3.14 * radius * radius;               |     (as<Rectangle> ? [w, h]): return w * h;     |
-| }                                              |   }                                             |
-| int Rectangle::get_area() const override {     | }                                               |
-|   return width * height;                       | ```                                             |
-| }                                              |                                                 |
-| ```                                            |                                                 |
-+------------------------------------------------+-------------------------------------------------+
+::: TonyTable
+
+### Before
+```cpp
+virtual int Shape::get_area() const = 0;
+
+int Circle::get_area() const override {
+  return 3.14 * radius * radius;
+}
+int Rectangle::get_area() const override {
+  return width * height;
+}
+```
+
+### After
+```cpp
+int get_area(const Shape& shape) {
+  inspect (shape) {
+    (as<Circle>? [r]): return 3.14 * r * r;
+    (as<Rectangle>? [w, h]): return w * h;
+  }
+}
+```
+
+:::
 
 ## Evaluating Expressions
 
@@ -162,41 +216,54 @@ namespace std {
 }
 ```
 
-+--------------------------------------------+-------------------------------------------------+
-| __Before__                                 | __After__                                       |
-+============================================+=================================================+
-| ```cpp                                     | ```cpp                                          |
-| int eval(const Expr& expr) {               | int eval(const Expr& expr) {                    |
-|   struct visitor {                         |   inspect (expr) {                              |
-|     int operator()(int i) const {          |     <int> i: return i;                          |
-|       return i;                            |     <Neg> [e]: return -eval(*e);                |
-|     }                                      |     <Add> [l, r]: return eval(*l) + eval(*r);   |
-|     int operator()(const Neg& n) const {   |     <Mul> [l, r]: return eval(*l) * eval(*r);   |
-|       return -eval(*n.expr);               |   }                                             |
-|     int operator()(const Add& a) const {   | }                                               |
-|       return eval(*a.lhs) + eval(*a.rhs);  | ```                                             |
-|     }                                      |                                                 |
-|     int operator()(const Mul& m) const {   |                                                 |
-|       return eval(*m.lhs) * eval(*m.rhs);  |                                                 |
-|     }                                      |                                                 |
-|   };                                       |                                                 |
-|   return std::visit(visitor{}, expr);      |                                                 |
-| }                                          |                                                 |
-| ```                                        |                                                 |
-+--------------------------------------------+-------------------------------------------------+
+::: TonyTable
+
+### Before {width=.48}
+```cpp
+int eval(const Expr& expr) {
+  struct visitor {
+    int operator()(int i) const {
+      return i;
+    }
+    int operator()(const Neg& n) const {
+      return -eval(*n.expr);
+    int operator()(const Add& a) const {
+      return eval(*a.lhs) + eval(*a.rhs);
+    }
+    int operator()(const Mul& m) const {
+      return eval(*m.lhs) * eval(*m.rhs);
+    }
+  };
+  return std::visit(visitor{}, expr);
+}
+```
+
+### After {width=.53}
+```cpp
+int eval(const Expr& expr) {
+  inspect (expr) {
+    <int> i: return i;
+    <Neg> [e]: return -eval(*e);
+    <Add> [l, r]: return eval(*l) + eval(*r);
+    <Mul> [l, r]: return eval(*l) * eval(*r);
+  }
+}
+```
+
+:::
 
 # Design Overview
 
 ## Basic Syntax
 
-> | `inspect constexpr`_~opt~_ `(` _init-statement~opt~_ _condition_ `) {`
-> |     _pattern_ _guard~opt~_ `:` _statement_
-> |     _pattern_ _guard~opt~_ `:` _statement_
+> | `inspect constexpr`*~opt~* `(` *init-statement~opt~* *condition* `) {`
+> |     *pattern* *guard~opt~* `:` *statement*
+> |     *pattern* *guard~opt~* `:` *statement*
 > |     ...
 > | `}`
 
-> | _guard:_
-> |     `if (` _expression_ `)`
+> | *guard:*
+> |     `if (` *expression* `)`
 
 ## Basic Model
 
@@ -355,63 +422,110 @@ else a non-member ADL-only `get<I>(v)`.
   - `Alt` is a _type_ and `std::is_same_v<Alt, std::variant_alternative_t<I, V>>` is `true`
   - `Alt` is a _constant expression_ that can be used in a `switch` and is the same value as `I`.
 
-+-----------------------------------------------------+----------------------------------------------+
-| __Before__                                          | __After__                                    |
-+=====================================================+==============================================+
-| ```cpp                                              | ```cpp                                       |
-| std::visit([&](auto&& x) {                          | inspect (v) {                                |
-|   strm << "got auto: " << x;                        |   <auto> x: strm << "got auto: " << x;       |
-| }, v);                                              | }                                            |
-| ```                                                 | ```                                          |
-+-----------------------------------------------------+----------------------------------------------+
-| ```cpp                                              | ```cpp                                       |
-| std::visit([&](auto&& x) {                          | inspect (v) {                                |
-|   using X = std::remove_cvref_t<decltype(x)>;       |   <C1> c1: strm << "got C1: " << c1;         |
-|   if constexpr (C1<X>()) {                          |   <C2> c2: strm << "got C2: " << c2;         |
-|     strm << "got C1: " << x;                        | }                                            |
-|   } else if constexpr (C2<X>()) {                   | ```                                          |
-|     strm << "got C2: " << x;                        |                                              |
-|   }                                                 |                                              |
-| }, v);                                              |                                              |
-| ```                                                 |                                              |
-+-----------------------------------------------------+----------------------------------------------+
-| ```cpp                                              | ```cpp                                       |
-| std::visit([&](auto&& x) {                          | inspect (v) {                                |
-|   using X = std::remove_cvref_t<decltype(x)>;       |   <int> i: strm << "got int: " << i;         |
-|   if constexpr (std::is_same_v<int, X>) {           |   <float> f: strm << "got float: " << f;     |
-|     strm << "got int: " << x;                       | }                                            |
-|   } else if constexpr (                             | ```                                          |
-|       std::is_same_v<float, X>) {                   |                                              |
-|     strm << "got float: " << x;                     |                                              |
-|   }                                                 |                                              |
-| }, v);                                              |                                              |
-| ```                                                 |                                              |
-+-----------------------------------------------------+----------------------------------------------+
-| ```cpp                                              | ```cpp                                       |
-| std::variant<int, int> v = /* ... */;               | std::variant<int, int> v = /* ... */;        |
-|                                                     |                                              |
-| std::visit([&](int x) {                             | inspect (v) {                                |
-|   strm << "got int: " << x;                         |   <int> x: strm << "got int: " << x;         |
-| }, v);                                              | }                                            |
-| ```                                                 | ```                                          |
-+-----------------------------------------------------+----------------------------------------------+
-| ```cpp                                              | ```cpp                                       |
-| std::variant<int, int> v = /* ... */;               | std::variant<int, int> v = /* ... */;        |
-|                                                     |                                              |
-| std::visit([&](auto&& x) {                          | inspect (v) {                                |
-|   switch (v.index()) {                              |   <0> x: strm << "got first: " << x;         |
-|     case 0: {                                       |   <1> x: strm << "got second: " << x;        |
-|       strm << "got first: " << x;                   | }                                            |
-|       break;                                        | ```                                          |
-|     }                                               |                                              |
-|     case 1: {                                       |                                              |
-|       strm << "got second: " << x;                  |                                              |
-|       break;                                        |                                              |
-|     }                                               |                                              |
-|   }                                                 |                                              |
-| }, v);                                              |                                              |
-| ```                                                 |                                              |
-+-----------------------------------------------------+----------------------------------------------+
+::: TonyTable
+
+### Before {width=.53}
+```cpp
+std::visit([&](auto&& x) {
+  strm << "got auto: " << x;
+}, v);
+```
+
+### After {width=.47}
+```cpp
+inspect (v) {
+  <auto> x: strm << "got auto: " << x;
+}
+```
+
+---
+
+```cpp
+std::visit([&](auto&& x) {
+  using X = std::remove_cvref_t<decltype(x)>;
+  if constexpr (C1<X>()) {
+    strm << "got C1: " << x;
+  } else if constexpr (C2<X>()) {
+    strm << "got C2: " << x;
+  }
+}, v);
+```
+
+```cpp
+inspect (v) {
+  <C1> c1: strm << "got C1: " << c1;
+  <C2> c2: strm << "got C2: " << c2;
+}
+```
+
+---
+
+```cpp
+std::visit([&](auto&& x) {
+  using X = std::remove_cvref_t<decltype(x)>;
+  if constexpr (std::is_same_v<int, X>) {
+    strm << "got int: " << x;
+  } else if constexpr (
+      std::is_same_v<float, X>) {
+    strm << "got float: " << x;
+  }
+}, v);
+```
+
+```cpp
+inspect (v) {
+  <int> i: strm << "got int: " << i;
+  <float> f: strm << "got float: " << f;
+}
+```
+
+---
+
+```cpp
+std::variant<int, int> v = /* ... */;
+
+std::visit([&](int x) {
+  strm << "got int: " << x;
+}, v);
+```
+
+```cpp
+std::variant<int, int> v = /* ... */;
+
+inspect (v) {
+  <int> x: strm << "got int: " << x;
+}
+```
+
+---
+
+```cpp
+std::variant<int, int> v = /* ... */;
+
+std::visit([&](auto&& x) {
+  switch (v.index()) {
+    case 0: {
+      strm << "got first: " << x;
+      break;
+    }
+    case 1: {
+      strm << "got second: " << x;
+      break;
+    }
+  }
+}, v);
+```
+
+```cpp
+std::variant<int, int> v = /* ... */;
+
+inspect (v) {
+  <0> x: strm << "got first: " << x;
+  <1> x: strm << "got second: " << x;
+}
+```
+
+:::
 
 #### Binding Pattern
 
@@ -497,21 +611,33 @@ struct Circle : Shape { int radius; };
 struct Rectangle : Shape { int width, height; };
 ```
 
-+------------------------------------------------+-------------------------------------------------+
-| __Before__                                     | __After__                                       |
-+================================================+=================================================+
-| ```cpp                                         | ```cpp                                          |
-| virtual int Shape::get_area() const = 0;       | int get_area(const Shape& shape) {              |
-|                                                |   inspect (shape) {                             |
-| int Circle::get_area() const override {        |     (as<Circle> ? [r]): return 3.14 * r * r;    |
-|   return 3.14 * radius * radius;               |     (as<Rectangle> ? [w, h]): return w * h;     |
-| }                                              | //  ^^^^^^^^^^^^^^^^^^^^^^^ as pattern          |
-|                                                |   }                                             |
-| int Rectangle::get_area() const override {     | }                                               |
-|   return width * height;                       | ```                                             |
-| }                                              |                                                 |
-| ```                                            |                                                 |
-+------------------------------------------------+-------------------------------------------------+
+::: TonyTable
+
+### Before
+```cpp
+virtual int Shape::get_area() const = 0;
+
+int Circle::get_area() const override {
+  return 3.14 * radius * radius;
+}
+
+int Rectangle::get_area() const override {
+  return width * height;
+}
+```
+
+### After
+```cpp
+int get_area(const Shape& shape) {
+  inspect (shape) {
+    (as<Circle>? [r]): return 3.14 * r * r;
+    (as<Rectangle>? [w, h]): return w * h;
+//  ^^^^^^^^^^^^^^^^^^^^^^^ as pattern
+  }
+}
+```
+
+:::
 
 ## Pattern Guard
 
@@ -553,31 +679,47 @@ Let `matches` be the condition for which a _pattern_ matches a value `v`.
 Ignoring any potential optimization opportunities, we're able to perform the
 following transformation:
 
-+--------------------------------------+-----------------------------------------------------------+
-| __`inspect`__                        | __`if`__                                                  |
-+======================================+===========================================================+
-| ```cpp                               | ```cpp                                                    |
-| inspect (v) {                        | if (pattern1 matches v && cond1) stmt1                    |
-|   pattern1 if (cond1): stmt1         | else if (pattern2 matches v) stmt2                        |
-|   pattern2: stmt2                    | // ...                                                    |
-|   // ...                             | ```                                                       |
-| }                                    |                                                           |
-| ```                                  |                                                           |
-+--------------------------------------+-----------------------------------------------------------+
+::: TonyTable
+
+### `inspect` {width=.4}
+```cpp
+inspect (v) {
+  pattern1 if (cond1): stmt1
+  pattern2: stmt2
+  // ...
+}
+```
+
+### `if` {width=.6}
+```cpp
+if (pattern1 matches v && cond1) stmt1
+else if (pattern2 matches v) stmt2
+// ...
+```
+
+:::
 
 `inspect constexpr` is then formulated by applying `constexpr` to every `if` branch.
 
-+--------------------------------------+-----------------------------------------------------------+
-| __`inspect constexpr`__              | __`if constexpr`__                                        |
-+======================================+===========================================================+
-| ```cpp                               | ```cpp                                                    |
-| inspect constexpr (v) {              | if constexpr (pattern1 matches v && cond1) stmt1          |
-|   pattern1 if (cond1): stmt1         | else if constexpr (pattern2 matches v) stmt2              |
-|   pattern2: stmt2                    | // ...                                                    |
-|   // ...                             | ```                                                       |
-| }                                    |                                                           |
-| ```                                  |                                                           |
-+--------------------------------------+-----------------------------------------------------------+
+::: TonyTable
+
+### `inspect constexpr` {width=.4}
+```cpp
+inspect constexpr (v) {
+  pattern1 if (cond1): stmt1
+  pattern2: stmt2
+  // ...
+}
+```
+
+### `if constexpr` {width=.6}
+```cpp
+if constexpr (pattern1 matches v && cond1) stmt1
+else if constexpr (pattern2 matches v) stmt2
+// ...
+```
+
+:::
 
 ## Exhaustiveness Checking
 
@@ -592,31 +734,31 @@ Add to __\S8.4 [stmt.select]__ of ...
 
 \pnum{1}Selection statements choose one of several flows of control.
 
-> | _selection-statement:_
-> |     `if constexpr`_~opt~_ `(` _init-statement~opt~_ _condition_ `)` _statement_
-> |     `if constexpr`_~opt~_ `(` _init-statement~opt~_ _condition_ `)` _statement_ `else` _statement_
-> |     `switch (` _init-statement~opt~_ _condition_ `)` _statement_
-> |     \added `inspect constexpr`_~opt~_ `(` _init-statement~opt~_ _condition_ `) {` _inspect-case-seq_ `}`\unchanged
+> | *selection-statement:*
+> |     `if constexpr`*~opt~* `(` *init-statement~opt~* *condition* `)` *statement*
+> |     `if constexpr`*~opt~* `(` *init-statement~opt~* *condition* `)` *statement* `else` *statement*
+> |     `switch (` *init-statement~opt~* *condition* `)` *statement*
+> |     \added `inspect constexpr`*~opt~* `(` *init-statement~opt~* *condition* `) {` *inspect-case-seq* `}`\unchanged
 >
 > \added
-> | _inspect-case-seq:_
-> |     _inspect-case_
-> |     _inspect-case-seq_ _inspect-case_
+> | *inspect-case-seq:*
+> |     *inspect-case*
+> |     *inspect-case-seq* *inspect-case*
 >
-> | _inspect-case:_
-> |     _attribute-specifier-seq~opt~_ _inspect-pattern_ _inspect-guard~opt~_ `:` _statement_
+> | *inspect-case:*
+> |     *attribute-specifier-seq~opt~* *inspect-pattern* *inspect-guard~opt~* `:` *statement*
 >
-> | _inspect-pattern:_
-> |     _wildcard-pattern_
-> |     _identifier-pattern_
-> |     _constant-pattern_
-> |     _structured-binding-pattern_
-> |     _alternative-pattern_
-> |     _binding-pattern_
-> |     _extractor-pattern_
+> | *inspect-pattern:*
+> |     *wildcard-pattern*
+> |     *identifier-pattern*
+> |     *constant-pattern*
+> |     *structured-binding-pattern*
+> |     *alternative-pattern*
+> |     *binding-pattern*
+> |     *extractor-pattern*
 >
-> | _inspect-guard:_
-> |     `if (` _expression_ `)`
+> | *inspect-guard:*
+> |     `if (` *expression* `)`
 > \unchanged
 
 # Design Decisions
@@ -771,32 +913,49 @@ for (auto&& [x, y] : points) { /* ... */ }
 The `[x, y]` part can also be a pattern of an `inspect` statement rather than
 a structured binding declaration.
 
-+--------------------------------------+---------------------------------------+
-| __Before__                           | __After__                             |
-+======================================+=======================================+
-| ```cpp                               | ```cpp                                |
-| for (auto&& p : points) {            | for (auto&& p : points) {             |
-|   auto&& [x, y] = p;                 |   inspect (p) {                       |
-|   // ...                             |     [x, y]: // ...                    |
-| }                                    |   }                                   |
-| ```                                  | }                                     |
-|                                      | ```                                   |
-+--------------------------------------+---------------------------------------+
+::: TonyTable
+
+### Before
+```cpp
+for (auto&& p : points) {
+  auto&& [x, y] = p;
+  // ...
+}
+```
+
+### After
+```cpp
+for (auto&& p : points) {
+  inspect (p) {
+    [x, y]: // ...
+  }
+}
+```
+
+:::
 
 With this model, allowing patterns directly in range-based `for` loop becomes natural.
 
-+--------------------------------------+---------------------------------------+
-| __Code__                             | __Expanded__                          |
-+======================================+=======================================+
-| ```cpp                               | ```cpp                                |
-| for (auto&& [0, y] : points) {       | for (auto&& p : points) {             |
-|   // only points on the y-axis.      |   inspect (p) {                       |
-| }                                    |     [0, y]: // ...                    |
-| ```                                  |   }                                   |
-|                                      |   // falls through if no match        |
-|                                      | }                                     |
-|                                      | ```                                   |
-+--------------------------------------+---------------------------------------+
+::: TonyTable
+
+### Code
+```cpp
+for (auto&& [0, y] : points) {
+  // only points on the y-axis.
+}
+```
+
+### Expanded
+```cpp
+for (auto&& p : points) {
+  inspect (p) {
+    [0, y]: // ...
+  }
+  // falls through if no match
+}
+```
+
+:::
 
 ## Note on Ranges
 
