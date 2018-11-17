@@ -1029,8 +1029,8 @@ references:
         given: Herb
       - family: Stroustrup
         given: Bjarne
-      - family: Dos Reis
-        given: Gabriel
+      - family: Reis
+        given: [Gabriel, Dos]
     container-title: P0144
     URL: http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2016/p0144r2.pdf
   - id: Mach7
@@ -1038,8 +1038,8 @@ references:
     author:
       - family: Solodkyy
         given: Yuriy
-      - family: Dos Reis
-        given: Gabriel
+      - family: Reis
+        given: [Gabriel, Dos]
       - family: Stroustrup
         given: Bjarne
     container-title: Mach7

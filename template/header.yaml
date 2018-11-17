@@ -1,10 +1,12 @@
 ---
-csl: template/acm.csl
 citecolor: blue
 linkcolor: blue
 urlcolor: blue
+
+csl: template/acm.csl
 link-citations: true
 reference-section-title: References
+
 header-includes:
   - \usepackage{fullpage}
   # colors

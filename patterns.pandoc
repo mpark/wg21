@@ -1219,7 +1219,7 @@ references:
       - family: Stroustrup
         given: Bjarne
       - family: Reis
-        given: Gabriel Dos
+        given: [Gabriel, Dos]
     container-title: P0144
     URL: http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2016/p0144r2.pdf
   - id: P1260
@@ -1252,7 +1252,7 @@ references:
       - family: Solodkyy
         given: Yuriy
       - family: Reis
-        given: Gabriel Dos
+        given: [Gabriel, Dos]
       - family: Stroustrup
         given: Bjarne
     URL: http://www.stroustrup.com/OpenPatternMatching.pdf
@@ -1262,7 +1262,7 @@ references:
       - family: Solodkyy
         given: Yuriy
       - family: Reis
-        given: Gabriel Dos
+        given: [Gabriel, Dos]
       - family: Stroustrup
         given: Bjarne
     container-title: Mach7

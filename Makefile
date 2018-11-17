@@ -4,7 +4,7 @@
          --filter pandoc-citeproc \
          --filter template/tony-table.py \
          --highlight-style kate \
-         --number-section \
+         --number-sections \
          --syntax-definition template/cpp.xml \
          --syntax-definition template/diff.xml \
          --template template/wg21.latex \
