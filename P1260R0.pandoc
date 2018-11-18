@@ -22,12 +22,11 @@ languages include text-based languages such as SNOBOL back in the 1960s,
 functional languages such as Haskell and OCaml, and "mainstream" languages such
 as Scala, Swift, and Rust.
 
-Inspired by P0095 [@P0095] --- which proposed pattern matching and
-language-level variant simultaneously --- this paper explores a possible
-direction for pattern matching only, and does not address language-level
-variant design. This is in correspondence with a straw poll from Kona 2015,
-which encouraged exploration of a full solution for pattern matching.
-SF: 16, WF: 6, N: 5, WA: 1, SA: 0.
+Inspired by [@P0095R1] --- which proposed pattern matching and language-level
+variant simultaneously --- this paper explores a possible direction for pattern
+matching only, and does not address language-level variant design. This is in
+correspondence with a straw poll from Kona 2015, which encouraged exploration
+of a full solution for pattern matching. SF: 16, WF: 6, N: 5, WA: 1, SA: 0.
 
 # Motivation and Scope
 
@@ -41,8 +40,8 @@ Since `switch` statements can only operate on a _single_ integral value and
 a significant gap between the two constructs even in inspection of
 the "vocabulary types" provided by the standard library.
 
-In C++17, structured binding declarations [@P0144] introduced the ability to
-concisely bind names to components of `tuple`-like values. The proposed
+In C++17, structured binding declarations [@P0144R2] introduced the ability
+to concisely bind names to components of `tuple`-like values. The proposed
 direction of this paper aims to naturally extend this notion by performing
 __structured inspection__ prior to forming the __structured bindings__ with
 a third selection statement: the `inspect` statement. The goal of the `inspect`
@@ -598,9 +597,9 @@ inline constexpr As<Derived> as;
 While this is a possible library implementation, it will likely benefit from
 being implemented as a compiler intrinsic for optimization opportunities.
 
-N3449 [@N3449] describes techniques involving vtable pointer caching and
-hash conflict minimization that are implemented in the Mach7 [@Mach7] library,
-but also mentions further opportunities available for a compiler solution.
+[@N3449] describes techniques involving vtable pointer caching and hash
+conflict minimization that are implemented in the [@Mach7] library, but
+also mentions further opportunities available for a compiler solution.
 
 Given the following definition of a `Shape` class hierarchy:
 
@@ -772,8 +771,8 @@ to rather than being assigned into new variables.
 ## `inspect` rather than `switch`
 
 This proposal introduces a new `inspect` statement rather than trying to extend
-the `switch` statement. P0095R0 [@P0095R0] had proposed extending `switch`
-and received feedback to "leave `switch` alone" in Kona 2015.
+the `switch` statement. [@P0095R0] had proposed extending `switch` and received
+feedback to "leave `switch` alone" in Kona 2015.
 
 The following are some of the reasons considered:
 
@@ -813,7 +812,7 @@ customization points available for user-defined behavior.
 
 ## Statement rather than Expression
 
-This paper diverges from P0095 [@P0095] in that it proposes to add `inspect` as
+This paper diverges from [@P0095R1] in that it proposes to add `inspect` as
 a statement only rather than trying to double as a statement and an expression.
 The main reason here is that the semantic differences between the statement and
 expression forms are not trivial.
@@ -835,7 +834,7 @@ statement in this paper consistent with every other statement in C++ today.
 ## Language rather than Library
 
 There are three popular pattern matching libraries for C++ today:
-Mach7 [@Mach7], MPark.Patterns [@Patterns], and simple_match [@SimpleMatch].
+[@Mach7], [@Patterns], and [@SimpleMatch].
 
 While the libraries have been useful for gaining experience with
 implementation and cleaner interfaces, the issue of introducing identifiers,
@@ -860,9 +859,9 @@ The sequence of alternative patterns can be executed in a `switch`.
 
 ### Open Class Hierarchy
 
-N3449 [@N3449] describes techniques involving vtable pointer caching and
-hash conflict minimization that are implemented in the Mach7 [@Mach7] library,
-but also mentions further opportunities available for a compiler solution.
+[@N3449] describes techniques involving vtable pointer caching and hash
+conflict minimization that are implemented in the [@Mach7] library, but
+also mentions further opportunities available for a compiler solution.
 
 # Future Work
 
@@ -980,50 +979,35 @@ the discussions, and encouraged me to write this paper.
 ---
 references:
   - id: N3449
+    citation-label: N3449
     title: "Open and Efficient Type Switch for C++"
-    issued:
-      year: 2012
-      month: 9
     author:
       family: Stroustrup
       given: Bjarne
-    container-title: N3449
-    URL: http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2012/n3449.pdf
-  - id: N3627
-    title: "Relaxed switch statement"
     issued:
-      year: 2013
-      month: 2
-    author:
-      family: Yuan
-      given: Zhihao
-    container-title: N3627
-    URL: http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2013/n3627.html
+      year: 2012
+    URL: http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2012/n3449.pdf
   - id: P0095R0
+    citation-label: P0095R0
     title: "Pattern Matching and Language Variants"
+    author:
+      family: Sankel
+      given: David
     issued:
       year: 2015
-      month: 9
-    author:
-      family: Sankel
-      given: David
-    container-title: P0095R0
     URL: http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2015/p0095r0.html
-  - id: P0095
+  - id: P0095R1
+    citation-label: P0095R1
     title: "Pattern Matching and Language Variants"
-    issued:
-      year: 2016
-      month: 5
     author:
       family: Sankel
       given: David
-    container-title: P0095R1
-    URL: http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2016/p0095r1.html
-  - id: P0144
-    title: "Structured bindings"
     issued:
       year: 2016
-      month: 3
+    URL: http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2016/p0095r1.html
+  - id: P0144R2
+    citation-label: P0144R2
+    title: "Structured bindings"
     author:
       - family: Sutter
         given: Herb
@@ -1031,9 +1015,11 @@ references:
         given: Bjarne
       - family: Reis
         given: [Gabriel, Dos]
-    container-title: P0144
+    issued:
+      year: 2016
     URL: http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2016/p0144r2.pdf
   - id: Mach7
+    citation-label: Mach7
     title: "Mach7: Pattern Matching for C++"
     author:
       - family: Solodkyy
@@ -1042,102 +1028,19 @@ references:
         given: [Gabriel, Dos]
       - family: Stroustrup
         given: Bjarne
-    container-title: Mach7
     URL: https://github.com/solodon4/Mach7
-  - id: SimpleMatch
-    title: "Simple, Extensible C++ Pattern Matching Library"
-    author:
-      - family: Bandela
-        given: John
-    container-title: simple_match
-    URL: https://github.com/jbandela/simple_match
   - id: Patterns
+    citation-label: Patterns
     title: "Pattern Matching in C++"
     author:
       - family: Park
         given: Michael
-    container-title: MPark.Patterns
     URL: https://github.com/mpark/patterns
+  - id: SimpleMatch
+    citation-label: SimpleMatch
+    title: "Simple, Extensible C++ Pattern Matching Library"
+    author:
+      - family: Bandela
+        given: John
+    URL: https://github.com/jbandela/simple_match
 ---
-
-<!--
-# Other Languages and Libraries
-## C\#
-## Rust
-Constants: https://github.com/rust-lang/rfcs/blob/master/text/1445-restrict-constants-in-patterns.md
-### Intersection of semantic / structural equality
-## Scala
-Scala Tutorial - Pattern Matching: https://www.youtube.com/watch?v=ULcpWn23waw
-Matching Objects with Patterns: https://infoscience.epfl.ch/record/98468/files/MatchingObjectsWithPatterns-TR.pdf
-### Extractors
-## F\#
-### Active Patterns
-From F# to Scala Extractors: https://theburningmonk.com/2017/01/from-f-to-scala-extractors/
-
-# Examples
-
-## "Closed" Class Hierarchy
-
-A class hierarchy can effectively be closed with an `enum` that maintains
-the list of its members, and provide efficient dispatching by opting into
-the Variant-Like protocol.
-
-```cpp
-struct Shape {
-  enum Kind { Circle, Rectangle } kind;
-
-  Kind index() const { return kind; }
-
-  template <Kind K>
-  auto&& get() const {
-    return static_cast<const std::variant_alternative_t<K, Shape>&>(*this);
-  }
-};
-
-struct Circle : Shape {
-  Circle(int radius) : Shape{Shape::Kind::Circle}, radius(radius) {}
-
-  int radius;
-};
-
-struct Rectangle : Shape {
-  Rectangle(int width, int height)
-    : Shape{Shape::Kind::Rectangle}, width(width), height(height) {}
-
-  int width, height;
-};
-
-namespace std {
-  template <>
-  struct variant_size<Shape> : std::integral_constant<std::size_t, 2> {};
-
-  template <>
-  struct variant_alternative<Shape::Circle, Shape> { using type = Circle; };
-
-  template <>
-  struct variant_alternative<Shape::Rectangle, Shape> { using type = Rectangle; };
-}
-
-int get_area(const Shape& shape) {
-  inspect (shape) {
-    <Circle> c: return 3.14 * c.radius * c.radius;
-    <Rectangle> r: return r.width * r.height;
-  }
-  // switch (shape.index()) {
-  //   using Index = decltype(shape.index());
-  //   case (Index)0: {
-  //     const std::variant_alternative_t<(Index)0, Shape>& c =
-  //         shape.template get<(Index)0>();
-  //     return 3.14 * c.radius * c.radius;
-  //     break;
-  //   }
-  //   case (Index)1: {
-  //     const std::variant_alternative_t<(Index)1, Shape>& r =
-  //         shape.template get<(Index)1>();
-  //     return r.width * r.height;
-  //     break;
-  //   }
-  // }
-}
-```
--->

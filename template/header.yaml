@@ -3,9 +3,8 @@ citecolor: blue
 linkcolor: blue
 urlcolor: blue
 
-csl: template/acm.csl
+csl: template/cpp.csl
 link-citations: true
-reference-section-title: References
 
 header-includes:
   - \usepackage{fullpage}

@@ -16,7 +16,7 @@ author:
 
 # Revision History
 
-  - R0 --- Merged P1260 [@P1260] and P1308 [@P1308]
+  - R0 --- Merged [@P1260R0] and [@P1308R0]
 
 # Introduction
 
@@ -30,7 +30,7 @@ languages include text-based languages such as SNOBOL back in the 1960s,
 functional languages such as Haskell and OCaml, and "mainstream" languages such
 as Scala, Swift, and Rust.
 
-Inspired by P0095 [@P0095] --- which proposed pattern matching and language-level
+Inspired by [@P0095R1] --- which proposed pattern matching and language-level
 variant simultaneously --- this paper explores a possible direction for pattern
 matching only, and does not address language-level variant design. This is in
 correspondence with a straw poll from Kona 2015, which encouraged exploration of
@@ -48,7 +48,7 @@ Since `switch` statements can only operate on a _single_ integral value and
 a significant gap between the two constructs even in inspection of
 the "vocabulary types" provided by the standard library.
 
-In C++17, structured binding declarations [@P0144] introduced the ability to
+In C++17, structured binding declarations [@P0144R2] introduced the ability to
 concisely bind names to components of `tuple`-like values. The proposed
 direction of this paper aims to naturally extend this notion by performing
 __structured inspection__ prior to forming the __structured bindings__ with
@@ -496,9 +496,9 @@ If `Alt` is a _type_ and `std::is_polymorphic_v<V>` is `true`, let `p` be
 to `bool` evaluates to `true`, and _pattern_ matches `*p`.
 
 While the __semantics__ of the pattern is specified in terms of `dynamic_cast`,
-N3449 [@N3449] describes techniques involving vtable pointer caching and
-hash conflict minimization that are implemented in the Mach7 [@Mach7] library,
-as well as mentions of further opportunities available for a compiler intrinsic.
+[@N3449] describes techniques involving vtable pointer caching and hash conflict
+minimization that are implemented in the [@Mach7] library, as well as mentions
+of further opportunities available for a compiler intrinsic.
 
 Given the following definition of a `Shape` class hierarchy:
 
@@ -740,8 +740,8 @@ to rather than being assigned into new variables.
 ## `inspect` rather than `switch`
 
 This proposal introduces a new `inspect` statement rather than trying to extend
-the `switch` statement. P0095R0 [@P0095R0] had proposed extending `switch`
-and received feedback to "leave `switch` alone" in Kona 2015.
+the `switch` statement. [@P0095R0] had proposed extending `switch` and received
+feedback to "leave `switch` alone" in Kona 2015.
 
 The following are some of the reasons considered:
 
@@ -782,7 +782,7 @@ customization points available for user-defined behavior.
 ## Language rather than Library
 
 There are three popular pattern matching libraries for C++ today:
-Mach7 [@Mach7], MPark.Patterns [@Patterns], and `simple_match` [@SimpleMatch].
+[@Mach7], [@Patterns], and [@SimpleMatch].
 
 While the libraries have been useful for gaining experience with interfaces and
 implementation, the issue of introducing identifiers, syntactic overhead of
@@ -816,9 +816,9 @@ Each of the matchers and extractors can be found in the [Examples] section.
 
 ## Wildcard Syntax
 
-P1110 [@Placeholder] "A placeholder with no name" discusses wildcard/placeholder
-syntax in different contexts of the language. The intent of this proposal is to
-consolidate with the results of the decision of P1110 [@Placeholder].
+[@P1110R0] discusses wildcard/placeholder syntax in different contexts of
+the language. The intent of this proposal is to consolidate with the results
+of the decision of [@P1110R0].
 
 # Runtime Performance
 
@@ -838,9 +838,9 @@ The sequence of alternative patterns can be executed in a `switch`.
 
 ### Open Class Hierarchy
 
-N3449 [@N3449] describes techniques involving vtable pointer caching and
-hash conflict minimization that are implemented in the Mach7 [@Mach7] library,
-but also mentions further opportunities available for a compiler solution.
+[@N3449] describes techniques involving vtable pointer caching and hash conflict
+minimization that are implemented in the [@Mach7] library, but also mentions
+further opportunities available for a compiler solution.
 
 # Examples
 
@@ -1165,11 +1165,11 @@ but further investigation is needed.
 Thanks to all of the following:
 
   - Yuriy Solodkyy, Gabriel Dos Reis, Bjarne Stroustrup for their prior work on
-    N3449 [@N3449], Open Pattern Matching for C++ [@OpenPatternMatching], and
-    the Mach7 [@Mach7] library.
+    [@N3449], Open Pattern Matching for C++ [@OpenPatternMatching], and
+    the [@Mach7] library.
   - Pattern matching presentation by Bjarne Stroustrup at Urbana-Champaign 2015.
-  - David Sankel for his work on P0095 [@P0095].
-  - Jeffrey Yasskin/JF Bastien for their work on P1110 [@Placeholder].
+  - David Sankel for his work on [@P0095R1].
+  - Jeffrey Yasskin/JF Bastien for their work on [@P1110R0].
   - (In alphabetical order by last name) John Bandela, Agustín Bergé,
     Ori Bernstein, Matt Calabrese, Alexander Chow, Louis Dionne,
     Michał Dominiak, Eric Fiselier, Zach Laine, Jason Lucas, David Sankel,
@@ -1179,40 +1179,35 @@ Thanks to all of the following:
 ---
 references:
   - id: N3449
+    citation-label: N3449
     title: "Open and Efficient Type Switch for C++"
-    issued:
-      year: 2012
-      month: 9
     author:
       family: Stroustrup
       given: Bjarne
-    container-title: N3449
+    issued:
+      year: 2012
     URL: http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2012/n3449.pdf
   - id: P0095R0
+    citation-label: P0095R0
     title: "Pattern Matching and Language Variants"
+    author:
+      family: Sankel
+      given: David
     issued:
       year: 2015
-      month: 9
-    author:
-      family: Sankel
-      given: David
-    container-title: P0095R0
     URL: http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2015/p0095r0.html
-  - id: P0095
+  - id: P0095R1
+    citation-label: P0095R1
     title: "Pattern Matching and Language Variants"
-    issued:
-      year: 2016
-      month: 5
     author:
       family: Sankel
       given: David
-    container-title: P0095R1
-    URL: http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2016/p0095r1.html
-  - id: P0144
-    title: "Structured bindings"
     issued:
       year: 2016
-      month: 3
+    URL: http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2016/p0095r1.html
+  - id: P0144R2
+    citation-label: P0144R2
+    title: "Structured bindings"
     author:
       - family: Sutter
         given: Herb
@@ -1220,23 +1215,21 @@ references:
         given: Bjarne
       - family: Reis
         given: [Gabriel, Dos]
-    container-title: P0144
-    URL: http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2016/p0144r2.pdf
-  - id: P1260
-    title: "Pattern Matching"
     issued:
-      year: 2018
-      month: 5
+      year: 2016
+    URL: http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2016/p0144r2.pdf
+  - id: P1260R0
+    citation-label: P1260R0
+    title: "Pattern Matching"
     author:
       - family: Park
         given: Michael
-    container-title: P1260
-    URL: http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p1260r0.pdf
-  - id: P1308
-    title: "Pattern Matching"
     issued:
       year: 2018
-      month: 10
+    URL: http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p1260r0.pdf
+  - id: P1308R0
+    citation-label: P1308R0
+    title: "Pattern Matching"
     author:
       - family: Sankel
         given: David
@@ -1244,9 +1237,11 @@ references:
         given: Dan
       - family: Murzin
         given: Sergei
-    container-title: P1308
+    issued:
+      year: 2018
     URL: http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p1308r0.html
   - id: OpenPatternMatching
+    citation-label: OpenPatternMatching
     title: "Open Pattern Matching for C++"
     author:
       - family: Solodkyy
@@ -1257,6 +1252,7 @@ references:
         given: Bjarne
     URL: http://www.stroustrup.com/OpenPatternMatching.pdf
   - id: Mach7
+    citation-label: Mach7
     title: "Mach7: Pattern Matching for C++"
     author:
       - family: Solodkyy
@@ -1265,28 +1261,30 @@ references:
         given: [Gabriel, Dos]
       - family: Stroustrup
         given: Bjarne
-    container-title: Mach7
     URL: https://github.com/solodon4/Mach7
   - id: SimpleMatch
+    citation-label: SimpleMatch
     title: "Simple, Extensible C++ Pattern Matching Library"
     author:
       - family: Bandela
         given: John
     URL: https://github.com/jbandela/simple_match
   - id: Patterns
+    citation-label: Patterns
     title: "Pattern Matching in C++"
     author:
       - family: Park
         given: Michael
-    container-title: MPark.Patterns
     URL: https://github.com/mpark/patterns
   - id: Warnings
+    citation-label: Warnings
     title: "Warnings for pattern matching"
     author:
       - family: Maranget
         given: Luc
     URL: http://moscova.inria.fr/~maranget/papers/warn/index.html
-  - id: Placeholder
+  - id: P1110R0
+    citation-label: P1110R0
     title: "A placeholder with no name"
     author:
       - family: Yasskin
@@ -1295,20 +1293,6 @@ references:
         given: JF
     URL: http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p1110r0.html
   - id : YAMLParser
+    citation-label : YAMLParser
     URL: http://llvm.org/doxygen/YAMLParser_8h_source.html
 ---
-
-<!--
-# Other Languages and Libraries
-## C\#
-## Rust
-Constants: https://github.com/rust-lang/rfcs/blob/master/text/1445-restrict-constants-in-patterns.md
-### Intersection of semantic / structural equality
-## Scala
-Scala Tutorial - Pattern Matching: https://www.youtube.com/watch?v=ULcpWn23waw
-Matching Objects with Patterns: https://infoscience.epfl.ch/record/98468/files/MatchingObjectsWithPatterns-TR.pdf
-### Extractors
-## F\#
-### Active Patterns
-From F# to Scala Extractors: https://theburningmonk.com/2017/01/from-f-to-scala-extractors/
--->

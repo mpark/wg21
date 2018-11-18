@@ -50,7 +50,7 @@ This proposal is a pure library extension.
 
 # Proposed Wording
 
-Modify __§23.7.2 [variant.syn]__ of N4687 [@N4687] as indicated:
+Modify __§23.7.2 [variant.syn]__ of [@N4687] as indicated:
 
 ```diff
   // 23.7.7, visitation
@@ -60,7 +60,7 @@ Modify __§23.7.2 [variant.syn]__ of N4687 [@N4687] as indicated:
 +    constexpr R visit(Visitor&&, Variants&&...);
 ```
 
-Add new paragraphs to __§23.7.7 [variant.visit]__ of N4687 [@N4687]:
+Add new paragraphs to __§23.7.7 [variant.visit]__ of [@N4687]:
 
 > \added
 > ```
@@ -154,10 +154,9 @@ if/when such facilities should have an accompanying overload.
 ---
 references:
   - id: N4687
+    citation-label: N4687
     title: "Working Draft, Standard for Programming Language C++"
     issued:
       year: 2017
-      month: 7
-    container-title: N4687
     URL: http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2017/n4687.pdf
 ---

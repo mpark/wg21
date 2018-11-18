@@ -50,7 +50,7 @@ This proposal is a pure library extension.
 
 # Proposed Wording
 
-Add to __§19.7.2 [variant.syn]__ of N4762 [@N4762]:
+Add to __§19.7.2 [variant.syn]__ of [@N4762]:
 
 ```diff
   template <class Visitor, class... Variants>
@@ -59,7 +59,7 @@ Add to __§19.7.2 [variant.syn]__ of N4762 [@N4762]:
 +   constexpr R visit(Visitor&&, Variants&&...);
 ```
 
-Add to __§19.7.7 [variant.visit]__ of N4762 [@N4762]:
+Add to __§19.7.7 [variant.visit]__ of [@N4762]:
 
 ```diff
   template <class Visitor, class... Variants>
@@ -168,10 +168,9 @@ if/when such facilities should have an accompanying overload.
 ---
 references:
   - id: N4762
+    citation-label: N4762
     title: "Working Draft, Standard for Programming Language C++"
     issued:
       year: 2018
-      month: 7
-    container-title: N4762
     URL: http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/n4762.pdf
 ---
