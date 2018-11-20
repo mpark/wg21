@@ -62,12 +62,11 @@ Modify __§23.7.2 [variant.syn]__ of [@N4687] as indicated:
 
 Add new paragraphs to __§23.7.7 [variant.visit]__ of [@N4687]:
 
-> ::: add
 > ```diff
 > + template <class R, class Visitor, class... Variants>
 > +   constexpr R visit(Visitor&& vis, Variants&&... vars);
 > ```
->>
+> ::: add
 >> _Requires_: The expression in the _Effects_: element shall be
 >> a valid expression for all combinations of alternative types
 >> of all variants.  Otherwise, the program is ill-formed.

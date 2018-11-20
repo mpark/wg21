@@ -7,7 +7,7 @@ csl: template/cpp.csl
 link-citations: true
 
 addcolor: 006E29
-removecolor: C01A1A
+rmcolor: C01A1A
 
 header-includes:
   # layout
@@ -16,11 +16,11 @@ header-includes:
   # colors
   - \definecolor{shadecolor}{HTML}{F6F8FA}
   - \definecolor{addcolor}{rgb}{0.00,0.43,0.16}
-  - \definecolor{removecolor}{rgb}{0.75,0.01,0.01}
+  - \definecolor{rmcolor}{rgb}{0.75,0.01,0.01}
   # syntax highlighting
   - \renewcommand{\AnnotationTok}[1]{\textit{#1}}
   - \renewcommand{\InformationTok}[1]{\textcolor{addcolor}{\textit{#1}}}
-  - \renewcommand{\WarningTok}[1]{\textcolor{removecolor}{\textit{#1}}}
+  - \renewcommand{\WarningTok}[1]{\textcolor{rmcolor}{\textit{#1}}}
   # adjust quote indent
   - \renewenvironment{quote}{\list{}{\leftmargin=0.2in}\item[]}{\endlist}
 ---
