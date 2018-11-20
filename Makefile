@@ -16,4 +16,5 @@
        --filter template/diff.py \
        --filter template/tonytable.py \
        --to gfm \
+       --webtex \
        --output github/$@

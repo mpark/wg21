@@ -68,8 +68,8 @@ Add to __§19.7.7 [variant.visit]__ of [@N4762]:
 +   constexpr R visit(Visitor&& vis, Variants&&... vars);
 ```
 > \pnum{1} Let _n_ be `sizeof...(Variants)`. Let `m` be a pack of _n_ values of type
-> `size_t`. Such a pack is called valid if 0 $\leq$ `m`_~i~_ <
-> `variant_size_v<remove_reference_t<Variants`_~i~_`>>` for all 0 $\leq$ _i_ < _n_.
+> `size_t`. Such a pack is called valid if $0 \leq$ `m`_~i~_ <
+> `variant_size_v<remove_reference_t<Variants`_~i~_`>>` for all $0 \leq i < n$.
 > For each valid pack `m`, let _e_(`m`) denote the expression:
 >
 > > \small _`INVOKE`_`(std::forward<Visitor>(vis), get<m>(std::forward<Variants>(vars))...)` _// see 19.14.3_
@@ -87,15 +87,15 @@ Add to __§19.7.7 [variant.visit]__ of [@N4762]:
 > otherwise, the program is ill-formed.
 
 > \pnum{3} _Returns:_ _e_(`m`), where `m` is the pack for which `m`_~i~_ is
-> `vars`_~i~_`.index()` for all 0 $\leq$ _i_ < _n_. The return type is
+> `vars`_~i~_`.index()` for all $0 \leq i < n$. The return type is
 > `decltype(`_e_(`m`)`)` [for the first form]{.add}.
 
 > \pnum{4} _Throws:_ `bad_variant_access` if any `variant` in `vars` is
 > `valueless_by_exception()`.
 
-> \pnum{5} _Complexity:_ For _n_ $\leq$ 1, the invocation of the callable object is
-> implemented in constant time, i.e., for _n_ = 1, it does not depend on the
-> number of alternative types of `Variants`_~0~_. For _n_ > 1, the invocation of
+> \pnum{5} _Complexity:_ For $n \leq 1$, the invocation of the callable object is
+> implemented in constant time, i.e., for $n = 1$, it does not depend on the
+> number of alternative types of `Variants`_~0~_. For $n > 1$, the invocation of
 > the callable object has no complexity requirements.
 
 # Design Decisions
