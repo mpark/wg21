@@ -54,7 +54,7 @@ a __declarative__, __structured__, __cohesive__, and __composable__ mechanism.
 
 ## Matching Integrals
 
-::: TonyTable
+::: tonytable
 
 ### Before
 ```cpp
@@ -78,7 +78,7 @@ inspect (x) {
 
 ## Matching Strings
 
-::: TonyTable
+::: tonytable
 
 ### Before
 ```cpp
@@ -104,7 +104,7 @@ inspect (s) {
 
 ## Matching Tuples
 
-::: TonyTable
+::: tonytable
 
 ### Before
 ```cpp
@@ -136,7 +136,7 @@ inspect (p) {
 
 ## Matching Variants
 
-::: TonyTable
+::: tonytable
 
 ### Before
 ```cpp
@@ -171,7 +171,7 @@ struct Circle : Shape { int radius; };
 struct Rectangle : Shape { int width, height; };
 ```
 
-::: TonyTable
+::: tonytable
 
 ### Before
 ```cpp
@@ -215,7 +215,7 @@ namespace std {
 }
 ```
 
-::: TonyTable
+::: tonytable
 
 ### Before {width=.48}
 ```cpp
@@ -421,7 +421,7 @@ else a non-member ADL-only `get<I>(v)`.
   - `Alt` is a _type_ and `std::is_same_v<Alt, std::variant_alternative_t<I, V>>` is `true`
   - `Alt` is a _constant expression_ that can be used in a `switch` and is the same value as `I`.
 
-::: TonyTable
+::: tonytable
 
 ### Before {width=.53}
 ```cpp
@@ -610,7 +610,7 @@ struct Circle : Shape { int radius; };
 struct Rectangle : Shape { int width, height; };
 ```
 
-::: TonyTable
+::: tonytable
 
 ### Before
 ```cpp
@@ -678,7 +678,7 @@ Let `matches` be the condition for which a _pattern_ matches a value `v`.
 Ignoring any potential optimization opportunities, we're able to perform the
 following transformation:
 
-::: TonyTable
+::: tonytable
 
 ### `inspect` {width=.4}
 ```cpp
@@ -700,7 +700,7 @@ else if (pattern2 matches v) stmt2
 
 `inspect constexpr` is then formulated by applying `constexpr` to every `if` branch.
 
-::: TonyTable
+::: tonytable
 
 ### `inspect constexpr` {width=.4}
 ```cpp
@@ -737,9 +737,9 @@ Add to __§8.4 [stmt.select]__ of ...
 > |     `if constexpr`*~opt~* `(` *init-statement~opt~* *condition* `)` *statement*
 > |     `if constexpr`*~opt~* `(` *init-statement~opt~* *condition* `)` *statement* `else` *statement*
 > |     `switch (` *init-statement~opt~* *condition* `)` *statement*
-> |     \added `inspect constexpr`*~opt~* `(` *init-statement~opt~* *condition* `) {` *inspect-case-seq* `}`\unchanged
+> |     [`inspect constexpr`*~opt~* `(` *init-statement~opt~* *condition* `) {` *inspect-case-seq* `}`]{.add}
 >
-> \added
+> ::: add
 > | *inspect-case-seq:*
 > |     *inspect-case*
 > |     *inspect-case-seq* *inspect-case*
@@ -758,7 +758,7 @@ Add to __§8.4 [stmt.select]__ of ...
 >
 > | *inspect-guard:*
 > |     `if (` *expression* `)`
-> \unchanged
+> :::
 
 # Design Decisions
 
@@ -912,7 +912,7 @@ for (auto&& [x, y] : points) { /* ... */ }
 The `[x, y]` part can also be a pattern of an `inspect` statement rather than
 a structured binding declaration.
 
-::: TonyTable
+::: tonytable
 
 ### Before
 ```cpp
@@ -935,7 +935,7 @@ for (auto&& p : points) {
 
 With this model, allowing patterns directly in range-based `for` loop becomes natural.
 
-::: TonyTable
+::: tonytable
 
 ### Code
 ```cpp

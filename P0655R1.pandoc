@@ -74,12 +74,13 @@ Add to __§19.7.7 [variant.visit]__ of [@N4762]:
 >
 > > \small _`INVOKE`_`(std::forward<Visitor>(vis), get<m>(std::forward<Variants>(vars))...)` _// see 19.14.3_
 >
-> \added
+> ::: add
 > for the first form and
 >
 > > \small _`INVOKE`_`<R>(std::forward<Visitor>(vis), get<m>(std::forward<Variants>(vars))...)` _// see 19.14.3_
 >
 > for the second form.
+> :::
 
 > \pnum{2} _Requires:_ For each valid pack `m` _e_(`m`) shall be a valid
 > expression. All such expressions shall be of the same type and value category;
@@ -87,7 +88,7 @@ Add to __§19.7.7 [variant.visit]__ of [@N4762]:
 
 > \pnum{3} _Returns:_ _e_(`m`), where `m` is the pack for which `m`_~i~_ is
 > `vars`_~i~_`.index()` for all 0 $\leq$ _i_ < _n_. The return type is
-> `decltype(`_e_(`m`)`)` \added for the first form.
+> `decltype(`_e_(`m`)`)` [for the first form]{.add}.
 
 > \pnum{4} _Throws:_ `bad_variant_access` if any `variant` in `vars` is
 > `valueless_by_exception()`.

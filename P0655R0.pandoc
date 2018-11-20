@@ -62,10 +62,10 @@ Modify __§23.7.2 [variant.syn]__ of [@N4687] as indicated:
 
 Add new paragraphs to __§23.7.7 [variant.visit]__ of [@N4687]:
 
-> \added
-> ```
-> template <class R, class Visitor, class... Variants>
->   constexpr R visit(Visitor&& vis, Variants&&... vars);
+> ::: add
+> ```diff
+> + template <class R, class Visitor, class... Variants>
+> +   constexpr R visit(Visitor&& vis, Variants&&... vars);
 > ```
 >>
 >> _Requires_: The expression in the _Effects_: element shall be
@@ -82,6 +82,7 @@ Add new paragraphs to __§23.7.7 [variant.visit]__ of [@N4687]:
 >> object is implemented in constant time, i.e. it does not depend on
 >> `sizeof...(Types)`. For `sizeof...(Variants) > 1`, the invocation of
 >> the callable object has no complexity requirements.
+> :::
 
 # Design Decisions
 

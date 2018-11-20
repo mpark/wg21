@@ -6,22 +6,21 @@ urlcolor: blue
 csl: template/cpp.csl
 link-citations: true
 
+addcolor: 006E29
+removecolor: C01A1A
+
 header-includes:
+  # layout
   - \usepackage{fullpage}
+  - \input{template/layout}
   # colors
   - \definecolor{shadecolor}{HTML}{F6F8FA}
-  - \definecolor{addedcolor}{rgb}{0.00,0.43,0.16}
-  - \definecolor{removedcolor}{rgb}{0.75,0.01,0.01}
-  # layout
-  - \input{template/layout}
-  # text diffs
-  - \newcommand{\unchanged}{\normalcolor}
-  - \newcommand{\added}{\color{addedcolor}}
-  - \newcommand{\removed}{\color{removedcolor}}
+  - \definecolor{addcolor}{rgb}{0.00,0.43,0.16}
+  - \definecolor{removecolor}{rgb}{0.75,0.01,0.01}
   # syntax highlighting
   - \renewcommand{\AnnotationTok}[1]{\textit{#1}}
-  - \renewcommand{\InformationTok}[1]{\textcolor{addedcolor}{\textit{#1}}}
-  - \renewcommand{\WarningTok}[1]{\textcolor{removedcolor}{\textit{#1}}}
+  - \renewcommand{\InformationTok}[1]{\textcolor{addcolor}{\textit{#1}}}
+  - \renewcommand{\WarningTok}[1]{\textcolor{removecolor}{\textit{#1}}}
   # adjust quote indent
-  - \renewenvironment{quote} {\list{}{\leftmargin=0.2in}\item[]}{\endlist}
+  - \renewenvironment{quote}{\list{}{\leftmargin=0.2in}\item[]}{\endlist}
 ---

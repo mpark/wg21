@@ -1,7 +1,8 @@
 %.pdf: %.pandoc
 	pandoc template/header.yaml $< template/footer.pandoc \
        --filter pandoc-citeproc \
-       --filter template/tony-table.py \
+       --filter template/diff.py \
+       --filter template/tonytable.py \
        --highlight-style kate \
        --number-sections \
        --syntax-definition template/cpp.xml \
@@ -12,6 +13,7 @@
 %.md: %.pandoc
 	pandoc template/header.yaml $< template/footer.pandoc \
        --filter pandoc-citeproc \
-       --filter template/tony-table.py \
+       --filter template/diff.py \
+       --filter template/tonytable.py \
        --to gfm \
        --output github/$@
