@@ -88,9 +88,9 @@ def build_header(elem):
 def build_code(elem, format):
     if (format != 'gfm'):
         return elem
-    lang = ' lang={}'.format(elem.classes[0]) if elem.classes else ''
+    lang = ' lang="{}"'.format(elem.classes[0]) if elem.classes else ''
     code = html.escape(elem.text)
-    return pf.RawBlock('<pre{lang}>{code}</pre>'.format(lang=lang, code=code))
+    return pf.RawBlock('\n\n<pre{lang}>\n{code}\n</pre>'.format(lang=lang, code=code))
 
 def build_row(elems):
     return pf.TableRow(*[pf.TableCell(elem) for elem in elems])
