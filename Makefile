@@ -15,6 +15,6 @@
        --filter pandoc-citeproc \
        --filter template/diff.py \
        --filter template/tonytable.py \
-       --to gfm \
        --webtex \
+       --to gfm \
        --output github/$@
