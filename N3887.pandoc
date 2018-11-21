@@ -197,8 +197,8 @@ references:
     citation-label: N3797
     title: "Working Draft, Standard for Programming Language C++"
     author:
-      family: Du Toit
-      given: Stefanus
+      family: Toit
+      given: [Stefanus, Du]
     issued:
       year: 2013
     URL: http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2013/n3797.pdf

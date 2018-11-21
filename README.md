@@ -13,24 +13,29 @@
 [P0080R0]: https://wg21.link/P0080
 [N3887]: https://wg21.link/N3887
 
-## Framework
-
-__TL;DR__: Written in [Pandoc Markdown], generated into PDF via [Pandoc].
-
-[Pandoc Markdown]: https://pandoc.org/MANUAL.html#pandocs-markdown
-[Pandoc]: https://pandoc.org/
-
 ## Generation
 
 ```bash
-make <paper>.md    // Generates `github/<paper>.md` from `<paper>.pandoc`
-make <paper>.pdf   // Generates `pdf/<paper>.pdf` from `<paper>.pandoc`
+make <paper>.md   // Generates `github/<paper>.md` from `<paper>.pandoc`
+make <paper>.pdf  // Generates `pdf/<paper>.pdf` from `<paper>.pandoc`
 ```
 
 ## Requirements
 
-  - `pandoc 2`
-  - `pandoc-citeproc`
-  - `panflute`
   - `pdflatex`
+  - `pandoc`
+  - `pandoc-citeproc`
   - `python3`
+  - `panflute`
+
+### OS X
+
+```bash
+brew cask install mactex
+
+brew install pandoc
+brew install pandoc-citeproc
+
+brew install python
+pip3 install panflute
+```

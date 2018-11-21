@@ -1461,6 +1461,8 @@ references:
         given: Jeffrey
       - family: Bastien
         given: JF
+    issued:
+      year: 2018
     URL: http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p1110r0.html
   - id : YAMLParser
     citation-label : YAMLParser

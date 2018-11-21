@@ -108,8 +108,7 @@
   </citation>
   <bibliography second-field-align="flush" entry-spacing="0">
     <sort>
-      <key macro="author"/>
-      <key variable="issued"/>
+      <key variable="citation-label"/>
     </sort>
     <layout>
       <text variable="citation-label" prefix="[" suffix="] "/>
