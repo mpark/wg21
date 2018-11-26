@@ -2,6 +2,7 @@
 citecolor: blue
 linkcolor: blue
 urlcolor: blue
+toccolor: black
 
 csl: template/cpp.csl
 link-citations: true
