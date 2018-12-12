@@ -32,11 +32,9 @@ languages include text-based languages such as SNOBOL back in the 1960s,
 functional languages such as Haskell and OCaml, and "mainstream" languages such
 as Scala, Swift, and Rust.
 
-Inspired by [@P0095R1] --- which proposed pattern matching and language-level
-variant simultaneously --- this paper explores a possible direction for pattern
-matching only, and does not address language-level variant design. This is in
-correspondence with a straw poll from Kona 2015, which encouraged exploration of
-a full solution for pattern matching. SF: 16, WF: 6, N: 5, WA: 1, SA: 0.
+This paper is a result of collaboration between the authors of [@P1260R0] and
+[@P1308R0], two pattern matching proposals more or less steming from the 2015
+[@P0095R1] proposal.
 
 # Motivation and Scope
 
@@ -53,10 +51,10 @@ the "vocabulary types" provided by the standard library.
 In C++17, structured binding declarations [@P0144R2] introduced the ability to
 concisely bind names to components of `tuple`-like values. The proposed
 direction of this paper aims to naturally extend this notion by performing
-__structured inspection__ prior to forming the __structured bindings__ with
-a third selection statement: the `inspect` statement. The goal of the `inspect`
-statement is to bridge the gap between `switch` and `if` statements with
-a __declarative__, __structured__, __cohesive__, and __composable__ mechanism.
+__structured inspection__  with `inspect` statements and expressions. The
+goal of `inspect` is to bridge the gap between `switch` and `if` statements
+with a __declarative__, __structured__, __cohesive__, and __composable__
+mechanism.
 
 # Before/After Comparisons
 
@@ -197,9 +195,9 @@ int Rectangle::get_area() const override {
 ### After
 ```cpp
 int get_area(const Shape& shape) {
-  inspect (shape) {
-    <Circle> [r]: return 3.14 * r * r;
-    <Rectangle> [w, h]: return w * h;
+  return inspect (shape) {
+    <Circle>    [r]    => 3.14 * r * r,
+    <Rectangle> [w, h] => w * h
   }
 }
 ```
@@ -235,10 +233,17 @@ int eval(const Expr& expr) {
     }
     int operator()(const Neg& n) const {
       return -eval(*n.expr);
+    }
     int operator()(const Add& a) const {
       return eval(*a.lhs) + eval(*a.rhs);
     }
     int operator()(const Mul& m) const {
+      // Optimize for multiplication by 0
+      if(int * lhsInt = std::get_if<int>(m.lhs.get()); lhsInt && *lhsInt == 0)
+        return 0;
+      if(int * rhsInt = std::get_if<int>(m.rhs.get()); rhsInt && *rhsInt == 0)
+        return 0;
+
       return eval(*m.lhs) * eval(*m.rhs);
     }
   };
@@ -251,9 +256,11 @@ int eval(const Expr& expr) {
 int eval(const Expr& expr) {
   inspect (expr) {
     <int> i: return i;
-    <Neg> [e]: return -eval(*e);
-    <Add> [l, r]: return eval(*l) + eval(*r);
-    <Mul> [l, r]: return eval(*l) * eval(*r);
+    <Neg> [*e]: return -eval(e);
+    <Add> [*l, *r]: return eval(l) + eval(r);
+    <Mul> [*<int> 0, _]: return 0;
+    <Mul> [_, *<int> 0]: return 0;
+    <Mul> [*l, *r]: return eval(l) * eval(r);
   }
 }
 ```
