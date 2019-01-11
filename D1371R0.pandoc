@@ -713,6 +713,148 @@ void print_leftmost(const Node& node) {
 
 [ _Note:_ The dereference operation is performed unconditionally. --- _end note_ ]
 
+Dereference patterns frequently come into play with complex patterns using
+recursive variant types. An example of such a problem is the rebalance
+operation for red-black trees. Using pattern matching this can be expressed
+succinctly and in a way that is easily verified visually as having the correct
+algorithm.
+
+```c++
+enum Color { R, B };
+
+template<typename T>
+struct Tree;
+
+struct Empty { };
+
+template<typename T>
+struct Valued {
+  Color c;
+  std::shared_ptr<Tree<T>> lhs;
+  T value;
+  std::shared_ptr<Tree<T>> rhs;
+};
+
+template<typename T>
+struct Tree : std::variant<Empty, Valued<T>> {
+  using std::variant<Empty, Valued<T>>::variant;
+};
+
+template<typename T>
+Tree<T> balance(Color c, std::shared_ptr<Tree<T>> lhs, T value, std::shared_ptr<Tree<T>> rhs) {
+  using V = Valued<T>;
+  return inspect(c,lhs,value,rhs) {
+    [^B, *<V> [^R, *<V> [^R, a, x, b], y, c], z, d]
+      => V{R, std::make_shared<Tree<T>>(V{B, a, x, b},
+           y, std::make_shared<Tree<T>>(V{B, c, z, d}},
+    [^B, *<V> [^R, a, x, *<V> [^R, b, y, c]], z, d]
+      => V{R, std::make_shared<Tree<T>>(V{B, a, x, b},
+           y, std::make_shared<Tree<T>>(V{B, c, z, d}},
+    [^B, a, x, *<V> [^R, *<V> [^R, b, y, c], z, d]]
+      => V{R, std::make_shared<Tree<T>>(V{B, a, x, b},
+           y, std::make_shared<Tree<T>>(V{B, c, z, d}},
+    [^B, a, x, *<V> [^R, b, y, *<V> [^R, c, z, d]]]
+      => V{R, std::make_shared<Tree<T>>(V{B, a, x, b},
+           y, std::make_shared<Tree<T>>(V{B, c, z, d}},
+    [color, a, x, b] => V{color, a, x, b}
+  };
+}
+```
+
+Compare this to what we currently need to do:
+
+```c++
+template<typename T>
+Tree<T> balance(Color c, std::shared_ptr<Tree<T>> lhs, T value, std::shared_ptr<Tree<T>> rhs) {
+  if(c == B) {
+    // case 1
+    if(Valued<T> * lhsValued = std::get_if<Valued<T>>(lhs.get());
+       lhsValued && lhsValued->c == R)
+    {
+      // case 1.a
+      if(Valued<T> * lhsLhsValued = std::get_if<Valued<T>>(lhsValued->lhs.get());
+         lhsLhsValued && lhsLhsValued->c == R)
+      {
+          return Valued<T>{
+            R,
+            std::make_shared<Tree<T>>(Valued<T>{
+              B,
+              lhsLhsValued->lhs,
+              lhsLhsValued->value,
+              lhsLhsValued->rhs}),
+            lhsValued->value,
+            std::make_shared<Tree<T>>(Valued<T>{
+              B,
+              lhsValued->rhs,
+              value,
+              rhs})};
+      }
+      // case 1.b
+      if(Valued<T> * lhsRhsValued = std::get_if<Valued<T>>(lhsValued->rhs.get());
+         lhsRhsValued && lhsRhsValued->c == R)
+      {
+          return Valued<T>{
+            R,
+            std::make_shared<Tree<T>>(Valued<T>{
+              B,
+              lhsValued->lhs,
+              lhsValued->value,
+              lhsRhsValued->lhs}),
+            lhsRhsValued->value,
+            std::make_shared<Tree<T>>(Valued<T>{
+              B,
+              lhsRhsValued->rhs,
+              value,
+              rhs})};
+      }
+    }
+    // case 2
+    if(Valued<T> * rhsValued = std::get_if<Valued<T>>(rhs.get());
+       rhsValued && rhsValued->c == R)
+    {
+      // case 2.a
+      if(Valued<T> * rhsLhsValued = std::get_if<Valued<T>>(rhsValued->lhs.get());
+         rhsLhsValued && rhsLhsValued->c == R)
+      {
+          return Valued<T>{
+            R,
+            std::make_shared<Tree<T>>(Valued<T>{
+              B,
+              lhs,
+              value,
+              rhsLhsValued->lhs}),
+            rhsLhsValued->value,
+            std::make_shared<Tree<T>>(Valued<T>{
+              B,
+              rhsLhsValued->rhs,
+              rhsValued->value,
+              rhsValued->rhs})};
+      }
+
+      // case 2.b
+      if(Valued<T> * rhsRhsValued = std::get_if<Valued<T>>(rhsValued->rhs.get());
+         rhsRhsValued && rhsRhsValued->c == R)
+      {
+          return Valued<T>{
+            R,
+            std::make_shared<Tree<T>>(Valued<T>{
+              B,
+              lhs,
+              value,
+              rhsValued->lhs}),
+            rhsValued->value,
+            std::make_shared<Tree<T>>(Valued<T>{
+              B,
+              rhsRhsValued->lhs,
+              rhsRhsValued->value,
+              rhsRhsValued->rhs})};
+      }
+    }
+  }
+  return Valued<T>{c, lhs, value, rhs};
+}
+```
+
 #### Extractor Pattern
 
 The extractor pattern has the following two forms:
