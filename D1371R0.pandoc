@@ -339,7 +339,7 @@ inspect (v) {
 
 [ _Note:_ Even though `_` is a valid identifier, it does not introduce a name. --- _end note_ ]
 
-#### Identifier Pattern
+#### Identifier Pattern {#identifier-pat}
 
 The identifier pattern has the form:
 
@@ -361,7 +361,7 @@ inspect (v) {
 [ _Note:_ If the identifier pattern is used at the top-level, it has the same
           syntax as a `goto` label. --- _end note_ ]
 
-#### Expression Pattern
+#### Expression Pattern {#expression-pat}
 
 The expression pattern has the form:
 
@@ -1123,6 +1123,90 @@ Each of the matchers and extractors can be found in the [Examples] section.
 the language. The intent of this proposal is to consolidate with the results
 of the decision of [@P1110R0].
 
+## Identifier and Expression Patterns Disambiguation
+
+Both identifier and expression patterns can contain an unqualified name. It can
+resolve into local variable name in case of [expression pattern](#expression-pat).
+And introduce new identifier into scope in case of
+[identifier pattern](#identifier-pat).
+
+This paper proposes to use leading caret `^` symbol in expression pattern (exact
+symbol or keyword is subject to bikeshed).
+
+```cpp
+constexpr int x = /* ... */
+
+inspect (v) {
+  ^x: std::cout << "v matches x by value";
+  x: std::cout << "introduces new identifier x bound to v: " << x;
+}
+```
+
+In the example above `^` is used to make former pattern to look for name `x`
+using unqualified name lookup rules. While latter introduces new identifier `x`
+in pattern scope.
+
+Adding "introducer" for expression pattern have other advantages. They become
+apparent when compared to alternative designs below.
+
+### Using "introducer" in identifier pattern.
+
+Some languages use keywords as part of identifier pattern syntax. In
+[@SwiftPatterns] keyword `let` is used to denote identifier pattern, and the
+same keyword is used to declare bindings in general.
+
+Syntax for identifier pattern can use `let` "introducer" instead, making
+expression pattern look more like normal expression seen anywhere else in
+codebase.
+
+```cpp
+inspect(v) {
+  (1 + get_int()): std::cout << "expression matched";
+  let x: std::cout << "introduce new identifier x bound to v: " << x;
+}
+```
+
+While it makes expressions look more natural in patterns, it significantly
+limits scope of possible syntax that can be used in patterns. Expression pattern
+would contain any expression syntax, such as parentheses, arithmetic operation
+signs and etc. Any future pattern syntax would not be able to use these
+syntax elements or will cause possible ambiguity for existing code.
+
+### Not using "introducer" in any pattern.
+
+It is possible to define "order of precedence" for pattern disambiguation. So
+that if unqualified name lookup failed - identifier pattern would be used instead.
+
+```cpp
+constexpr int x = /* ... */
+inspect(v) {
+  x: std::cout << "v matches x by value";
+  y: std::cout << "introduces new identifier y";
+}
+```
+
+This solution in addition to having same problem as the one above, also makes code
+behave differently depending on scope of execution and will be very prone to
+errors.
+
+### Use "introducer" for both patterns.
+
+Both identifier and expression patterns could have used some leading "introducer"
+syntax. For example if we were to use `!` and `^`:
+
+```cpp
+constexpr int x = /* ... */
+inspect(v) {
+  ^x: std::cout << "v matches x by value";
+  !x: std::cout << "introduces new identifier x bound to v: " << x;
+}
+```
+
+While using different introducer syntax for each of patterns makes code more
+clear in its' intent. It isn't strictly necessary, so we'll be introducing syntax
+just for reader. It takes more syntax space away from any further pattern
+development. And is still possible to get wrong and make mistake.
+
 # Runtime Performance
 
 The following are few of the optimizations that are worth noting.
@@ -1616,4 +1700,8 @@ references:
   - id : YAMLParser
     citation-label : YAMLParser
     URL: http://llvm.org/doxygen/YAMLParser_8h_source.html
+  - id : SwiftPatterns
+    citation-label : Swift Patterns
+    title : "Swift Reference Manual - Patterns"
+    URL: https://docs.swift.org/swift-book/ReferenceManual/Patterns.html
 ---
