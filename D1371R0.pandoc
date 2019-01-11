@@ -288,7 +288,7 @@ There are two forms of `inspect`: the statement form and the expression form.
 > | *guard:*
 > |     `if (` *expression* `)`
 
-[ _Note:_ The expression form is equivalent to:
+[ _Note:_ The expression form is roughly equivalent to:
 
 > | `std::invoke([&]()` *trailing-return-type~opt~* `{`
 > |     `inspect constexpr`*~opt~* `(` *init-statement~opt~* *condition* `) {`
