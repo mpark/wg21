@@ -873,12 +873,12 @@ is contextually convertible to `bool`, evaluates to `true`,
 and _pattern_ matches `*e`.
 
 ```cpp
-struct {
+constexpr struct {
     std::optional<std::array<std::string_view, 2>>
     try_extract(std::string_view sv) const;
 } email;
 
-struct {
+constexpr struct {
     std::optional<std::array<std::string_view, 3>>
     try_extract(std::string_view sv) const;
 } phone_number;
