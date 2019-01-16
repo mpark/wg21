@@ -867,6 +867,25 @@ Let `c` be the _constant-expression_. The first form matches value `v`
 if _pattern_ matches `e` where `e` is the result of a call to member
 `c.extract(v)` or else a non-member ADL-only `extract(c, v)`.
 
+```cpp
+template <typename T>
+struct Is {
+    template <typename Arg>
+    Arg&& extract(Arg&& arg) const {
+        static_assert(std::is_same_v<T, std::remove_cvref_t<Arg>>);
+        return std::forward<Arg>(arg);
+    }
+};
+
+template <typename T>
+constexpr Is<T> is;
+
+// P0480: `auto&& [std::string s, int i] = f();`
+inspect (f()) {
+  [is<std::string>! s, is<int>! i]: // ...
+}
+```
+
 For second form, let `e` be the result of a call to member `c.try_extract(v)`
 or else a non-member ADL-only `try_extract(c, v)`. It matches value `v` if `e`
 is contextually convertible to `bool`, evaluates to `true`,
