@@ -366,6 +366,7 @@ inspect (v) {
 The expression pattern has the form:
 
 > | _literal_
+> | `this`
 > | `^` _primary-expression_
 
 and matches value `v` if a call to member `e.match(v)` or else a non-member
