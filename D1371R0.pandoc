@@ -911,14 +911,6 @@ inspect (p) {
 
 This also diminishes the desire for fall-through semantics within the
 statements, an unpopular feature even in `switch` statements.
-For the reified semantics of the pattern guard, consider the following snippet:
-
-```cpp
-switch (x) {
-    case c1: if (cond1) { stmt1; break; } [[fallthrough]]
-    case c2: if (cond2) { stmt2; break; } [[fallthrough]]
-}
-```
 
 ## `inspect constexpr`
 
