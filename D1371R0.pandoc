@@ -672,6 +672,23 @@ int get_area(const Shape& shape) {
 
 :::
 
+#### Parenthesized Pattern
+
+The parenthesized pattern has the form:
+
+> | `(` _pattern_ `)`
+
+and matches value `v` if _pattern_ matches it.
+
+```cpp
+std::variant<Point, /* ... */> v = /* ... */;
+
+inspect (v) {
+    <Point> ([x, y]): // ...
+//          ^^^^^^^^ parenthesized pattern
+}
+```
+
 #### Binding Pattern
 
 The binding pattern has the form:
