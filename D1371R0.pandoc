@@ -979,6 +979,57 @@ it is to `vector<T>` as far as the type system is concerned. This limitation
 will likely be even bigger in a pattern matching context with the amount of
 customization points available for user-defined behavior.
 
+## Unrestricted Side Effects
+
+We considered the possibility of restricting side-effects within patterns.
+Specifically, we discussed whether modifying the value currently being matched
+in the middle of evaluation should have defined behavior.
+
+The consideration was due to potential optimization opportunities.
+
+Consider the following:
+
+```cpp
+int x = 1;
+
+inspect (x) {
+    0: std::cout << 0;
+    1 if (test()): std::cout << 1;
+    2: std::cout << 2;
+}
+```
+
+If modifying the value currently being matched has undefined behavior,
+a compiler can assume that `test` will not change the value of `x`.
+This means that the above snippet could be translated to:
+
+```cpp
+int x = 1;
+
+switch (x) {
+    case 0: std::cout << 0; break;
+    case 1: if (test()) { std::cout << 1; } break;
+    case 2: std::cout << 2; break;
+}
+```
+
+Otherwise, `test` may change the value of `x`, and if `test` is an out-of-line
+function call, the compiler would be forced to generate something like:
+
+```
+int x = 1;
+
+if (x == 0) std::cout << 0;
+else if (x == 1 && test()) std::cout << 1;
+else if (x == 2) std::cout << 2;
+```
+
+However, we consider this opportunity too niche. Suppose we have a slightly more
+complex case: `struct S { int x; };` and `bool operator==(const S&, const S&);`.
+Even if modifying the value being matched has undefined behavior, if the
+`operator==` is out-of-line, a compiler cannot do much more than generate
+the sequence of `if`-`else` chain anyway.
+
 ## Language rather than Library
 
 There are three popular pattern matching libraries for C++ today:
