@@ -1211,7 +1211,7 @@ development. And is still possible to get wrong and make mistake.
 
 The following are few of the optimizations that are worth noting.
 
-### Structured Binding Pattern
+## Structured Binding Pattern
 
 Structured binding patterns can be optimized by performing `switch` over
 the columns with the duplicates removed, rather than the naive approach of
@@ -1219,11 +1219,11 @@ performing a comparison per element. This removes unnecessary duplicate
 comparisons that would be performed otherwise. This would likely require some
 wording around "comparison elision" in order to enable such optimizations.
 
-### Alternative Pattern
+## Alternative Pattern
 
 The sequence of alternative patterns can be executed in a `switch`.
 
-### Open Class Hierarchy
+## Open Class Hierarchy
 
 [@N3449] describes techniques involving vtable pointer caching and hash conflict
 minimization that are implemented in the [@Mach7] library, but also mentions
