@@ -693,7 +693,7 @@ inspect (v) {
 
 The dereference pattern has the form:
 
-> | `*`_pattern_
+> | `*` _pattern_
 
 and matches value `v` if _pattern_ matches `*v`.
 
