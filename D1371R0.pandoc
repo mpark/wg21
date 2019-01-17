@@ -339,26 +339,6 @@ inspect (v) {
 }
 ```
 
-[ _Note:_ Even though `_` is a valid identifier, it does not introduce a name
-as doing so would require all values matched and represented by the wildcard
-to be equal.
-
-It is possible for users to have already introduced `_` as a type or variable
-name in the same scope where an `inspect` statement is used. As a
-highly-visible example, the authors are aware of the use of `_` as a name in
-the popular "Google Mock" library. Idiomatically this is accessed by
-introducing `_` into the current namespace or block scope with a `using`
-directive. Using the wildcard pattern in cases like this is unambiguous
-since the expression pattern requires a `^` introducer for primary expressions. 
-Introduced `_` identifiers will always match against an existing name and 
-un-introduced `_` identifiers will always represent the wildcard pattern. 
-In wildcard cases, an existing `_` name can be used without ambiguity in 
-the matched statement to which control is passed.
-
-Naturally, the impact of defining `_` in the pre-processor cannot be
-predicted or controlled by this paper and is thus liable to result in an
-ill-formed program. --- _end note_ ]
-
 #### Identifier Pattern {#identifier-pat}
 
 The identifier pattern has the form:
@@ -1175,6 +1155,25 @@ Each of the matchers and extractors can be found in the [Examples] section.
 [@P1110R0] discusses wildcard/placeholder syntax in different contexts of
 the language. The intent of this proposal is to consolidate with the results
 of the decision of [@P1110R0].
+
+Even though `_` is a valid identifier, it does not introduce a name
+as doing so would result in redeclaration errors in the case where multiple
+wildcard `_` identifiers are used.
+
+It is possible for users to have already introduced `_` as a type or variable
+name in the same scope where an `inspect` statement is used. As a
+highly-visible example, the authors are aware of the use of `_` as a name in
+the popular "Google Mock" library. Idiomatically this is accessed by
+introducing `_` into the current namespace or block scope with a `using`
+directive. Using the wildcard pattern in cases like this is unambiguous
+since the expression pattern requires a `^` introducer for primary expressions.
+`^_` will always match against an existing name and `_` will always represent 
+the wildcard pattern. An existing `_` name can be used without ambiguity 
+in the matched statement to which control is passed.
+
+Naturally, the impact of defining `_` in the pre-processor cannot be
+predicted or controlled by this paper and is thus liable to result in an
+ill-formed program.
 
 ## Identifier and Expression Patterns Disambiguation
 
