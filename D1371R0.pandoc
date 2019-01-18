@@ -1175,15 +1175,26 @@ Naturally, the impact of defining `_` in the pre-processor cannot be
 predicted or controlled by this paper and is thus liable to result in an
 ill-formed program.
 
-## Identifier and Expression Patterns Disambiguation
+## Pattern syntax and Expression Pattern Disambiguation
 
-Both identifier and expression patterns can contain an unqualified name. It can
-resolve into local variable name in case of [expression pattern](#expression-pat).
-And introduce new identifier into scope in case of
-[identifier pattern](#identifier-pat).
+It is clear that we want to be able to use arbitrary expressions in various
+pattern matching clauses, for that we introduce [expression pattern](#expression-pat).
+Allowing any expression to appear in the same space other patterns causes some
+problems though.
+
+Expressions can contain a vast number of syntactic elements, including arithmetic,
+bitshift and logical operators, parentheses and braces, etc. Which means that if we
+allow expressions to appear as pattern without disambiguation we would close most
+of the syntax space for other patterns.
 
 This paper proposes to use leading caret `^` symbol in expression pattern (exact
-symbol or keyword is subject to bikeshed).
+symbol or keyword is subject to bikeshed) in order to disambiguate expressions and
+other patterns.
+
+For example, let's look at identifier and expression patterns. Both of them can
+contain an unqualified name. It can resolve into local variable name in case of
+[expression pattern](#expression-pat). And introduce new identifier into scope in
+case of [identifier pattern](#identifier-pat).
 
 ```cpp
 constexpr int x = /* ... */
@@ -1194,70 +1205,40 @@ inspect (v) {
 }
 ```
 
-In the example above `^` is used to make former pattern to look for name `x`
+In the example above, `^` is used to make former pattern to look for name `x`
 using unqualified name lookup rules. While latter introduces new identifier `x`
 in pattern scope.
 
-Adding "introducer" for expression pattern have other advantages. They become
-apparent when compared to alternative designs below.
+The problem described spans more than just *identifier pattern*. That could have
+been solved by introducer for *identifier pattern*. For example [@SwiftPatterns]
+use keyword `let` to denote identifier pattern and treat everything else as expression.
+This solution works but closes off any pattern syntax that could use syntax that is
+already possible in expression. For example *parenthesized pattern* is using
+parentheses to group patterns together. That would cause ambiguity with
+parenthesized expression.
 
-### Using "introducer" in identifier pattern.
-
-Some languages use keywords as part of identifier pattern syntax. In
-[@SwiftPatterns] keyword `let` is used to denote identifier pattern, and the
-same keyword is used to declare bindings in general.
-
-Syntax for identifier pattern can use `let` "introducer" instead, making
-expression pattern look more like normal expression seen anywhere else in
-codebase.
+That leaves the only other solution - to use "introducer* for any pattern syntax
+except *expression pattern*. I.e. we can prefix all patterns with context-sensitive
+keyword. Using example from *derefence pattern*:
 
 ```cpp
-inspect(v) {
-  (1 + get_int()): std::cout << "expression matched";
-  let x: std::cout << "introduce new identifier x bound to v: " << x;
+struct Node {
+    int value;
+    std::unique_ptr<Node> lhs, rhs;
+};
+
+template <typename Visitor>
+void print_leftmost(const Node& node) {
+    inspect (node) {
+        pat [.value: pat v, .lhs: nullptr]: std::cout << v << '\n';
+        pat [.lhs: pat* pat l]: print_leftmost(l);
+    }
 }
 ```
 
-While it makes expressions look more natural in patterns, it significantly
-limits scope of possible syntax that can be used in patterns. Expression pattern
-would contain any expression syntax, such as parentheses, arithmetic operation
-signs and etc. Any future pattern syntax would not be able to use these
-syntax elements or will cause possible ambiguity for existing code.
-
-### Not using "introducer" in any pattern.
-
-It is possible to define "order of precedence" for pattern disambiguation. So
-that if unqualified name lookup failed - identifier pattern would be used instead.
-
-```cpp
-constexpr int x = /* ... */
-inspect(v) {
-  x: std::cout << "v matches x by value";
-  y: std::cout << "introduces new identifier y";
-}
-```
-
-This solution in addition to having same problem as the one above, also makes code
-behave differently depending on scope of execution and will be very prone to
-errors.
-
-### Use "introducer" for both patterns.
-
-Both identifier and expression patterns could have used some leading "introducer"
-syntax. For example if we were to use `!` and `^`:
-
-```cpp
-constexpr int x = /* ... */
-inspect(v) {
-  ^x: std::cout << "v matches x by value";
-  !x: std::cout << "introduces new identifier x bound to v: " << x;
-}
-```
-
-While using different introducer syntax for each of patterns makes code more
-clear in its' intent. It isn't strictly necessary, so we'll be introducing syntax
-just for reader. It takes more syntax space away from any further pattern
-development. And is still possible to get wrong and make mistake.
+This solution is much heavier on syntax, since every pattern need to be prefixed,
+sometimes causing readability issues, where `pat* pat l`  stands for introduce
+identifier `l` bound to dereferenced `node.lhs`.
 
 # Runtime Performance
 
