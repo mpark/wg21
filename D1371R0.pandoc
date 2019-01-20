@@ -339,7 +339,7 @@ inspect (v) {
 }
 ```
 
-#### Identifier Pattern {#identifier-pat}
+#### Identifier Pattern
 
 The identifier pattern has the form:
 
@@ -361,7 +361,7 @@ inspect (v) {
 [ _Note:_ If the identifier pattern is used at the top-level, it has the same
           syntax as a `goto` label. --- _end note_ ]
 
-#### Expression Pattern {#expression-pat}
+#### Expression Pattern
 
 The expression pattern has the form:
 
@@ -1175,16 +1175,16 @@ Naturally, the impact of defining `_` in the pre-processor cannot be
 predicted or controlled by this paper and is thus liable to result in an
 ill-formed program.
 
-## Pattern syntax and Expression Pattern Disambiguation
+## Expression vs Pattern Disambiguation
 
 It is clear that we want to be able to use arbitrary expressions in various
-pattern matching clauses, for that we introduce [expression pattern](#expression-pat).
+pattern matching clauses, for that we introduce [Expression Pattern].
 Allowing any expression to appear in the same space other patterns causes some
 problems though.
 
 Expressions can contain a vast number of syntactic elements, including arithmetic,
-bitshift and logical operators, parentheses and braces, etc. Which means that if we
-allow expressions to appear as pattern without disambiguation we would close most
+bitshift and logical operators, parentheses and braces, etc. which means that if we
+allow expressions to appear as patterns without disambiguation we would close most
 of the syntax space for other patterns.
 
 This paper proposes to use leading caret `^` symbol in expression pattern (exact
@@ -1193,8 +1193,8 @@ other patterns.
 
 For example, let's look at identifier and expression patterns. Both of them can
 contain an unqualified name. It can resolve into local variable name in case of
-[expression pattern](#expression-pat). And introduce new identifier into scope in
-case of [identifier pattern](#identifier-pat).
+[Expression Pattern] and introduce a new identifier into scope in case of 
+[Identifier Pattern].
 
 ```cpp
 constexpr int x = /* ... */
@@ -1205,9 +1205,8 @@ inspect (v) {
 }
 ```
 
-In the example above, `^` is used to make former pattern to look for name `x`
-using unqualified name lookup rules. While latter introduces new identifier `x`
-in pattern scope.
+In the example above, `^x` performs unqualified name lookup for `x`, while `x`
+introduces new identifier `x` in scope.
 
 The problem described spans more than just *identifier pattern*. That could have
 been solved by introducer for *identifier pattern*. For example [@SwiftPatterns]
@@ -1218,8 +1217,8 @@ parentheses to group patterns together. That would cause ambiguity with
 parenthesized expression.
 
 That leaves the only other solution - to use "introducer* for any pattern syntax
-except *expression pattern*. I.e. we can prefix all patterns with context-sensitive
-keyword. Using example from *derefence pattern*:
+except [Expression Pattern]. I.e. we can prefix all patterns with context-sensitive
+keyword. Using example from [Dereference Pattern]:
 
 ```cpp
 struct Node {
