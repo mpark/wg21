@@ -1544,67 +1544,6 @@ inspect (u) {
 The main point is that whatever entity is introduced as the discriminator,
 the presented form of alternative pattern should be extendable to support it.
 
-## Patterns in range-based `for` loop
-
-```cpp
-for (auto&& [0, y] : points) {
-    // only operate on points on the y-axis.
-}
-```
-
-Structured binding declaration is allowed in range-based `for` loop:
-
-```cpp
-for (auto&& [x, y] : points) { /* ... */ }
-```
-
-The `[x, y]` part can also be a pattern of an `inspect` statement rather than
-a structured binding declaration.
-
-::: tonytable
-
-### Before
-```cpp
-for (auto&& p : points) {
-  auto&& [x, y] = p;
-  // ...
-}
-```
-
-### After
-```cpp
-for (auto&& p : points) {
-  inspect (p) {
-    [x, y]: // ...
-  }
-}
-```
-
-:::
-
-With this model, allowing patterns directly in range-based `for` loop becomes natural.
-
-::: tonytable
-
-### Code
-```cpp
-for (auto&& [0, y] : points) {
-  // only points on the y-axis.
-}
-```
-
-### Expanded
-```cpp
-for (auto&& p : points) {
-  inspect (p) {
-    [0, y]: // ...
-  }
-  // falls through if no match
-}
-```
-
-:::
-
 ## Note on Ranges
 
 The benefit of pattern matching for ranges is unclear. While it's possible to
