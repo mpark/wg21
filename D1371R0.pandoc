@@ -1269,7 +1269,7 @@ further opportunities available for a compiler solution.
 
 Short-string optimization using a __predicate__ as a discriminator rather than
 an explicitly stored __value__. Adapted from the pattern matching presentation
-given by Bjarne Stroustrup at Urbana-Champaign 2015.
+given by Bjarne Stroustrup at Urbana-Champaign 2014 [@PatMatPres].
 
 ```cpp
 struct String {
@@ -1640,6 +1640,16 @@ references:
       - family: Stroustrup
         given: Bjarne
     URL: https://github.com/solodon4/Mach7
+  - id: PatMatPres
+    citation-label: PatMatPres
+    title: "\"Pattern Matching for C++\" presentation at Urbana-Champaign 2014"
+    author:
+      - family: Solodkyy
+        given: Yuriy
+      - family: Reis
+        given: [Gabriel, Dos]
+      - family: Stroustrup
+        given: Bjarne
   - id: SimpleMatch
     citation-label: SimpleMatch
     title: "Simple, Extensible C++ Pattern Matching Library"
