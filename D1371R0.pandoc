@@ -1177,19 +1177,25 @@ ill-formed program.
 
 ## Expression vs Pattern Disambiguation
 
-It is clear that we want to be able to use arbitrary expressions in various
-pattern matching clauses, for that we introduce [Expression Pattern].
-Allowing any expression to appear in the same space other patterns causes some
-problems though.
+Crucial discussion revolves around whether arbitrary expressions should be allowed
+inside patterns. If allowed, expressions provide ability to compute values to match
+without explicitly binding them before *inspect-statement*, but allowing any
+expression to appear in the same space with other patterns causes some
+problems discussed below.
 
 Expressions can contain a vast number of syntactic elements, including arithmetic,
 bitshift and logical operators, parentheses and braces, etc. which means that if we
 allow expressions to appear as patterns without disambiguation we would close most
-of the syntax space for other patterns.
+of the syntax space for other patterns. For example, if we wanted to introduce
+pattern that matches one of listed patterns. We couldn't use common `|` operator
+for that `<pat1> | <pat2>`, since it will result in ambiguous syntax with bitwise
+or operator expression `1 | 2`.
 
-This paper proposes to use leading caret `^` symbol in expression pattern (exact
-symbol or keyword is subject to bikeshed) in order to disambiguate expressions and
-other patterns.
+This paper proposes to allow any expression to appear in patterns, see
+[Expression Pattern]. We propose to use leading caret `^` symbol in expression pattern
+(exact symbol or keyword is subject to bikeshed) in order to disambiguate expressions and
+other patterns. This allows full flexibility of expressions to be used, while still
+keeping syntax space open for pattern development.
 
 For example, let's look at identifier and expression patterns. Both of them can
 contain an unqualified name. It can resolve into local variable name in case of
@@ -1212,32 +1218,28 @@ The problem described spans more than just *identifier pattern*. That could have
 been solved by introducer for *identifier pattern*. For example [@SwiftPatterns]
 use keyword `let` to denote identifier pattern and treat everything else as expression.
 This solution works but closes off any pattern syntax that could use syntax that is
-already possible in expression. For example *parenthesized pattern* is using
-parentheses to group patterns together. That would cause ambiguity with
-parenthesized expression.
+already possible in expression. If we take `1 | 2` expression as an example again,
+in [@SwiftPatterns] it is a valid expression and can appear anywhere inside pattern.
+Which means Swift can't introduce *or-pattern* with familiar syntax.
 
 That leaves the only other solution - to use "introducer* for any pattern syntax
 except [Expression Pattern]. I.e. we can prefix all patterns with context-sensitive
-keyword. Using example from [Dereference Pattern]:
+keyword. Using example from [Matching Tuples]:
 
 ```cpp
-struct Node {
-    int value;
-    std::unique_ptr<Node> lhs, rhs;
-};
+std::pair<int, int> p = /* ... */
 
-template <typename Visitor>
-void print_leftmost(const Node& node) {
-    inspect (node) {
-        pat [.value: pat v, .lhs: nullptr]: std::cout << v << '\n';
-        pat [.lhs: pat* pat l]: print_leftmost(l);
-    }
+inspect (p) {
+  pat [0, 0]: std::cout << "on origin";
+  pat [0, pat y]: std::cout << "on y-axis";
+  pat [pat x, 0]: std::cout << "on x-axis";
+  pat [pat x, pat y]: std::cout << x << ',' << y;
 }
 ```
 
 This solution is much heavier on syntax, since every pattern need to be prefixed,
-sometimes causing readability issues, where `pat* pat l`  stands for introduce
-identifier `l` bound to dereferenced `node.lhs`.
+sometimes causing readability issues, where `pat [0, pat y]` stands apply structured
+binding pattern, match `p.first` to `0` and bind `p.second` to `y`.
 
 # Runtime Performance
 
