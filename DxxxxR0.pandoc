@@ -1,0 +1,112 @@
+---
+title: "Deprecate _ usage in C++20 for Pattern Matching in C++23"
+document: DxxxxR0
+date: 2019-01-22
+audience: Evolution
+author:
+  - name: Sergei Murzin
+    email: <smurzin@bloomberg.net>
+  - name: Michael Park
+    email: <mcypark@gmail.com>
+  - name: David Sankel
+    email: <dsankel@bloomberg.net>
+  - name: Dan Sarginson
+    email: <dsarginson@bloomberg.net>
+toc: true
+toc-depth: 4
+---
+
+# Introduction
+
+We need to deprecate a rare usage of `_` as an identifier in C++ 20 so it can
+be safely used for pattern matching [@P1371R1] which is targeting C++ 23. The
+issue is simple, we'd like structured binding code as in,
+
+```c++
+auto [a, _] = std::make_pair(3, 4);
+```
+
+, to have `_` represent a wildcard pattern instead of binding the identifier
+`_`. There are a few ways to do this and we suggest what we think is the ideal
+engineering approach.
+
+# Various Approaches
+
+## Use something besides '`_`' (BAD)
+
+Why is `_` so important? '`?`' is available. Languages with pattern
+matching almost universally use `_` as a wildcard pattern and popular libraries
+in C++ (like Google Test) do the same. It would be ackward and somewhat
+embarrasing if C++ were to not use the conventional token. Furthermore, because
+`_` has so much existing widespread use, we expect people to use `_` anyway,
+and accidentily bind the `_` identifier.
+
+`__` is another possiblility, but it is difficult to recognize as a double
+underscore with many fonts and we expect significant confusion were we to use
+this.
+
+## Deprecate all or most uses of '`_`' as an identifier (WORSE)
+
+Another option is to deprecate all or most uses of `_` as an identifier. We could,
+for instance, deprecate block-scope references to `_` identifiers. The
+migration cost for this is unfortunately quite a steep one. There are more
+instances of the `_` token than `short` in the wild [@ACTCD16]. Breaking all
+this code would be costly for the C++ community so other options are preferred.
+
+## Deprecate '`_`' access when structured-binding bound (OKAY)
+
+Finally, we could deprecate referencing `_` identifiers that are bound as
+part of a structured binding. Because structured binding is a relatively new
+feature and most uses of `_` as a structured binding identifier are expected to
+be wildcard uses anyway, the cost of fixing breakages would be low.
+This change to be a sweet spot for engineering value, but we need to act
+quickly if we want to take advantage of this for pattern matching in C++23.
+
+# Should we generalize this as in P1110R0?
+
+[@P1110R0] suggests that we make something like the wildcard (`_`) pattern
+accessible in many other places than patterns (e.g. in an enumerator). The
+authors of this paper find questionable engineering value for many of these
+suggestions and have no opinion on others. Our primary focus is on parity
+between structured bindings and pattern matching.
+
+# Conclusion
+
+Right now we have an opportunity to prevent mistakes being made by using the
+wildcard that everyone expects for pattern matching. Lets deprecate access to
+`_` variables if they are bound by structured binding.
+
+---
+references:
+  - id: P1110R0
+    citation-label: P1110R0
+    title: "A placeholder with no name"
+    author:
+      - family: Yasskin
+        given: Jeffrey
+      - family: Bastien
+        given: JF
+    issued:
+      year: 2018
+    URL: http://wg21.link/P1371R1
+  - id: P1371R1
+    citation-label: P1371R1
+    title: "Pattern Matching"
+    author:
+      - family: Murzin
+        given: Sergei
+      - family: Park
+        given: Michael
+      - family: Sankel
+        given: David
+    issued:
+      year: 2019
+    URL: http://wg21.link/P1371R1
+  - id: ACTCD16
+    citation-label: ACTCD16
+    title: "Andrew's C/C++ Token Count Dataset 2016 (ACTCD16)"
+    author:
+      - family: Tomazos
+        given: Andrew
+    URL: http://www.tomazos.com/actcd16.pdf
+---
