@@ -1167,8 +1167,8 @@ the popular "Google Mock" library. Idiomatically this is accessed by
 introducing `_` into the current namespace or block scope with a `using`
 directive. Using the wildcard pattern in cases like this is unambiguous
 since the expression pattern requires a `^` introducer for primary expressions.
-`^_` will always match against an existing name and `_` will always represent 
-the wildcard pattern. An existing `_` name can be used without ambiguity 
+`^_` will always match against an existing name and `_` will always represent
+the wildcard pattern. An existing `_` name can be used without ambiguity
 in the matched statement to which control is passed.
 
 Naturally, the impact of defining `_` in the pre-processor cannot be
