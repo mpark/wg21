@@ -1165,7 +1165,7 @@ name in the same scope where an `inspect` statement is used. As a
 highly-visible example, the authors are aware of the use of `_` as a name in
 the popular "Google Mock" library. Idiomatically this is accessed by
 introducing `_` into the current namespace or block scope with a `using`
-directive. Using the wildcard pattern in cases like this is unambiguous
+declaration. Using the wildcard pattern in cases like this is unambiguous
 since the expression pattern requires a `^` introducer for primary expressions.
 `^_` will always match against an existing name and `_` will always represent
 the wildcard pattern. An existing `_` name can be used without ambiguity
