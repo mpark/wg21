@@ -878,7 +878,7 @@ struct Is {
 };
 
 template <typename T>
-constexpr Is<T> is;
+inline constexpr Is<T> is;
 
 // P0480: `auto&& [std::string s, int i] = f();`
 inspect (f()) {
@@ -892,15 +892,19 @@ is contextually convertible to `bool`, evaluates to `true`,
 and _pattern_ matches `*e`.
 
 ```cpp
-constexpr struct {
+struct Email {
     std::optional<std::array<std::string_view, 2>>
     try_extract(std::string_view sv) const;
-} email;
+};
 
-constexpr struct {
+inline constexpr Email email;
+
+struct PhoneNumber {
     std::optional<std::array<std::string_view, 3>>
     try_extract(std::string_view sv) const;
-} phone_number;
+};
+
+inline constexpr PhoneNumber phone_number;
 
 inspect (s) {
     (email? [address, domain]): std::cout << "got an email";
@@ -1436,12 +1440,14 @@ This extractor emulates binary logical-and with a `std::pair` where
 both elements are references to value `v`.
 
 ```cpp
-inline constexpr struct {
+struct Both {
     template <typename U>
     std::pair<U&&, U&&> extract(U&& u) const {
         return {std::forward<U>(u), std::forward<U>(u)};
     }
 } both;
+
+inline constexpr Both both;
 ```
 
 ```cpp
