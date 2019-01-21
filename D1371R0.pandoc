@@ -886,6 +886,21 @@ would be useless.
 Warnings for pattern matching [@Warnings] discusses and outlines an algorithm
 for exhaustiveness and usefulness for OCaml, and is the algorithm used by Rust.
 
+## Refutability
+
+Patterns that cannot fail to match are said to be _irrefutable_ in contrast
+to _refutable_ patterns which can fail to match. For example, the identifier
+pattern is _irrefutable_ whereas the expression pattern is _refutable_.
+
+The distinction is useful in reasoning about which patterns should be allowed
+in which contexts. For example, the structured bindings declaration is
+conceptually a restricted form of pattern matching. With the introduction of
+expression pattern in this paper, some may question whether structured bindings
+declaration should be extended for examples such as `auto [0, x] = f();`.
+
+This is ultimately a question of whether structured bindings declaration
+supports _refutable_ patterns or if it is restricted to _irrefutable_ patterns.
+
 # Proposed Wording
 
 The following is the beginning of an attempt at a syntactic structure.
