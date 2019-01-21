@@ -345,6 +345,8 @@ inspect (v) {
 }
 ```
 
+[ _Note:_ Refer to [Wildcard Syntax] for a design discussion. --- _end note_ ]
+
 #### Identifier Pattern
 
 The identifier pattern has the form:
