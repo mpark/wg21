@@ -35,7 +35,7 @@ as Scala, Swift, and Rust.
 This paper is a result of collaboration between the authors of [@P1260R0] and
 [@P1308R0]. A joint presentation by the authors of the two proposals was given
 in EWGI at the San Diego 2018 meeting, with the closing poll:
-"Should we commit additional committee time to pattern matching?" --
+"Should we commit additional committee time to pattern matching?" ---
 SF: 14, WF: 0, N: 1, WA: 0, SA: 0
 
 # Motivation and Scope
