@@ -1,5 +1,5 @@
 ---
-title: "Deprecate `_` usage in C++20 for Pattern Matching in C++23"
+title: "Disallow `_` Usage in C++20 for Pattern Matching in C++23"
 document: P1469R0
 date: 2019-01-21
 audience: Evolution
