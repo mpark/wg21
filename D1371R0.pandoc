@@ -718,7 +718,8 @@ The dereference pattern has the form:
 
 > | `*` _pattern_
 
-and matches value `v` if _pattern_ matches `*v`.
+and matches value `v` if `v` is contextually convertible to `bool` and
+evaluates to `true`, and _pattern_ matches `*v`.
 
 ```cpp
 struct Node {
@@ -735,7 +736,8 @@ void print_leftmost(const Node& node) {
 }
 ```
 
-[ _Note:_ The dereference operation is performed unconditionally. --- _end note_ ]
+[ _Note:_ Refer to [Red-black Tree Rebalancing] for a more complex example. ---
+_end note_ ]
 
 #### Extractor Pattern
 
