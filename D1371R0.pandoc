@@ -1041,54 +1041,53 @@ ill-formed program.
 
 ## Expression vs Pattern Disambiguation
 
-Crucial discussion revolves around whether arbitrary expressions should be allowed
-inside patterns. If allowed, expressions provide ability to compute values to match
-without explicitly binding them before *inspect-statement*, but allowing any
-expression to appear in the same space with other patterns causes some
-problems discussed below.
+Crucial discussion revolves around whether arbitrary expressions should be
+allowed inside patterns. Allowing expressions would provide the ability to
+compute values to match without creating variables for them before `inspect`.
+However, this introduces syntactic ambiguity problems that must be addressed.
 
-Expressions can contain a vast number of syntactic elements, including arithmetic,
-bitshift and logical operators, parentheses and braces, etc. which means that if we
-allow expressions to appear as patterns without disambiguation we would close most
-of the syntax space for other patterns. For example, if we wanted to introduce
-pattern that matches one of listed patterns. We couldn't use common `|` operator
-for that `<pat1> | <pat2>`, since it will result in ambiguous syntax with bitwise
-or operator expression `1 | 2`.
+Expressions can contain a vast number of syntactic elements, such as arithmetic,
+bit-shift, and logical operators, parentheses and braces, etc. This means that
+if we allow expressions to appear as patterns without disambiguation, we would
+be closing a significant amount of the syntax options for patterns. For example,
+consider the logical-or pattern that matches if any of given patterns match.
+Most languages spell it as _pattern_~0~ `|` _pattern_~1~ `| ... |` _pattern_~N~.
+However, examples such as `1 | 2` becomes ambiguous as to whether `1 | 2` is
+an expression (`3`) or a pattern (matches `1` or `2`).
 
-This paper proposes to allow any expression to appear in patterns, see
-[Expression Pattern]. We propose to use leading caret `^` symbol in expression pattern
-(exact symbol or keyword is subject to bikeshed) in order to disambiguate expressions and
-other patterns. This allows full flexibility of expressions to be used, while still
-keeping syntax space open for pattern development.
+This paper proposes to allow arbitrary expression to appear in patterns
+(See [Expression Pattern]). We propose to use `^` symbol to disambiguate
+expressions. This allows full flexibility of expressions to be used inline,
+while keeping the syntax space open for pattern development.
 
 For example, let's look at identifier and expression patterns. Both of them can
-contain an unqualified name. It can resolve into local variable name in case of
-[Expression Pattern] and introduce a new identifier into scope in case of 
+contain an _unqualified-id_. It can perform unqualified name lookup in the case
+of [Expression Pattern] and introduce a new identifier into scope in case of
 [Identifier Pattern].
 
 ```cpp
 constexpr int x = /* ... */
 
 inspect (v) {
-  ^x: std::cout << "v matches x by value";
-  x: std::cout << "introduces new identifier x bound to v: " << x;
+  ^x: std::cout << "`v` matched `x` by value";
+  x: std::cout << "introduces new identifier `x` bound to `v`: " << x;
 }
 ```
 
-In the example above, `^x` performs unqualified name lookup for `x`, while `x`
-introduces new identifier `x` in scope.
+In the example above, `^x` performs unqualified name lookup for `x`,
+while `x` introduces new identifier `x` in scope.
 
-The problem described spans more than just *identifier pattern*. That could have
-been solved by introducer for *identifier pattern*. For example [@SwiftPatterns]
-use keyword `let` to denote identifier pattern and treat everything else as expression.
-This solution works but closes off any pattern syntax that could use syntax that is
-already possible in expression. If we take `1 | 2` expression as an example again,
-in [@SwiftPatterns] it is a valid expression and can appear anywhere inside pattern.
-Which means Swift can't introduce *or-pattern* with familiar syntax.
+The problem described spans more than just _identifier pattern_. That could have
+been solved with an introducer for _identifier pattern_ only. For example,
+[@SwiftPatterns] use keyword `let` to denote identifier pattern and treat
+everything else as expression. This solution works but closes off any pattern
+syntax that could use syntax that is already possible in expression. If we take
+`1 | 2` as an example again, since it is a valid expression in Swift, they could
+not introduce `1 | 2` as a logical-or pattern without a breaking change.
 
-That leaves the only other solution - to use "introducer* for any pattern syntax
-except [Expression Pattern]. I.e. we can prefix all patterns with context-sensitive
-keyword. Using example from [Matching Tuples]:
+That leaves the only other solution --- to disambiguate patterns rather than
+expressions. e.g., prefix patterns with a context-sensitive keyword `pat`.
+Using the example from [Matching Tuples]:
 
 ```cpp
 std::pair<int, int> p = /* ... */
@@ -1101,9 +1100,9 @@ inspect (p) {
 }
 ```
 
-This solution is much heavier on syntax, since every pattern need to be prefixed,
-sometimes causing readability issues, where `pat [0, pat y]` stands apply structured
-binding pattern, match `p.first` to `0` and bind `p.second` to `y`.
+This solution however is more complex because patterns contain expressions.
+This means that a pattern would either need to be explicitly prefixed at
+nested level, or implicitly distributed to inner patterns.
 
 # Runtime Performance
 
