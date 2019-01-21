@@ -1,5 +1,5 @@
-%.pdf: %.pandoc
-	pandoc template/header.yaml $< template/footer.pandoc \
+%.pdf: %.md
+	pandoc template/header.yaml $< template/footer.md \
        --filter pandoc-citeproc \
        --filter template/diff.py \
        --filter template/tonytable.py \
@@ -9,12 +9,3 @@
        --syntax-definition template/diff.xml \
        --template template/wg21.latex \
        --output pdf/$@
-
-%.md: %.pandoc
-	pandoc template/header.yaml $< template/footer.pandoc \
-       --filter pandoc-citeproc \
-       --filter template/diff.py \
-       --filter template/tonytable.py \
-       --webtex \
-       --to gfm \
-       --output github/$@
