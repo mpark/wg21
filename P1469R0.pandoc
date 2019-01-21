@@ -62,6 +62,14 @@ be wildcard uses anyway, the cost of fixing breakages would be low.
 This change to be a sweet spot for engineering value, but we need to act
 quickly if we want to take advantage of this for pattern matching in C++23.
 
+## Disallow '`_`' access when structured-binding bound (GOOD)
+
+Because usages of `_` identifiers that are bound by structured binding are so
+rare, there is little engineering benefit in deprecating these usages instead
+of just making access illegal altogether. In fact, a deprecation period can
+actually increase cost as engineers (who ignore warnings) will have more
+opportunity to use `_` identifiers bound by structured bindings.
+
 # Should we generalize this as in P1110R0?
 
 [@P1110R0] suggests that we make something like the wildcard (`_`) pattern
@@ -73,8 +81,8 @@ between structured bindings and pattern matching.
 # Conclusion
 
 Right now we have an opportunity to prevent mistakes being made by using the
-wildcard that everyone expects for pattern matching. Lets deprecate access to
-`_` variables if they are bound by structured binding.
+wildcard that everyone expects for pattern matching. Lets deprecate or disallow
+access to `_` variables if they are bound by structured binding.
 
 ---
 references:
