@@ -19,7 +19,7 @@ toc-depth: 4
 # Introduction
 
 We need to deprecate a rare usage of `_` as an identifier in C++20 so it can
-be safely used for pattern matching [@P1371R1] which is targeting C++23. The
+be safely used for pattern matching [@P1371] which is targeting C++23. The
 issue is simple, we'd like structured binding code as in,
 
 ```c++
@@ -96,9 +96,9 @@ references:
         given: JF
     issued:
       year: 2018
-    URL: http://wg21.link/P1371R1
-  - id: P1371R1
-    citation-label: P1371R1
+    URL: http://wg21.link/P1110R0
+  - id: P1371
+    citation-label: P1371
     title: "Pattern Matching"
     author:
       - family: Murzin
@@ -107,9 +107,11 @@ references:
         given: Michael
       - family: Sankel
         given: David
+      - family: Sarginson
+        given: Dan
     issued:
       year: 2019
-    URL: http://wg21.link/P1371R1
+    URL: http://wg21.link/P1371
   - id: ACTCD16
     citation-label: ACTCD16
     title: "Andrew's C/C++ Token Count Dataset 2016 (ACTCD16)"
