@@ -1545,14 +1545,14 @@ Thanks to all of the following:
 
   - Yuriy Solodkyy, Gabriel Dos Reis, Bjarne Stroustrup for their prior work on
     [@N3449], Open Pattern Matching for C++ [@OpenPM], and the [@Mach7] library.
-  - Pattern matching presentation by Bjarne Stroustrup at Urbana-Champaign 2015.
-  - David Sankel for his work on [@P0095R1].
+  - Pattern matching presentation by Bjarne Stroustrup at Urbana-Champaign
+    2015. [@PatMatPres]
   - Jeffrey Yasskin/JF Bastien for their work on [@P1110R0].
-  - (In alphabetical order by last name) John Bandela, Agustín Bergé,
-    Ori Bernstein, Matt Calabrese, Alexander Chow, Louis Dionne,
-    Michał Dominiak, Eric Fiselier, Zach Laine, Jason Lucas, David Sankel,
-    Bjarne Stroustrup, Tony Van Eerd, and everyone else who contributed to
-    the discussions, and encouraged me to write this paper.
+  - (In alphabetical order by last name) Dave Abrahams, John Bandela, Agustín
+    Bergé, Ori Bernstein, Matt Calabrese, Alexander Chow, Louis Dionne, Michał
+    Dominiak, Vicente Botet Escrib&aacute;, Eric Fiselier, Bengt Gustafsson,
+    Zach Laine, Jason Lucas, John Skaller, Bjarne Stroustrup, Tony Van Eerd,
+    and everyone else who contributed to the discussions.
 
 ---
 references:
