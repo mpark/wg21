@@ -990,45 +990,55 @@ The consideration was due to potential optimization opportunities.
 Consider the following:
 
 ```cpp
+void f(int &);  // defined in a different translation unit.
+
 int x = 1;
 
 inspect (x) {
     0: std::cout << 0;
-    1 if (test()): std::cout << 1;
+    1 if (f(x)): std::cout << 1;
     2: std::cout << 2;
 }
 ```
 
 If modifying the value currently being matched has undefined behavior,
-a compiler can assume that `test` will not change the value of `x`.
-This means that the above snippet could be translated to:
+a compiler can assume that `f` (defined in a different translation unit)
+will not change the value of `x`. This means that the compiler can generate
+code that uses a jump table to determine which of the patterns match.
+A possible representation of this in C++ would be:
 
 ```cpp
+void f(int &);  // defined in a different translation unit.
+
 int x = 1;
 
+// A possible representation in C++
 switch (x) {
     case 0: std::cout << 0; break;
-    case 1: if (test()) { std::cout << 1; } break;
+    case 1: if (f(x)) { std::cout << 1; } break;
     case 2: std::cout << 2; break;
 }
 ```
 
-Otherwise, `test` may change the value of `x`, and if `test` is an out-of-line
-function call, the compiler would be forced to generate something like:
+If on the other hand `f` may change the value of `x`, the compiler would be
+forced to generated code checks the patterns in sequence.
 
 ```
+void f(int &);  // defined in a different translation unit.
+
 int x = 1;
 
+// A possible representation in C++
 if (x == 0) std::cout << 0;
-else if (x == 1 && test()) std::cout << 1;
+else if (x == 1 && f(x)) std::cout << 1;
 else if (x == 2) std::cout << 2;
 ```
 
 However, we consider this opportunity too niche. Suppose we have a slightly more
 complex case: `struct S { int x; };` and `bool operator==(const S&, const S&);`.
 Even if modifying the value being matched has undefined behavior, if the
-`operator==` is out-of-line, a compiler cannot do much more than generate
-the sequence of `if`-`else` chain anyway.
+`operator==` is defined in a different translation unit, a compiler cannot do
+much more than generate code that checks the patterns in sequence anyway.
 
 ## Language rather than Library
 
