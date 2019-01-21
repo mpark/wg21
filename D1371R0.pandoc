@@ -16,6 +16,8 @@ toc: true
 toc-depth: 4
 ---
 
+\pagebreak
+
 # Revision History
 
   - R0 --- Merged [@P1260R0] and [@P1308R0]
@@ -110,8 +112,6 @@ inspect (s) {
 
 :::
 
-\pagebreak
-
 ## Matching Tuples
 
 ::: tonytable
@@ -178,8 +178,6 @@ struct Circle : Shape { int radius; };
 struct Rectangle : Shape { int width, height; };
 ```
 
-\pagebreak
-
 ::: tonytable
 
 ### Before
@@ -210,25 +208,37 @@ int get_area(const Shape& shape) {
 
 ```cpp
 struct Expr;
-struct Neg { std::shared_ptr<Expr> expr; };
-struct Add { std::shared_ptr<Expr> lhs, rhs; };
-struct Mul { std::shared_ptr<Expr> lhs, rhs; };
-struct Expr : std::variant<int, Neg, Add, Mul> { using variant::variant; };
+
+struct Neg {
+  std::shared_ptr<Expr> expr;
+};
+
+struct Add {
+  std::shared_ptr<Expr> lhs, rhs;
+};
+
+struct Mul {
+  std::shared_ptr<Expr> lhs, rhs;
+};
+
+struct Expr : std::variant<int, Neg, Add, Mul> {
+  using variant::variant;
+};
 
 namespace std {
-    template <>
-    struct variant_size<Expr> : variant_size<Expr::variant> {};
+  template <>
+  struct variant_size<Expr> : variant_size<Expr::variant> {};
 
-    template <std::size_t I>
-    struct variant_alternative<I, Expr> : variant_alternative<I, Expr::variant> {};
+  template <std::size_t I>
+  struct variant_alternative<I, Expr> : variant_alternative<I, Expr::variant> {};
 }
 ```
 
-\newpage
+\pagebreak
 
 ::: tonytable
 
-### Before {width=.48}
+### Before
 ```cpp
 int eval(const Expr& expr) {
   struct visitor {
@@ -242,16 +252,13 @@ int eval(const Expr& expr) {
       return eval(*a.lhs) + eval(*a.rhs);
     }
     int operator()(const Mul& m) const {
-      // Optimize for multiplication by 0
-      if(int* i = std::get_if<int>(
-                            m.lhs.get());
-         i && *i == 0)
+      // Optimize multiplication by 0.
+      if (int* i = std::get_if<int>(m.lhs.get()); i && *i == 0) {
         return 0;
-      if(int* i = std::get_if<int>(
-                            m.rhs.get());
-         i && *i == 0)
+      }
+      if (int* i = std::get_if<int>(m.rhs.get()); i && *i == 0) {
         return 0;
-
+      }
       return eval(*m.lhs) * eval(*m.rhs);
     }
   };
@@ -259,21 +266,26 @@ int eval(const Expr& expr) {
 }
 ```
 
-### After {width=.53}
+---
+
+### After
 ```cpp
 int eval(const Expr& expr) {
   inspect (expr) {
     <int> i: return i;
     <Neg> [*e]: return -eval(e);
     <Add> [*l, *r]: return eval(l) + eval(r);
-    <Mul> [*<int> 0, _]: return 0;
-    <Mul> [_, *<int> 0]: return 0;
+    // Optimize multiplication by 0.
+    <Mul> [*(<int> 0), _]: return 0;
+    <Mul> [_, *(<int> 0)]: return 0;
     <Mul> [*l, *r]: return eval(l) * eval(r);
   }
 }
 ```
 
 :::
+
+\pagebreak
 
 # Design Overview
 
@@ -323,6 +335,8 @@ to `false`, control flows to the subsequent pattern.
 
 If no pattern matches, none of the statements are executed for the statement
 form and `std::no_match` exception is thrown for the expression form.
+
+\pagebreak
 
 ## Types of Patterns
 
@@ -383,6 +397,8 @@ to `true` where `e` is the _literal_ or _primary-expression_.
 
 The default behavior of `match(x, y)` is `x == y`.
 
+\pagebreak
+
 ```cpp
 int v = /* ... */;
 
@@ -435,6 +451,8 @@ The second form matches value `v` if each _pattern~i~_ matches the direct
 non-static data member of `v` named _identifier_ from each _designator~i~_.
 If an _identifier_ from any _designator~i~_ does not refer to a direct
 non-static data member of `v`, the program is ill-formed.
+
+\pagebreak
 
 ```cpp
 struct Player { std::string name; int hitpoints; int coins; };
@@ -594,6 +612,8 @@ inspect (v) {
 
 :::
 
+\pagebreak
+
 __Case 2: `std::any`-like__
 
 > | `<` _type_ `>` _pattern_
@@ -605,7 +625,7 @@ and _pattern_ matches `*p`.
 
 ::: tonytable
 
-### Before
+### Before {width=.52}
 ```cpp
 std::any a = 42;
 
@@ -616,7 +636,7 @@ if (int* i = any_cast<int>(&a)) {
 }
 ```
 
-### After
+### After {width=.53}
 ```cpp
 std::any a = 42;
 
@@ -678,6 +698,8 @@ int get_area(const Shape& shape) {
 
 :::
 
+\pagebreak
+
 #### Parenthesized Pattern
 
 The parenthesized pattern has the form:
@@ -709,8 +731,8 @@ the end of the statement following the pattern label.
 std::variant<Point, /* ... */> v = /* ... */;
 
 inspect (v) {
-    <Point> p @ [x, y]: // ...
-//          ^^^^^^^^^^ binding pattern
+    <Point> (p @ [x, y]): // ...
+//           ^^^^^^^^^^ binding pattern
 }
 ```
 
@@ -734,6 +756,7 @@ void print_leftmost(const Node& node) {
     inspect (node) {
         [.value: v, .lhs: nullptr]: std::cout << v << '\n';
         [.lhs: *l]: print_leftmost(l);
+//             ^^ dereference pattern
     }
 }
 ```
@@ -767,7 +790,8 @@ inline constexpr Is<T> is;
 
 // P0480: `auto&& [std::string s, int i] = f();`
 inspect (f()) {
-  [is<std::string>! s, is<int>! i]: // ...
+    [(is<std::string>! s), (is<int>! i)]: // ...
+//   ^^^^^^^^^^^^^^^^^^^^  ^^^^^^^^^^^^ extractor pattern
 }
 ```
 
@@ -869,6 +893,8 @@ else if constexpr (MATCHES(pattern2, v)) stmt2
 ```
 
 :::
+
+\pagebreak
 
 ## Exhaustiveness and Usefulness
 
@@ -1001,22 +1027,19 @@ customization points available for user-defined behavior.
 ## Unrestricted Side Effects
 
 We considered the possibility of restricting side-effects within patterns.
-Specifically, we discussed whether modifying the value currently being matched
-in the middle of evaluation should have defined behavior.
+Specifically whether modifying the value currently being matched in the middle
+of evaluation should have defined behavior.
 
 The consideration was due to potential optimization opportunities.
 
-Consider the following:
-
 ```cpp
 void f(int &);  // defined in a different translation unit.
-
 int x = 1;
 
 inspect (x) {
-    0: std::cout << 0;
-    1 if (f(x)): std::cout << 1;
-    2: std::cout << 2;
+  0: std::cout << 0;
+  1 if (f(x)): std::cout << 1;
+  2: std::cout << 2;
 }
 ```
 
@@ -1024,34 +1047,38 @@ If modifying the value currently being matched has undefined behavior,
 a compiler can assume that `f` (defined in a different translation unit)
 will not change the value of `x`. This means that the compiler can generate
 code that uses a jump table to determine which of the patterns match.
-A possible representation of this in C++ would be:
 
+If on the other hand `f` may change the value of `x`, the compiler would be
+forced to generated code checks the patterns in sequence, since a subsequent
+pattern may match the updated value of `x`.
+
+The following are __illustrations__ of the two approaches written in C++:
+
+::: tonytable
+
+### Not allowed to modify {width=.55}
 ```cpp
-void f(int &);  // defined in a different translation unit.
-
+void f(int &);
 int x = 1;
 
-// A possible representation in C++
 switch (x) {
-    case 0: std::cout << 0; break;
-    case 1: if (f(x)) { std::cout << 1; } break;
-    case 2: std::cout << 2; break;
+  case 0: std::cout << 0; break;
+  case 1: if (f(x)) { std::cout << 1; } break;
+  case 2: std::cout << 2; break;
 }
 ```
 
-If on the other hand `f` may change the value of `x`, the compiler would be
-forced to generated code checks the patterns in sequence.
-
-```
-void f(int &);  // defined in a different translation unit.
-
+### Allowed to modify {width=.48}
+```cpp
+void f(int &);
 int x = 1;
 
-// A possible representation in C++
 if (x == 0) std::cout << 0;
 else if (x == 1 && f(x)) std::cout << 1;
 else if (x == 2) std::cout << 2;
 ```
+
+:::
 
 However, we consider this opportunity too niche. Suppose we have a slightly more
 complex case: `struct S { int x; };` and `bool operator==(const S&, const S&);`.
@@ -1184,7 +1211,7 @@ This solution however is more complex because patterns contain expressions.
 This means that a pattern would either need to be explicitly prefixed at
 nested level, or implicitly distributed to inner patterns.
 
-\newpage
+\pagebreak
 
 The following is a flow graph of decisions that need to be made:
 
@@ -1217,64 +1244,64 @@ further opportunities available for a compiler solution.
 ## Predicate-based Discriminator
 
 Short-string optimization using a __predicate__ as a discriminator rather than
-an explicitly stored __value__. Adapted from the pattern matching presentation
-given by Bjarne Stroustrup at Urbana-Champaign 2014 [@PatMatPres].
+an explicitly stored __value__. Adapted from Bjarne Stroustrup's pattern
+matching presentation at Urbana-Champaign 2014 [@PatMatPres].
 
 ```cpp
 struct String {
-    enum Storage { Local, Remote };
+  enum Storage { Local, Remote };
 
-    int size;
-    union {
-        char local[32];
-        struct { char *ptr; int unused_allocated_space; } remote;
-    };
+  int size;
+  union {
+    char local[32];
+    struct { char *ptr; int unused_allocated_space; } remote;
+  };
 
-    // Predicate-based discriminator derived from `size`.
-    Storage index() const { return size > sizeof(local) ? Remote : Local; }
+  // Predicate-based discriminator derived from `size`.
+  Storage index() const { return size > sizeof(local) ? Remote : Local; }
 
-    // Opt into Variant-Like protocol.
-    template <Storage S>
-    auto &&get() {
-        if constexpr (S == Local) return local;
-        else if constexpr (S == Remote) return remote;
-    }
+  // Opt into Variant-Like protocol.
+  template <Storage S>
+  auto &&get() {
+    if constexpr (S == Local) return local;
+    else if constexpr (S == Remote) return remote;
+  }
 
-    char *data();
+  char *data();
 };
 
 namespace std {
-    // Opt into Variant-Like protocol.
+  // Opt into Variant-Like protocol.
 
-    template <>
-    struct variant_size<String> : std::integral_constant<std::size_t, 2> {};
+  template <>
+  struct variant_size<String> : std::integral_constant<std::size_t, 2> {};
 
-    template <>
-    struct variant_alternative<String::Local, String> {
-        using type = decltype(String::local);
-    };
+  template <>
+  struct variant_alternative<String::Local, String> {
+    using type = decltype(String::local);
+  };
 
-    template <>
-    struct variant_alternative<String::Remote, String> {
-        using type = decltype(String::remote);
-    };
+  template <>
+  struct variant_alternative<String::Remote, String> {
+    using type = decltype(String::remote);
+  };
 }
 
 char* String::data() {
-    inspect (*this) {
-        <Local> l: return l;
-        <Remote> r: return r.ptr;
-    }
-    // switch (index()) {
-    //     case Local: {
-    //         std::variant_alternative_t<Local, String> &l = get<Local>();
-    //         return l;
-    //     }
-    //     case Remote: {
-    //         std::variant_alternative_t<Remote, String> &r = get<Remote>();
-    //         return r.ptr;
-    //     }
-    // }
+  inspect (*this) {
+    <Local> l: return l;
+    <Remote> r: return r.ptr;
+  }
+  // switch (index()) {
+  //   case Local: {
+  //     std::variant_alternative_t<Local, String>& l = get<Local>();
+  //     return l;
+  //   }
+  //   case Remote: {
+  //     std::variant_alternative_t<Remote, String>& r = get<Remote>();
+  //     return r.ptr;
+  //   }
+  // }
 }
 ```
 
@@ -1291,53 +1318,53 @@ A generalized mechanism of pattern is used extensively in LLVM;
 struct Shape { enum Kind { Circle, Rectangle } kind; };
 
 struct Circle : Shape {
-    Circle(int radius) : Shape{Shape::Kind::Circle}, radius(radius) {}
+  Circle(int radius) : Shape{Shape::Kind::Circle}, radius(radius) {}
 
-    int radius;
+  int radius;
 };
 
 struct Rectangle : Shape {
-    Rectangle(int width, int height)
-        : Shape{Shape::Kind::Rectangle}, width(width), height(height) {}
+  Rectangle(int width, int height)
+    : Shape{Shape::Kind::Rectangle}, width(width), height(height) {}
 
-    int width, height;
+  int width, height;
 };
 
 namespace std {
-    template <>
-    struct variant_size<Shape> : std::integral_constant<std::size_t, 2> {};
+  template <>
+  struct variant_size<Shape> : std::integral_constant<std::size_t, 2> {};
 
-    template <>
-    struct variant_alternative<Shape::Circle, Shape> { using type = Circle; };
+  template <>
+  struct variant_alternative<Shape::Circle, Shape> { using type = Circle; };
 
-    template <>
-    struct variant_alternative<Shape::Rectangle, Shape> { using type = Rectangle; };
+  template <>
+  struct variant_alternative<Shape::Rectangle, Shape> { using type = Rectangle; };
 }
 
 Shape::Kind index(const Shape& shape) { return shape.kind; }
 
 template <Kind K>
 auto&& get(const Shape& shape) {
-    return static_cast<const std::variant_alternative_t<K, Shape>&>(shape);
+  return static_cast<const std::variant_alternative_t<K, Shape>&>(shape);
 }
 
 int get_area(const Shape& shape) {
-    inspect (shape) {
-        <Circle> c: return 3.14 * c.radius * c.radius;
-        <Rectangle> r: return r.width * r.height;
-    }
-    // switch (index(shape)) {
-    //     case Shape::Circle: {
-    //         const std::variant_alternative_t<Shape::Circle, Shape>& c =
-    //             get<Shape::Circle>(shape);
-    //         return 3.14 * c.radius * c.radius;
-    //     }
-    //     case Shape::Rectangle: {
-    //         const std::variant_alternative_t<Shape::Rectangle, Shape>& r =
-    //             get<Shape::Rectangle>(shape);
-    //         return r.width * r.height;
-    //     }
-    // }
+  inspect (shape) {
+    <Circle> c: return 3.14 * c.radius * c.radius;
+    <Rectangle> r: return r.width * r.height;
+  }
+  // switch (index(shape)) {
+  //   case Shape::Circle: {
+  //     const std::variant_alternative_t<Shape::Circle, Shape>& c =
+  //         get<Shape::Circle>(shape);
+  //     return 3.14 * c.radius * c.radius;
+  //   }
+  //   case Shape::Rectangle: {
+  //     const std::variant_alternative_t<Shape::Rectangle, Shape>& r =
+  //         get<Shape::Rectangle>(shape);
+  //     return r.width * r.height;
+  //   }
+  // }
 }
 ```
 
@@ -1352,24 +1379,22 @@ This provides a restricted form (constant-only) of the logical-or pattern.
 ```cpp
 template <typename... Ts>
 struct any_of : std::tuple<Ts...> {
-    using tuple::tuple;
+  using tuple::tuple;
 
-    template <typename U>
-    bool match(const U& u) const {
-        return std::apply([&](const auto&... xs) {
-            return (... || xs == u);
-        }, *this);
-    }
+  template <typename U>
+  bool match(const U& u) const {
+    return std::apply([&](const auto&... xs) { return (... || xs == u); }, *this);
+  }
 };
 ```
 
 ```cpp
 int fib(int n) {
-    inspect (n) {
-        x if (x < 0): return 0;
-        ^(any_of{1, 2}): return n;  // 1 | 2
-        x: return fib(x - 1) + fib(x - 2);
-    }
+  inspect (n) {
+    x if (x < 0): return 0;
+    ^(any_of{1, 2}): return n;  // 1 | 2
+    x: return fib(x - 1) + fib(x - 2);
+  }
 }
 ```
 
@@ -1380,20 +1405,20 @@ and matches `v` if `v` $\in$ `[first, last]`.
 
 ```cpp
 struct within {
-    int first, last;
+  int first, last;
 
-    bool match(int n) const { return first <= n && n <= last; }
+  bool match(int n) const { return first <= n && n <= last; }
 };
 ```
 
 ```cpp
 inspect (n) {
-    ^(within{1, 10}): {  // 1..10
-        std::cout << n << " is in [1, 10].";
-    }
-    _: {
-        std::cout << n << " is not in [1, 10].";
-    }
+  ^(within{1, 10}): {  // 1..10
+    std::cout << n << " is in [1, 10].";
+  }
+  _: {
+    std::cout << n << " is not in [1, 10].";
+  }
 }
 ```
 
@@ -1408,10 +1433,10 @@ both elements are references to value `v`.
 
 ```cpp
 struct Both {
-    template <typename U>
-    std::pair<U&&, U&&> extract(U&& u) const {
-        return {std::forward<U>(u), std::forward<U>(u)};
-    }
+  template <typename U>
+  std::pair<U&&, U&&> extract(U&& u) const {
+    return {std::forward<U>(u), std::forward<U>(u)};
+  }
 } both;
 
 inline constexpr Both both;
@@ -1419,7 +1444,7 @@ inline constexpr Both both;
 
 ```cpp
 inspect (v) {
-    (both! [[x, 0], [0, y]]): // ...
+  (both! [[x, 0], [0, y]]): // ...
 }
 ```
 
@@ -1438,8 +1463,8 @@ inline constexpr at = both;
 
 ```cpp
 inspect (v) {
-    <Point> (at! [p, [x, y]]): // ...
-    // ...
+  <Point> (at! [p, [x, y]]): // ...
+  // ...
 }
 ```
 
@@ -1473,8 +1498,6 @@ The following is what we can write with pattern matching:
 template <typename T>
 void Node<T>::balance() {
   *this = inspect (*this) {
-    // `x`, `y`, `z` are values, `a`, `b`, `c`, `d` are branches.
-
     // left-left case
     //
     //        (Black) z              (Red) y
@@ -1488,37 +1511,29 @@ void Node<T>::balance() {
       => Node{Red, std::make_shared<Node>(Black, a, x, b),
                    y,
                    std::make_shared<Node>(Black, c, z, d)},
-    // left-right case
-    [^Black, *[^Red, a, x, *[^Red, b, y, c]], z, d]
+    [^Black, *[^Red, a, x, *[^Red, b, y, c]], z, d]  // left-right case
       => Node{Red, std::make_shared<Node>(Black, a, x, b),
                    y,
                    std::make_shared<Node>(Black, c, z, d)},
-    // right-left case
-    [^Black, a, x, *[^Red, *[^Red, b, y, c], z, d]]
+    [^Black, a, x, *[^Red, *[^Red, b, y, c], z, d]]  // right-left case
       => Node{Red, std::make_shared<Node>(Black, a, x, b),
                    y,
                    std::make_shared<Node>(Black, c, z, d)},
-    // right-right case
-    [^Black, a, x, *[^Red, b, y, *[^Red, c, z, d]]]
+    [^Black, a, x, *[^Red, b, y, *[^Red, c, z, d]]]  // right-right case
       => Node{Red, std::make_shared<Node>(Black, a, x, b),
                    y,
                    std::make_shared<Node>(Black, c, z, d)},
-    // do nothing
-    self => self
+    self => self  // do nothing
   };
 }
 ```
 
-Compare this to what we currently need to write:
+The following is what we currently need to write:
 
 ```cpp
 template <typename T>
 void Node<T>::balance() {
-  if (color != Black) {
-    // do nothing
-    return;
-  }
-
+  if (color != Black) return;
   if (lhs && lhs->color == Red) {
     if (const auto& lhs_lhs = lhs->lhs; lhs_lhs && lhs_lhs->color == Red) {
       // left-left case
@@ -1537,10 +1552,8 @@ void Node<T>::balance() {
           std::make_shared<Node>(Black, lhs->rhs, value, rhs)};
       return;
     }
-
     if (const auto& lhs_rhs = lhs->rhs; lhs_rhs && lhs_rhs->color == Red) {
-      // left-right case
-      *this = Node{
+      *this = Node{  // left-right case
           Red,
           std::make_shared<Node>(Black, lhs->lhs, lhs->value, lhs_rhs->lhs),
           lhs_rhs->value,
@@ -1548,21 +1561,17 @@ void Node<T>::balance() {
       return;
     }
   }
-
   if (rhs && rhs->color == Red) {
     if (const auto& rhs_lhs = rhs->lhs; rhs_lhs && rhs_lhs->color == Red) {
-      // right-left case
-      *this = Node{
+      *this = Node{  // right-left case
           Red,
           std::make_shared<Node>(Black, lhs, value, rhs_lhs->lhs),
           rhs_lhs->value,
           std::make_shared<Node>(Black, rhs_lhs->rhs, rhs->value, rhs->rhs)};
       return;
     }
-
     if (const auto& rhs_rhs = rhs->rhs; rhs_rhs && rhs_rhs->color == Red) {
-      // right-right case
-      *this = Node{
+      *this = Node{  // right-right case
           Red,
           std::make_shared<Node>(Black, lhs, value, rhs->lhs),
           rhs->value,
@@ -1597,8 +1606,8 @@ alternative to support pattern matching.
 U u = /* ... */;
 
 inspect (u) {
-    <U::small> s: std::cout << s;
-    <U::big> b: std::cout << b;
+  <U::small> s: std::cout << s;
+  <U::big> b: std::cout << b;
 }
 ```
 
