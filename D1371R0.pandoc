@@ -1074,20 +1074,20 @@ inspect (v) {
 }
 ```
 
-In the example above, `^x` performs unqualified name lookup for `x`,
-while `x` introduces new identifier `x` in scope.
+`^x` performs unqualified name lookup for `x`, while `x` introduces new
+identifier `x` in scope.
 
 The problem described spans more than just _identifier pattern_. That could have
 been solved with an introducer for _identifier pattern_ only. For example,
 [@SwiftPatterns] use keyword `let` to denote identifier pattern and treat
-everything else as expression. This solution works but closes off any pattern
-syntax that could use syntax that is already possible in expression. If we take
-`1 | 2` as an example again, since it is a valid expression in Swift, they could
-not introduce `1 | 2` as a logical-or pattern without a breaking change.
+everything else as an expression. This solution works but closes off pattern
+syntax that already looks like an expression. Using `1 | 2` as an example again,
+it could not be introduce as a logical-or pattern in Swift without a breaking
+change since it's already a valid expression.
 
 That leaves the only other solution --- to disambiguate patterns rather than
-expressions. e.g., prefix patterns with a context-sensitive keyword `pat`.
-Using the example from [Matching Tuples]:
+expressions. For example, we can prefix patterns with a context-sensitive
+keyword `pat`. Using the example from [Matching Tuples]:
 
 ```cpp
 std::pair<int, int> p = /* ... */
@@ -1103,6 +1103,12 @@ inspect (p) {
 This solution however is more complex because patterns contain expressions.
 This means that a pattern would either need to be explicitly prefixed at
 nested level, or implicitly distributed to inner patterns.
+
+\newpage
+
+The following is a flow graph of decisions that need to be made:
+
+![](img/disambiguation.png)
 
 # Runtime Performance
 
