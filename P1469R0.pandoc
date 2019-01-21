@@ -1,5 +1,5 @@
 ---
-title: "Deprecate _ usage in C++20 for Pattern Matching in C++23"
+title: "Deprecate `_` usage in C++20 for Pattern Matching in C++23"
 document: P1469R0
 date: 2019-01-21
 audience: Evolution
@@ -18,42 +18,42 @@ toc-depth: 4
 
 # Introduction
 
-We need to deprecate a rare usage of `_` as an identifier in C++ 20 so it can
-be safely used for pattern matching [@P1371R1] which is targeting C++ 23. The
+We need to deprecate a rare usage of `_` as an identifier in C++20 so it can
+be safely used for pattern matching [@P1371R1] which is targeting C++23. The
 issue is simple, we'd like structured binding code as in,
 
 ```c++
 auto [a, _] = std::make_pair(3, 4);
 ```
 
-, to have `_` represent a wildcard pattern instead of binding the identifier
+to have `_` represent a wildcard pattern instead of binding the identifier
 `_`. There are a few ways to do this and we suggest what we think is the ideal
 engineering approach.
 
 # Various Approaches
 
-## Use something besides '`_`' (BAD)
+## Use something besides `_` (BAD)
 
-Why is `_` so important? '`?`' is available. Languages with pattern
+Why is `_` so important when `?` is available? Languages with pattern
 matching almost universally use `_` as a wildcard pattern and popular libraries
-in C++ (like Google Test) do the same. It would be ackward and somewhat
-embarrasing if C++ were to not use the conventional token. Furthermore, because
+in C++ (like Google Test) do the same. It would be awkward and somewhat
+embarrassing if C++ were to not use such a ubiquitous token. Furthermore, because
 `_` has so much existing widespread use, we expect people to use `_` anyway,
-and accidentily bind the `_` identifier.
+and accidentally bind the `_` identifier.
 
 `__` is another possiblility, but it is difficult to recognize as a double
 underscore with many fonts and we expect significant confusion were we to use
 this.
 
-## Deprecate all or most uses of '`_`' as an identifier (WORSE)
+## Deprecate all or most uses of `_` as an identifier (WORSE)
 
 Another option is to deprecate all or most uses of `_` as an identifier. We could,
-for instance, deprecate block-scope references to `_` identifiers. The
-migration cost for this is unfortunately quite a steep one. There are more
-instances of the `_` token than `short` in the wild [@ACTCD16]. Breaking all
-this code would be costly for the C++ community so other options are preferred.
+for instance, deprecate references to `_` identifiers declared in block-scope.
+The migration cost for this is unfortunately quite a steep one. There are more
+instances of the `_` token than `short` in the wild according to [@ACTCD16].
+Breaking all this code would be extremely costly for the C++ community.
 
-## Deprecate '`_`' access when structured-binding bound (OKAY)
+## Deprecate `_` access when structured-binding bound (OKAY)
 
 Finally, we could deprecate referencing `_` identifiers that are bound as
 part of a structured binding. Because structured binding is a relatively new
@@ -62,7 +62,7 @@ be wildcard uses anyway, the cost of fixing breakages would be low.
 This change to be a sweet spot for engineering value, but we need to act
 quickly if we want to take advantage of this for pattern matching in C++23.
 
-## Disallow '`_`' access when structured-binding bound (GOOD)
+## Disallow `_` access when structured-binding bound (GOOD)
 
 Because usages of `_` identifiers that are bound by structured binding are so
 rare, there is little engineering benefit in deprecating these usages instead
@@ -81,7 +81,7 @@ between structured bindings and pattern matching.
 # Conclusion
 
 Right now we have an opportunity to prevent mistakes being made by using the
-wildcard that everyone expects for pattern matching. Lets deprecate or disallow
+wildcard that everyone expects for pattern matching. Let's deprecate or disallow
 access to `_` variables if they are bound by structured binding.
 
 ---
