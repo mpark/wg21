@@ -224,6 +224,8 @@ namespace std {
 }
 ```
 
+\newpage
+
 ::: tonytable
 
 ### Before {width=.48}
@@ -241,9 +243,13 @@ int eval(const Expr& expr) {
     }
     int operator()(const Mul& m) const {
       // Optimize for multiplication by 0
-      if(int * lhsInt = std::get_if<int>(m.lhs.get()); lhsInt && *lhsInt == 0)
+      if(int* i = std::get_if<int>(
+                            m.lhs.get());
+         i && *i == 0)
         return 0;
-      if(int * rhsInt = std::get_if<int>(m.rhs.get()); rhsInt && *rhsInt == 0)
+      if(int* i = std::get_if<int>(
+                            m.rhs.get());
+         i && *i == 0)
         return 0;
 
       return eval(*m.lhs) * eval(*m.rhs);
