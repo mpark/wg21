@@ -24,7 +24,8 @@ Refer to [How I format my C++ papers][FMT] for an overview.
 ## Generation
 
 ```bash
-make <paper>.pdf  // Generates `pdf/<paper>.pdf` from `<paper>.pandoc`
+make <paper>.pdf  // Generates `pdf/<paper>.pdf` from `<paper>.md`
+make <paper>.html  // Generates `html/<paper>.html` from `<paper>.md`
 ```
 
 ## Requirements
