@@ -25,7 +25,6 @@ Refer to [How I format my C++ papers][FMT] for an overview.
 
 ```bash
 make <paper>.pdf  // Generates `pdf/<paper>.pdf` from `<paper>.pandoc`
-make <paper>.md   // Generates `github/<paper>.md` from `<paper>.pandoc`
 ```
 
 ## Requirements
