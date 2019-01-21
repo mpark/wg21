@@ -3,12 +3,13 @@ citecolor: blue
 linkcolor: blue
 urlcolor: blue
 toccolor: black
+toctitle: Contents
 
 csl: template/cpp.csl
 link-citations: true
 
-addcolor: 006E29
-rmcolor: C01A1A
+addcolor: 006E28
+rmcolor: BF0303
 
 header-includes:
   # layout
@@ -22,6 +23,11 @@ header-includes:
   - \renewcommand{\AnnotationTok}[1]{\textit{#1}}
   - \renewcommand{\InformationTok}[1]{\textcolor{addcolor}{\textit{#1}}}
   - \renewcommand{\WarningTok}[1]{\textcolor{rmcolor}{\textit{#1}}}
+  - '<style type="text/css">'
+  -   'code span.an { color: #1F1C1B; font-style: italic; }'
+  -   'code span.in { color: #006E28; font-style: italic; }'
+  -   'code span.wa { color: #BF0303; font-style: italic; }'
+  - '</style>'
   # adjust quote indent
   - \renewenvironment{quote}{\list{}{\leftmargin=0.2in}\item[]}{\endlist}
 ---
