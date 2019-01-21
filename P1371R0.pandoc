@@ -1215,7 +1215,7 @@ nested level, or implicitly distributed to inner patterns.
 
 The following is a flow graph of decisions that need to be made:
 
-![](img/disambiguation.png)
+![](img/expr-vs-pat.png)
 
 # Runtime Performance
 
