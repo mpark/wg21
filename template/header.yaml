@@ -30,10 +30,10 @@ header-includes:
     ```
   - |
     ```{=html}
-    '<style type="text/css">'
-      'code span.an { color: #1F1C1B; font-style: italic; }'
-      'code span.in { color: #006E28; font-style: italic; }'
-      'code span.wa { color: #BF0303; font-style: italic; }'
-    '</style>'
+    <style type="text/css">
+      code span.an { color: #1F1C1B; font-style: italic; }
+      code span.in { color: #006E28; font-style: italic; }
+      code span.wa { color: #BF0303; font-style: italic; }
+    </style>
     ```
 ---
