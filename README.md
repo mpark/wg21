@@ -32,6 +32,14 @@ make <paper>.pdf  // Generates `pdf/<paper>.pdf` from `<paper>.md`
 make <paper>.html  // Generates `html/<paper>.html` from `<paper>.md`
 ```
 
+## Examples
+
+- [P1390]: Suggested Reflection TS NB Resolutions
+- [P1361]: Integration of chrono with text formatting
+
+[P1390]: https://wg21.link/p1390
+[P1361]: https://wg21.link/p1361
+
 ## Requirements
 
   - `pdflatex`
