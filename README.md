@@ -2,18 +2,22 @@
 
 ## Status
 
-- [P1260R0]: Pattern Matching - Requested to unify with [P1308R0]
-- [P0655R1]: `visit<R>`: Explicit Return Type for `visit` - Accepted in C++20
-- [D0080R1]: Tweaks to the Kona Variant - Encouraged to return with `P`-papers
-- [P0080R0]: Variant: Discriminated Union with Value Semantics - Not presented
+- [P1371]: Pattern Matching
+- [P1469]: Disallow `_` Usage in C++20 for Pattern Matching in C++23
+- [P1260]: Pattern Matching - Requested to unify with [P1308R0]
+- [P0655]: `visit<R>`: Explicit Return Type for `visit` - Accepted in C++20
+- [D0080]: Tweaks to the Kona Variant - Encouraged to return with `P`-papers
+- [P0080]: Variant: Discriminated Union with Value Semantics - Not presented
 - [N3887]: Consistent Metafunction Aliases - Accepted in C++14
 
-[P1308R0]: https://wg21.link/P1308
-[P1260R0]: https://wg21.link/P1260
-[P0655R1]: https://wg21.link/P0655
-[D0080R1]: pdf/D0080R1.pdf
-[P0080R0]: https://wg21.link/P0080
-[N3887]: https://wg21.link/N3887
+[P1371]: https://wg21.link/p1371
+[P1469]: https://wg21.link/p1469
+[P1308]: https://wg21.link/p1308
+[P1260]: https://wg21.link/p1260
+[P0655]: https://wg21.link/p0655
+[D0080]: pdf/D0080R1.pdf
+[P0080]: https://wg21.link/p0080
+[N3887]: https://wg21.link/n3887
 
 ## Formatting
 
