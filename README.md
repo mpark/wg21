@@ -61,7 +61,7 @@ make <paper>.html -f wg21/Makefile OUTDIR=html  # -> `html/<paper>.html`
 ## Requirements
 
   - `pdflatex`
-  - `pandoc`
+  - `pandoc` (>= 2.7)
   - `pandoc-citeproc`
   - `python3`
   - `panflute`
