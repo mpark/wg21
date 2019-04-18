@@ -14,7 +14,7 @@ $if(keywords)$
   <meta name="keywords" content="$for(keywords)$$keywords$$sep$, $endfor$" />
 $endif$
   <title>$if(title-prefix)$$title-prefix$ – $endif$$pagetitle$</title>
-  <style type="text/css">
+  <style>
       code{white-space: pre-wrap;}
       span.smallcaps{font-variant: small-caps;}
       span.underline{text-decoration: underline;}
@@ -24,7 +24,7 @@ $if(quotes)$
 $endif$
   </style>
 $if(highlighting-css)$
-  <style type="text/css">
+  <style>
 $highlighting-css$
   </style>
 $endif$
@@ -65,7 +65,7 @@ $endif$
     <td style="vertical-align:top">Project: </td>
     <td>Programming Language C++<br>
 $for(audience)$
-$audience$<br>
+      $audience$<br>
 $endfor$
     </td>
   </tr>
@@ -88,12 +88,10 @@ $endfor$
 </header>
 $endif$
 $if(toc)$
-<nav id="$idprefix$TOC">
-$if(toctitle)$
-<h2 id="$idprefix$toctitle">$toctitle$</h2>
-$endif$
+<div id="$idprefix$TOC" role="doc-toc">
+<h1 id="$idprefix$toctitle">Contents</h1>
 $table-of-contents$
-</nav>
+</div>
 $endif$
 $body$
 $for(include-after)$
