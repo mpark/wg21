@@ -43,11 +43,21 @@ make <paper>.html OUTDIR=html  # `<paper>.md` -> `html/<paper>.html`
 ```bash
 git submodule add https://github.com/mpark/wg21.git
 
+# Command Line
+
 make <paper>.pdf -f wg21/Makefile               # -> `generated/<paper>.pdf`
 make <paper>.pdf -f wg21/Makefile OUTDIR=pdf    # -> `pdf/<paper>.pdf`
 
 make <paper>.html -f wg21/Makefile              # -> `generated/<paper>.html`
 make <paper>.html -f wg21/Makefile OUTDIR=html  # -> `html/<paper>.html`
+
+# `Makefile`
+
+echo "include wg21/Makefile" > Makefile
+make <paper>.pdf                                # -> `generated/<paper>.pdf`
+
+echo "include wg21/Makefile\nOUTDIR=pdf" > Makefile
+make <paper>.pdf                                # -> `pdf/<paper>.pdf`
 ```
 
 ## Examples
