@@ -1,7 +1,7 @@
 DATADIR=$(join $(dir $(lastword $(MAKEFILE_LIST))), data)
 OUTDIR=generated
 
-%.pdf %.html: %.md
+%.html %.latex %.pdf: %.md
 	pandoc $< $(DATADIR)/references.md \
        --self-contained \
        --table-of-contents \
