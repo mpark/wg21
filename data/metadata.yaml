@@ -15,7 +15,7 @@ header-includes:
     ```{=latex}
     % layout
     \usepackage{fullpage}
-
+    %
     % https://github.com/cplusplus/draft/blob/master/source/layout.tex
     % bullet numbering
     \makeatletter
@@ -24,17 +24,17 @@ header-includes:
     \scriptsize\raisebox{.7ex}{#1}%
     \hspace{\@totalleftmargin}\quad}}}
     \makeatother
-
+    %
     % colors
     \definecolor{shadecolor}{HTML}{F6F8FA}
     \definecolor{addcolor}{rgb}{0.00,0.43,0.16}
     \definecolor{rmcolor}{rgb}{0.75,0.01,0.01}
-
+    %
     % syntax highlighting
     \renewcommand{\AnnotationTok}[1]{\textit{#1}}
     \renewcommand{\InformationTok}[1]{\textcolor{addcolor}{\textit{#1}}}
     \renewcommand{\WarningTok}[1]{\textcolor{rmcolor}{\textit{#1}}}
-
+    %
     % adjust quote indent
     \renewenvironment{quote}{\list{}{\leftmargin=0.2in}\item[]}{\endlist}
     ```
