@@ -27,8 +27,8 @@ Refer to [How I format my C++ papers][FMT] for an overview.
 
 ## Generation
 
-By default, the documents are generated in the `generated` directory.
-A different output directory can be specified by `OUTDIR=<outdir>`.
+Documents are generated in the `generated` directory by default, and
+can be overridden by `OUTDIR=<outdir>`.
 
 ```bash
 make <paper>.pdf               # `<paper>.md` -> `generated/<paper>.pdf`
