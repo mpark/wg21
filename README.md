@@ -15,7 +15,7 @@
 [P1308]: https://wg21.link/p1308
 [P1260]: https://wg21.link/p1260
 [P0655]: https://wg21.link/p0655
-[D0080]: pdf/D0080R1.pdf
+[D0080]: generated/D0080R1.pdf
 [P0080]: https://wg21.link/p0080
 [N3887]: https://wg21.link/n3887
 
@@ -27,9 +27,27 @@ Refer to [How I format my C++ papers][FMT] for an overview.
 
 ## Generation
 
+By default, the documents are generated in the `generated` directory.
+A different output directory can be specified by `OUTDIR=<outdir>`.
+
 ```bash
-make <paper>.pdf  // Generates `pdf/<paper>.pdf` from `<paper>.md`
-make <paper>.html  // Generates `html/<paper>.html` from `<paper>.md`
+make <paper>.pdf               # `<paper>.md` -> `generated/<paper>.pdf`
+make <paper>.pdf OUTDIR=pdf    # `<paper>.md` -> `pdf/<paper>.pdf`
+
+make <paper>.html              # `<paper>.md` -> `generated/<paper>.html`
+make <paper>.html OUTDIR=html  # `<paper>.md` -> `html/<paper>.html`
+```
+
+## Submodule
+
+```bash
+git submodule add https://github.com/mpark/wg21.git
+
+make <paper>.pdf -f wg21/Makefile               # -> `generated/<paper>.pdf`
+make <paper>.pdf -f wg21/Makefile OUTDIR=pdf    # -> `pdf/<paper>.pdf`
+
+make <paper>.html -f wg21/Makefile              # -> `generated/<paper>.html`
+make <paper>.html -f wg21/Makefile OUTDIR=html  # -> `html/<paper>.html`
 ```
 
 ## Examples
