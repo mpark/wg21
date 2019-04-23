@@ -8,6 +8,7 @@ link-citations: true
 
 addcolor: 006E28
 rmcolor: BF0303
+ednotecolor: 0000FF
 
 header-includes:
   - |
@@ -28,6 +29,7 @@ header-includes:
     \definecolor{shadecolor}{HTML}{F6F8FA}
     \definecolor{addcolor}{rgb}{0.00,0.43,0.16}
     \definecolor{rmcolor}{rgb}{0.75,0.01,0.01}
+    \definecolor{ednotecolor}{rgb}{0,0,1}
     %
     % syntax highlighting
     \renewcommand{\AnnotationTok}[1]{\textit{#1}}

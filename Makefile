@@ -7,8 +7,7 @@ OUTDIR=generated
        --table-of-contents \
        --csl $(DATADIR)/cpp.csl \
        --filter pandoc-citeproc \
-       --filter $(DATADIR)/filter/diff.py \
-       --filter $(DATADIR)/filter/tonytable.py \
+       --filter $(DATADIR)/filter/wg21.py \
        --highlight-style kate \
        --metadata-file $(DATADIR)/metadata.yaml \
        --number-sections \
