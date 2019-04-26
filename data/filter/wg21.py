@@ -7,7 +7,11 @@ import html
 import json
 import os.path
 import panflute as pf
+import re
 import tempfile
+
+escape_char = '@'
+escape_span = re.compile('{ec}(.*?){ec}'.format(ec=escape_char))
 
 def prepare(doc):
     datadir = doc.get_metadata('datadir')
@@ -253,5 +257,33 @@ def tonytable(table, doc):
 
     return pf.Table(*rows, **kwargs)
 
+
+def codeblock(elem, doc):
+    if not isinstance(elem, pf.CodeBlock) or escape_char not in elem.text:
+        return None
+
+    datadir = doc.get_metadata('datadir')
+    syntaxdir = os.path.join(datadir, 'syntax')
+
+    converted = pf.convert_text(
+        elem,
+        input_format='panflute',
+        output_format=doc.format,
+        extra_args=[
+            '--syntax-definition', os.path.join(syntaxdir, 'cpp.xml')
+        ]
+    )
+
+    def repl(match_obj):
+        text = match_obj.group(1)
+        if not text:
+            return match_obj.group(0)
+        return pf.convert_text(
+            pf.Plain(*pf.convert_text(text)[0].content),
+            input_format='panflute',
+            output_format=doc.format)
+
+    return pf.RawBlock(escape_span.sub(repl, converted), doc.format)
+
 if __name__ == '__main__':
-    pf.run_filters([divspan, tonytable], prepare=prepare)
+    pf.run_filters([divspan, tonytable, codeblock], prepare=prepare)
