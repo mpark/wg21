@@ -4,7 +4,41 @@
 """
 
 import html
+import json
+import os.path
 import panflute as pf
+import tempfile
+
+def prepare(doc):
+    datadir = doc.get_metadata('datadir')
+
+    kate = pf.run_pandoc(args=['--print-highlight-style', 'kate'])
+    json_styles = json.loads(kate)
+
+    json_styles['background-color'] = '#' + doc.get_metadata('shadecolor')
+    text_styles = json_styles['text-styles']
+    text_styles['Comment']['italic'] = True
+    text_styles['Variable']['text-color'] = '#' + doc.get_metadata('addcolor')
+    text_styles['String']['text-color'] = '#' + doc.get_metadata('rmcolor')
+
+    with tempfile.NamedTemporaryFile('w', suffix='.theme') as f:
+        json.dump(json_styles, f)
+        f.flush()
+
+        def highlighting(output_format):
+            return pf.convert_text(
+                '`_`{.cpp}',
+                output_format=output_format,
+                extra_args=[
+                    '--highlight-style', f.name,
+                    '--template', os.path.join(datadir, 'template', 'highlighting')
+                ]
+            )
+
+        doc.metadata['highlighting-macros'] = pf.MetaBlocks(
+            pf.RawBlock(highlighting('latex'), 'latex'))
+        doc.metadata['highlighting-css'] = pf.MetaBlocks(
+            pf.RawBlock(highlighting('html'), 'html'))
 
 def divspan(elem, doc):
     """
@@ -220,4 +254,4 @@ def tonytable(table, doc):
     return pf.Table(*rows, **kwargs)
 
 if __name__ == '__main__':
-    pf.run_filters([divspan, tonytable])
+    pf.run_filters([divspan, tonytable], prepare=prepare)

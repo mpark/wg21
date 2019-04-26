@@ -8,10 +8,9 @@ OUTDIR=generated
        --csl $(DATADIR)/cpp.csl \
        --filter pandoc-citeproc \
        --filter $(DATADIR)/filter/wg21.py \
-       --highlight-style kate \
+       --metadata datadir:$(DATADIR) \
        --metadata-file $(DATADIR)/metadata.yaml \
        --number-sections \
        --syntax-definition $(DATADIR)/syntax/cpp.xml \
-       --syntax-definition $(DATADIR)/syntax/diff.xml \
        --template $(DATADIR)/template/wg21 \
        --output $(OUTDIR)/$@

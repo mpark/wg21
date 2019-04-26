@@ -6,9 +6,10 @@ toccolor: black
 
 link-citations: true
 
-addcolor: 006E28
-rmcolor: BF0303
-ednotecolor: 0000FF
+addcolor: 006e28
+rmcolor: bf0303
+ednotecolor: 0000ff
+shadecolor: f6f8fa
 
 header-includes:
   - |
@@ -27,26 +28,7 @@ header-includes:
     \hspace{\@totalleftmargin}\quad}}}
     \makeatother
     %
-    % colors
-    \definecolor{shadecolor}{HTML}{F6F8FA}
-    \definecolor{addcolor}{rgb}{0.00,0.43,0.16}
-    \definecolor{rmcolor}{rgb}{0.75,0.01,0.01}
-    \definecolor{ednotecolor}{rgb}{0,0,1}
-    %
-    % syntax highlighting
-    \renewcommand{\AnnotationTok}[1]{\textit{#1}}
-    \renewcommand{\InformationTok}[1]{\textcolor{addcolor}{\textit{#1}}}
-    \renewcommand{\WarningTok}[1]{\textcolor{rmcolor}{\textit{#1}}}
-    %
     % adjust quote indent
     \renewenvironment{quote}{\list{}{\leftmargin=0.2in}\item[]}{\endlist}
-    ```
-  - |
-    ```{=html}
-    <style type="text/css">
-      code span.an { color: #1F1C1B; font-style: italic; }
-      code span.in { color: #006E28; font-style: italic; }
-      code span.wa { color: #BF0303; font-style: italic; }
-    </style>
     ```
 ---
