@@ -18,6 +18,6 @@ endif
        --metadata datadir:$(DATADIR) \
        --metadata-file $(DATADIR)/metadata.yaml \
        --number-sections \
-       --syntax-definition $(DATADIR)/syntax/cpp.xml \
+       --syntax-definition $(DATADIR)/syntax/isocpp.xml \
        --template $(DATADIR)/template/wg21 \
        --output $(OUTDIR)/$@

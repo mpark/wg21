@@ -21,7 +21,10 @@ def prepare(doc):
 
     json_styles['background-color'] = '#' + doc.get_metadata('shadecolor')
     text_styles = json_styles['text-styles']
+    text_styles['BuiltIn'] = text_styles['Normal']
     text_styles['Comment']['italic'] = True
+    text_styles['ControlFlow'] = text_styles['DataType']
+    text_styles['Keyword'] = text_styles['DataType']
     text_styles['Variable']['text-color'] = '#' + doc.get_metadata('addcolor')
     text_styles['String']['text-color'] = '#' + doc.get_metadata('rmcolor')
 
@@ -36,8 +39,7 @@ def prepare(doc):
                 extra_args=[
                     '--highlight-style', f.name,
                     '--template', os.path.join(datadir, 'template', 'highlighting')
-                ]
-            )
+                ])
 
         doc.metadata['highlighting-macros'] = pf.MetaBlocks(
             pf.RawBlock(highlighting('latex'), 'latex'))
@@ -270,9 +272,8 @@ def codeblock(elem, doc):
         input_format='panflute',
         output_format=doc.format,
         extra_args=[
-            '--syntax-definition', os.path.join(syntaxdir, 'cpp.xml')
-        ]
-    )
+            '--syntax-definition', os.path.join(syntaxdir, 'isocpp.xml')
+        ])
 
     def repl(match_obj):
         text = match_obj.group(1)
