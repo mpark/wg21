@@ -1,8 +1,15 @@
 DATADIR=$(join $(dir $(lastword $(MAKEFILE_LIST))), data)
+
 OUTDIR=generated
 
+ifneq ("$(wildcard $(metadata.yaml))","")
+METADATA=metadata.yaml
+else
+METADATA=
+endif
+
 %.html %.latex %.pdf: %.md
-	pandoc $< $(DATADIR)/references.md \
+	pandoc $(METADATA) $< $(DATADIR)/references.md \
        --self-contained \
        --table-of-contents \
        --csl $(DATADIR)/cpp.csl \
