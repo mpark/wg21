@@ -8,9 +8,10 @@ import panflute as pf
 
 def divspan(elem, doc):
     """
-    Non-code diffs: `add` and `rm` are classes that can be added to a `Div`
-    or a `Span`. `add` colors the text green, and `rm` colors the text red.
-    Additionally for HTML, `add` underlines and `rm`  strikes out the text.
+    Non-code diffs: `add` and `rm` are classes that can be added to
+    a `Div` or a `Span`. `add` colors the text with `addcolor` and
+    `rm` colors the text `rmcolor`. For `Span`s, `add` underlines
+    and `rm` strikes out the text.
 
     # Example
 
@@ -45,31 +46,32 @@ def divspan(elem, doc):
             elem.content.list.insert(0, opening)
             elem.content.list.append(closing)
 
-    def _color(color_name):
-        color = color_name + 'color'
-        _wrap(pf.RawInline('{{\\color{{{}}}'.format(color), 'tex'),
-              pf.RawInline('}', 'tex'))
-        hex_color = doc.get_metadata(color)
-        if hex_color is not None:
-            elem.attributes['style'] = 'color: #{}'.format(hex_color)
+    def _color(color):
+        html_color = doc.get_metadata(color)
+        _wrap(pf.RawInline('{{\\color[HTML]{{{}}}'.format(html_color), 'latex'),
+              pf.RawInline('}', 'latex'))
+        elem.attributes['style'] = 'color: #{}'.format(html_color)
 
     def _nonnormative(name):
         _wrap(pf.Span(pf.Str('[ '), pf.Emph(pf.Str('{}:'.format(name.title()))), pf.Space),
               pf.Span(pf.Str(' — '), pf.Emph(pf.Str('end {}'.format(name.lower()))), pf.Str(' ]')))
 
-    def _diff(tag, color):
-        _wrap(pf.RawInline('<{}>'.format(tag), 'html'),
-              pf.RawInline('</{}>'.format(tag), 'html'))
+    def _diff(color, latex_tag, html_tag):
+        if isinstance(elem, pf.Span):
+            _wrap(pf.RawInline('\\{}{{'.format(latex_tag), 'latex'),
+                  pf.RawInline('}', 'latex'))
+            _wrap(pf.RawInline('<{}>'.format(html_tag), 'html'),
+                  pf.RawInline('</{}>'.format(html_tag), 'html'))
         _color(color)
 
     def example(): _nonnormative('example')
     def note():    _nonnormative('note')
     def ednote():
         _wrap(pf.Str("[ Editor's note: "), pf.Str(' ]'))
-        _color('ednote')
+        _color('ednotecolor')
 
-    def add(): _diff('ins', 'add');
-    def rm():  _diff('del', 'rm')
+    def add(): _diff('addcolor', 'uline', 'ins')
+    def rm():  _diff('rmcolor', 'sout', 'del')
 
     if not isinstance(elem, pf.Div) and not isinstance(elem, pf.Span):
         return None
