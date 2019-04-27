@@ -4,20 +4,22 @@ linkcolor: blue
 urlcolor: blue
 toccolor: black
 
-link-citations: true
-
 addcolor: 006e28
 rmcolor: bf0303
 ednotecolor: 0000ff
 shadecolor: f6f8fa
+
+link-citations: true
+strikeout: true
 
 header-includes:
   - |
     ```{=latex}
     % layout
     \usepackage{fullpage}
-    \usepackage{ulem}
-    \normalem
+    %
+    % adjust quote indent
+    \renewenvironment{quote}{\list{}{\leftmargin=0.2in}\item[]}{\endlist}
     %
     % https://github.com/cplusplus/draft/blob/master/source/layout.tex
     % bullet numbering
@@ -27,8 +29,5 @@ header-includes:
     \scriptsize\raisebox{.7ex}{#1}%
     \hspace{\@totalleftmargin}\quad}}}
     \makeatother
-    %
-    % adjust quote indent
-    \renewenvironment{quote}{\list{}{\leftmargin=0.2in}\item[]}{\endlist}
     ```
 ---
