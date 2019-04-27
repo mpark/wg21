@@ -259,15 +259,20 @@ def tonytable(table, doc):
 
     return pf.Table(*rows, **kwargs)
 
-
 def codeblock(elem, doc):
     if not isinstance(elem, pf.CodeBlock) or escape_char not in elem.text:
         return None
 
+    is_raw = not elem.classes
+
+    if is_raw:
+        elem.classes.append('default')
+        elem.attributes['style'] = 'color: inherit'
+
     datadir = doc.get_metadata('datadir')
     syntaxdir = os.path.join(datadir, 'syntax')
 
-    converted = pf.convert_text(
+    text = pf.convert_text(
         elem,
         input_format='panflute',
         output_format=doc.format,
@@ -276,15 +281,22 @@ def codeblock(elem, doc):
         ])
 
     def repl(match_obj):
-        text = match_obj.group(1)
-        if not text:
+        match = match_obj.group(1)
+        if not match:  # @@
             return match_obj.group(0)
+        if match.isspace():  # @  @
+            return match
         return pf.convert_text(
-            pf.Plain(*pf.convert_text(text)[0].content),
+            pf.Plain(*pf.convert_text(match)[0].content),
             input_format='panflute',
             output_format=doc.format)
 
-    return pf.RawBlock(escape_span.sub(repl, converted), doc.format)
+    result = pf.RawBlock(escape_span.sub(repl, text), doc.format)
+
+    return pf.Div(
+        pf.RawBlock('{\\renewcommand{\\NormalTok}[1]{#1}', 'latex'),
+        result,
+        pf.RawBlock('}', 'latex')) if is_raw else result
 
 if __name__ == '__main__':
     pf.run_filters([divspan, tonytable, codeblock], prepare=prepare)
