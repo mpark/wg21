@@ -1,12 +1,6 @@
 DATADIR=$(join $(dir $(lastword $(MAKEFILE_LIST))), data)
-
+METADATA=$(wildcard metadata.yaml)
 OUTDIR=generated
-
-ifneq ("$(wildcard $(metadata.yaml))","")
-METADATA=metadata.yaml
-else
-METADATA=
-endif
 
 %.html %.latex %.pdf: %.md
 	pandoc $(METADATA) $< $(DATADIR)/references.md \
