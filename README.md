@@ -4,7 +4,7 @@
 
 - [P1371]: Pattern Matching
 - [P1469]: Disallow `_` Usage in C++20 for Pattern Matching in C++23
-- [P1260]: Pattern Matching - Requested to unify with [P1308R0]
+- [P1260]: Pattern Matching - Requested to unify with [P1308]
 - [P0655]: `visit<R>`: Explicit Return Type for `visit` - Accepted in C++20
 - [D0080]: Tweaks to the Kona Variant - Encouraged to return with `P`-papers
 - [P0080]: Variant: Discriminated Union with Value Semantics - Not presented
