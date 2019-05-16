@@ -6,8 +6,8 @@ $(OUTDIR)/%.html $(OUTDIR)/%.latex $(OUTDIR)/%.pdf: %.md
 	pandoc $(METADATA) $< $(DATADIR)/references.md \
        --self-contained \
        --table-of-contents \
+       --bibliography $(DATADIR)/index.yaml \
        --csl $(DATADIR)/cpp.csl \
-       --filter pandoc-citeproc \
        --filter $(DATADIR)/filter/wg21.py \
        --metadata datadir:$(DATADIR) \
        --metadata-file $(DATADIR)/metadata.yaml \
@@ -22,11 +22,18 @@ HTML = $(SRC:.md=.html)
 LATEX = $(SRC:.md=.latex)
 PDF = $(SRC:.md=.pdf)
 
+$(DATADIR)/index.yaml:
+	wget https://wg21.link/index.yaml -O $@
+
 .PHONY: $(HTML)
-$(HTML): %.html: $(OUTDIR)/%.html
+$(HTML): %.html: $(DATADIR)/index.yaml $(OUTDIR)/%.html
 
 .PHONY: $(LATEX)
-$(LATEX): %.latex: $(OUTDIR)/%.latex
+$(LATEX): %.latex: $(DATADIR)/index.yaml $(OUTDIR)/%.latex
 
 .PHONY: $(PDF)
-$(PDF): %.pdf: $(OUTDIR)/%.pdf
+$(PDF): %.pdf: $(DATADIR)/index.yaml $(OUTDIR)/%.pdf
+
+.PHONY: update
+update:
+	wget https://wg21.link/index.yaml -O $(DATADIR)/index.yaml
