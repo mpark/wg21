@@ -3,7 +3,7 @@ METADATA = $(wildcard metadata.yaml)
 OUTDIR = generated
 
 $(OUTDIR)/%.html $(OUTDIR)/%.latex $(OUTDIR)/%.pdf: %.md
-	pandoc $(METADATA) $< $(DATADIR)/references.md \
+	pandoc $< $(METADATA) $(DATADIR)/references.md \
        --self-contained \
        --table-of-contents \
        --bibliography $(DATADIR)/index.yaml \
