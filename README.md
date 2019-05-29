@@ -95,11 +95,11 @@ author:
 The default `toc-depth` is `3`, but it can be specified to go deeper:
 ![](img/toc-depth.png)
 
-### Code Examples
+### Markdown within Code Blocks
 
-Within a code block, any text surrounded by the `@` symbol is formatted as Markdown!
-This is useful for conventions such as _`see below`_, _`unspecified`_, _`INVOKE`_,
-and _exposition-only_ variable names.
+Within `` ``` ``, `` ```cpp `` or `` ```diff `` code blocks, any text surrounded
+by the `@` symbol is formatted as Markdown! This is useful for conventions such
+as _`see below`_, _`unspecified`_, and _exposition-only_ variable names.
 
 ![](img/code-cpp.png)
 

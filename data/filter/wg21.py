@@ -288,7 +288,7 @@ def tonytable(table, doc):
     return pf.Table(*rows, **kwargs)
 
 def codeblock(elem, doc):
-    if not isinstance(elem, pf.CodeBlock) or escape_char not in elem.text:
+    if not isinstance(elem, pf.CodeBlock):
         return None
 
     is_raw = not elem.classes
@@ -296,6 +296,12 @@ def codeblock(elem, doc):
     if is_raw:
         elem.classes.append('default')
         elem.attributes['style'] = 'color: inherit'
+
+    if not any(cls in elem.classes for cls in ['cpp', 'default', 'diff']):
+        return None
+
+    if escape_char not in elem.text:
+        return None
 
     datadir = doc.get_metadata('datadir')
     syntaxdir = os.path.join(datadir, 'syntax')
