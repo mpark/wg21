@@ -50,11 +50,19 @@ make <paper>.html # `<paper>.md` -> `generated/<paper>.html`
 
 This framework provides support for various common elements for C++ papers.
 
-### Markdown
-
-Refer to the full [Pandoc Markdown] spec for useful extensions!
-
-[Pandoc Markdown]: https://pandoc.org/MANUAL.html#pandocs-markdown
+- [Title](#title)
+- [Table of Contents](#table-of-contents)
+- [Markdown](#markdown)
+  - [Within Code Blocks](#within-code-blocks)
+- [Tony Tables](#tony-tables)
+- [Proposed Wording](#proposed-wording)
+  - [Code Changes](#code-changes)
+  - [Wording Changes](#wording-changes)
+  - [Grammar Changes](#grammar-changes)
+- [Citations](#citations)
+- [References](#references)
+  - [Automatic References](#automatic-references)
+  - [Manual References](#manual-references)
 
 ### Title
 
@@ -95,15 +103,22 @@ author:
 The default `toc-depth` is `3`, but it can be specified to go deeper:
 ![](img/toc-depth.png)
 
-### Markdown within Code Blocks
+### Markdown
 
-Within `` ``` ``, `` ```cpp `` or `` ```diff `` code blocks, any text surrounded
-by the `@` symbol is formatted as Markdown! This is useful for conventions such
-as _`see below`_, _`unspecified`_, and _exposition-only_ variable names.
+Refer to the full [Pandoc Markdown] spec for useful extensions!
+
+[Pandoc Markdown]: https://pandoc.org/MANUAL.html#pandocs-markdown
+
+#### Within Code Blocks
+
+Within `` ``` ``, `` ```cpp ``, and `` ```diff `` code blocks, any text
+surrounded by the `@` symbol is formatted as Markdown! This is useful for
+conventions such as _`see below`_, _`unspecified`_, and _exposition-only_
+variable names.
 
 ![](img/code-cpp.png)
 
-### Tony Tables (Comparison Tables)
+### Tony Tables
 
 Tony Tables are [fenced `Div` blocks][divspan] that open with `::: tonytable`
 and close with `:::`. [Fenced code blocks][code] are the only elements that
@@ -197,8 +212,7 @@ inspect (s) {
 
 #### Wording Changes
 
-Large changes are [fenced `Div` blocks][divspan] that open with `::: add` for
-additions, `::: rm` for removals, and close with `:::`.
+Large changes are [fenced `Div` blocks][divspan] with `::: add` for additions, `::: rm` for removals.
 
 ![](img/wording-div.png)
 
@@ -270,7 +284,7 @@ The `[@N3546]` example from [Citations](#citations) generates:
 
 ![](img/automatic-reference.png)
 
-Use `make update` to update the local cache of [index.yaml](https://wg21.link/index.yaml).
+> Use `make update` to update the local cache of [index.yaml](https://wg21.link/index.yaml).
 
 #### Manual References
 
