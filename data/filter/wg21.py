@@ -46,6 +46,10 @@ def prepare(doc):
         doc.metadata['highlighting-css'] = pf.MetaBlocks(
             pf.RawBlock(highlighting('html'), 'html'))
 
+def protect_code(elem, doc):
+    if isinstance(elem, pf.Code):
+        return pf.Span(pf.RawInline('\\mbox{', 'latex'), elem, pf.RawInline('}', 'latex'))
+
 def divspan(elem, doc):
     """
     Non-code diffs: `add` and `rm` are classes that can be added to
@@ -98,6 +102,7 @@ def divspan(elem, doc):
 
     def _diff(color, latex_tag, html_tag):
         if isinstance(elem, pf.Span):
+            elem.walk(protect_code)
             _wrap(pf.RawInline('\\{}{{'.format(latex_tag), 'latex'),
                   pf.RawInline('}', 'latex'))
             _wrap(pf.RawInline('<{}>'.format(html_tag), 'html'),
@@ -298,5 +303,12 @@ def codeblock(elem, doc):
         result,
         pf.RawBlock('}', 'latex')) if is_raw else result
 
+# https://github.com/jgm/pandoc/issues/5529
+def strikeout(elem, doc):
+    if not isinstance(elem, pf.Strikeout):
+        return None
+
+    elem.walk(protect_code)
+
 if __name__ == '__main__':
-    pf.run_filters([divspan, tonytable, codeblock], prepare=prepare)
+    pf.run_filters([divspan, tonytable, codeblock, strikeout], prepare=prepare)
