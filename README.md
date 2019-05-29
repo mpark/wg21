@@ -56,6 +56,7 @@ This framework provides support for various common elements for C++ papers.
   - [Within Code Blocks](#within-code-blocks)
 - [Tony Tables](#tony-tables)
 - [Proposed Wording](#proposed-wording)
+  - [Paragraph Numbers](#paragraph-numbers)
   - [Code Changes](#code-changes)
   - [Wording Changes](#wording-changes)
   - [Grammar Changes](#grammar-changes)
@@ -205,6 +206,23 @@ inspect (s) {
 ![](img/tonytable-2.png)
 
 ### Proposed Wording
+
+#### Paragraph Numbers
+
+Paragraph numbers are [bracketed `Span` elements][divspan] that look
+like: `[2]{.pnum}` and `[2.1]{.pnum}`.
+
+```markdown
+[2]{.pnum} An expression is _potentially evaluated_ unless it is an unevaluated
+operand (7.2) or a subexpression thereof. The set of _potential results_ of
+an expression `e` is defined as follows:
+
+- [2.1]{.pnum} If `e` is an _id-expression_ (7.5.4), the set contains only `e`.
+- [2.2]{.pnum} If `e` is a subscripting operation (7.6.1.1) with an array operand,
+the set contains the potential results of that operand.
+```
+
+![](img/pnum.png)
 
 #### Code Changes
 

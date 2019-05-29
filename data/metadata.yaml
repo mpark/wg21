@@ -17,12 +17,14 @@ header-includes:
     ```{=latex}
     % layout
     \usepackage{fullpage}
-    %
     % adjust quote indent
     \renewenvironment{quote}{\list{}{\leftmargin=0.2in}\item[]}{\endlist}
-    %
-    % https://github.com/cplusplus/draft/blob/master/source/layout.tex
-    % bullet numbering
+    % adjust list style
+    \renewcommand{\labelitemi}{---}
+    \renewcommand{\labelitemii}{---}
+    \renewcommand{\labelitemiii}{---}
+    \renewcommand{\labelitemiv}{---}
+    % `\pnum`: https://github.com/cplusplus/draft/blob/master/source/layout.tex
     \makeatletter
     \newcommand{\pnum}[1]{%
     \noindent\makebox[0pt][l]{\makebox[0pt][r]{%
@@ -31,6 +33,4 @@ header-includes:
     }}\ignorespaces}
     \makeatother
     ```
-
-keywords: mpark/wg21
 ...
