@@ -121,6 +121,12 @@ def divspan(elem, doc):
         if doc.format == 'latex':
             return pf.RawInline('\\pnum{{{}}}'.format(num), 'latex')
 
+        if doc.format == 'html':
+            return pf.RawInline(
+                '<div class="marginalizedparent">' \
+                    '<a class="marginalized">{}</a>' \
+                '</div>'.format(num), 'html')
+
         return pf.Superscript(pf.Str(num))
 
     def example(): _nonnormative('example')

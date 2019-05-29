@@ -42,17 +42,18 @@ $for(header-includes)$
 $endfor$
 </head>
 <body>
+<div class="wrapper">
 $for(include-before)$
 $include-before$
 $endfor$
 $if(title)$
 <header id="title-block-header">
-<h1 class="title">$title$</h1>
+<h1 class="title" style="text-align:center">$title$</h1>
 $if(subtitle)$
 <p class="subtitle">$subtitle$</p>
 $endif$
 
-<table>
+<table style="border:none;float:right">
   <tr>
     <td>Document #: </td>
     <td>$document$</td>
@@ -87,6 +88,7 @@ $endfor$
 
 </header>
 $endif$
+<div style="clear:both">
 $if(toc)$
 <div id="$idprefix$TOC" role="doc-toc">
 <h1 id="$idprefix$toctitle">Contents</h1>
@@ -97,5 +99,7 @@ $body$
 $for(include-after)$
 $include-after$
 $endfor$
+</div>
+</div>
 </body>
 </html>
