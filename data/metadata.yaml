@@ -25,9 +25,10 @@ header-includes:
     % bullet numbering
     \makeatletter
     \newcommand{\pnum}[1]{%
-    \noindent\makebox[0pt][l]{\makebox[0pt][r]{
+    \noindent\makebox[0pt][l]{\makebox[0pt][r]{%
     \scriptsize\raisebox{.7ex}{#1}%
-    \hspace{\@totalleftmargin}\quad}}}
+    \hspace{\@totalleftmargin}\quad%
+    }}\ignorespaces}
     \makeatother
     ```
 ---

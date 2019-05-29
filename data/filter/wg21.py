@@ -109,6 +109,20 @@ def divspan(elem, doc):
                   pf.RawInline('</{}>'.format(html_tag), 'html'))
         _color(color)
 
+    def pnum():
+        num = pf.stringify(elem)
+
+        if not num.replace('.', '').isdigit():
+            raise SyntaxError('`pnum` must be integrals with optional `.` separators.')
+
+        if '.' in num:
+            num = '({})'.format(num)
+
+        if doc.format == 'latex':
+            return pf.RawInline('\\pnum{{{}}}'.format(num), 'latex')
+
+        return pf.Superscript(pf.Str(num))
+
     def example(): _nonnormative('example')
     def note():    _nonnormative('note')
     def ednote():
@@ -122,6 +136,9 @@ def divspan(elem, doc):
         return None
 
     clses = list(reversed(elem.classes))
+
+    if 'pnum' in clses and isinstance(elem, pf.Span):
+        return pnum()
 
     note_cls = next(iter(cls for cls in clses if cls in {'example', 'note', 'ednote'}), None)
     if note_cls == 'example':  example()
