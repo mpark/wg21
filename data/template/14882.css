@@ -1,4 +1,4 @@
-/* Forked from https://github.com/Eelis/cxxdraft-htmlgen/blob/master/14882.css */
+/* https://raw.githubusercontent.com/Eelis/cxxdraft-htmlgen/master/14882.css */
 
 body {
 	margin: 5em;
@@ -87,6 +87,11 @@ div.marginalizedparent {
 	position: relative;
 	left: -5em;
 }
+
+li > div.marginalizedparent { left: -7em; }
+li > ul > li > div.marginalizedparent { left: -9em; }
+li > ul > li > ul > li > div.marginalizedparent { left: -11em; }
+li > ul > li > ul > li > ul > li > div.marginalizedparent { left: -13em; }
 
 div.footnoteNumberParent {
 	position: relative;
