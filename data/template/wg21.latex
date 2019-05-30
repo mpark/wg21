@@ -220,7 +220,7 @@ $if(colorlinks)$
 $else$
   hidelinks,
 $endif$
-  pdfcreator={LaTeX via pandoc}}
+  pdfcreator={mpark/wg21}}
 \urlstyle{same} % disable monospaced font for URLs
 $if(verbatim-in-note)$
 \VerbatimFootnotes % allow verbatim text in footnotes
