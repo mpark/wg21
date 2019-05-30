@@ -88,7 +88,7 @@ author:
     email: <dani@ngrt.de>
   - name: Howard E. Hinnant
     email: <howard.hinnant@gmail.com>
-...
+---
 ```
 
 ### Table of Contents
@@ -324,7 +324,7 @@ references:
       - family: Park
         given: Michael
     URL: https://github.com/mpark/patterns
-...
+---
 ```
 
 ![](img/manual-reference.png)
