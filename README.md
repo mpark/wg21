@@ -353,6 +353,15 @@ brew install pandoc pandoc-citeproc python
 pip3 install panflute
 ```
 
+### Ubuntu
+
+Manually install the [latest pandoc release](https://github.com/jgm/pandoc/releases/tag/2.7.2) following [their installation instructions](https://pandoc.org/installing.html).
+
+```
+sudo apt-get install texlive-latex-base
+pip3 install panflute
+```
+
 ## Resources
 
   - Blog Post: [How I format my C++ papers][FMT]
