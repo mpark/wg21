@@ -373,7 +373,7 @@ Reply-to:   $for(author)$&$author.name$\\$for(author.email)$&<$author.email$>\\$
 }
 
 $if(title)$
-\title{$title$$if(thanks)$\thanks{$thanks$}$endif$}
+\title{$title$}
 $endif$
 $if(subtitle)$
 $if(beamer)$
