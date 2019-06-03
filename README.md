@@ -355,9 +355,9 @@ pip3 install panflute
 
 ### Ubuntu
 
-Manually install the [latest pandoc release](https://github.com/jgm/pandoc/releases/tag/2.7.2) following [their installation instructions](https://pandoc.org/installing.html).
+Manually install the [latest pandoc release](https://github.com/jgm/pandoc/releases/latest) following [their installation instructions](https://pandoc.org/installing.html).
 
-```
+```bash
 sudo apt-get install texlive-latex-base
 pip3 install panflute
 ```
