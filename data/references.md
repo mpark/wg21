@@ -1,3 +1,5 @@
+::: {#bibliography}
+
 # References
 
 ```{=latex}
@@ -7,3 +9,8 @@
 \setlength{\leftskip}{0.2in}
 \setlength{\parskip}{8pt}
 ```
+
+::: {#refs}
+:::
+
+:::

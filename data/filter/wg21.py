@@ -339,5 +339,25 @@ def strikeout(elem, doc):
 
     elem.walk(protect_code)
 
+def bibliography(elem, doc):
+    if not isinstance(elem, pf.Div) or elem.identifier != 'bibliography':
+        return None
+
+    def references(elem, doc):
+        if isinstance(elem, pf.Div) and elem.identifier == 'refs':
+            nonlocal refs
+            refs = elem
+
+    refs = pf.Div()
+    elem.walk(references)
+    if refs.content:
+        # This should just be `return None`, but the HTML output
+        # for headers seem to break with `<h1>` inside a `<div>`.
+        elem.parent.content.extend(elem.content)
+
+    return []
+
 if __name__ == '__main__':
-    pf.run_filters([divspan, tonytable, codeblock, strikeout], prepare=prepare)
+    pf.run_filters(
+        [divspan, tonytable, codeblock, strikeout, bibliography],
+        prepare=prepare)
