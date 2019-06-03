@@ -79,16 +79,16 @@ def divspan(elem, doc):
     def _wrap(opening, closing):
         if isinstance(elem, pf.Div):
             if elem.content and isinstance(elem.content[0], pf.Para):
-                elem.content[0].content.list.insert(0, opening)
+                elem.content[0].content.insert(0, opening)
             else:
-                elem.content.list.insert(0, pf.Plain(opening))
+                elem.content.insert(0, pf.Plain(opening))
             if elem.content and isinstance(elem.content[-1], pf.Para):
-                elem.content[-1].content.list.append(closing)
+                elem.content[-1].content.append(closing)
             else:
-                elem.content.list.append(pf.Plain(closing))
+                elem.content.append(pf.Plain(closing))
         elif isinstance(elem, pf.Span):
-            elem.content.list.insert(0, opening)
-            elem.content.list.append(closing)
+            elem.content.insert(0, opening)
+            elem.content.append(closing)
 
     def _color(color):
         html_color = doc.get_metadata(color)
