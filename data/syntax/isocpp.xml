@@ -363,12 +363,6 @@
         <keyword attribute="Data Type" context="#stay" String="types" />
         <keyword attribute="Type Modifiers" context="#stay" String="modifiers" />
         <keyword attribute="Standard Macros" context="#stay" String="StdMacros" />
-        <RegExpr attribute="Internals" context="#stay" String="_[a-zA-Z0-9_]+|[a-zA-Z][a-zA-Z0-9_]*__\b" />
-        <RegExpr attribute="Data Members (m_*)" context="#stay" String="m_[a-zA-Z0-9_]+|[a-z][a-zA-Z0-9_]*_\b" />
-        <RegExpr attribute="Globals (g_*)" context="#stay" String="g_[a-zA-Z0-9_]+" />
-        <RegExpr attribute="Statics (s_*)" context="#stay" String="s_[a-zA-Z0-9_]+" />
-        <RegExpr attribute="CONSTS/MACROS" context="#stay" String="[A-Z][A-Z0-9_]{2,}\b" />
-        <RegExpr attribute="Types (*_t/*_type)" context="#stay" String="[a-zA-Z][a-zA-Z0-9_]*_t(ype)?\b" />
         <DetectIdentifier />
       </context>
 
@@ -514,7 +508,6 @@
         <AnyChar attribute="Decimal" context="Integer" String="0123456789" lookAhead="true" />
         <keyword attribute="Keyword" context="AttributeNamespace" String="using" />
         <IncludeRules context="DetectGccAttributes##GCCExtensions" />
-        <RegExpr attribute="CONSTS/MACROS" context="#stay" String="[A-Z][A-Z0-9_]{2,}\b" />
         <DetectIdentifier />
       </context>
 
@@ -796,17 +789,11 @@
       <itemData name="Comment"            defStyleNum="dsComment"   spellChecking="true"  />
       <itemData name="Symbol"             defStyleNum="dsNormal"    spellChecking="false" />
       <itemData name="Separator Symbol"   defStyleNum="dsNormal"    spellChecking="false" />
-      <itemData name="Data Members (m_*)" defStyleNum="dsVariable"  spellChecking="false" />
-      <itemData name="Globals (g_*)"      defStyleNum="dsVariable"  spellChecking="false" />
-      <itemData name="Statics (s_*)"      defStyleNum="dsVariable"  spellChecking="false" />
-      <itemData name="Types (*_t/*_type)" defStyleNum="dsDataType"  spellChecking="false" />
-      <itemData name="CONSTS/MACROS"      defStyleNum="dsNormal"    spellChecking="false" />
       <itemData name="Preprocessor"       defStyleNum="dsPreprocessor" spellChecking="false" />
       <itemData name="Prep. Lib"          defStyleNum="dsImport"    spellChecking="false" />
       <itemData name="Standard Macros"    defStyleNum="dsOthers"    spellChecking="false" />
       <itemData name="Standard Classes"   defStyleNum="dsBuiltIn"   spellChecking="false" />
       <itemData name="Boost Stuff"        defStyleNum="dsExtension" spellChecking="false" />
-      <itemData name="Internals"          defStyleNum="dsNormal"    spellChecking="false" color="#808080" selColor="#808080" />
       <itemData name="Region Marker"      defStyleNum="dsRegionMarker" spellChecking="false" />
       <itemData name="UDL Numeric Suffix" defStyleNum="dsDecVal"    spellChecking="false" />
       <itemData name="UDL String Suffix"  defStyleNum="dsString"    spellChecking="false" />
