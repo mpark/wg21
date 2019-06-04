@@ -90,8 +90,7 @@ def divspan(elem, doc):
             elem.content.insert(0, opening)
             elem.content.append(closing)
 
-    def _color(color):
-        html_color = doc.get_metadata(color)
+    def _color(html_color):
         _wrap(pf.RawInline('{{\\color[HTML]{{{}}}'.format(html_color), 'latex'),
               pf.RawInline('}', 'latex'))
         elem.attributes['style'] = 'color: #{}'.format(html_color)
@@ -107,7 +106,7 @@ def divspan(elem, doc):
                   pf.RawInline('}', 'latex'))
             _wrap(pf.RawInline('<{}>'.format(html_tag), 'html'),
                   pf.RawInline('</{}>'.format(html_tag), 'html'))
-        _color(color)
+        _color(doc.get_metadata(color))
 
     def pnum():
         num = pf.stringify(elem)
@@ -130,7 +129,7 @@ def divspan(elem, doc):
     def note():    _nonnormative('note')
     def ednote():
         _wrap(pf.Str("[ Editor's note: "), pf.Str(' ]'))
-        _color('ednotecolor')
+        _color('0000ff')
 
     def add(): _diff('addcolor', 'uline', 'ins')
     def rm():  _diff('rmcolor', 'sout', 'del')
