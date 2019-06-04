@@ -353,24 +353,25 @@ $for(bibliography)$
 $endfor$
 $endif$
 
-\renewcommand*{\title}[1]{\def\@title{#1}}
-\renewcommand{\maketitle}{
+\makeatletter
+\def\@maketitle{
   \newpage \null \vskip 2em
   {\center \LARGE \@title \par}
   \vskip 1.5em
   \begin{flushright}
     \begin{tabular}{ll}
 Document \#:&$document$\\
-Date:       &$date$\\
+Date:       &\@date\\
 Project:    &Programming Language C++\\
             $for(audience)$&$audience$\\$endfor$
 $if(revises)$
 Revises:    &$revises$\\
 $endif$
-Reply-to:   $for(author)$&$author.name$\\$for(author.email)$&<$author.email$>\\$endfor$$endfor$
+Reply-to:   \@author
     \end{tabular}
   \end{flushright}
 }
+\makeatother
 
 $if(title)$
 \title{$title$}
@@ -388,7 +389,7 @@ $endif$
 \subtitle{$subtitle$}
 $endif$
 $if(author)$
-\author{$for(author)$$author$$sep$ \and $endfor$}
+\author{$for(author)$&$author.name$\\$for(author.email)$&<$author.email$>\\$endfor$$endfor$}
 $endif$
 \date{$date$}
 $if(beamer)$
