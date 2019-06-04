@@ -112,9 +112,6 @@ def divspan(elem, doc):
     def pnum():
         num = pf.stringify(elem)
 
-        if not num.replace('.', '').isdigit():
-            raise SyntaxError('`pnum` must be integrals with optional `.` separators.')
-
         if '.' in num:
             num = '({})'.format(num)
 
