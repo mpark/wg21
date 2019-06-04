@@ -259,15 +259,13 @@ code.itemdeclcode {
 	display: block;
 }
 
-span.comment { color: green; font-style: italic; font-family: serif; }
-span.keyword { color: #00607c; }
-span.parenthesis { color: #af1915; }
-span.curlybracket { color: #af1915; }
-span.squarebracket { color: #af1915; }
-span.literal { color: #9F6807; }
-span.operator { color: #570057; }
-span.anglebracket { color: #570057; }
-span.preprocessordirective { color: #6F4E37; }
+code span.co { color: green; font-style: italic; font-family: serif; }
+code span.kw { color: #00607c; }
+code span.cf { color: #00607c; }
+code span.at { color: #00607c; }
+code span.dt { color: #00607c; }
+code span.op { color: #af1915; }
+code span.pp { color: #6F4E37; }
 
 span.textsuperscript {
 	vertical-align: super;
