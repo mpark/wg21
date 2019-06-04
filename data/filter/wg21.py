@@ -294,35 +294,32 @@ def codeblock(elem, doc):
         elem.classes.append('default')
         elem.attributes['style'] = 'color: inherit'
 
-    if not any(cls in elem.classes for cls in ['cpp', 'default', 'diff']):
-        return None
+    result = elem
 
-    if escape_char not in elem.text:
-        return None
+    if any(cls in elem.classes for cls in ['cpp', 'default', 'diff']) and escape_char in elem.text:
+        datadir = doc.get_metadata('datadir')
+        syntaxdir = os.path.join(datadir, 'syntax')
 
-    datadir = doc.get_metadata('datadir')
-    syntaxdir = os.path.join(datadir, 'syntax')
-
-    text = pf.convert_text(
-        elem,
-        input_format='panflute',
-        output_format=doc.format,
-        extra_args=[
-            '--syntax-definition', os.path.join(syntaxdir, 'isocpp.xml')
-        ])
-
-    def repl(match_obj):
-        match = match_obj.group(1)
-        if not match:  # @@
-            return match_obj.group(0)
-        if match.isspace():  # @  @
-            return match
-        return pf.convert_text(
-            pf.Plain(*pf.convert_text(match)[0].content),
+        text = pf.convert_text(
+            elem,
             input_format='panflute',
-            output_format=doc.format)
+            output_format=doc.format,
+            extra_args=[
+                '--syntax-definition', os.path.join(syntaxdir, 'isocpp.xml')
+            ])
 
-    result = pf.RawBlock(escape_span.sub(repl, text), doc.format)
+        def repl(match_obj):
+            match = match_obj.group(1)
+            if not match:  # @@
+                return match_obj.group(0)
+            if match.isspace():  # @  @
+                return match
+            return pf.convert_text(
+                pf.Plain(*pf.convert_text(match)[0].content),
+                input_format='panflute',
+                output_format=doc.format)
+
+        result = pf.RawBlock(escape_span.sub(repl, text), doc.format)
 
     return pf.Div(
         pf.RawBlock('{\\renewcommand{\\NormalTok}[1]{#1}', 'latex'),
