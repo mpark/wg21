@@ -284,7 +284,15 @@ def codeblock(elem, doc):
 
         result = pf.RawBlock(escape_span.sub(repl, text), doc.format)
 
-    return result
+    if 'diff' not in elem.classes:
+        return result
+
+    # For HTML, this is handled via CSS in `data/template/wg21.html`.
+    command = '\\renewcommand{{\\{}}}[1]{{\\textcolor[HTML]{{{}}}{{#1}}}}'
+    return pf.Div(
+        pf.RawBlock(command.format('VariableTok', doc.get_metadata('addcolor')), 'latex'),
+        pf.RawBlock(command.format('StringTok', doc.get_metadata('rmcolor')), 'latex'),
+        result)
 
 # https://github.com/jgm/pandoc/issues/5529
 def strikeout(elem, doc):
