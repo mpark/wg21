@@ -125,13 +125,6 @@
       <list>co_return</list>
       <list>co_yield</list> -->
     </list>
-    <!-- This keyword may appear in InternalsNS context. For example in code:
-      details::some_class::template some_templated_static();
-      and it should be displayed as keyword, not like part of details namespace...
-      -->
-    <list name="template">
-      <item>template</item>
-    </list>
 
     <!-- 7.6 Attributes -->
     <!-- http://en.cppreference.com/w/cpp/language/attributes -->
@@ -298,14 +291,6 @@
         <IncludeRules context="match string" />
         <!-- Match GCC extensions -->
         <IncludeRules context="DetectGccExtensions##GCCExtensions" />
-        <!-- Match most used namespaces and styles -->
-        <StringDetect attribute="Standard Classes" context="Standard Classes" String="std::" />
-        <StringDetect attribute="Boost Stuff" context="Boost Stuff" String="boost::" />
-        <StringDetect attribute="Boost Stuff" context="Boost Stuff" String="BOOST_" />
-        <StringDetect attribute="Internals" context="InternalsNS" String="detail::" />
-        <StringDetect attribute="Internals" context="InternalsNS" String="details::" />
-        <StringDetect attribute="Internals" context="InternalsNS" String="aux::" />
-        <StringDetect attribute="Internals" context="InternalsNS" String="internals::" />
         <IncludeRules context="match identifier" />
         <!-- Match preprocessor directives -->
         <RegExpr attribute="Preprocessor" context="AfterHash" String="&ispphash;" lookAhead="true" />
@@ -535,40 +520,6 @@
 
       <context name="Region Marker" attribute="Region Marker" lineEndContext="#pop" />
 
-      <context name="DetectNSEnd" attribute="Normal Text" lineEndContext="#stay">
-        <keyword attribute="Keyword" context="#stay" String="template" />
-        <DetectIdentifier context="#stay" />
-        <AnyChar attribute="Separator Symbol" context="#pop" String="&separators;" />
-        <AnyChar attribute="Symbol" context="#pop" String="&ns_punctuators; &#9;" />
-      </context>
-
-      <context name="Standard Classes" attribute="Standard Classes" lineEndContext="#stay">
-        <IncludeRules context="DetectNSEnd" />
-      </context>
-
-      <context name="Boost Stuff" attribute="Boost Stuff" lineEndContext="#stay">
-        <IncludeRules context="DetectNSEnd" />
-      </context>
-
-      <context name="InternalsNS" attribute="Internals" lineEndContext="#stay">
-        <IncludeRules context="DetectNSEnd" />
-      </context>
-
-      <context name="Standard Classes In PP" attribute="Standard Classes" lineEndContext="#pop">
-        <IncludeRules context="InPreprocessor" />
-        <IncludeRules context="DetectNSEnd" />
-      </context>
-
-      <context name="Boost Stuff In PP" attribute="Boost Stuff" lineEndContext="#pop">
-        <IncludeRules context="InPreprocessor" />
-        <IncludeRules context="DetectNSEnd" />
-      </context>
-
-      <context name="InternalsNS In PP" attribute="Internals" lineEndContext="#pop">
-        <IncludeRules context="InPreprocessor" />
-        <IncludeRules context="DetectNSEnd" />
-      </context>
-
       <context name="Comment 1" attribute="Comment" lineEndContext="#pop">
         <LineContinue attribute="Error" context="#stay" />
         <DetectSpaces />
@@ -690,14 +641,6 @@
         <IncludeRules context="match string" />
         <!-- Match GCC extensions -->
         <IncludeRules context="DetectGccExtensionsInPP##GCCExtensions" />
-        <!-- Match most used namespaces and styles -->
-        <StringDetect attribute="Standard Classes" context="Standard Classes In PP" String="std::" />
-        <StringDetect attribute="Boost Stuff" context="Boost Stuff In PP" String="boost::" />
-        <StringDetect attribute="Boost Stuff" context="Boost Stuff In PP" String="BOOST_" />
-        <StringDetect attribute="Internals" context="InternalsNS In PP" String="detail::" />
-        <StringDetect attribute="Internals" context="InternalsNS In PP" String="details::" />
-        <StringDetect attribute="Internals" context="InternalsNS In PP" String="aux::" />
-        <StringDetect attribute="Internals" context="InternalsNS In PP" String="internals::" />
         <keyword attribute="Standard Macros" context="#stay" String="InMacro" />
         <IncludeRules context="match identifier" />
         <!-- Match preprocessor directives -->
@@ -793,7 +736,6 @@
       <itemData name="Prep. Lib"          defStyleNum="dsImport"    spellChecking="false" />
       <itemData name="Standard Macros"    defStyleNum="dsOthers"    spellChecking="false" />
       <itemData name="Standard Classes"   defStyleNum="dsBuiltIn"   spellChecking="false" />
-      <itemData name="Boost Stuff"        defStyleNum="dsExtension" spellChecking="false" />
       <itemData name="Region Marker"      defStyleNum="dsRegionMarker" spellChecking="false" />
       <itemData name="UDL Numeric Suffix" defStyleNum="dsDecVal"    spellChecking="false" />
       <itemData name="UDL String Suffix"  defStyleNum="dsString"    spellChecking="false" />
