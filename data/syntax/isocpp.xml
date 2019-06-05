@@ -646,7 +646,7 @@
         <!-- Match preprocessor directives -->
         <DetectChar attribute="Preprocessor" context="#stay" char="#" />
         <!-- Match invalid symbols -->
-        <AnyChar attribute="Error" context="#stay" String="$@`" />
+        <AnyChar attribute="Error" context="#stay" String="$`" />
       </context>
 
       <context name="InPreprocessor" attribute="Normal Text" lineEndContext="#pop">
