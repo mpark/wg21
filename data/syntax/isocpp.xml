@@ -730,7 +730,7 @@
       <itemData name="String"             defStyleNum="dsString"    spellChecking="true"  />
       <itemData name="String Char"        defStyleNum="dsSpecialChar" spellChecking="false" />
       <itemData name="Comment"            defStyleNum="dsComment"   spellChecking="true"  />
-      <itemData name="Symbol"             defStyleNum="dsNormal"    spellChecking="false" />
+      <itemData name="Symbol"             defStyleNum="dsOperator"    spellChecking="false" />
       <itemData name="Separator Symbol"   defStyleNum="dsNormal"    spellChecking="false" />
       <itemData name="Preprocessor"       defStyleNum="dsPreprocessor" spellChecking="false" />
       <itemData name="Prep. Lib"          defStyleNum="dsImport"    spellChecking="false" />
