@@ -13,39 +13,6 @@ import tempfile
 escape_char = '@'
 escape_span = re.compile('{ec}(.*?){ec}'.format(ec=escape_char))
 
-def prepare(doc):
-    datadir = doc.get_metadata('datadir')
-
-    kate = pf.run_pandoc(args=['--print-highlight-style', 'kate'])
-    json_styles = json.loads(kate)
-
-    json_styles['background-color'] = '#f6f8fa'
-    text_styles = json_styles['text-styles']
-    text_styles['BuiltIn'] = text_styles['Normal']
-    text_styles['Comment']['italic'] = True
-    text_styles['ControlFlow'] = text_styles['DataType']
-    text_styles['Keyword'] = text_styles['DataType']
-    text_styles['Variable']['text-color'] = '#' + doc.get_metadata('addcolor')
-    text_styles['String']['text-color'] = '#' + doc.get_metadata('rmcolor')
-
-    with tempfile.NamedTemporaryFile('w', suffix='.theme') as f:
-        json.dump(json_styles, f)
-        f.flush()
-
-        def highlighting(output_format):
-            return pf.convert_text(
-                '`_`{.cpp}',
-                output_format=output_format,
-                extra_args=[
-                    '--highlight-style', f.name,
-                    '--template', os.path.join(datadir, 'template', 'highlighting')
-                ])
-
-        doc.metadata['highlighting-macros'] = pf.MetaBlocks(
-            pf.RawBlock(highlighting('latex'), 'latex'))
-        doc.metadata['highlighting-css'] = pf.MetaBlocks(
-            pf.RawBlock(highlighting('html'), 'html'))
-
 def protect_code(elem, doc):
     if isinstance(elem, pf.Code):
         return pf.Span(pf.RawInline('\\mbox{', 'latex'), elem, pf.RawInline('}', 'latex'))
@@ -352,5 +319,4 @@ def bibliography(elem, doc):
 
 if __name__ == '__main__':
     pf.run_filters(
-        [divspan, tonytable, codeblock, strikeout, bibliography],
-        prepare=prepare)
+        [divspan, tonytable, codeblock, strikeout, bibliography])
