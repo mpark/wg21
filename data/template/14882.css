@@ -259,14 +259,6 @@ code.itemdeclcode {
 	display: block;
 }
 
-code span.co { color: green; font-style: italic; font-family: serif; }
-code span.kw { color: #00607c; }
-code span.cf { color: #00607c; }
-code span.at { color: #00607c; }
-code span.dt { color: #00607c; }
-code span.op { color: #af1915; }
-code span.pp { color: #6F4E37; }
-
 span.textsuperscript {
 	vertical-align: super;
 	font-size: smaller;
