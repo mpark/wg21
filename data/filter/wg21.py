@@ -19,7 +19,7 @@ def prepare(doc):
     kate = pf.run_pandoc(args=['--print-highlight-style', 'kate'])
     json_styles = json.loads(kate)
 
-    json_styles['background-color'] = '#' + doc.get_metadata('shadecolor')
+    json_styles['background-color'] = '#f6f8fa'
     text_styles = json_styles['text-styles']
     text_styles['BuiltIn'] = text_styles['Normal']
     text_styles['Comment']['italic'] = True
