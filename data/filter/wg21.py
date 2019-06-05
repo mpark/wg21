@@ -313,7 +313,10 @@ def codeblock(elem, doc):
                 return match_obj.group(0)
             if match.isspace():  # @  @
                 return match
-            return pf.convert_text(match, output_format=doc.format)
+            return pf.convert_text(
+                pf.Plain(*pf.convert_text(match)[0].content),
+                input_format='panflute',
+                output_format=doc.format)
 
         result = pf.RawBlock(escape_span.sub(repl, text), doc.format)
 
