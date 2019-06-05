@@ -254,11 +254,8 @@ def codeblock(elem, doc):
     if not isinstance(elem, pf.CodeBlock):
         return None
 
-    is_raw = not elem.classes
-
-    if is_raw:
+    if not elem.classes:
         elem.classes.append('default')
-        elem.attributes['style'] = 'color: inherit'
 
     result = elem
 
@@ -287,10 +284,7 @@ def codeblock(elem, doc):
 
         result = pf.RawBlock(escape_span.sub(repl, text), doc.format)
 
-    return pf.Div(
-        pf.RawBlock('{\\renewcommand{\\NormalTok}[1]{#1}', 'latex'),
-        result,
-        pf.RawBlock('}', 'latex')) if is_raw else result
+    return result
 
 # https://github.com/jgm/pandoc/issues/5529
 def strikeout(elem, doc):
@@ -318,5 +312,4 @@ def bibliography(elem, doc):
     return []
 
 if __name__ == '__main__':
-    pf.run_filters(
-        [divspan, tonytable, codeblock, strikeout, bibliography])
+    pf.run_filters([divspan, tonytable, codeblock, strikeout, bibliography])
