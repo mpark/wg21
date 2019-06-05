@@ -718,7 +718,7 @@
       <itemData name="Control Flow"       defStyleNum="dsControlFlow" spellChecking="false" />
       <itemData name="Keyword"            defStyleNum="dsKeyword"   spellChecking="false" />
       <itemData name="Data Type"          defStyleNum="dsDataType"  spellChecking="false" />
-      <itemData name="Type Modifiers"     defStyleNum="dsAttribute" spellChecking="false" />
+      <itemData name="Type Modifiers"     defStyleNum="dsKeyword" spellChecking="false" />
       <itemData name="Attribute"          defStyleNum="dsAttribute" spellChecking="false" bold="false" italic="true" />
       <itemData name="Standard Attribute" defStyleNum="dsAttribute" spellChecking="false" bold="false" italic="true" />
       <itemData name="Decimal"            defStyleNum="dsDecVal"    spellChecking="false" />
