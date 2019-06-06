@@ -32,7 +32,7 @@ clean:
 
 .PHONY: update
 update:
-	wget https://wg21.link/index.yaml -O $(DATADIR)/index.yaml
+	wget https://wg21.link/index.yaml -O - | ./extend_yaml > $(DATADIR)/index.yaml
 
 $(DATADIR)/index.yaml:
 	wget https://wg21.link/index.yaml -O $@
