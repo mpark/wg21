@@ -1,0 +1,53 @@
+#!/usr/bin/env python3
+from collections import OrderedDict
+from itertools import groupby
+import sys 
+import yaml
+
+# from https://stackoverflow.com/a/21912744/2069064, ordered-preseving
+# load and dump of yaml data
+def ordered_load(stream, Loader=yaml.Loader, object_pairs_hook=OrderedDict):
+    class OrderedLoader(Loader):
+        pass
+    def construct_mapping(loader, node):
+        loader.flatten_mapping(node)
+        return object_pairs_hook(loader.construct_pairs(node))
+    OrderedLoader.add_constructor(
+        yaml.resolver.BaseResolver.DEFAULT_MAPPING_TAG,
+        construct_mapping)
+    return yaml.load(stream, OrderedLoader)
+
+def ordered_dump(data, stream=None, Dumper=yaml.Dumper, **kwds):
+    class OrderedDumper(Dumper):
+        pass
+    def _dict_representer(dumper, data):
+        return dumper.represent_mapping(
+            yaml.resolver.BaseResolver.DEFAULT_MAPPING_TAG,
+            data.items())
+    OrderedDumper.add_representer(OrderedDict, _dict_representer)
+    return yaml.dump(data, stream, OrderedDumper, **kwds)
+
+if __name__ == '__main__':
+    yaml.Dumper.ignore_aliases = lambda *args: True
+
+    index = ordered_load(sys.stdin)
+
+    # only considered P-numbered papers that have a R in them - we don't care
+    # about other papers and also ignore things like P0977
+    revisioned_papers = (p for p in index['references']
+        if p['id'].startswith('P') and 'R' in p['id'])
+
+    new_entries = []
+    for k, g in groupby(revisioned_papers,
+                        key=lambda ref: ref['id'][:ref['id'].index('R')]):
+        recent = list(g)[-1]
+        new_entry = recent.copy()
+        new_entry['id'] = k 
+        new_entry['citation-label'] = k 
+        new_entries.append(new_entry)
+
+    index['references'].extend(new_entries)
+    print(ordered_dump(index,
+            default_flow_style=False,
+            allow_unicode=True,
+            width=500))
