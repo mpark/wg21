@@ -294,8 +294,10 @@
         <IncludeRules context="match identifier" />
         <!-- Match preprocessor directives -->
         <RegExpr attribute="Preprocessor" context="AfterHash" String="&ispphash;" lookAhead="true" />
+        <!-- Match embedded Markdown -->
+        <RegExpr attribute="Ignore" context="#stay" String="@.*?@" />
         <!-- Match invalid symbols -->
-        <AnyChar attribute="Error" context="#stay" String="$`" />
+        <AnyChar attribute="Error" context="#stay" String="$@`" />
       </context>
 
       <context name="match comments" attribute="Normal Text" lineEndContext="#pop">
@@ -645,8 +647,10 @@
         <IncludeRules context="match identifier" />
         <!-- Match preprocessor directives -->
         <DetectChar attribute="Preprocessor" context="#stay" char="#" />
+        <!-- Match embedded Markdown -->
+        <RegExpr attribute="Ignore" context="#stay" String="@.*?@" />
         <!-- Match invalid symbols -->
-        <AnyChar attribute="Error" context="#stay" String="$`" />
+        <AnyChar attribute="Error" context="#stay" String="$@`" />
       </context>
 
       <context name="InPreprocessor" attribute="Normal Text" lineEndContext="#pop">

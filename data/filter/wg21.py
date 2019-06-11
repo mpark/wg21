@@ -277,8 +277,9 @@ def codeblock(elem, doc):
                 return match_obj.group(0)
             if match.isspace():  # @  @
                 return match
+            plain = pf.Plain(*pf.convert_text(match)[0].content)
             return pf.convert_text(
-                pf.Plain(*pf.convert_text(match)[0].content),
+                plain.walk(divspan, doc).walk(strikeout, doc),
                 input_format='panflute',
                 output_format=doc.format)
 
