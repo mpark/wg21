@@ -277,6 +277,13 @@ def codeblock(elem, doc):
                 return match_obj.group(0)
             if match.isspace():  # @  @
                 return match
+
+            if doc.format == 'latex':
+                # Undo `escapeLaTeX` from https://github.com/jgm/skylighting
+                match = match.replace('\\textbackslash{}', '\\') \
+                             .replace('\\{', '{') \
+                             .replace('\\}', '}')
+
             plain = pf.Plain(*pf.convert_text(match)[0].content)
             return pf.convert_text(
                 plain.walk(divspan, doc).walk(strikeout, doc),
