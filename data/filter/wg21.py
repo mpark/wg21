@@ -3,6 +3,7 @@
 """
 """
 
+import datetime
 import html
 import json
 import os.path
@@ -12,6 +13,11 @@ import tempfile
 
 escape_char = '@'
 escape_span = re.compile('{ec}(.*?){ec}'.format(ec=escape_char))
+
+def prepare(doc):
+    date = doc.get_metadata('date')
+    if date == 'today':
+        doc.metadata['date'] = datetime.date.today().isoformat()
 
 def protect_code(elem, doc):
     if isinstance(elem, pf.Code):
@@ -328,4 +334,6 @@ def bibliography(elem, doc):
     return []
 
 if __name__ == '__main__':
-    pf.run_filters([divspan, tonytable, codeblock, strikeout, bibliography])
+    pf.run_filters(
+        [divspan, tonytable, codeblock, strikeout, bibliography],
+        prepare=prepare)
