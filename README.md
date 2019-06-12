@@ -340,7 +340,7 @@ references:
 ## Requirements
 
   - `pdflatex`
-  - `pandoc` (>= 2.7)
+  - `pandoc` (>= 2.7.3)
   - `pandoc-citeproc`
   - `python3`
   - `panflute`
@@ -355,12 +355,15 @@ pip3 install panflute
 
 ### Ubuntu
 
-Manually install the [latest pandoc release](https://github.com/jgm/pandoc/releases/latest) following [their installation instructions](https://pandoc.org/installing.html).
+Manually install the [latest pandoc release] following their [instructions].
 
 ```bash
 sudo apt-get install texlive-latex-base
 pip3 install panflute
 ```
+
+[latest pandoc release]: https://github.com/jgm/pandoc/releases/latest
+[instructions]: https://pandoc.org/installing.html
 
 ## Resources
 
