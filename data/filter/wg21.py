@@ -19,10 +19,6 @@ def prepare(doc):
     if date == 'today':
         doc.metadata['date'] = datetime.date.today().isoformat()
 
-def protect_code(elem, doc):
-    if isinstance(elem, pf.Code):
-        return pf.Span(pf.RawInline('\\mbox{', 'latex'), elem, pf.RawInline('}', 'latex'))
-
 def divspan(elem, doc):
     """
     Non-code diffs: `add` and `rm` are classes that can be added to
@@ -74,6 +70,11 @@ def divspan(elem, doc):
 
     def _diff(color, latex_tag, html_tag):
         if isinstance(elem, pf.Span):
+            def protect_code(elem, doc):
+                if isinstance(elem, pf.Code):
+                    return pf.Span(pf.RawInline('\\mbox{', 'latex'),
+                                   elem,
+                                   pf.RawInline('}', 'latex'))
             elem.walk(protect_code)
             _wrap(pf.RawInline('\\{}{{'.format(latex_tag), 'latex'),
                   pf.RawInline('}', 'latex'))
