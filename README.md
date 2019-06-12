@@ -71,6 +71,8 @@ The title is specified in a YAML metadata block.
 
 ![](img/title.png)
 
+> `date: today` will generate today's date in `YYYY-MM-DD` (ISO 8601) format.
+
 YAML lists can be used to specify multiple audiences and authors:
 
 ```yaml
