@@ -292,7 +292,7 @@ def codeblock(elem, doc):
 
             plain = pf.Plain(*pf.convert_text(match)[0].content)
             return pf.convert_text(
-                plain.walk(divspan, doc).walk(strikeout, doc),
+                plain.walk(divspan, doc),
                 input_format='panflute',
                 output_format=doc.format)
 
@@ -307,13 +307,6 @@ def codeblock(elem, doc):
         pf.RawBlock(command.format('VariableTok', doc.get_metadata('addcolor')), 'latex'),
         pf.RawBlock(command.format('StringTok', doc.get_metadata('rmcolor')), 'latex'),
         result)
-
-# https://github.com/jgm/pandoc/issues/5529
-def strikeout(elem, doc):
-    if not isinstance(elem, pf.Strikeout):
-        return None
-
-    elem.walk(protect_code)
 
 def bibliography(elem, doc):
     if not isinstance(elem, pf.Div) or elem.identifier != 'bibliography':
@@ -335,5 +328,5 @@ def bibliography(elem, doc):
 
 if __name__ == '__main__':
     pf.run_filters(
-        [divspan, tonytable, codeblock, strikeout, bibliography],
+        [divspan, tonytable, codeblock, bibliography],
         prepare=prepare)
