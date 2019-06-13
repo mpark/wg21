@@ -7,7 +7,7 @@
     <!ENTITY exp_hexfloat "(?:[pP][-+]?&int;)">
 
     <!ENTITY separators ",;">
-    <!ENTITY ns_punctuators "(){}[].+-/*&#37;=&lt;&gt;!|&amp;?~^">
+    <!ENTITY ns_punctuators "(){}[].+-/*&#37;=&lt;&gt;!|&amp;?~^@">
     <!ENTITY punctuators ":&ns_punctuators;">
 
     <!-- printf-like format strings conversion specifiers -->
@@ -282,6 +282,8 @@
         <RegExpr attribute="Decimal" context="Number" String="\.?[0-9]" lookAhead="true" />
         <!-- Match comments -->
         <IncludeRules context="match comments and region markers" />
+        <!-- Match embedded Markdown -->
+        <RegExpr attribute="Ignore" context="#stay" String="@.*?@" />
         <!-- Match punctuators -->
         <AnyChar attribute="Separator Symbol" context="#stay" String="&separators;" />
         <AnyChar attribute="Symbol" context="#stay" String="&punctuators;" />
@@ -294,10 +296,8 @@
         <IncludeRules context="match identifier" />
         <!-- Match preprocessor directives -->
         <RegExpr attribute="Preprocessor" context="AfterHash" String="&ispphash;" lookAhead="true" />
-        <!-- Match embedded Markdown -->
-        <RegExpr attribute="Ignore" context="#stay" String="@.*?@" />
         <!-- Match invalid symbols -->
-        <AnyChar attribute="Error" context="#stay" String="$@`" />
+        <AnyChar attribute="Error" context="#stay" String="$" />
       </context>
 
       <context name="match comments" attribute="Normal Text" lineEndContext="#pop">
@@ -634,6 +634,8 @@
         <RegExpr attribute="Decimal" context="Number" String="\.?[0-9]" lookAhead="true" />
         <!-- Match comments -->
         <IncludeRules context="match comments" />
+        <!-- Match embedded Markdown -->
+        <RegExpr attribute="Ignore" context="#stay" String="@.*?@" />
         <!-- Match punctuators -->
         <AnyChar attribute="Separator Symbol" context="#stay" String="&separators;" />
         <AnyChar attribute="Symbol" context="#stay" String="&punctuators;" />
@@ -647,10 +649,8 @@
         <IncludeRules context="match identifier" />
         <!-- Match preprocessor directives -->
         <DetectChar attribute="Preprocessor" context="#stay" char="#" />
-        <!-- Match embedded Markdown -->
-        <RegExpr attribute="Ignore" context="#stay" String="@.*?@" />
         <!-- Match invalid symbols -->
-        <AnyChar attribute="Error" context="#stay" String="$@`" />
+        <AnyChar attribute="Error" context="#stay" String="$" />
       </context>
 
       <context name="InPreprocessor" attribute="Normal Text" lineEndContext="#pop">
