@@ -283,7 +283,10 @@ def tonytable(table, doc):
         pf.debug("[Warning] More than one caption specified for a Tony Table, using the last one specified:",
                     pf.stringify(caption))
 
-    return pf.Table(*rows, **kwargs, caption=caption.content.list)
+    if not isinstance(caption, pf.Null):
+        kwargs['caption'] = caption.content.list
+
+    return pf.Table(*rows, **kwargs)
 
 def codeblock(elem, doc):
     if not isinstance(elem, pf.CodeBlock):
