@@ -19,6 +19,13 @@ def prepare(doc):
     if date == 'today':
         doc.metadata['date'] = datetime.date.today().isoformat()
 
+def header(elem, doc):
+    if not isinstance(elem, pf.Header):
+        return None
+
+    elem.content.append(
+        pf.Link(url='#{}'.format(elem.identifier), classes=['self-link']))
+
 def divspan(elem, doc):
     """
     Non-code diffs: `add` and `rm` are classes that can be added to
@@ -329,5 +336,5 @@ def bibliography(elem, doc):
 
 if __name__ == '__main__':
     pf.run_filters(
-        [divspan, tonytable, codeblock, bibliography],
+        [header, divspan, tonytable, codeblock, bibliography],
         prepare=prepare)
