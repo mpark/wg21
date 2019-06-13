@@ -6,6 +6,7 @@ toccolor: black
 addcolor: 006e28
 rmcolor: bf0303
 
+block-headings: true
 link-citations: true
 strikeout: true
 
