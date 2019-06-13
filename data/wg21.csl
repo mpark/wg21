@@ -49,9 +49,11 @@
       </else>
     </choose>
   </macro>
-  <macro name="year">
+  <macro name="date">
     <date variable="issued">
       <date-part name="year"/>
+      <date-part name="month" form="numeric" prefix="-"/>
+      <date-part name="day" prefix="-"/>
     </date>
   </macro>
   <macro name="journal">
@@ -114,7 +116,7 @@
       <text variable="citation-label" prefix="[" suffix="] "/>
       <group delimiter=". " suffix=". ">
         <text macro="author"/>
-        <text macro="year"/>
+        <text macro="date"/>
         <text macro="title"/>
       </group>
       <group suffix=".">
