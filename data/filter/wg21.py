@@ -311,10 +311,12 @@ def codeblock(elem, doc):
     # For HTML, this is handled via CSS in `data/template/wg21.html`.
     command = '\\renewcommand{{\\{}}}[1]{{\\textcolor[HTML]{{{}}}{{#1}}}}'
     return pf.Div(
+        pf.RawBlock('{', 'latex'),
         pf.RawBlock(command.format('NormalTok', doc.get_metadata('uccolor')), 'latex'),
         pf.RawBlock(command.format('VariableTok', doc.get_metadata('addcolor')), 'latex'),
         pf.RawBlock(command.format('StringTok', doc.get_metadata('rmcolor')), 'latex'),
-        result)
+        result,
+        pf.RawBlock('}', 'latex'))
 
 def bibliography(elem, doc):
     if not isinstance(elem, pf.Div) or elem.identifier != 'bibliography':
