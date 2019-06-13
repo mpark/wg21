@@ -83,15 +83,15 @@ a.itemDeclLink {
 }
 a.itemDeclLink:hover { opacity: 1; }
 
-.marginalizedparent {
+span.marginalizedparent {
 	position: relative;
 	left: -5em;
 }
 
-li > .marginalizedparent { left: -7em; }
-li > ul > li > .marginalizedparent { left: -9em; }
-li > ul > li > ul > li > .marginalizedparent { left: -11em; }
-li > ul > li > ul > li > ul > li > .marginalizedparent { left: -13em; }
+li > span.marginalizedparent { left: -7em; }
+li > ul > li > span.marginalizedparent { left: -9em; }
+li > ul > li > ul > li > span.marginalizedparent { left: -11em; }
+li > ul > li > ul > li > ul > li > span.marginalizedparent { left: -13em; }
 
 div.footnoteNumberParent {
 	position: relative;
