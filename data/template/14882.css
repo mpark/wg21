@@ -36,8 +36,10 @@ li {
 	margin-bottom: 0.6em;
 }
 
-h1, h2, h3, h4 { position: relative; }
-h1, h2, h3, h4 { line-height: 1; }
+h1, h2, h3, h4 {
+  position: relative;
+  line-height: 1;
+}
 
 a.self-link {
     position: absolute;
