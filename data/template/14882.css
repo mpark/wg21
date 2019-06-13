@@ -21,7 +21,10 @@ ul {
 	margin-bottom: -0.2em;
 }
 
-a { text-decoration: none; }
+a {
+  text-decoration: none;
+  color: #4183C4;
+}
 
 a.hidden_link {
 	text-decoration: none;
