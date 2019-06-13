@@ -92,10 +92,9 @@ def divspan(elem, doc):
             return pf.RawInline('\\pnum{{{}}}'.format(num), 'latex')
 
         if doc.format == 'html':
-            return pf.RawInline(
-                '<span class="marginalizedparent">' \
-                    '<a class="marginalized">{}</a>' \
-                '</span>'.format(num), 'html')
+            return pf.Span(
+                pf.RawInline('<a class="marginalized">{}</a>'.format(num), 'html')
+                classes=['marginalizedparent'])
 
         return pf.Superscript(pf.Str(num))
 
