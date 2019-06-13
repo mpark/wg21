@@ -372,3 +372,5 @@ span.indented {
 
 ol.enumeratea { list-style-type: none; background: inherit; }
 ol.enumerate { list-style-type: none; background: inherit; }
+
+div#refs p { padding-left: 32px; text-indent: -32px; }
