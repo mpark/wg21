@@ -1,0 +1,212 @@
+---
+title: "Test document for `mpark/wg21`."
+document: D0000R0
+date: today
+audience:
+  - Library Evolution
+  - Library
+author:
+  - name: Michael Park
+    email: <mcypark@gmail.com>
+toc: true
+---
+
+# Introduction
+
+`x`~*`i`*~ `<=>` `y`~*`i`*~
+
+`-foo`{.diff}
+
+`c3way `{.cpp}
+
+`compare_3way `{.cpp}
+
+`3WAY`{.default}`<R>`{.cpp}
+
+`operator@`{.cpp}
+
+`operator+`{.cpp}
+
+`x @ y`{.cpp}
+
+```cpp
+#include <iostream>
+#include "foo.h"
+
+__FILE__;
+
+int x = 42'234'234;
+const int x = 42ul;
+const int x = 0B01011;
+
+bool b = true;
+
+struct process {
+  hello @[`constexpr`]{.add}@ detail::foo::template foo;
+
+  [[using CC: opt(1), debug]] x;
+
+  template <typename I>
+  [[nodiscard]] auto operator()(I i) -> O<I> { /* ... */ };
+
+  x@~*i*~@ <=> y@~*i*~@;
+  @x~*i*~@ <=> @y~*i*~@;
+};
+
+if (x) {
+  return ""sv;
+  return 5ms;
+}
+
+std::printf("%d", x);
+
+std::variant<I1, I2> input = 'h';
+std::variant<I1, I2> input = "h";
+std::variant<I1, I2> input = "hello";
+
+// mapping from a `variant` of inputs to a `variant` of results:
+auto output = std::visit<std::variant<O<I1>, O<I2>>>(process{}, input);
+
+// coercing different results to a common type:
+auto result = std::visit<std::common_type_t<O<I1>, O<I2>>>(process{}, input);
+
+// visiting a `variant` for the side-effects, discarding results:
+std::visit<void>(process{}, input);
+```
+
+```diff
+normal
+- rm
++ add
+```
+
+[`hello world`]{.add}
+
+~~_`hello world`_~~
+
+~~`hello world`~~
+
+In all of the above cases the return type deduction would have failed, as each
+invocation yields a different type for each alternative.
+
+# Impact on the Standard
+
+This proposal is a pure library extension.
+
+# Proposed Wording
+
+Add to __§19.7.2 [variant.syn]__ of [@N4762]:
+
+::: add
+```
+  template <class Visitor, class... Variants>
+    constexpr @_see below_@ visit(Visitor&&, Variants&&...);
+  template <class R, class Visitor, class... Variants>
+    constexpr R visit(Visitor&&, Variants&&...);
+```
+:::
+
+Add to __§19.7.7 [variant.visit]__ of [@P0655R0]:
+
+```diff
+  template <class Visitor, class... Variants>
+    constexpr @_see below_@ visit(Visitor&& vis, Variants&&... vars);
++ template <class R, class Visitor, class... Variants>
++   constexpr R visit(Visitor&& vis, Variants&&... vars);
+```
+[1]{.pnum} Let _n_ be `sizeof...(Variants)`. Let `m` be a pack of _n_ values of
+type `size_t`. Such a pack is called valid if $0 \leq$ `m`_~i~_ <
+`variant_size_v<remove_reference_t<Variants`_~i~_`>>` for all $0 \leq i < n$.
+For each valid pack `m`, let _e_(`m`) denote the expression:
+
+> \small _`INVOKE`_`(std::forward<Visitor>(vis), get<m>(std::forward<Variants>(vars))...)` _// see 19.14.3_
+
+[for the first form and]{.add}
+
+> \small [_`INVOKE`_`<R>(std::forward<Visitor>(vis), get<m>(std::forward<Variants>(vars))...)` _// see 19.14.3_]{.add}
+
+[for the second form]{.add}.
+
+[2]{.pnum} _Requires:_ For each valid pack `m` _e_(`m`) shall be a valid
+expression. All such expressions shall be of the same type and value category;
+otherwise, the program is ill-formed.
+
+[3]{.pnum} _Returns:_ _e_(`m`), where `m` is the pack for which `m`_~i~_ is
+`vars`_~i~_`.index()` for all $0 \leq i < n$. The return type is
+`decltype(`_e_(`m`)`)` [for the first form]{.add}.
+
+[4]{.pnum} _Throws:_ `bad_variant_access` if any `variant` in `vars` is
+`valueless_by_exception()`.
+
+[5]{.pnum} _Complexity:_ For $n \leq 1$, the invocation of the callable object
+is implemented in constant time, i.e., for $n = 1$, it does not depend on
+the number of alternative types of `Variants`_~0~_. For $n > 1$,
+the invocation of the callable object has no complexity requirements.
+
+# Design Decisions
+
+There is a corner case for which the new overload could clash with the existing
+overload. A call to `std::visit<Result>` actually performs overload resolution
+with the following two candidates:
+
+```cpp
+template <class Visitor, class... Variants>
+constexpr decltype(auto) visit(Visitor&&, Variants&&...);
+
+template <class R, class Visitor, class... Variants>
+constexpr R visit(Visitor&&, Variants&&...);
+```
+
+The template instantiation via `std::visit<Result>` replaces `Visitor` with
+`Result` for the first overload, `R` with `Result` for the second, and
+we end up with the following:
+
+```cpp
+template <class... Variants>
+constexpr decltype(auto) visit(Result&&, Variants&&...);
+
+template <class Visitor, class... Variants>
+constexpr Result visit(Visitor&&, Variants&&...);
+```
+
+This results in an ambiguity if `Result&&` happens to be the same type as
+`Visitor&&`. For example, a call to `std::visit<Vis>(Vis{});` would be
+ambiguous since `Result&&` and `Visitor&&` are both `Vis&&`.
+
+In general, we would first need a self-returning visitor, then an invocation
+to `std::visit` with the same type __and__ value category specified for
+the return type __and__ the visitor argument.
+
+We claim that this problem is not worth solving considering the rarity of
+such a use case and the complexity of a potential solution.
+
+Finally, note that this is not a new problem since `bind` already uses
+the same pattern to support `bind<R>`:
+
+```cpp
+  template <class F, class... BoundArgs>
+    @_unspecified_@ bind(F&&, BoundArgs&&...);
+  template <class R, class F, class... BoundArgs>
+    @_unspecified_@ bind(F&&, BoundArgs&&...);
+```
+
+# Implementation Experience
+
+  - [`MPark.Variant`][mpark/variant] implements `visit<R>` as proposed in
+    the [`visit-r`][visit-r] branch.
+  - [`Eggs.Variant`][eggs/variant] has provided an implementation of `visit<R>`
+    as `apply<R>` since 2014, and also handles the corner case mentioned in
+    [Design Decisions](#design-decisions).
+
+[visit-r]: https://github.com/mpark/variant/tree/visit-r
+[mpark/variant]: https://github.com/mpark/variant
+[eggs/variant]: https://github.com/eggs-cpp/variant
+
+# Future Work
+
+There are other similar facilities that currently use _`INVOKE`_, and
+do not provide an accompanying overload that uses _`INVOKE`_`<R>`.
+Some examples are `std::invoke`, `std::apply`, and `std::async`.
+
+There may be room for a paper with clear guidelines as to
+if/when such facilities should have an accompanying overload.
