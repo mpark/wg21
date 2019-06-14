@@ -58,9 +58,11 @@ Various compositions in compact list:
 
   - `x`~_`i`_~ `<=>` `y`~_`i`_~
   - `compare_3way`{.cpp}
-  - `3WAY`{.default}`<R>`{.cpp},
+  - `3WAY`{.default}`<R>`{.cpp}
   - `operator@`{.cpp}
+  - `operator+`{.cpp}
   - `x @ y`{.cpp}
+  <!-- - ~~`x & y`{.cpp}~~ <https://github.com/jgm/skylighting/issues/78> -->
   - __foo `constexpr`{.cpp} bar__
   - _foo `constexpr`{.cpp} bar_
   - ~~foo `constexpr`{.cpp} bar~~
@@ -77,6 +79,8 @@ Loose list:
   - [foo `hello world` bar]{.rm}
 
 [Pandoc Markdown]: https://pandoc.org/MANUAL.html#pandocs-markdown
+
+## Inline Code in Headers: `int`{.cpp}, `x & y`{.cpp}
 
 ## Code Block
 
