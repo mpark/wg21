@@ -1,5 +1,6 @@
 ---
-title: "Test document for `mpark/wg21`."
+title: "Test document for `mpark/wg21`"
+subtitle: "Visual inspection of various features of the framework"
 document: D0000R0
 date: today
 audience:
@@ -13,21 +14,97 @@ toc: true
 
 # Introduction
 
-`x`~*`i`*~ `<=>` `y`~*`i`*~
+This framework provides support for various common elements for C++ papers.
+This document is intended to test various features implemented in [`mpark/wg21`].
 
-`-foo`{.diff}
+[`mpark/wg21`]: https://github.com/mpark/wg21
 
-`c3way `{.cpp}
+# Title
 
-`compare_3way `{.cpp}
+The title is specified by YAML metadata block.
 
-`3WAY`{.default}`<R>`{.cpp}
+```yaml
+---
+title: Example Title
+subtitle: Example Subtitle
+document: DxxxxRn
+date: 2019-06-13
+audience:
+  - Library Evolution
+  - Library
+author:
+  - name: Author One
+    email: <one@author.com>
+  - name: Author Two
+    email: <two@author.com>
+toc: false    # default: `true`
+toc-depth: 4  # default: `3`
+---
+```
 
-`operator@`{.cpp}
+> `date: today` will generate today's date in `YYYY-MM-DD` (ISO 8601) format.
 
-`operator+`{.cpp}
+# Markdown
 
-`x @ y`{.cpp}
+[Pandoc Markdown] is the Markdown flavor used for this framework.
+
+## Inline Formatting
+
+Inline formatting such as __bold__, _italics_, and `verbatim` work as you would
+expect. There are also useful extensions such as ~~strikeout~~,
+su~b~script, su^per^script, and highlighted code: `constexpr`{.cpp}.
+
+Various compositions in compact list:
+
+  - `x`~_`i`_~ `<=>` `y`~_`i`_~
+  - `compare_3way`{.cpp}
+  - `3WAY`{.default}`<R>`{.cpp},
+  - `operator@`{.cpp}
+  - `x @ y`{.cpp}
+  - __foo `constexpr`{.cpp} bar__
+  - _foo `constexpr`{.cpp} bar_
+  - ~~foo `constexpr`{.cpp} bar~~
+  - [`hello world`]{.add}
+  - ~~_`hello world`_~~
+  - ~~`hello world`~~
+
+---
+
+Loose list:
+
+  - `x`{.cpp}~_`i`{.cpp}_~ `<=>`{.cpp} `y`{.cpp}~_`i`{.cpp}_~
+
+  - [foo `hello world` bar]{.rm}
+
+[Pandoc Markdown]: https://pandoc.org/MANUAL.html#pandocs-markdown
+
+## Code Block
+
+### No Syntax Highlighting
+
+```
+#include <iostream>
+#include "foo.h"
+
+__FILE__;
+
+int x = 42'234'234;
+const int x = 42ul;
+const int x = 0B01011;
+
+bool b = true;
+
+struct process {
+  hello @_`constexpr`_@ detail::foo::template foo;
+
+  [[using CC: opt(1), debug]] x;
+
+  template <typename I>
+  [[nodiscard]] auto operator()(I i) -> O<I> { /* ... */ };
+};
+```
+
+### C++ Syntax Highlighting
 
 ```cpp
 #include <iostream>
@@ -74,139 +151,159 @@ auto result = std::visit<std::common_type_t<O<I1>, O<I2>>>(process{}, input);
 std::visit<void>(process{}, input);
 ```
 
+### `diff` Syntax Highlighting
+
 ```diff
-normal
-- rm
-+ add
+some things just don't change.
+
+// 20.3.4 tuple-like access to pair:
+- constexpr typename tuple_element<I, std::pair<T1, T2> >::type&
++ constexpr tuple_element_t<I, pair<T1, T2> >&
+-   get(std::pair<T1, T2>&) noexcept;
++   get(pair<T1, T2>&) noexcept;
 ```
 
-[`hello world`]{.add}
+# Tony Tables
 
-~~_`hello world`_~~
+::: tonytable
 
-~~`hello world`~~
+### Before
+```cpp
+switch (x) {
+  case 0: std::cout << "got zero"; break;
+  case 1: std::cout << "got one"; break;
+  default: std::cout << "don't care";
+}
+```
 
-In all of the above cases the return type deduction would have failed, as each
-invocation yields a different type for each alternative.
+### After
+```cpp
+inspect (x) {
+  0: std::cout << "got zero";
+  1: std::cout << "got one";
+  _: std::cout << "don't care";
+}
+```
 
-# Impact on the Standard
+:::
 
-This proposal is a pure library extension.
+::: tonytable
+
+### Before
+```cpp
+switch (x) {
+  case 0: std::cout << "got zero"; break;
+  case 1: std::cout << "got one"; break;
+  default: std::cout << "don't care";
+}
+```
+
+### After
+```cpp
+inspect (x) {
+  0: std::cout << "got zero";
+  1: std::cout << "got one";
+  _: std::cout << "don't care";
+}
+```
+
+---
+
+```cpp
+if (s == "foo") {
+  std::cout << "got foo";
+} else if (s == "bar") {
+  std::cout << "got bar";
+} else {
+  std::cout << "don't care";
+}
+```
+
+```cpp
+inspect (s) {
+  "foo": std::cout << "got foo";
+  "bar": std::cout << "got bar";
+  _: std::cout << "don't care";
+}
+```
+
+:::
 
 # Proposed Wording
 
-Add to __§19.7.2 [variant.syn]__ of [@N4762]:
+## Paragraph Numbers
 
-::: add
-```
-  template <class Visitor, class... Variants>
-    constexpr @_see below_@ visit(Visitor&&, Variants&&...);
-  template <class R, class Visitor, class... Variants>
-    constexpr R visit(Visitor&&, Variants&&...);
-```
-:::
+[2]{.pnum} An expression is _potentially evaluated_ unless it is an unevaluated
+operand (7.2) or a subexpression thereof. The set of _potential results_ of
+an expression `e` is defined as follows:
 
-Add to __§19.7.7 [variant.visit]__ of [@P0655R0]:
+  - [2.1]{.pnum} If `e` is an _id-expression_ (7.5.4), the set contains only `e`.
 
-```diff
-  template <class Visitor, class... Variants>
-    constexpr @_see below_@ visit(Visitor&& vis, Variants&&... vars);
-+ template <class R, class Visitor, class... Variants>
-+   constexpr R visit(Visitor&& vis, Variants&&... vars);
-```
-[1]{.pnum} Let _n_ be `sizeof...(Variants)`. Let `m` be a pack of _n_ values of
-type `size_t`. Such a pack is called valid if $0 \leq$ `m`_~i~_ <
-`variant_size_v<remove_reference_t<Variants`_~i~_`>>` for all $0 \leq i < n$.
-For each valid pack `m`, let _e_(`m`) denote the expression:
+  - [2.2]{.pnum} If `e` is a subscripting operation (7.6.1.1) with an array operand,
+the set contains the potential results of that operand.
 
-> \small _`INVOKE`_`(std::forward<Visitor>(vis), get<m>(std::forward<Variants>(vars))...)` _// see 19.14.3_
+## Wording Changes
 
-[for the first form and]{.add}
+Large changes are `::: add` for additions, `::: rm` for removals.
 
-> \small [_`INVOKE`_`<R>(std::forward<Visitor>(vis), get<m>(std::forward<Variants>(vars))...)` _// see 19.14.3_]{.add}
+> Modify section 19.20.2 Formatting functions [format.functions]:
+>
+> ::: add
+>
+> ```
+> template<class... Args>
+>   string format(const locale& loc, string_view fmt, const Args&... args);
+> ```
+>
+> _Returns:_ `vforamt(loc, fmt, make_format_args(args...))`.
+>
+> :::
 
-[for the second form]{.add}.
+Small, inline changes are done with `[<new text>]{.add}` or `[<old text>]{.rm}`.
 
-[2]{.pnum} _Requires:_ For each valid pack `m` _e_(`m`) shall be a valid
-expression. All such expressions shall be of the same type and value category;
-otherwise, the program is ill-formed.
++-----------+--------------------------------------------------------------------+
+| Specifier | Replacement                                                        |
++===========+====================================================================+
+| `%a`      | The locale’s abbreviated weekday name. If the value does not       |
+|           | contain a valid weekday, [`setstate(ios::failbit)` is called]{.rm} |
+|           | [`format_error` is thrown]{.add}.                                  |
++-----------+--------------------------------------------------------------------+
+| `%A`      | The locale’s full weekday name. If the value does not contain      |
+|           | a valid weekday, [`setstate(ios::failbit)` is called]{.rm}         |
+|           | [`format_error` is thrown]{.add}.                                  |
++-----------+--------------------------------------------------------------------+
 
-[3]{.pnum} _Returns:_ _e_(`m`), where `m` is the pack for which `m`_~i~_ is
-`vars`_~i~_`.index()` for all $0 \leq i < n$. The return type is
-`decltype(`_e_(`m`)`)` [for the first form]{.add}.
+## Grammar Changes
 
-[4]{.pnum} _Throws:_ `bad_variant_access` if any `variant` in `vars` is
-`valueless_by_exception()`.
+> | _selection-statement:_
+> |     `if constexpr`_~opt~_ `(` _init-statement~opt~_ _condition_ `)` _statement_
+> |     `if constexpr`_~opt~_ `(` _init-statement~opt~_ _condition_ `)` _statement_ `else` _statement_
+> |     `switch (` _init-statement~opt~_ _condition_ `)` _statement_
+> |     [`inspect` `constexpr`~_opt_~ `(` _init-statement~opt~_ _condition_ `)` `{`
+>            _inspect-case-seq_
+>        `}`]{.add}
+>
+> ::: add
+> | _inspect-case-seq:_
+> |     _inspect-case_
+> |     _inspect-case-seq_ _inspect-case_
+>
+> | _inspect-case:_
+> |     _attribute-specifier-seq~opt~_ _inspect-pattern_ _inspect-guard~opt~_ `:` _statement_
+>
+> | _inspect-pattern:_
+> |     _wildcard-pattern_
+> |     _identifier-pattern_
+> |     _constant-pattern_
+> |     _structured-binding-pattern_
+> |     _alternative-pattern_
+> |     _binding-pattern_
+> |     _extractor-pattern_
+>
+> | _inspect-guard:_
+> |     `if (` _expression_ `)`
+> :::
 
-[5]{.pnum} _Complexity:_ For $n \leq 1$, the invocation of the callable object
-is implemented in constant time, i.e., for $n = 1$, it does not depend on
-the number of alternative types of `Variants`_~0~_. For $n > 1$,
-the invocation of the callable object has no complexity requirements.
+# Citation
 
-# Design Decisions
-
-There is a corner case for which the new overload could clash with the existing
-overload. A call to `std::visit<Result>` actually performs overload resolution
-with the following two candidates:
-
-```cpp
-template <class Visitor, class... Variants>
-constexpr decltype(auto) visit(Visitor&&, Variants&&...);
-
-template <class R, class Visitor, class... Variants>
-constexpr R visit(Visitor&&, Variants&&...);
-```
-
-The template instantiation via `std::visit<Result>` replaces `Visitor` with
-`Result` for the first overload, `R` with `Result` for the second, and
-we end up with the following:
-
-```cpp
-template <class... Variants>
-constexpr decltype(auto) visit(Result&&, Variants&&...);
-
-template <class Visitor, class... Variants>
-constexpr Result visit(Visitor&&, Variants&&...);
-```
-
-This results in an ambiguity if `Result&&` happens to be the same type as
-`Visitor&&`. For example, a call to `std::visit<Vis>(Vis{});` would be
-ambiguous since `Result&&` and `Visitor&&` are both `Vis&&`.
-
-In general, we would first need a self-returning visitor, then an invocation
-to `std::visit` with the same type __and__ value category specified for
-the return type __and__ the visitor argument.
-
-We claim that this problem is not worth solving considering the rarity of
-such a use case and the complexity of a potential solution.
-
-Finally, note that this is not a new problem since `bind` already uses
-the same pattern to support `bind<R>`:
-
-```cpp
-  template <class F, class... BoundArgs>
-    @_unspecified_@ bind(F&&, BoundArgs&&...);
-  template <class R, class F, class... BoundArgs>
-    @_unspecified_@ bind(F&&, BoundArgs&&...);
-```
-
-# Implementation Experience
-
-  - [`MPark.Variant`][mpark/variant] implements `visit<R>` as proposed in
-    the [`visit-r`][visit-r] branch.
-  - [`Eggs.Variant`][eggs/variant] has provided an implementation of `visit<R>`
-    as `apply<R>` since 2014, and also handles the corner case mentioned in
-    [Design Decisions](#design-decisions).
-
-[visit-r]: https://github.com/mpark/variant/tree/visit-r
-[mpark/variant]: https://github.com/mpark/variant
-[eggs/variant]: https://github.com/eggs-cpp/variant
-
-# Future Work
-
-There are other similar facilities that currently use _`INVOKE`_, and
-do not provide an accompanying overload that uses _`INVOKE`_`<R>`.
-Some examples are `std::invoke`, `std::apply`, and `std::async`.
-
-There may be room for a paper with clear guidelines as to
-if/when such facilities should have an accompanying overload.
+Automatic references like [@N4762] use <https://wg21.link/index.yaml>.
