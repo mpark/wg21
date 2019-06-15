@@ -136,6 +136,8 @@ def tonytable(table, doc):
     Tony Tables: CodeBlocks are the first-class entities that get added
     to the table. The last (if any) header leading upto a CodeBlock is
     the header that gets attached to the table cell with the CodeBlock.
+    A block-quote in the Tony Table is used as the caption for the 
+    Tony Table. The last (if any) caption found in the Tony Table is used.
 
     Each CodeBlock entry is pushed onto the current row. Horizontal rule
     is used to move to the next row.
@@ -143,6 +145,8 @@ def tonytable(table, doc):
     # Example
 
     ::: tonytable
+
+    > compare inspect of unconstrained and constrained types
 
     ### Before
     ```cpp
@@ -182,9 +186,11 @@ def tonytable(table, doc):
 
     # Generates
 
+    Table: compare inspect of unconstrained and constrained types
+
     +------------------------------------------------+---------------------------------------------+
     | __Before__                                     | __After__                                   |
-    +------------------------------------------------+---------------------------------------------+
+    +================================================+=============================================+
     | ```cpp                                         | ```cpp                                      |
     | std::visit([&](auto&& x) {                     | inspect (v) {                               |
     |   strm << "got auto: " << x;                   |   <auto> x: strm << "got auto: " << x;      |
@@ -205,9 +211,12 @@ def tonytable(table, doc):
     def build_header(elem):
         # We use a `pf.RawInline` here because setting the `align`
         # attribute on `pf.Div` does not work for some reason.
-        header = pf.Plain(pf.RawInline('<div align="center">', 'html'),
-                          pf.Strong(*elem.content),
-                          pf.RawInline('</div>', 'html'))
+        header = pf.Div(
+            pf.Plain(pf.RawInline('\\begin{center}', 'latex'),
+                     pf.Strong(*elem.content),
+                     pf.RawInline('\\end{center}', 'latex')),
+            attributes={'style': 'text-align:center'})
+
         width = float(elem.attributes['width']) if 'width' in elem.attributes else 0
         return header, width
 
@@ -234,10 +243,16 @@ def tonytable(table, doc):
 
     header = pf.Null()
     width = 0
+    caption = pf.Null()
     table.content.append(pf.HorizontalRule())
     for elem in table.content:
         if isinstance(elem, pf.Header):
             header, width = build_header(elem)
+        elif isinstance(elem, pf.BlockQuote):
+            if 'caption' in kwargs:
+                pf.debug("[Warning] The following caption is being ignored by a Tony Table:",
+                         pf.stringify(kwargs['caption']))
+            kwargs['caption'] = elem.content[0].content.list
         elif isinstance(elem, pf.CodeBlock):
             headers.append(header)
             widths.append(width)
@@ -246,11 +261,14 @@ def tonytable(table, doc):
 
             examples.append(build_code(elem, doc.format))
         elif isinstance(elem, pf.HorizontalRule) and examples:
-            if not all(isinstance(header, pf.Null) for header in headers):
-                rows.append(build_row(headers))
-
             if 'width' not in kwargs:
                 kwargs['width'] = widths
+
+            if not all(isinstance(header, pf.Null) for header in headers):
+                if 'header' in kwargs:
+                    pf.debug("[Warning] The following header is being ignored by a Tony Table:",
+                             pf.stringify(kwargs['header']))
+                kwargs['header'] = build_row(headers)
 
             rows.append(build_row(examples))
 
@@ -259,7 +277,7 @@ def tonytable(table, doc):
             examples = []
         else:
             pf.debug("[Warning] The following is ignored by a Tony Table:",
-                     pf.stringify(elem))
+                     type(elem), pf.stringify(elem))
 
     return pf.Table(*rows, **kwargs)
 
