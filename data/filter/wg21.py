@@ -261,7 +261,7 @@ def tonytable(table, doc):
             if not all(isinstance(header, pf.Null) for header in headers):
                 if 'header' in kwargs:
                     pf.debug("[Warning] The following header is being ignored by a Tony Table:",
-                            pf.stringify(kwargs['header']))
+                             pf.stringify(kwargs['header']))
                 kwargs['header'] = build_row(headers)
 
             rows.append(build_row(examples))
