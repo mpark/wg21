@@ -133,14 +133,14 @@ def divspan(elem, doc):
 
 def tonytable(table, doc):
     """
-    Tony Tables: CodeBlocks are the first-class entities that get added
-    to the table. The last (if any) header leading upto a CodeBlock is
-    the header that gets attached to the table cell with the CodeBlock.
-    A block-quote in the Tony Table is used as the caption for the
-    Tony Table. The last (if any) caption found in the Tony Table is used.
+    Tony Tables: Code blocks are the first-class entities that get added
+    to the table. Each code block is pushed onto the current row.
+    A horizontal rule (`---`) is used to move to the next row.
 
-    Each CodeBlock entry is pushed onto the current row. Horizontal rule
-    is used to move to the next row.
+    In the first row, the last header (if any) leading upto the i'th
+    code block is the header for the i'th column of the table.
+
+    The last block quote (if any) is used as the caption.
 
     # Example
 
@@ -208,26 +208,10 @@ def tonytable(table, doc):
     +------------------------------------------------+---------------------------------------------+
     """
 
-    def build_header(elem):
-        # We use a `pf.RawInline` here because setting the `align`
-        # attribute on `pf.Div` does not work for some reason.
-        header = pf.Div(
-            pf.Plain(pf.RawInline('\\begin{center}', 'latex'),
-                     pf.Strong(*elem.content),
-                     pf.RawInline('\\end{center}', 'latex')),
-            attributes={'style': 'text-align:center'})
-
-        width = float(elem.attributes['width']) if 'width' in elem.attributes else 0
-        return header, width
-
-    def build_row(elems):
-        return pf.TableRow(*[pf.TableCell(elem) for elem in elems])
-
     if not isinstance(table, pf.Div) or 'tonytable' not in table.classes:
         return None
 
     rows = []
-
     kwargs = {}
 
     headers = []
@@ -236,41 +220,48 @@ def tonytable(table, doc):
 
     header = pf.Null()
     width = 0
-    caption = pf.Null()
+
+    first_row = True
     table.content.append(pf.HorizontalRule())
+
+    warning = '[Warning] The following {} is in a Tony Table is ignored:'
+
     for elem in table.content:
         if isinstance(elem, pf.Header):
-            header, width = build_header(elem)
+            if not isinstance(header, pf.Null):
+                pf.debug(warning.format('header'), pf.stringify(header))
+
+            if first_row:
+                header = pf.Plain(*elem.content)
+                width = float(elem.attributes['width']) if 'width' in elem.attributes else 0
+            else:
+                pf.debug(warning.format('header'), pf.stringify(elem))
         elif isinstance(elem, pf.BlockQuote):
             if 'caption' in kwargs:
-                pf.debug("[Warning] The following caption is being ignored by a Tony Table:",
-                         pf.stringify(kwargs['caption']))
+                pf.debug(warning.format('caption'), pf.stringify(*kwargs['caption']))
+
             kwargs['caption'] = elem.content[0].content.list
         elif isinstance(elem, pf.CodeBlock):
-            headers.append(header)
-            widths.append(width)
-            header = pf.Null()
-            width = 0
+            if first_row:
+                headers.append(header)
+                widths.append(width)
+
+                header = pf.Null()
+                width = 0
 
             examples.append(elem)
         elif isinstance(elem, pf.HorizontalRule) and examples:
-            if 'width' not in kwargs:
-                kwargs['width'] = widths
+            first_row = False
 
-            if not all(isinstance(header, pf.Null) for header in headers):
-                if 'header' in kwargs:
-                    pf.debug("[Warning] The following header is being ignored by a Tony Table:",
-                             pf.stringify(kwargs['header']))
-                kwargs['header'] = build_row(headers)
-
-            rows.append(build_row(examples))
-
-            headers = []
-            widths = []
+            rows.append(pf.TableRow(*[pf.TableCell(example) for example in examples]))
             examples = []
         else:
-            pf.debug("[Warning] The following is ignored by a Tony Table:",
-                     type(elem), pf.stringify(elem))
+            pf.debug(warning.format('element'), type(elem), pf.stringify(elem))
+
+    if not all(isinstance(header, pf.Null) for header in headers):
+        kwargs['header'] = pf.TableRow(*[pf.TableCell(header) for header in headers])
+
+    kwargs['width'] = widths
 
     return pf.Table(*rows, **kwargs)
 
@@ -329,6 +320,22 @@ def codeblock(elem, doc):
         result,
         pf.RawBlock('}', 'latex'))
 
+def table(elem, doc):
+    if not isinstance(elem, pf.Table):
+        return None
+
+    def header(elem, doc):
+        if not isinstance(elem, pf.Plain):
+            return None
+
+        return pf.Div(
+            pf.Plain(pf.RawInline('\\centering', 'latex'),
+                     pf.Strong(*elem.content)),
+            attributes={'style': 'text-align:center'})
+
+    if elem.header is not None:
+        elem.header.walk(header)
+
 def bibliography(elem, doc):
     if not isinstance(elem, pf.Div) or elem.identifier != 'bibliography':
         return None
@@ -349,5 +356,13 @@ def bibliography(elem, doc):
 
 if __name__ == '__main__':
     pf.run_filters(
-        [header, divspan, tonytable, codeblock, bibliography],
+        [
+            bibliography,
+            divspan,
+            tonytable,
+            # after `tonytable` because...
+            codeblock,  # this can produce raw html/latex but `tonytable` expects codeblocks.
+            header,     # this doesn't apply to the "headers" in tony table.
+            table       # this also applies to tables generated by `tonytable`.
+        ],
         prepare=prepare)
