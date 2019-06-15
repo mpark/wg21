@@ -207,8 +207,8 @@ def tonytable(table, doc):
         # attribute on `pf.Div` does not work for some reason.
         header = pf.Div(
             pf.Plain(pf.RawInline('\\begin{center}', 'latex'),
-                    pf.Strong(*elem.content),
-                    pf.RawInline('\\end{center}', 'latex')),
+                     pf.Strong(*elem.content),
+                     pf.RawInline('\\end{center}', 'latex')),
             attributes={'style': 'text-align:center'})
 
         width = float(elem.attributes['width']) if 'width' in elem.attributes else 0
