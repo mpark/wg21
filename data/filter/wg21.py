@@ -136,7 +136,7 @@ def tonytable(table, doc):
     Tony Tables: CodeBlocks are the first-class entities that get added
     to the table. The last (if any) header leading upto a CodeBlock is
     the header that gets attached to the table cell with the CodeBlock.
-    A block-quote in the Tony Table is used as the caption for the 
+    A block-quote in the Tony Table is used as the caption for the
     Tony Table. The last (if any) caption found in the Tony Table is used.
 
     Each CodeBlock entry is pushed onto the current row. Horizontal rule
@@ -220,13 +220,6 @@ def tonytable(table, doc):
         width = float(elem.attributes['width']) if 'width' in elem.attributes else 0
         return header, width
 
-    def build_code(elem, format):
-        if (format != 'gfm'):
-            return elem
-        lang = ' lang="{}"'.format(elem.classes[0]) if elem.classes else ''
-        code = html.escape(elem.text)
-        return pf.RawBlock('\n\n<pre{lang}>\n{code}\n</pre>'.format(lang=lang, code=code))
-
     def build_row(elems):
         return pf.TableRow(*[pf.TableCell(elem) for elem in elems])
 
@@ -259,7 +252,7 @@ def tonytable(table, doc):
             header = pf.Null()
             width = 0
 
-            examples.append(build_code(elem, doc.format))
+            examples.append(elem)
         elif isinstance(elem, pf.HorizontalRule) and examples:
             if 'width' not in kwargs:
                 kwargs['width'] = widths
