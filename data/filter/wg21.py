@@ -238,14 +238,15 @@ def tonytable(table, doc):
     header = pf.Null()
     width = 0
     caption = pf.Null()
-    captionsFound = 0
     table.content.append(pf.HorizontalRule())
     for elem in table.content:
         if isinstance(elem, pf.Header):
             header, width = build_header(elem)
         elif isinstance(elem, pf.BlockQuote):
-            caption = elem.content[0]
-            captionsFound = captionsFound + 1
+            if 'caption' in kwargs:
+                pf.debug("[Warning] The following caption is being ignored by a Tony Table:",
+                         pf.stringify(kwargs['caption']))
+            kwargs['caption'] = elem.content[0].content.list
         elif isinstance(elem, pf.CodeBlock):
             headers.append(header)
             widths.append(width)
@@ -254,11 +255,14 @@ def tonytable(table, doc):
 
             examples.append(build_code(elem, doc.format))
         elif isinstance(elem, pf.HorizontalRule) and examples:
-            if not all(isinstance(header, pf.Null) for header in headers):
-                rows.append(build_row(headers))
-
             if 'width' not in kwargs:
                 kwargs['width'] = widths
+
+            if not all(isinstance(header, pf.Null) for header in headers):
+                if 'header' in kwargs:
+                    pf.debug("[Warning] The following header is being ignored by a Tony Table:",
+                            pf.stringify(kwargs['header']))
+                kwargs['header'] = build_row(headers)
 
             rows.append(build_row(examples))
 
@@ -268,13 +272,6 @@ def tonytable(table, doc):
         else:
             pf.debug("[Warning] The following is ignored by a Tony Table:",
                      type(elem), pf.stringify(elem))
-
-    if captionsFound > 1:
-        pf.debug("[Warning] More than one caption specified for a Tony Table, using the last one specified:",
-                    pf.stringify(caption))
-
-    if not isinstance(caption, pf.Null):
-        kwargs['caption'] = caption.content.list
 
     return pf.Table(*rows, **kwargs)
 
