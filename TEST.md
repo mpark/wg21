@@ -259,7 +259,7 @@ Large changes are `::: add` for additions, `::: rm` for removals.
 >   string format(const locale& loc, string_view fmt, const Args&... args);
 > ```
 >
-> _Returns:_ `vforamt(loc, fmt, make_format_args(args...))`.
+> _Returns:_ `vformat(loc, fmt, make_format_args(args...))`.
 >
 > :::
 
