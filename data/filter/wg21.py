@@ -11,13 +11,103 @@ import panflute as pf
 import re
 import tempfile
 
-escape_char = '@'
-escape_span = re.compile('{ec}(.*?){ec}'.format(ec=escape_char))
+embedded = re.compile('{c}(.*?){c}'.format(c='@'))
 
 def prepare(doc):
     date = doc.get_metadata('date')
     if date == 'today':
         doc.metadata['date'] = datetime.date.today().isoformat()
+
+    datadir = doc.get_metadata('datadir')
+
+    def highlighting(output_format):
+        return pf.convert_text(
+            '`_`{.default}',
+            output_format=output_format,
+            extra_args=[
+              '--highlight-style', os.path.join(datadir, 'syntax', 'wg21.theme'),
+              '--template', os.path.join(datadir, 'template', 'highlighting')
+            ])
+
+    doc.metadata['highlighting-macros'] = pf.MetaBlocks(
+        pf.RawBlock(highlighting('latex'), 'latex'))
+    doc.metadata['highlighting-css'] = pf.MetaBlocks(
+        pf.RawBlock(highlighting('html'), 'html'))
+
+    def intersperse(lst, item):
+        result = [item] * (len(lst) * 2 - 1)
+        result[0::2] = lst
+        return result
+
+    def codeblock(elem, doc):
+        if not isinstance(elem, pf.CodeBlock):
+            return None
+
+        if not elem.classes:
+            elem.classes.append('default')
+
+        codeblocks.append(elem)
+
+    codeblocks = []
+    doc.walk(codeblock)
+
+    texts = pf.convert_text(
+        intersperse(codeblocks, pf.Plain(pf.RawInline('---', doc.format))),
+        input_format='panflute',
+        output_format=doc.format,
+        extra_args=[
+            '--syntax-definition', os.path.join(datadir, 'syntax', 'isocpp.xml')
+        ]).split('\n---\n')
+
+    assert(len(codeblocks) == len(texts))
+
+    def convert(elem, text):
+        if not any(cls in elem.classes for cls in ['cpp', 'default', 'diff']):
+            return elem
+
+        def repl(match_obj):
+            match = match_obj.group(1)
+            if not match:  # @@
+                return match_obj.group(0)
+            if match.isspace():  # @  @
+                return match
+
+            result = convert.cache.get(match)
+            if result is not None:
+                return result
+
+            if doc.format == 'latex':
+                # Undo `escapeLaTeX` from https://github.com/jgm/skylighting
+                match = match.replace('\\textbackslash{}', '\\') \
+                             .replace('\\{', '{') \
+                             .replace('\\}', '}')
+
+            result = pf.convert_text(
+                pf.Plain(*pf.convert_text(match)[0].content).walk(divspan, doc),
+                input_format='panflute',
+                output_format=doc.format)
+
+            convert.cache[match] = result
+            return result
+
+        result = pf.RawBlock(embedded.sub(repl, text), doc.format)
+
+        if 'diff' not in elem.classes:
+            return result
+
+        # For HTML, this is handled via CSS in `data/template/wg21.html`.
+        command = '\\renewcommand{{\\{}}}[1]{{\\textcolor[HTML]{{{}}}{{#1}}}}'
+        return pf.Div(
+            pf.RawBlock('{', 'latex'),
+            pf.RawBlock(command.format('NormalTok', doc.get_metadata('uccolor')), 'latex'),
+            pf.RawBlock(command.format('VariableTok', doc.get_metadata('addcolor')), 'latex'),
+            pf.RawBlock(command.format('StringTok', doc.get_metadata('rmcolor')), 'latex'),
+            result,
+            pf.RawBlock('}', 'latex'))
+
+    convert.cache = {}
+
+    prepare.converted = [convert(elem, text) for elem, text in zip(codeblocks, texts)]
 
 def header(elem, doc):
     if not isinstance(elem, pf.Header):
@@ -269,56 +359,11 @@ def codeblock(elem, doc):
     if not isinstance(elem, pf.CodeBlock):
         return None
 
-    if not elem.classes:
-        elem.classes.append('default')
+    result = prepare.converted[codeblock.i]
+    codeblock.i += 1
+    return result
 
-    result = elem
-
-    if any(cls in elem.classes for cls in ['cpp', 'default', 'diff']) and escape_char in elem.text:
-        datadir = doc.get_metadata('datadir')
-        syntaxdir = os.path.join(datadir, 'syntax')
-
-        text = pf.convert_text(
-            elem,
-            input_format='panflute',
-            output_format=doc.format,
-            extra_args=[
-                '--syntax-definition', os.path.join(syntaxdir, 'isocpp.xml')
-            ])
-
-        def repl(match_obj):
-            match = match_obj.group(1)
-            if not match:  # @@
-                return match_obj.group(0)
-            if match.isspace():  # @  @
-                return match
-
-            if doc.format == 'latex':
-                # Undo `escapeLaTeX` from https://github.com/jgm/skylighting
-                match = match.replace('\\textbackslash{}', '\\') \
-                             .replace('\\{', '{') \
-                             .replace('\\}', '}')
-
-            plain = pf.Plain(*pf.convert_text(match)[0].content)
-            return pf.convert_text(
-                plain.walk(divspan, doc),
-                input_format='panflute',
-                output_format=doc.format)
-
-        result = pf.RawBlock(escape_span.sub(repl, text), doc.format)
-
-    if 'diff' not in elem.classes:
-        return result
-
-    # For HTML, this is handled via CSS in `data/template/wg21.html`.
-    command = '\\renewcommand{{\\{}}}[1]{{\\textcolor[HTML]{{{}}}{{#1}}}}'
-    return pf.Div(
-        pf.RawBlock('{', 'latex'),
-        pf.RawBlock(command.format('NormalTok', doc.get_metadata('uccolor')), 'latex'),
-        pf.RawBlock(command.format('VariableTok', doc.get_metadata('addcolor')), 'latex'),
-        pf.RawBlock(command.format('StringTok', doc.get_metadata('rmcolor')), 'latex'),
-        result,
-        pf.RawBlock('}', 'latex'))
+codeblock.i = 0
 
 def table(elem, doc):
     if not isinstance(elem, pf.Table):
@@ -361,8 +406,8 @@ if __name__ == '__main__':
             divspan,
             tonytable,
             # after `tonytable` because...
-            codeblock,  # this can produce raw html/latex but `tonytable` expects codeblocks.
-            header,     # this doesn't apply to the "headers" in tony table.
-            table       # this also applies to tables generated by `tonytable`.
+            codeblock,  # produces raw html/latex, `tonytable` needs codeblocks.
+            header,     # doesn't apply to the "headers" in tony table.
+            table       # also applies to tables generated by `tonytable`.
         ],
         prepare=prepare)
