@@ -110,6 +110,10 @@
       <item>or_eq</item>
       <item>xor</item>
       <item>xor_eq</item>
+      <!-- Coroutines -->
+      <item>co_await</item>
+      <item>co_return</item>
+      <item>co_yield</item>
       <!-- TM TS -->
       <!-- <list>atomic_cancel</list>
       <list>atomic_commit</list>
@@ -120,10 +124,6 @@
       <!-- module TS -->
       <!-- <list>import</list>
       <list>module</list> -->
-      <!-- coroutine TS -->
-      <!-- <list>co_await</list>
-      <list>co_return</list>
-      <list>co_yield</list> -->
     </list>
 
     <!-- 7.6 Attributes -->
