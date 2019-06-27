@@ -314,7 +314,7 @@ def tonytable(table, doc):
     first_row = True
     table.content.append(pf.HorizontalRule())
 
-    warning = '[Warning] The following {} in a Tony Table is ignored:'
+    warning = '[WARNING] The following {} in a Tony Table is ignored:'
 
     for elem in table.content:
         if isinstance(elem, pf.Header):
