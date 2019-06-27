@@ -1,3 +1,18 @@
+# https://github.com/cplusplus/draft/blob/97b615a5a6ab0598b624ee05402c531d0421cff6/source/std.tex#L6
+papersize: a4paper
+fontsize: 10pt
+classoption:
+  - oneside
+  - openany
+  - final
+
+# https://github.com/cplusplus/draft/blob/97b615a5a6ab0598b624ee05402c531d0421cff6/source/layout.tex#L4-L8
+geometry:
+  - left=2.245cm
+  - right=2.245cm
+  - top=2.5cm
+  - bottom=2.5cm
+
 citecolor: blue
 linkcolor: blue
 urlcolor: blue
@@ -14,16 +29,16 @@ strikeout: true
 header-includes:
   - |
     ```{=latex}
-    % layout
-    \usepackage{fullpage}
     % adjust quote indent
     \renewenvironment{quote}{\list{}{\leftmargin=0.2in}\item[]}{\endlist}
-    % adjust list style
+
+    % https://github.com/cplusplus/draft/blob/97b615a5a6ab0598b624ee05402c531d0421cff6/source/styles.tex#L127-L133
     \renewcommand{\labelitemi}{---}
     \renewcommand{\labelitemii}{---}
     \renewcommand{\labelitemiii}{---}
     \renewcommand{\labelitemiv}{---}
-    % `\pnum`: https://github.com/cplusplus/draft/blob/master/source/layout.tex
+
+    % https://github.com/cplusplus/draft/blob/97b615a5a6ab0598b624ee05402c531d0421cff6/source/layout.tex#L32-L68
     \makeatletter
     \newcommand{\pnum}[1]{%
     \noindent\makebox[0pt][l]{\makebox[0pt][r]{%
