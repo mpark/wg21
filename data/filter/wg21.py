@@ -51,6 +51,9 @@ def prepare(doc):
     codeblocks = []
     doc.walk(codeblock)
 
+    if not codeblocks:
+        return
+
     texts = pf.convert_text(
         intersperse(codeblocks, pf.Plain(pf.RawInline('---', doc.format))),
         input_format='panflute',
