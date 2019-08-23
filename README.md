@@ -64,6 +64,7 @@ This framework provides support for various common elements for C++ papers.
 - [References](#references)
   - [Automatic References](#automatic-references)
   - [Manual References](#manual-references)
+- [Unicode Considerations](#unicode-considerations)
 
 ### Title
 
@@ -330,6 +331,32 @@ references:
 ```
 
 ![](img/manual-reference.png)
+
+### Unicode Considerations
+
+If you build for LaTex output, and you have Unicode characters in any of your paper's source code, you may have problems.  First of all, the default pdf engine simply does not support Unicode characters at all.  You can add `--pdf-engine=xelatex` to the call to `pandoc` in the Makefile to use xelatex as your engine instead.  That gives you access to some font selections for different parts of your paper (see the Fonts section of the Pandoc manual at https://pandoc.org/MANUAL.html).  The one of these that controls your source code fonts is `monofont`.  You can add a line with you `monofont` choice to your YAML metadata block:
+
+```yaml
+---
+title: Integration of chrono with text formatting
+document: P1361R0
+date: 2018-10-16
+audience:
+  - Library Evolution Working Group
+  - Library Working Group
+author:
+  - name: Victor Zverovich
+    email: <victor.zverovich@gmail.com>
+  - name: Daniela Engert
+    email: <dani@ngrt.de>
+  - name: Howard E. Hinnant
+    email: <howard.hinnant@gmail.com>
+monofont: "DejaVu Sans Mono"
+---
+```
+
+If you want the list of available fonts on your system, most supported systems will produce a list via the command-line tool `fc-list`.
+
 
 ## Other Papers
 
