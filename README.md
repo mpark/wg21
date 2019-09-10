@@ -334,7 +334,7 @@ references:
 
 ### Unicode Considerations
 
-If you build for LaTex output, and you have Unicode characters in any of your paper's source code, you may have problems.  First of all, the default pdf engine simply does not support Unicode characters at all.  You can add `--pdf-engine=xelatex` to the call to `pandoc` in the Makefile to use xelatex as your engine instead.  That gives you access to some font selections for different parts of your paper (see the Fonts section of the Pandoc manual at https://pandoc.org/MANUAL.html).  The one of these that controls your source code fonts is `monofont`.  You can add a line with you `monofont` choice to your YAML metadata block:
+If you build for LaTeX output, and you have Unicode characters in any of your paper's source code, you may have problems.  First of all, the default pdf engine simply does not support Unicode characters at all.  You can add `--pdf-engine=xelatex` to the call to `pandoc` in the Makefile to use xelatex as your engine instead.  That gives you access to some font selections for different parts of your paper (see the Fonts section of the Pandoc manual at https://pandoc.org/MANUAL.html#fonts).  The option that controls your source code fonts is `monofont`.  You can add a line with your `monofont` choice to your YAML metadata block.  Here, it's "DejaVu Sans Mono" which provides glyphs for a large amount of the Unicode characters:
 
 ```yaml
 ---
