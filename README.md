@@ -404,6 +404,5 @@ Debian installation may require these additional packages:
 
 ## Resources
 
-  - Blog Post: [How I format my C++ papers][FMT]
-
-[FMT]: https://mpark.github.io/programming/2018/11/16/how-i-format-my-cpp-papers
+  - Blog Post: [How I format my C++ papers](https://mpark.github.io/programming/2018/11/16/how-i-format-my-cpp-papers)
+  - Lightning Talk @ C++Now 2019: [WG21 Paper in Markdown](https://www.youtube.com/watch?v=8yReHZOw6QY)
