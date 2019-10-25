@@ -394,6 +394,14 @@ pip3 install panflute
 [latest pandoc release]: https://github.com/jgm/pandoc/releases/latest
 [instructions]: https://pandoc.org/installing.html
 
+### Debian
+
+Debian installation may require these additional packages:
+
+  - `texlive-fonts-recommended`
+  - `texlive-latex-recommended`
+  - `texlive-latex-extra`
+
 ## Resources
 
   - Blog Post: [How I format my C++ papers][FMT]
