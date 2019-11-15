@@ -36,9 +36,13 @@ clean:
 .PHONY: update
 update:
 	wget https://wg21.link/index.yaml -O $(DATADIR)/index.yaml
+	wget https://timsong-cpp.github.io/cppwp/annex-f -O $(DATADIR)/annex-f
 
 $(DATADIR)/index.yaml:
 	wget https://wg21.link/index.yaml -O $@
+
+$(DATADIR)/annex-f:
+	wget https://timsong-cpp.github.io/cppwp/annex-f -O $@
 
 .PHONY: $(HTML)
 $(HTML): %.html: $(DATADIR)/index.yaml $(OUTDIR)/%.html
