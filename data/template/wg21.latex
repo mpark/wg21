@@ -370,7 +370,7 @@ $endif$
 Document \#:&$document$\\
 Date:       &\@date\\
 Project:    &Programming Language C++\\
-            $for(audience)$&$audience$\\$endfor$
+Audience:   $for(audience)$&$audience$\\$endfor$
 $if(revises)$
 Revises:    &$revises$\\
 $endif$
