@@ -83,7 +83,16 @@ def prepare(doc):
                 # Undo `escapeLaTeX` from https://github.com/jgm/skylighting
                 match = match.replace('\\textbackslash{}', '\\') \
                              .replace('\\{', '{') \
-                             .replace('\\}', '}')
+                             .replace('\\}', '}') \
+                             .replace('\\_', '_') \
+                             .replace('\\&', '&') \
+                             .replace('\\%', '%') \
+                             .replace('\\#', '#') \
+                             .replace('\\textasciigrave{}', '`') \
+                             .replace('\\textquotesingle{}', '\'') \
+                             .replace('{-}', '-') \
+                             .replace('\\textasciitilde{}', '~') \
+                             .replace('\\^{}', '^')
 
             result = pf.convert_text(
                 pf.Plain(*pf.convert_text(match)[0].content).walk(divspan, doc),
