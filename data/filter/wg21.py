@@ -11,7 +11,7 @@ import panflute as pf
 import re
 import tempfile
 
-embedded = re.compile('{c}(.*?){c}'.format(c='@'))
+embedded_md = re.compile('@\((.*?)\)@|@(.*?)@')
 
 def prepare(doc):
     date = doc.get_metadata('date')
@@ -68,10 +68,7 @@ def prepare(doc):
         if not any(cls in elem.classes for cls in ['cpp', 'default', 'diff']):
             return elem
 
-        def repl(match_obj):
-            match = match_obj.group(1)
-            if not match:  # @@
-                return match_obj.group(0)
+        def repl2(match):
             if match.isspace():  # @  @
                 return match
 
@@ -84,6 +81,7 @@ def prepare(doc):
                 match = match.replace('\\textbackslash{}', '\\') \
                              .replace('\\{', '{') \
                              .replace('\\}', '}') \
+                             .replace('\\VerbBar{}', '|') \
                              .replace('\\_', '_') \
                              .replace('\\&', '&') \
                              .replace('\\%', '%') \
@@ -102,7 +100,20 @@ def prepare(doc):
             convert.cache[match] = result
             return result
 
-        result = pf.RawBlock(embedded.sub(repl, text), doc.format)
+        def repl(match_obj):
+            groups = match_obj.groups()
+            if not any(groups):
+                return match_obj.group()
+
+            group = groups[0]
+            if group is not None:
+                return embedded_md.sub(repl, repl2(group))
+
+            group = groups[1]
+            if group is not None:
+                return repl2(group)
+
+        result = pf.RawBlock(embedded_md.sub(repl, text), doc.format)
 
         if 'diff' not in elem.classes:
             return result

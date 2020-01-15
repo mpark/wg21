@@ -106,6 +106,9 @@ struct process {
   template <typename I>
   [[nodiscard]] auto operator()(I i) -> O<I> { /* ... */ };
 };
+
+@([`namespace @_unspecified_@ { struct sender_base {}; }`]{.add})@
+@([using @_unspecified_@::sender_base;]{.add})@
 ```
 
 ### C++ Syntax Highlighting
@@ -153,6 +156,9 @@ auto result = std::visit<std::common_type_t<O<I1>, O<I2>>>(process{}, input);
 
 // visiting a `variant` for the side-effects, discarding results:
 std::visit<void>(process{}, input);
+
+@([`namespace @_unspecified_@ { struct sender_base {}; }`]{.add})@
+@([using @_unspecified_@::sender_base;]{.add})@
 ```
 
 ### `diff` Syntax Highlighting
