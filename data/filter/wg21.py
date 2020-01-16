@@ -18,9 +18,8 @@ def prepare(doc):
     if date == 'today':
         doc.metadata['date'] = datetime.date.today().isoformat()
 
-    datadir = doc.get_metadata('datadir')
-
     def highlighting(output_format):
+        datadir = doc.get_metadata('datadir')
         return pf.convert_text(
             '`_`{.default}',
             output_format=output_format,
@@ -34,40 +33,46 @@ def prepare(doc):
     doc.metadata['highlighting-css'] = pf.MetaBlocks(
         pf.RawBlock(highlighting('html'), 'html'))
 
-    def intersperse(lst, item):
-        result = [item] * (len(lst) * 2 - 1)
-        result[0::2] = lst
-        return result
-
-    def codeblock(elem, doc):
-        if not isinstance(elem, pf.CodeBlock):
+def finalize(doc):
+    def collect_code_elems(elem, doc):
+        if not any(isinstance(elem, cls) for cls in [pf.Code, pf.CodeBlock]):
             return None
 
         if not elem.classes:
             elem.classes.append('default')
 
-        codeblocks.append(elem)
+        if not any(cls in elem.classes for cls in ['cpp', 'default', 'diff']):
+            return None
 
-    codeblocks = []
-    doc.walk(codeblock)
+        if not any(['@' in elem.text, 'diff' in elem.classes]):
+            return None
 
-    if not codeblocks:
+        code_elems.append(elem)
+
+    code_elems = []
+    doc.walk(collect_code_elems)
+    if not code_elems:
         return
 
+    def intersperse(lst, item):
+        result = [item] * (len(lst) * 2 - 1)
+        result[0::2] = lst
+        return result
+
+    datadir = doc.get_metadata('datadir')
     texts = pf.convert_text(
-        intersperse(codeblocks, pf.Plain(pf.RawInline('---', doc.format))),
+        intersperse(
+            [pf.Plain(elem) if isinstance(elem, pf.Code) else elem for elem in code_elems],
+            pf.Plain(pf.RawInline('---', doc.format))),
         input_format='panflute',
         output_format=doc.format,
         extra_args=[
             '--syntax-definition', os.path.join(datadir, 'syntax', 'isocpp.xml')
         ]).split('\n---\n')
 
-    assert(len(codeblocks) == len(texts))
+    assert(len(code_elems) == len(texts))
 
     def convert(elem, text):
-        if not any(cls in elem.classes for cls in ['cpp', 'default', 'diff']):
-            return elem
-
         def repl2(match):
             if match.isspace():  # @  @
                 return match
@@ -113,24 +118,52 @@ def prepare(doc):
             if group is not None:
                 return repl2(group)
 
-        result = pf.RawBlock(embedded_md.sub(repl, text), doc.format)
+        if isinstance(elem, pf.Code):
+            result = pf.RawInline(embedded_md.sub(repl, text), doc.format)
+        elif isinstance(elem, pf.CodeBlock):
+            result = pf.RawBlock(embedded_md.sub(repl, text), doc.format)
 
         if 'diff' not in elem.classes:
             return result
 
         # For HTML, this is handled via CSS in `data/template/wg21.html`.
         command = '\\renewcommand{{\\{}}}[1]{{\\textcolor[HTML]{{{}}}{{#1}}}}'
-        return pf.Div(
-            pf.RawBlock('{', 'latex'),
-            pf.RawBlock(command.format('NormalTok', doc.get_metadata('uccolor')), 'latex'),
-            pf.RawBlock(command.format('VariableTok', doc.get_metadata('addcolor')), 'latex'),
-            pf.RawBlock(command.format('StringTok', doc.get_metadata('rmcolor')), 'latex'),
-            result,
-            pf.RawBlock('}', 'latex'))
+
+        uc = command.format('NormalTok', doc.get_metadata('uccolor'))
+        add = command.format('VariableTok', doc.get_metadata('addcolor'))
+        rm = command.format('StringTok', doc.get_metadata('rmcolor'))
+
+        if isinstance(elem, pf.Code):
+            return pf.Span(
+                pf.RawInline(uc, 'latex'),
+                pf.RawInline(add, 'latex'),
+                pf.RawInline(rm, 'latex'),
+                result)
+        elif isinstance(elem, pf.CodeBlock):
+            return pf.Div(
+                pf.RawBlock('{', 'latex'),
+                pf.RawBlock(uc, 'latex'),
+                pf.RawBlock(add, 'latex'),
+                pf.RawBlock(rm, 'latex'),
+                result,
+                pf.RawBlock('}', 'latex'))
 
     convert.cache = {}
 
-    prepare.converted = [convert(elem, text) for elem, text in zip(codeblocks, texts)]
+    def code_elem(elem, doc):
+        if not any(isinstance(elem, cls) for cls in [pf.Code, pf.CodeBlock]):
+            return None
+
+        if not any(cls in elem.classes for cls in ['cpp', 'default', 'diff']):
+            return None
+
+        if not any(['@' in elem.text, 'diff' in elem.classes]):
+            return None
+
+        return convert(*next(converted))
+
+    converted = zip(code_elems, texts)
+    doc.walk(code_elem)
 
 def header(elem, doc):
     if not isinstance(elem, pf.Header):
@@ -227,7 +260,7 @@ def divspan(elem, doc):
     def add(): _diff('addcolor', 'uline', 'ins')
     def rm():  _diff('rmcolor', 'sout', 'del')
 
-    if not isinstance(elem, pf.Div) and not isinstance(elem, pf.Span):
+    if not any(isinstance(elem, cls) for cls in [pf.Div, pf.Span]):
         return None
 
     clses = list(reversed(elem.classes))
@@ -378,16 +411,6 @@ def tonytable(table, doc):
 
     return pf.Table(*rows, **kwargs)
 
-def codeblock(elem, doc):
-    if not isinstance(elem, pf.CodeBlock):
-        return None
-
-    result = prepare.converted[codeblock.i]
-    codeblock.i += 1
-    return result
-
-codeblock.i = 0
-
 def table(elem, doc):
     if not isinstance(elem, pf.Table):
         return None
@@ -423,14 +446,11 @@ def bibliography(elem, doc):
     return []
 
 if __name__ == '__main__':
-    pf.run_filters(
-        [
-            bibliography,
-            divspan,
-            tonytable,
-            # after `tonytable` because...
-            codeblock,  # produces raw html/latex, `tonytable` needs codeblocks.
-            header,     # doesn't apply to the "headers" in tony table.
-            table       # also applies to tables generated by `tonytable`.
-        ],
-        prepare=prepare)
+  pf.run_filters([
+      bibliography,
+      divspan,
+      tonytable,
+      # after `tonytable` because...
+      header, # doesn't apply to the "headers" in tony table.
+      table,  # also applies to tables generated by `tonytable`.
+  ], prepare, finalize)
