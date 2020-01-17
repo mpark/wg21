@@ -13,13 +13,21 @@ import tempfile
 
 embedded_md = re.compile('@\((.*?)\)@|@(.*?)@')
 
+stable_name_map = {}
+
 def prepare(doc):
     date = doc.get_metadata('date')
     if date == 'today':
         doc.metadata['date'] = datetime.date.today().isoformat()
 
+    datadir = doc.get_metadata('datadir')
+
+    global stable_name_map
+    with open(os.path.join(datadir, 'annex-f'), 'r') as f:
+        lines = f.readlines()
+        stable_name_map = dict(map(lambda s: s.split(), lines))
+
     def highlighting(output_format):
-        datadir = doc.get_metadata('datadir')
         return pf.convert_text(
             '`_`{.default}',
             output_format=output_format,
@@ -275,6 +283,15 @@ def divspan(elem, doc):
 
     if 'pnum' in clses and isinstance(elem, pf.Span):
         return pnum()
+
+    if 'sref' in clses and isinstance(elem, pf.Span):
+        target = pf.stringify(elem)
+        targetlink = pf.Link(pf.Str('[{}]'.format(target)), url='https://wg21.link/{}'.format(target))
+        if target in stable_name_map:
+            return pf.Span(pf.Str(stable_name_map[target]), pf.Space(), targetlink)
+        else:
+            pf.debug('[WARNING] unknown stable name:', target)
+            return targetlink
 
     note_cls = next(iter(cls for cls in clses if cls in {'example', 'note', 'ednote'}), None)
     if note_cls == 'example':  example()
