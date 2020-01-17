@@ -390,28 +390,31 @@ def tonytable(table, doc):
     examples = []
 
     header = pf.Null()
+    caption = None
     width = 0
 
     first_row = True
     table.content.append(pf.HorizontalRule())
 
-    warning = '[WARNING] The following {} in a Tony Table is ignored:'
+    def warn(elem):
+        pf.debug('mpark/wg21:', type(elem), pf.stringify(elem, newlines=False),
+                 'in a tony table is ignored')
 
     for elem in table.content:
         if isinstance(elem, pf.Header):
             if not isinstance(header, pf.Null):
-                pf.debug(warning.format('header'), pf.stringify(header))
+                warn(header)
 
             if first_row:
                 header = pf.Plain(*elem.content)
                 width = float(elem.attributes['width']) if 'width' in elem.attributes else 0
             else:
-                pf.debug(warning.format('header'), pf.stringify(elem))
+                warn(elem)
         elif isinstance(elem, pf.BlockQuote):
-            if 'caption' in kwargs:
-                pf.debug(warning.format('caption'), pf.stringify(*kwargs['caption']))
+            if caption is not None:
+                warn(caption)
 
-            kwargs['caption'] = elem.content[0].content.list
+            caption = elem
         elif isinstance(elem, pf.CodeBlock):
             if first_row:
                 headers.append(header)
@@ -427,10 +430,13 @@ def tonytable(table, doc):
             rows.append(pf.TableRow(*[pf.TableCell(example) for example in examples]))
             examples = []
         else:
-            pf.debug(warning.format('element'), type(elem), pf.stringify(elem))
+            warn(elem)
 
     if not all(isinstance(header, pf.Null) for header in headers):
         kwargs['header'] = pf.TableRow(*[pf.TableCell(header) for header in headers])
+
+    if caption is not None:
+        kwargs['caption'] = caption.content[0].content
 
     kwargs['width'] = widths
 
