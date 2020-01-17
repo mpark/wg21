@@ -12,8 +12,7 @@ import re
 import tempfile
 
 embedded_md = re.compile('@\((.*?)\)@|@(.*?)@')
-
-stable_name_map = {}
+stable_names = {}
 
 def prepare(doc):
     date = doc.get_metadata('date')
@@ -22,10 +21,8 @@ def prepare(doc):
 
     datadir = doc.get_metadata('datadir')
 
-    global stable_name_map
     with open(os.path.join(datadir, 'annex-f'), 'r') as f:
-        lines = f.readlines()
-        stable_name_map = dict(map(lambda s: s.split(), lines))
+        stable_names.update(line.split() for line in f)
 
     def highlighting(output_format):
         return pf.convert_text(
@@ -286,12 +283,15 @@ def divspan(elem, doc):
 
     if 'sref' in clses and isinstance(elem, pf.Span):
         target = pf.stringify(elem)
-        targetlink = pf.Link(pf.Str('[{}]'.format(target)), url='https://wg21.link/{}'.format(target))
-        if target in stable_name_map:
-            return pf.Span(pf.Str(stable_name_map[target]), pf.Space(), targetlink)
+        number = stable_names.get(target)
+        link = pf.Link(
+            pf.Str('[{}]'.format(target)),
+            url='https://wg21.link/{}'.format(target))
+        if number is not None:
+            return pf.Span(pf.Str(number), pf.Space(), link)
         else:
-            pf.debug('[WARNING] unknown stable name:', target)
-            return targetlink
+            pf.debug('mpark/wg21: stable name', target, 'not found')
+            return link
 
     note_cls = next(iter(cls for cls in clses if cls in {'example', 'note', 'ednote'}), None)
     if note_cls == 'example':  example()

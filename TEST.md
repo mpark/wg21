@@ -326,3 +326,8 @@ Small, inline changes are done with `[<new text>]{.add}` or `[<old text>]{.rm}`.
 # Citation
 
 Automatic references like [@N4762] use <https://wg21.link/index.yaml>.
+
+# Stable Names
+
+Stable names are written as `[basic.life]{.sref}`, and renders as [basic.life]{.sref}.
+It uses <https://timsong-cpp.github.io/cppwp/annex-f>.

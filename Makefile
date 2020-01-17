@@ -45,10 +45,10 @@ $(DATADIR)/annex-f:
 	wget https://timsong-cpp.github.io/cppwp/annex-f -O $@
 
 .PHONY: $(HTML)
-$(HTML): %.html: $(DATADIR)/index.yaml $(OUTDIR)/%.html
+$(HTML): %.html: $(DATADIR)/index.yaml $(DATADIR)/annex-f $(OUTDIR)/%.html
 
 .PHONY: $(LATEX)
-$(LATEX): %.latex: $(DATADIR)/index.yaml $(OUTDIR)/%.latex
+$(LATEX): %.latex: $(DATADIR)/index.yaml $(DATADIR)/annex-f $(OUTDIR)/%.latex
 
 .PHONY: $(PDF)
-$(PDF): %.pdf: $(DATADIR)/index.yaml $(OUTDIR)/%.pdf
+$(PDF): %.pdf: $(DATADIR)/index.yaml $(DATADIR)/annex-f $(OUTDIR)/%.pdf
