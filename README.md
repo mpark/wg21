@@ -238,7 +238,7 @@ Large changes are [fenced `Div` blocks][divspan] with `::: add` for additions, `
 ![](img/wording-div.png)
 
 Small, inline changes are [bracketed `Span` elements][divspan] that looks like
-`[<new text>]{.add}` or `[<old text>]{.rm}`.
+`[new text]{.add}` or `[old text]{.rm}`.
 
 ![](img/wording-span.png)
 
@@ -283,7 +283,7 @@ Use [line blocks][lineblock] (`|`) in order to preserve the leading spaces.
 
 ### Citations
 
-In-text citations look like this: `[@<id>]`
+In-text citations look like this: `[@id]`
 
 ![](img/citation.png)
 
