@@ -369,7 +369,7 @@ If you want the list of available fonts on your system, most supported systems w
 ## Requirements
 
   - `pdflatex`
-  - `pandoc` (>= 2.7.3)
+  - `pandoc` (>= 2.8.1)
   - `pandoc-citeproc`
   - `python3`
   - `panflute`
