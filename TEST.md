@@ -325,7 +325,15 @@ Small, inline changes are done with `[<new text>]{.add}` or `[<old text>]{.rm}`.
 
 # Citation
 
-Automatic references like [@N4762] use <https://wg21.link/index.yaml>.
+Automatic references are written as `[@N4762]` and renders as [@N4762].
+Anything in <https://wg21.link/index.yaml> are linked automatically.
+
+  - `N` Papers (e.g., `[@N3887]` [@N3887])
+  - `P` Papers (e.g., `[@P1371R1]` [@P1371R1])
+  - CWG Issues (e.g., `[@CWG1234]` [@CWG1234])
+  - LWG Issues (e.g., `[@LWG1234]` [@LWG1234])
+  - Github Edits (e.g, `[@EDIT1234]` [@EDIT1234])
+  - Standing Documents (e.g., `[@SD6]` [@SD6])
 
 # Stable Names
 
