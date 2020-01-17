@@ -111,6 +111,9 @@ struct process {
 
 @([`namespace @_unspecified_@ { struct sender_base {}; }`]{.add})@
 @([`using @_unspecified_@::sender_base;`]{.add})@
+
+@([`template<class, class> struct @_as-receiver_@; @_// exposition only_@`]{.add})@
+@([`template<class, class> struct @_as-invocable_@; @_// exposition only_@`]{.add})@
 ```
 
 ### C++ Syntax Highlighting

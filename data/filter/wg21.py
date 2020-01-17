@@ -34,12 +34,18 @@ def prepare(doc):
         pf.RawBlock(highlighting('html'), 'html'))
 
 def finalize(doc):
-    def collect_code_elems(elem, doc):
+    def init_code_elems(elem, doc):
         if not any(isinstance(elem, cls) for cls in [pf.Code, pf.CodeBlock]):
             return None
 
         if not elem.classes:
             elem.classes.append('default')
+
+    doc.walk(init_code_elems)
+
+    def collect_code_elems(elem, doc):
+        if not any(isinstance(elem, cls) for cls in [pf.Code, pf.CodeBlock]):
+            return None
 
         if not any(cls in elem.classes for cls in ['cpp', 'default', 'diff']):
             return None
@@ -98,7 +104,9 @@ def finalize(doc):
                              .replace('\\^{}', '^')
 
             result = pf.convert_text(
-                pf.Plain(*pf.convert_text(match)[0].content).walk(divspan, doc),
+                pf.Plain(*pf.convert_text(match)[0].content)
+                    .walk(divspan, doc)
+                    .walk(init_code_elems, doc),
                 input_format='panflute',
                 output_format=doc.format)
 
