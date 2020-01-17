@@ -62,13 +62,15 @@ Various compositions in compact list:
   - `operator@`{.cpp}
   - `operator+`{.cpp}
   - `x @ y`{.cpp}
-  <!-- - ~~`x & y`{.cpp}~~ <https://github.com/jgm/skylighting/issues/78> -->
+  - ~~`x & y`{.cpp}~~
   - __foo `constexpr`{.cpp} bar__
   - _foo `constexpr`{.cpp} bar_
   - ~~foo `constexpr`{.cpp} bar~~
   - [`hello world`]{.add}
   - ~~_`hello world`_~~
   - ~~`hello world`~~
+  - `namespace @_unspecified_@ { struct sender_base {}; }`
+  - `namespace @_unspecified_@ { struct sender_base {}; }`{.cpp}
 
 ---
 
@@ -99,13 +101,19 @@ const int x = 0B01011;
 bool b = true;
 
 struct process {
-  hello @_`constexpr`_@ detail::foo::template foo;
+  hello @[constexpr]{.rm}@ detail::foo::template @_foo_@;
 
   [[using CC: opt(1), debug]] x;
 
   template <typename I>
   [[nodiscard]] auto operator()(I i) -> O<I> { /* ... */ };
 };
+
+@([`namespace @_unspecified_@ { struct sender_base {}; }`]{.add})@
+@([`using @_unspecified_@::sender_base;`]{.add})@
+
+@([`template<class, class> struct @_as-receiver_@; @_// exposition only_@`]{.add})@
+@([`template<class, class> struct @_as-invocable_@; @_// exposition only_@`]{.add})@
 ```
 
 ### C++ Syntax Highlighting
@@ -153,6 +161,9 @@ auto result = std::visit<std::common_type_t<O<I1>, O<I2>>>(process{}, input);
 
 // visiting a `variant` for the side-effects, discarding results:
 std::visit<void>(process{}, input);
+
+@([`namespace @_unspecified_@ { struct sender_base {}; }`]{.add})@
+@([`using @_unspecified_@::sender_base;`]{.add})@
 ```
 
 ### `diff` Syntax Highlighting
@@ -165,6 +176,10 @@ some things just don't change.
 + constexpr tuple_element_t<I, pair<T1, T2> >&
 -   get(std::pair<T1, T2>&) noexcept;
 +   get(pair<T1, T2>&) noexcept;
+
+@_unspecified_@ detail::foo::template foo;
++ @_unspecified_@ detail::foo::template foo;
+- @_unspecified_@ detail::foo::template foo;
 ```
 
 # Tony Tables
