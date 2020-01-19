@@ -40,9 +40,20 @@ def prepare(doc):
 
 def finalize(doc):
     def init_code_elems(elem, doc):
+        def header(elem, doc):
+            if not any(isinstance(elem, cls) for cls in [pf.Code, pf.CodeBlock]):
+                return None
+
+            elem.classes.append('raw')
+
+        if isinstance(elem, pf.Header) and doc.format == 'latex':
+            elem.walk(header)
+
         if not any(isinstance(elem, cls) for cls in [pf.Code, pf.CodeBlock]):
             return None
 
+        # As `walk` performs post-order traversal, this is
+        # guaranteed to run before the 'raw' codepath.
         if not elem.classes:
             elem.classes.append('default')
 
@@ -52,10 +63,10 @@ def finalize(doc):
         if not any(isinstance(elem, cls) for cls in [pf.Code, pf.CodeBlock]):
             return None
 
-        if not any(cls in elem.classes for cls in ['cpp', 'default', 'diff']):
+        if 'raw' in elem.classes:
             return None
 
-        if not any(['@' in elem.text, 'diff' in elem.classes]):
+        if not any(cls in elem.classes for cls in ['cpp', 'default', 'diff']):
             return None
 
         code_elems.append(elem)
@@ -71,15 +82,20 @@ def finalize(doc):
         return result
 
     datadir = doc.get_metadata('datadir')
-    texts = pf.convert_text(
+    text = pf.convert_text(
         intersperse(
             [pf.Plain(elem) if isinstance(elem, pf.Code) else elem for elem in code_elems],
             pf.Plain(pf.RawInline('---', doc.format))),
         input_format='panflute',
         output_format=doc.format,
-        extra_args=[
-            '--syntax-definition', os.path.join(datadir, 'syntax', 'isocpp.xml')
-        ]).split('\n---\n')
+        extra_args=['--syntax-definition', os.path.join(datadir, 'syntax', 'isocpp.xml')])
+
+    # Workaround for https://github.com/jgm/skylighting/issues/79.
+    if doc.format == 'latex':
+        text = text.replace('<', '\\textless{}') \
+                   .replace('>', '\\textgreater{}')
+
+    texts = text.split('\n---\n')
 
     assert(len(code_elems) == len(texts))
 
@@ -107,6 +123,12 @@ def finalize(doc):
                              .replace('{-}', '-') \
                              .replace('\\textasciitilde{}', '~') \
                              .replace('\\^{}', '^')
+
+                # Undo the workaround escaping.
+                match = match.replace('\\textless{}', '<') \
+                             .replace('\\textgreater{}', '>')
+            elif doc.format == 'html':
+                match = html.unescape(match)
 
             result = pf.convert_text(
                 pf.Plain(*pf.convert_text(match)[0].content)
@@ -167,10 +189,10 @@ def finalize(doc):
         if not any(isinstance(elem, cls) for cls in [pf.Code, pf.CodeBlock]):
             return None
 
-        if not any(cls in elem.classes for cls in ['cpp', 'default', 'diff']):
+        if 'raw' in elem.classes:
             return None
 
-        if not any(['@' in elem.text, 'diff' in elem.classes]):
+        if not any(cls in elem.classes for cls in ['cpp', 'default', 'diff']):
             return None
 
         return convert(*next(converted))
@@ -256,8 +278,7 @@ def divspan(elem, doc):
 
         if doc.format == 'latex':
             return pf.RawInline('\\pnum{{{}}}'.format(num), 'latex')
-
-        if doc.format == 'html':
+        elif doc.format == 'html':
             return pf.Span(
                 pf.RawInline('<a class="marginalized">{}</a>'.format(num), 'html'),
                 classes=['marginalizedparent'])

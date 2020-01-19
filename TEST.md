@@ -56,6 +56,7 @@ su~b~script, su^per^script, and highlighted code: `constexpr`{.cpp}.
 
 Various compositions in compact list:
 
+  - ~~`A<B<T>>`{.cpp}~~
   - `x`~_`i`_~ `<=>` `y`~_`i`_~
   - `compare_3way`{.cpp}
   - `3WAY`{.default}`<R>`{.cpp}
