@@ -56,19 +56,22 @@ su~b~script, su^per^script, and highlighted code: `constexpr`{.cpp}.
 
 Various compositions in compact list:
 
+  - ~~`A<B<T>>`{.cpp}~~
   - `x`~_`i`_~ `<=>` `y`~_`i`_~
   - `compare_3way`{.cpp}
   - `3WAY`{.default}`<R>`{.cpp}
   - `operator@`{.cpp}
   - `operator+`{.cpp}
   - `x @ y`{.cpp}
-  <!-- - ~~`x & y`{.cpp}~~ <https://github.com/jgm/skylighting/issues/78> -->
+  - ~~`x & y`{.cpp}~~
   - __foo `constexpr`{.cpp} bar__
   - _foo `constexpr`{.cpp} bar_
   - ~~foo `constexpr`{.cpp} bar~~
   - [`hello world`]{.add}
   - ~~_`hello world`_~~
   - ~~`hello world`~~
+  - `namespace @_unspecified_@ { struct sender_base {}; }`
+  - `namespace @_unspecified_@ { struct sender_base {}; }`{.cpp}
 
 ---
 
@@ -99,13 +102,19 @@ const int x = 0B01011;
 bool b = true;
 
 struct process {
-  hello @_`constexpr`_@ detail::foo::template foo;
+  hello @[constexpr]{.rm}@ detail::foo::template @_foo_@;
 
   [[using CC: opt(1), debug]] x;
 
   template <typename I>
   [[nodiscard]] auto operator()(I i) -> O<I> { /* ... */ };
 };
+
+@([`namespace @_unspecified_@ { struct sender_base {}; }`]{.add})@
+@([`using @_unspecified_@::sender_base;`]{.add})@
+
+@([`template<class, class> struct @_as-receiver_@; @_// exposition only_@`]{.add})@
+@([`template<class, class> struct @_as-invocable_@; @_// exposition only_@`]{.add})@
 ```
 
 ### C++ Syntax Highlighting
@@ -153,6 +162,9 @@ auto result = std::visit<std::common_type_t<O<I1>, O<I2>>>(process{}, input);
 
 // visiting a `variant` for the side-effects, discarding results:
 std::visit<void>(process{}, input);
+
+@([`namespace @_unspecified_@ { struct sender_base {}; }`]{.add})@
+@([`using @_unspecified_@::sender_base;`]{.add})@
 ```
 
 ### `diff` Syntax Highlighting
@@ -165,6 +177,10 @@ some things just don't change.
 + constexpr tuple_element_t<I, pair<T1, T2> >&
 -   get(std::pair<T1, T2>&) noexcept;
 +   get(pair<T1, T2>&) noexcept;
+
+@_unspecified_@ detail::foo::template foo;
++ @_unspecified_@ detail::foo::template foo;
+- @_unspecified_@ detail::foo::template foo;
 ```
 
 # Tony Tables
@@ -308,6 +324,19 @@ Small, inline changes are done with `[<new text>]{.add}` or `[<old text>]{.rm}`.
 > |     `if (` _expression_ `)`
 > :::
 
+# Stable Names
+
+Stable names are written as `[basic.life]{.sref}`, and renders as [basic.life]{.sref}.
+It uses <https://timsong-cpp.github.io/cppwp/annex-f>.
+
 # Citation
 
-Automatic references like [@N4762] use <https://wg21.link/index.yaml>.
+Automatic references are written as `[@N4762]` and renders as [@N4762].
+Anything in <https://wg21.link/index.yaml> are linked automatically.
+
+  - `N` Papers (e.g., `[@N3887]` [@N3887])
+  - `P` Papers (e.g., `[@P1371R1]` [@P1371R1])
+  - CWG Issues (e.g., `[@CWG1234]` [@CWG1234])
+  - LWG Issues (e.g., `[@LWG1234]` [@LWG1234])
+  - Github Edits (e.g, `[@EDIT1234]` [@EDIT1234])
+  - Standing Documents (e.g., `[@SD6]` [@SD6])

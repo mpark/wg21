@@ -286,6 +286,7 @@
         <!-- Match comments -->
         <IncludeRules context="match comments and region markers" />
         <!-- Match embedded Markdown -->
+        <RegExpr attribute="Ignore" context="#stay" String="@\(.*?\)@" />
         <RegExpr attribute="Ignore" context="#stay" String="@.*?@" />
         <!-- Match punctuators -->
         <AnyChar attribute="Separator Symbol" context="#stay" String="&separators;" />
@@ -638,6 +639,7 @@
         <!-- Match comments -->
         <IncludeRules context="match comments" />
         <!-- Match embedded Markdown -->
+        <RegExpr attribute="Ignore" context="#stay" String="@\(.*?\)@" />
         <RegExpr attribute="Ignore" context="#stay" String="@.*?@" />
         <!-- Match punctuators -->
         <AnyChar attribute="Separator Symbol" context="#stay" String="&separators;" />

@@ -60,6 +60,7 @@ This framework provides support for various common elements for C++ papers.
   - [Code Changes](#code-changes)
   - [Wording Changes](#wording-changes)
   - [Grammar Changes](#grammar-changes)
+- [Stable Names](#stable-names)
 - [Citations](#citations)
 - [References](#references)
   - [Automatic References](#automatic-references)
@@ -238,7 +239,7 @@ Large changes are [fenced `Div` blocks][divspan] with `::: add` for additions, `
 ![](img/wording-div.png)
 
 Small, inline changes are [bracketed `Span` elements][divspan] that looks like
-`[<new text>]{.add}` or `[<old text>]{.rm}`.
+`[new text]{.add}` or `[old text]{.rm}`.
 
 ![](img/wording-span.png)
 
@@ -281,9 +282,23 @@ Use [line blocks][lineblock] (`|`) in order to preserve the leading spaces.
 
 ![](img/grammar.png)
 
+### Stable Names
+
+Stable names are [bracketed `Span` elements][divspan] that look like: `[stable.name]{.sref}`.
+
+```markdown
+In [expr.sizeof]{.sref}/5:
+
+The identifier in a `sizeof...` expression shall name a [parameter]{.rm} pack.
+The `sizeof...` operator yields the number of [arguments provided for]{.rm}
+[elements in]{.add} the [parameter]{.rm} pack [identifier]{.rm} ([temp.variadic]{.sref}).
+```
+
+![](img/sref.png)
+
 ### Citations
 
-In-text citations look like this: `[@<id>]`
+In-text citations look like this: `[@id]`
 
 ![](img/citation.png)
 
@@ -334,7 +349,15 @@ references:
 
 ### Unicode Considerations
 
-If you build for LaTeX output, and you have Unicode characters in any of your paper's source code, you may have problems.  First of all, the default pdf engine simply does not support Unicode characters at all.  You can add `--pdf-engine=xelatex` to the call to `pandoc` in the Makefile to use xelatex as your engine instead.  That gives you access to some font selections for different parts of your paper (see the Fonts section of the Pandoc manual at https://pandoc.org/MANUAL.html#fonts).  The option that controls your source code fonts is `monofont`.  You can add a line with your `monofont` choice to your YAML metadata block.  Here, it's "DejaVu Sans Mono" which provides glyphs for a large amount of the Unicode characters:
+If you build for LaTeX output and you have Unicode characters in any of
+your paper's source code, you may have problems. First, the default PDF engine
+simply does not support Unicode characters. You can add `--pdf-engine=xelatex`
+to the call to `pandoc` in the `Makefile` to use `xelatex` instead.
+That gives you access to some font selections for different parts of your paper
+(see the [Fonts] section of the Pandoc manual). The option that controls your
+source code fonts is `monofont`. You can add a line with your `monofont` choice
+to your YAML metadata block. Here, it's "DejaVu Sans Mono" which provides
+glyphs for a large amount of the Unicode characters:
 
 ```yaml
 ---
@@ -357,6 +380,7 @@ monofont: "DejaVu Sans Mono"
 
 If you want the list of available fonts on your system, most supported systems will produce a list via the command-line tool `fc-list`.
 
+[Fonts]: https://pandoc.org/MANUAL.html#fonts
 
 ## Other Papers
 
@@ -369,7 +393,7 @@ If you want the list of available fonts on your system, most supported systems w
 ## Requirements
 
   - `pdflatex`
-  - `pandoc` (>= 2.7.3)
+  - `pandoc` (>= 2.8.1)
   - `pandoc-citeproc`
   - `python3`
   - `panflute`
