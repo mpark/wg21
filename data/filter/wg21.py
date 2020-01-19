@@ -90,7 +90,7 @@ def finalize(doc):
         output_format=doc.format,
         extra_args=['--syntax-definition', os.path.join(datadir, 'syntax', 'isocpp.xml')])
 
-    # Workaround for https://github.com/jgm/skylighting/issues/79.
+    # Workaround for https://github.com/jgm/skylighting/issues/91.
     if doc.format == 'latex':
         text = text.replace('<', '\\textless{}') \
                    .replace('>', '\\textgreater{}')
