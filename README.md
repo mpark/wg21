@@ -60,6 +60,7 @@ This framework provides support for various common elements for C++ papers.
   - [Code Changes](#code-changes)
   - [Wording Changes](#wording-changes)
   - [Grammar Changes](#grammar-changes)
+- [Stable Names](#stable-names)
 - [Citations](#citations)
 - [References](#references)
   - [Automatic References](#automatic-references)
@@ -348,7 +349,15 @@ references:
 
 ### Unicode Considerations
 
-If you build for LaTeX output, and you have Unicode characters in any of your paper's source code, you may have problems.  First of all, the default pdf engine simply does not support Unicode characters at all.  You can add `--pdf-engine=xelatex` to the call to `pandoc` in the Makefile to use xelatex as your engine instead.  That gives you access to some font selections for different parts of your paper (see the Fonts section of the Pandoc manual at https://pandoc.org/MANUAL.html#fonts).  The option that controls your source code fonts is `monofont`.  You can add a line with your `monofont` choice to your YAML metadata block.  Here, it's "DejaVu Sans Mono" which provides glyphs for a large amount of the Unicode characters:
+If you build for LaTeX output and you have Unicode characters in any of
+your paper's source code, you may have problems. First, the default PDF engine
+simply does not support Unicode characters. You can add `--pdf-engine=xelatex`
+to the call to `pandoc` in the `Makefile` to use `xelatex` instead.
+That gives you access to some font selections for different parts of your paper
+(see the [Fonts] section of the Pandoc manual). The option that controls your
+source code fonts is `monofont`. You can add a line with your `monofont` choice
+to your YAML metadata block. Here, it's "DejaVu Sans Mono" which provides
+glyphs for a large amount of the Unicode characters:
 
 ```yaml
 ---
@@ -371,6 +380,7 @@ monofont: "DejaVu Sans Mono"
 
 If you want the list of available fonts on your system, most supported systems will produce a list via the command-line tool `fc-list`.
 
+[Fonts]: https://pandoc.org/MANUAL.html#fonts
 
 ## Other Papers
 

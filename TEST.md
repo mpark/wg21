@@ -324,6 +324,11 @@ Small, inline changes are done with `[<new text>]{.add}` or `[<old text>]{.rm}`.
 > |     `if (` _expression_ `)`
 > :::
 
+# Stable Names
+
+Stable names are written as `[basic.life]{.sref}`, and renders as [basic.life]{.sref}.
+It uses <https://timsong-cpp.github.io/cppwp/annex-f>.
+
 # Citation
 
 Automatic references are written as `[@N4762]` and renders as [@N4762].
@@ -335,8 +340,3 @@ Anything in <https://wg21.link/index.yaml> are linked automatically.
   - LWG Issues (e.g., `[@LWG1234]` [@LWG1234])
   - Github Edits (e.g, `[@EDIT1234]` [@EDIT1234])
   - Standing Documents (e.g., `[@SD6]` [@SD6])
-
-# Stable Names
-
-Stable names are written as `[basic.life]{.sref}`, and renders as [basic.life]{.sref}.
-It uses <https://timsong-cpp.github.io/cppwp/annex-f>.
