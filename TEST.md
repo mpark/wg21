@@ -187,6 +187,8 @@ some things just don't change.
 
 ::: tonytable
 
+> Put your caption here
+
 ### Before
 ```cpp
 switch (x) {

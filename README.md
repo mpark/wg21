@@ -128,8 +128,7 @@ variable names.
 Tony Tables are [fenced `Div` blocks][divspan] that open with `::: tonytable`
 and close with `:::`. [Fenced code blocks][code] are the only elements that
 actually get added to Tony Tables, except that the last header (if any) before
-a [fenced code block][code] is attached to the cell above. Each code block is
-pushed onto the current row.
+a [fenced code block][code] is attached to the cell above.
 
 ``````md
 ::: tonytable
@@ -160,8 +159,8 @@ inspect (x) {
 
 ![](img/tonytable-1.png)
 
-Each [fenced code block][code] is pushed onto the current row,
-and horizontal rules (`---`) are used to move to the next row.
+Each [fenced code block][code] is pushed onto the current row, and
+horizontal rules (`---`) are used to move to the next row.
 
 ``````md
 ::: tonytable
@@ -208,6 +207,36 @@ inspect (s) {
 ``````
 
 ![](img/tonytable-2.png)
+
+The last block quote `> caption` (if any) is used as the caption.
+
+``````md
+::: tonytable
+
+> Put your caption here
+
+### Before
+```cpp
+switch (x) {
+  case 0: std::cout << "got zero"; break;
+  case 1: std::cout << "got one"; break;
+  default: std::cout << "don't care";
+}
+```
+
+### After
+```cpp
+inspect (x) {
+  0: std::cout << "got zero";
+  1: std::cout << "got one";
+  _: std::cout << "don't care";
+}
+```
+
+:::
+``````
+
+![](img/tonytable-3.png)
 
 ### Proposed Wording
 
