@@ -95,7 +95,10 @@ def finalize(doc):
         text = text.replace('<', '\\textless{}') \
                    .replace('>', '\\textgreater{}')
 
-    texts = text.split('\n---\n')
+    if doc.format == 'latex':
+        texts = text.split('\n\n---\n\n')
+    elif doc.format == 'html':
+        texts = text.split('\n---\n')
 
     assert(len(code_elems) == len(texts))
 
