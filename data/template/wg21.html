@@ -59,16 +59,20 @@ $endif$
 
 <table style="border:none;float:right">
   <tr>
-    <td>Document #: </td>
+    <td>Document #:</td>
     <td>$document$</td>
   </tr>
   <tr>
-    <td>Date: </td>
+    <td>Date:</td>
     <td>$date$</td>
   </tr>
   <tr>
-    <td style="vertical-align:top">Project: </td>
-    <td>Programming Language C++<br>
+    <td style="vertical-align:top">Project:</td>
+    <td>Programming Language C++</td>
+  </tr>
+  <tr>
+    <td style="vertical-align:top">Audience:</td>
+    <td>
 $for(audience)$
       $audience$<br>
 $endfor$
@@ -81,7 +85,7 @@ $if(revises)$
   </tr>
 $endif$
   <tr>
-    <td style="vertical-align:top">Reply-to: </td>
+    <td style="vertical-align:top">Reply-to:</td>
     <td>
 $for(author)$
       $author.name$<br><$author.email$><br>
