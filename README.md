@@ -325,6 +325,8 @@ The `sizeof...` operator yields the number of [arguments provided for]{.rm}
 
 ![](img/sref.png)
 
+> Run `make update` to update the local cache of `annex-f`.
+
 ### Citations
 
 In-text citations look like this: `[@id]`
@@ -349,7 +351,7 @@ The `[@N3546]` example from [Citations](#citations) generates:
 
 ![](img/automatic-reference.png)
 
-> Use `make update` to update the local cache of [index.yaml](https://wg21.link/index.yaml).
+> Run `make update` to update the local cache of `index.yaml`.
 
 #### Manual References
 
