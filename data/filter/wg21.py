@@ -11,7 +11,7 @@ import panflute as pf
 import re
 import tempfile
 
-embedded_md = re.compile('@\((.*?)\)@|@(.*?)@')
+embedded_md = re.compile('@@(.*?)@@|@(.*?)@')
 stable_names = {}
 
 def prepare(doc):
