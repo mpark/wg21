@@ -13,10 +13,8 @@ $(OUTDIR)/%.html $(OUTDIR)/%.latex $(OUTDIR)/%.pdf: %.md
        --css $(DATADIR)/template/14882.css \
        --filter pandoc-citeproc \
        --filter $(DATADIR)/filter/wg21.py \
-       --highlight-style $(DATADIR)/syntax/wg21.theme \
        --metadata datadir:$(DATADIR) \
        --metadata-file $(DATADIR)/metadata.yaml \
-       --syntax-definition $(DATADIR)/syntax/isocpp.xml \
        --template $(DATADIR)/template/wg21 \
        --output $@
 
