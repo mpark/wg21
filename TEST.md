@@ -1,5 +1,5 @@
 ---
-title: "Test document for `mpark/wg21`"
+title: "Test document for mpark/wg21"
 subtitle: "Visual inspection of various features of the framework"
 document: D0000R0
 date: today
@@ -57,7 +57,6 @@ su~b~script, su^per^script, and highlighted code: `constexpr`{.cpp}.
 Various compositions in compact list:
 
   - ~~`A<B<T>>`{.cpp}~~
-  - `x`~_`i`_~ `<=>` `y`~_`i`_~
   - `compare_3way`{.cpp}
   - `3WAY`{.default}`<R>`{.cpp}
   - `operator@`{.cpp}
@@ -77,7 +76,7 @@ Various compositions in compact list:
 
 Loose list:
 
-  - `x`{.cpp}~_`i`{.cpp}_~ `<=>`{.cpp} `y`{.cpp}~_`i`{.cpp}_~
+  - `x@~_i_~@ <=> y@~_i_~@`{.cpp}
 
   - [foo `hello world` bar]{.rm}
 
@@ -139,8 +138,7 @@ struct process {
   template <typename I>
   [[nodiscard]] auto operator()(I i) -> O<I> { /* ... */ };
 
-  x@~*i*~@ <=> y@~*i*~@;
-  @x~*i*~@ <=> @y~*i*~@;
+  x@~_i_~@ <=> y@~_i_~@;
 };
 
 if (x) {
@@ -268,7 +266,7 @@ the set contains the potential results of that operand.
 
 Large changes are `::: add` for additions, `::: rm` for removals.
 
-> Modify section 19.20.2 Formatting functions [format.functions]:
+> Modify section [format.functions]{.sref}:
 >
 > ::: add
 >
@@ -281,7 +279,7 @@ Large changes are `::: add` for additions, `::: rm` for removals.
 >
 > :::
 
-Small, inline changes are done with `[<new text>]{.add}` or `[<old text>]{.rm}`.
+Small, inline changes are done with `[new text]{.add}` or `[old text]{.rm}`.
 
 +-----------+--------------------------------------------------------------------+
 | Specifier | Replacement                                                        |
