@@ -32,7 +32,7 @@ all: $(PDF)
 
 .PHONY: clean
 clean:
-	rm -rf $(OUTDIR)/*
+	rm -rf $(OUTDIR)
 
 .PHONY: update
 update:
