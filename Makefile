@@ -12,7 +12,7 @@ $(OUTDIR)/%.html $(OUTDIR)/%.latex $(OUTDIR)/%.pdf: \
        --self-contained \
        --table-of-contents \
        --bibliography $(DATADIR)/index.yaml \
-       --csl $(DATADIR)/cpp.csl \
+       --csl $(DATADIR)/wg21.csl \
        --css $(DATADIR)/template/14882.css \
        --filter pandoc-citeproc \
        --filter $(DATADIR)/filter/wg21.py \
