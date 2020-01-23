@@ -1,25 +1,17 @@
 OUTDIR := generated
 
+DEFAULTS := $(wildcard defaults.yaml)
 METADATA := $(wildcard metadata.yaml)
 
 override DATADIR := $(dir $(lastword $(MAKEFILE_LIST)))data
 
 $(OUTDIR)/%.html $(OUTDIR)/%.latex $(OUTDIR)/%.pdf: \
-%.md $(DATADIR)/index.yaml $(DATADIR)/annex-f
-	mkdir -p $(OUTDIR) && \
-	pandoc $< $(METADATA) $(DATADIR)/references.md \
-       --number-sections \
-       --self-contained \
-       --table-of-contents \
-       --bibliography $(DATADIR)/index.yaml \
-       --csl $(DATADIR)/wg21.csl \
-       --css $(DATADIR)/template/14882.css \
-       --filter pandoc-citeproc \
-       --filter $(DATADIR)/filter/wg21.py \
-       --metadata datadir:$(DATADIR) \
-       --metadata-file $(DATADIR)/metadata.yaml \
-       --template $(DATADIR)/template/wg21 \
-       --output $@
+%.md $(DATADIR)/defaults.yaml $(DATADIR)/index.yaml $(DATADIR)/annex-f
+	@mkdir -p $(OUTDIR)
+	$(eval override CMD := pandoc $< -o $@ -d $(DATADIR)/defaults.yaml)
+	$(eval $(and $(DEFAULTS), override CMD += -d $(DEFAULTS)))
+	$(eval $(and $(METADATA), override CMD += --metadata-file $(METADATA)))
+	$(CMD)
 
 override SRC := $(filter-out README.md, $(wildcard *.md))
 
@@ -38,6 +30,9 @@ clean:
 update:
 	wget https://wg21.link/index.yaml -O $(DATADIR)/index.yaml
 	wget https://timsong-cpp.github.io/cppwp/annex-f -O $(DATADIR)/annex-f
+
+$(DATADIR)/defaults.yaml: $(DATADIR)/defaults.py
+	$(DATADIR)/defaults.py > $@
 
 $(DATADIR)/index.yaml:
 	wget https://wg21.link/index.yaml -O $@
