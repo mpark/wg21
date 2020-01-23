@@ -11,6 +11,9 @@ $(OUTDIR)/%.html $(OUTDIR)/%.latex $(OUTDIR)/%.pdf: \
 	$(eval override CMD := pandoc $< -o $@ -d $(DATADIR)/defaults.yaml)
 	$(eval $(and $(DEFAULTS), override CMD += -d $(DEFAULTS)))
 	$(eval $(and $(METADATA), override CMD += --metadata-file $(METADATA)))
+	$(eval $(if $(filter %.html, $@), \
+	  $(eval override TOCDEPTH := $(shell $(DATADIR)/toc-depth.py < $<)) \
+	  $(and $(TOCDEPTH), override CMD += --toc-depth $(TOCDEPTH))))
 	$(CMD)
 
 override SRC := $(filter-out README.md, $(wildcard *.md))
