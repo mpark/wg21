@@ -1,6 +1,8 @@
-DATADIR = $(dir $(lastword $(MAKEFILE_LIST)))data
-METADATA = $(wildcard metadata.yaml)
-OUTDIR = generated
+OUTDIR := generated
+
+METADATA := $(wildcard metadata.yaml)
+
+override DATADIR := $(dir $(lastword $(MAKEFILE_LIST)))data
 
 $(OUTDIR)/%.html $(OUTDIR)/%.latex $(OUTDIR)/%.pdf: \
 %.md $(DATADIR)/index.yaml $(DATADIR)/annex-f
@@ -19,11 +21,11 @@ $(OUTDIR)/%.html $(OUTDIR)/%.latex $(OUTDIR)/%.pdf: \
        --template $(DATADIR)/template/wg21 \
        --output $@
 
-SRC = $(filter-out README.md, $(wildcard *.md))
+override SRC := $(filter-out README.md, $(wildcard *.md))
 
-HTML = $(SRC:.md=.html)
-LATEX = $(SRC:.md=.latex)
-PDF = $(SRC:.md=.pdf)
+override HTML := $(SRC:.md=.html)
+override LATEX := $(SRC:.md=.latex)
+override PDF := $(SRC:.md=.pdf)
 
 .PHONY: all
 all: $(PDF)
