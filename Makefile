@@ -2,7 +2,8 @@ DATADIR = $(dir $(lastword $(MAKEFILE_LIST)))data
 METADATA = $(wildcard metadata.yaml)
 OUTDIR = generated
 
-$(OUTDIR)/%.html $(OUTDIR)/%.latex $(OUTDIR)/%.pdf: %.md
+$(OUTDIR)/%.html $(OUTDIR)/%.latex $(OUTDIR)/%.pdf: \
+%.md $(DATADIR)/index.yaml $(DATADIR)/annex-f
 	mkdir -p $(OUTDIR) && \
 	pandoc $< $(METADATA) $(DATADIR)/references.md \
        --number-sections \
@@ -43,10 +44,10 @@ $(DATADIR)/annex-f:
 	wget https://timsong-cpp.github.io/cppwp/annex-f -O $@
 
 .PHONY: $(HTML)
-$(HTML): %.html: $(DATADIR)/index.yaml $(DATADIR)/annex-f $(OUTDIR)/%.html
+$(HTML): %.html: $(OUTDIR)/%.html
 
 .PHONY: $(LATEX)
-$(LATEX): %.latex: $(DATADIR)/index.yaml $(DATADIR)/annex-f $(OUTDIR)/%.latex
+$(LATEX): %.latex: $(OUTDIR)/%.latex
 
 .PHONY: $(PDF)
-$(PDF): %.pdf: $(DATADIR)/index.yaml $(DATADIR)/annex-f $(OUTDIR)/%.pdf
+$(PDF): %.pdf: $(OUTDIR)/%.pdf
