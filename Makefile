@@ -1,7 +1,7 @@
-OUTDIR := generated
+OUTDIR ?= generated
 
-DEFAULTS := $(wildcard defaults.yaml)
-METADATA := $(wildcard metadata.yaml)
+DEFAULTS ?= $(wildcard defaults.yaml)
+METADATA ?= $(wildcard metadata.yaml)
 
 override DATADIR := $(dir $(lastword $(MAKEFILE_LIST)))data
 
