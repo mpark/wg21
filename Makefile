@@ -26,9 +26,11 @@ override PDF := $(SRC:.md=.pdf)
 .PHONY: all
 all: $(PDF)
 
+ifneq ($(SRCDIR), $(OUTDIR))
 .PHONY: clean
 clean:
 	rm -rf $(OUTDIR)
+endif
 
 .PHONY: update
 update:
