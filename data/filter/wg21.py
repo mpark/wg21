@@ -61,9 +61,9 @@ def finalize(doc):
         # guaranteed to run before the 'raw' code path.
         if not elem.classes:
             if isinstance(elem, pf.Code):
-                cls = doc.get_metadata('highlighting.inline-code')
+                cls = doc.get_metadata('highlighting.inline-code', 'default')
             elif isinstance(elem, pf.CodeBlock):
-                cls = doc.get_metadata('highlighting.code-block')
+                cls = doc.get_metadata('highlighting.code-block', 'default')
             elem.classes.append(cls)
 
     doc.walk(init_code_elems)
