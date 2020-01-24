@@ -18,13 +18,17 @@ linkcolor: blue
 urlcolor: blue
 toccolor: black
 
-uccolor: 898887
-addcolor: 006e28
-rmcolor: bf0303
-
 block-headings: true
 link-citations: true
 strikeout: true
+
+uccolor: '898887'
+addcolor: '006e28'
+rmcolor: 'bf0303'
+
+highlighting:
+  inline-code: default
+  code-block: default
 
 header-includes:
   - |

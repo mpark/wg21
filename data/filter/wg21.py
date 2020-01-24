@@ -40,22 +40,31 @@ def prepare(doc):
 
 def finalize(doc):
     def init_code_elems(elem, doc):
-        def header(elem, doc):
-            if not any(isinstance(elem, cls) for cls in [pf.Code, pf.CodeBlock]):
-                return None
-
-            elem.classes.append('raw')
-
         if isinstance(elem, pf.Header) and doc.format == 'latex':
-            elem.walk(header)
+            elem.walk(lambda elem, doc:
+                elem.classes.append('raw')
+                if any(isinstance(elem, cls) for cls in [pf.Code, pf.CodeBlock])
+                else None)
+
+        # Mark code elements within colored divspan as default.
+        if any(isinstance(elem, cls) for cls in [pf.Div, pf.Span]) and \
+           any(cls in elem.classes for cls in ['add', 'rm', 'ednote']):
+            elem.walk(lambda elem, doc:
+                elem.classes.insert(0, 'default')
+                if any(isinstance(elem, cls) for cls in [pf.Code, pf.CodeBlock])
+                else None)
 
         if not any(isinstance(elem, cls) for cls in [pf.Code, pf.CodeBlock]):
             return None
 
         # As `walk` performs post-order traversal, this is
-        # guaranteed to run before the 'raw' codepath.
+        # guaranteed to run before the 'raw' code path.
         if not elem.classes:
-            elem.classes.append('default')
+            if isinstance(elem, pf.Code):
+                cls = doc.get_metadata('highlighting.inline-code')
+            elif isinstance(elem, pf.CodeBlock):
+                cls = doc.get_metadata('highlighting.code-block')
+            elem.classes.append(cls)
 
     doc.walk(init_code_elems)
 
