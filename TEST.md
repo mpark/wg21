@@ -10,6 +10,7 @@ author:
   - name: Michael Park
     email: <mcypark@gmail.com>
 toc: true
+toc-depth: 2
 ---
 
 # Introduction
