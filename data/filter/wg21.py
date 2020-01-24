@@ -138,7 +138,8 @@ def finalize(doc):
                     .walk(divspan, doc)
                     .walk(init_code_elems, doc),
                 input_format='panflute',
-                output_format=doc.format)
+                output_format=doc.format,
+                extra_args=['--syntax-definition', os.path.join(datadir, 'syntax', 'isocpp.xml')])
 
             convert.cache[match] = result
             return result
