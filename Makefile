@@ -1,3 +1,4 @@
+SRCDIR ?= .
 OUTDIR ?= generated
 
 DEFAULTS ?= $(wildcard defaults.yaml)
@@ -16,7 +17,7 @@ $(OUTDIR)/%.html $(OUTDIR)/%.latex $(OUTDIR)/%.pdf: \
 	  $(and $(TOCDEPTH), override CMD += --toc-depth $(TOCDEPTH))))
 	$(CMD)
 
-override SRC := $(filter-out README.md, $(wildcard *.md))
+override SRC := $(filter-out README.md, $(wildcard $(SRCDIR)/*.md))
 
 override HTML := $(SRC:.md=.html)
 override LATEX := $(SRC:.md=.latex)
