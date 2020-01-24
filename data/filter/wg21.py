@@ -300,12 +300,10 @@ def divspan(elem, doc):
     if not any(isinstance(elem, cls) for cls in [pf.Div, pf.Span]):
         return None
 
-    clses = list(reversed(elem.classes))
-
-    if 'pnum' in clses and isinstance(elem, pf.Span):
+    if 'pnum' in elem.classes and isinstance(elem, pf.Span):
         return pnum()
 
-    if 'sref' in clses and isinstance(elem, pf.Span):
+    if 'sref' in elem.classes and isinstance(elem, pf.Span):
         target = pf.stringify(elem)
         number = stable_names.get(target)
         link = pf.Link(
@@ -317,12 +315,12 @@ def divspan(elem, doc):
             pf.debug('mpark/wg21: stable name', target, 'not found')
             return link
 
-    note_cls = next(iter(cls for cls in clses if cls in {'example', 'note', 'ednote'}), None)
+    note_cls = next(iter(cls for cls in elem.classes if cls in {'example', 'note', 'ednote'}), None)
     if note_cls == 'example':  example()
     elif note_cls == 'note':   note()
     elif note_cls == 'ednote': ednote(); return
 
-    diff_cls = next(iter(cls for cls in clses if cls in {'add', 'rm'}), None)
+    diff_cls = next(iter(cls for cls in elem.classes if cls in {'add', 'rm'}), None)
     if diff_cls == 'add':  add()
     elif diff_cls == 'rm': rm()
 
