@@ -6,7 +6,7 @@ METADATA ?= $(wildcard metadata.yaml)
 
 override DATADIR := $(dir $(lastword $(MAKEFILE_LIST)))data
 
-override SRC := $(filter-out README.md, $(wildcard $(SRCDIR)/*.md))
+override SRC := $(filter-out %/README.md, $(wildcard $(SRCDIR)/*.md))
 
 override HTML := $(SRC:.md=.html)
 override LATEX := $(SRC:.md=.latex)
