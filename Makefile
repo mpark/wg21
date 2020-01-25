@@ -57,4 +57,5 @@ $(DATADIR)/annex-f:
 $(HTML) $(LATEX) $(PDF): %: $(OUTDIR)/%
 
 $(OUTDIR)/%.html $(OUTDIR)/%.latex $(OUTDIR)/%.pdf: $(DEPS) %.md
-	$(PANDOC)
+	$(PANDOC) \
+    --bibliography $(DATADIR)/index.yaml

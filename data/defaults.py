@@ -16,7 +16,6 @@ input-file: {datadir}/references.md
 
 metadata:
   datadir: {datadir}
-  bibliography: {datadir}/index.yaml
   csl: {datadir}/wg21.csl
 
 metadata-file: {datadir}/metadata.yaml\
