@@ -404,9 +404,7 @@ $else$
 $endif$
 \subtitle{$subtitle$}
 $endif$
-$if(author)$
 \author{$for(author)$&$author.name$\\$for(author.email)$&<$author.email$>\\$endfor$$endfor$}
-$endif$
 \date{$date$}
 $if(beamer)$
 $if(institute)$
@@ -446,7 +444,7 @@ $if(toc-title)$
 \renewcommand*\contentsname{$toc-title$}
 $endif$
 $if(beamer)$
-\begin{frame}
+\begin{frame}[allowframebreaks]
 $if(toc-title)$
   \frametitle{$toc-title$}
 $endif$
