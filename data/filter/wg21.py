@@ -217,6 +217,9 @@ def header(elem, doc):
     if not isinstance(elem, pf.Header):
         return None
 
+    if elem.identifier == 'bibliography':
+        elem.classes.remove('unnumbered')
+
     elem.content.append(
         pf.Link(url='#{}'.format(elem.identifier), classes=['self-link']))
 
@@ -490,27 +493,8 @@ def table(elem, doc):
     if elem.header is not None:
         elem.header.walk(header)
 
-def bibliography(elem, doc):
-    if not isinstance(elem, pf.Div) or elem.identifier != 'bibliography':
-        return None
-
-    def references(elem, doc):
-        if isinstance(elem, pf.Div) and elem.identifier == 'refs':
-            nonlocal refs
-            refs = elem
-
-    refs = pf.Div()
-    elem.walk(references)
-    if refs.content:
-        # This should just be `return None`, but the HTML output
-        # for headers seem to break with `<h1>` inside a `<div>`.
-        elem.parent.content.extend(elem.content)
-
-    return []
-
 if __name__ == '__main__':
   pf.run_filters([
-      bibliography,
       divspan,
       tonytable,
       # after `tonytable` because...

@@ -15,6 +15,7 @@ geometry:
 
 block-headings: true
 link-citations: true
+reference-section-title: References
 strikeout: true
 
 citecolor: blue
