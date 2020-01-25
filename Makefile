@@ -1,8 +1,8 @@
 SRCDIR ?= .
 OUTDIR ?= generated
 
-DEFAULTS ?= $(wildcard defaults.yaml)
-METADATA ?= $(wildcard metadata.yaml)
+DEFAULTS ?= $(wildcard $(SRCDIR)/defaults.yaml)
+METADATA ?= $(wildcard $(SRCDIR)/metadata.yaml)
 
 override DATADIR := $(dir $(lastword $(MAKEFILE_LIST)))data
 
