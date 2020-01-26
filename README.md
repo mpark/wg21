@@ -53,7 +53,7 @@ This framework provides support for various common elements for C++ papers.
 - [Title](#title)
 - [Table of Contents](#table-of-contents)
 - [Markdown](#markdown)
-  - [Within Code Blocks](#within-code-blocks)
+- [Embedded Markdown within Code](#embedded-markdown-within-code)
 - [Tony Tables](#tony-tables)
 - [Proposed Wording](#proposed-wording)
   - [Paragraph Numbers](#paragraph-numbers)
@@ -114,14 +114,47 @@ Refer to the full [Pandoc Markdown] spec for useful extensions!
 
 [Pandoc Markdown]: https://pandoc.org/MANUAL.html#pandocs-markdown
 
-#### Within Code Blocks
+### Embedded Markdown within Code
 
-Within `` ``` ``, `` ```cpp ``, and `` ```diff `` code blocks, any text
-surrounded by the `@` symbol is formatted as Markdown! This is useful for
-conventions such as _`see below`_, _`unspecified`_, and _exposition-only_
-variable names.
+Within default, `cpp`, and `diff` code elements, any text surrounded by the `@`
+symbol is formatted as Markdown! This is useful for conventions such as
+_`see below`_, _`unspecified`_, and _exposition-only_ variable names.
 
 ![](img/code-cpp.png)
+
+This also works for inline code, e.g.,
+```markdown
+Recall the `static_cast`{.cpp} syntax: `static_cast < @_type-id_@ > ( @_expression_@ )`{.cpp}.
+```
+
+![](img/inline-code-cpp.png)
+
+If you need to nest embedded Markdown, surround the outer context with `@@`.
+This comes up sometimes if you want to produce inline diffs within a code block,
+and some of the inner code need to be marked up.
+
+``````markdown
+```
+template <@[`invocable`]{.rm}[`class`]{.add}@ F@[`, class`]{.add}@>
+struct @_as-receiver_@ {
+@[`private:`]{.rm}@
+  @[`using invocable_type = std::remove_cvref_t<F>;`]{.rm}@
+  @[`invocable_type`]{.rm}[`F`]{.add}@ f_;
+@[`public:`]{.rm}@
+  @@[`explicit @_as-receiver_@(invocable_type&& f)`]{.rm}@@
+  @@[`@_as-receiver_@(@_as-receiver_@&& other) = default;`]{.rm}@@
+  void set_value() @[`noexcept(is_nothrow_invocable_v<F&>)`]{.add}@ {
+    invoke(f_);
+  }
+  @[`[[noreturn]]`]{.add}@ void set_error(std::exception_ptr) @[`noexcept`]{.add}@ {
+    terminate();
+  }
+  void set_done() noexcept {}
+};
+```
+``````
+
+![](img/nested-inline-code-cpp.png)
 
 ### Tony Tables
 
