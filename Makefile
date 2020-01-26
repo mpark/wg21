@@ -35,6 +35,9 @@ ifneq ($(SRCDIR), $(OUTDIR))
 .PHONY: clean
 clean:
 	rm -rf $(OUTDIR)
+
+.PHONY: $(HTML) $(LATEX) $(PDF)
+$(HTML) $(LATEX) $(PDF): $(SRCDIR)/%: $(OUTDIR)/%
 endif
 
 .PHONY: update
@@ -53,9 +56,6 @@ $(DATADIR)/index.yaml:
 $(DATADIR)/annex-f:
 	wget https://timsong-cpp.github.io/cppwp/annex-f -O $@
 
-.PHONY: $(HTML) $(LATEX) $(PDF)
-$(HTML) $(LATEX) $(PDF): %: $(OUTDIR)/%
-
-$(OUTDIR)/%.html $(OUTDIR)/%.latex $(OUTDIR)/%.pdf: $(DEPS) %.md
+$(OUTDIR)/%.html $(OUTDIR)/%.latex $(OUTDIR)/%.pdf: $(DEPS) $(SRCDIR)/%.md
 	$(PANDOC) \
     --bibliography $(DATADIR)/index.yaml
