@@ -182,9 +182,9 @@ some things just don't change.
 - @_unspecified_@ detail::foo::template foo;
 ```
 
-# Tony Tables
+# Comparison Tables
 
-::: tonytable
+::: cmptable
 
 > Put your caption here
 
@@ -208,7 +208,7 @@ inspect (x) {
 
 :::
 
-::: tonytable
+::: cmptable
 
 ### Before
 ```cpp

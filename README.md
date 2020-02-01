@@ -54,7 +54,7 @@ This framework provides support for various common elements for C++ papers.
 - [Table of Contents](#table-of-contents)
 - [Markdown](#markdown)
 - [Embedded Markdown within Code](#embedded-markdown-within-code)
-- [Tony Tables](#tony-tables)
+- [Comparison Tables](#comparison-tables)
 - [Proposed Wording](#proposed-wording)
   - [Paragraph Numbers](#paragraph-numbers)
   - [Code Changes](#code-changes)
@@ -156,15 +156,15 @@ struct @_as-receiver_@ {
 
 ![](img/nested-inline-code-cpp.png)
 
-### Tony Tables
+### Comparison Tables
 
-Tony Tables are [fenced `Div` blocks][divspan] that open with `::: tonytable`
+Comparison Tables are [fenced `Div` blocks][divspan] that open with `::: cmptable`
 and close with `:::`. [Fenced code blocks][code] are the only elements that
-actually get added to Tony Tables, except that the last header (if any) before
-a [fenced code block][code] is attached to the cell above.
+actually get added to Comparison Tables, except that the last header (if any)
+before a [fenced code block][code] is attached to the cell above.
 
 ``````md
-::: tonytable
+::: cmptable
 
 ### Before
 ```cpp
@@ -190,13 +190,13 @@ inspect (x) {
 [code]: https://pandoc.org/MANUAL.html#fenced-code-blocks
 [divspan]: https://pandoc.org/MANUAL.html#divs-and-spans
 
-![](img/tonytable-1.png)
+![](img/cmptable-1.png)
 
 Each [fenced code block][code] is pushed onto the current row, and
 horizontal rules (`---`) are used to move to the next row.
 
 ``````md
-::: tonytable
+::: cmptable
 
 ### Before
 ```cpp
@@ -239,12 +239,12 @@ inspect (s) {
 :::
 ``````
 
-![](img/tonytable-2.png)
+![](img/cmptable-2.png)
 
 The last block quote `> caption` (if any) is used as the caption.
 
 ``````md
-::: tonytable
+::: cmptable
 
 > Put your caption here
 
@@ -269,7 +269,7 @@ inspect (x) {
 :::
 ``````
 
-![](img/tonytable-3.png)
+![](img/cmptable-3.png)
 
 ### Proposed Wording
 
