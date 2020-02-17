@@ -23,8 +23,7 @@ $(if $(filter %.html, $@),
 $(CMD)
 endef
 
-override DEPS := $(OUTDIR)
-override DEPS += $(addprefix $(DATADIR)/, defaults.yaml index.yaml annex-f)
+override DEPS := $(addprefix $(DATADIR)/, defaults.yaml index.yaml annex-f)
 $(eval $(and $(DEFAULTS), override DEPS += $(DEFAULTS)))
 $(eval $(and $(METADATA), override DEPS += $(METADATA)))
 
@@ -56,6 +55,6 @@ $(DATADIR)/index.yaml:
 $(DATADIR)/annex-f:
 	wget https://timsong-cpp.github.io/cppwp/annex-f -O $@
 
-$(OUTDIR)/%.html $(OUTDIR)/%.latex $(OUTDIR)/%.pdf: $(DEPS) $(SRCDIR)/%.md
+$(OUTDIR)/%.html $(OUTDIR)/%.latex $(OUTDIR)/%.pdf: $(DEPS) $(SRCDIR)/%.md | $(OUTDIR)
 	$(PANDOC) \
     --bibliography $(DATADIR)/index.yaml
