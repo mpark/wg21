@@ -19,6 +19,11 @@ def prepare(doc):
     if date == 'today':
         doc.metadata['date'] = datetime.date.today().isoformat()
 
+    doc.metadata['pagetitle'] = pf.convert_text(
+        pf.Plain(*doc.metadata['title'].content),
+        input_format='panflute',
+        output_format='markdown')
+
     datadir = doc.get_metadata('datadir')
 
     with open(os.path.join(datadir, 'annex-f'), 'r') as f:
