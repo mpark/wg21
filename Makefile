@@ -57,4 +57,4 @@ $(DATADIR)/annex-f:
 
 $(OUTDIR)/%.html $(OUTDIR)/%.latex $(OUTDIR)/%.pdf: $(DEPS) $(SRCDIR)/%.md | $(OUTDIR)
 	$(PANDOC) \
-    --bibliography $(DATADIR)/index.yaml
+    --pdf-engine=xelatex --include-in-header=header.tex --bibliography $(DATADIR)/index.yaml
