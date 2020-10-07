@@ -27,7 +27,7 @@ def prepare(doc):
     datadir = doc.get_metadata('datadir')
 
     with open(os.path.join(datadir, 'annex-f'), 'r') as f:
-        stable_names.update(line.split() for line in f)
+        stable_names.update(line.split(maxsplit=1) for line in f)
 
     def highlighting(output_format):
         return pf.convert_text(
