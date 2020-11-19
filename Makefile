@@ -61,5 +61,4 @@ $(DATADIR)/template/wg21.latex: $(DATADIR)/template/wg21.latex.patch
 	(cd $(DATADIR)/.. && git apply $<)
 
 $(OUTDIR)/%.html $(OUTDIR)/%.latex $(OUTDIR)/%.pdf: $(DEPS) $(SRCDIR)/%.md | $(OUTDIR)
-	$(PANDOC) \
-    --pdf-engine=xelatex --include-in-header=header.tex --bibliography $(DATADIR)/index.yaml
+	$(PANDOC)

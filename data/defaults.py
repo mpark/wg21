@@ -8,14 +8,14 @@ number-sections: true
 table-of-contents: true
 self-contained: true
 
-filters: [pandoc-citeproc, {datadir}/filter/wg21.py]
+citeproc: true
+filters: [{datadir}/filter/wg21.py]
 template: {datadir}/template/wg21
 
 css: {datadir}/template/14882.css
 
 metadata:
   datadir: {datadir}
-  csl: {datadir}/wg21.csl
 
 metadata-file: {datadir}/metadata.yaml\
 """.format(datadir = pathlib.Path(__file__).parent.resolve()))
