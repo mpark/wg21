@@ -429,12 +429,13 @@ def cmptable(table, doc):
     kwargs = {}
 
     headers = []
-    widths = []
     examples = []
 
     header = pf.Null()
-    caption = None
-    width = 0
+    width = 'ColWidthDefault'
+
+    kwargs['caption'] = pf.Caption()
+    kwargs['colspec'] = []
 
     first_row = True
     table.content.append(pf.HorizontalRule())
@@ -450,21 +451,19 @@ def cmptable(table, doc):
 
             if first_row:
                 header = pf.Plain(*elem.content)
-                width = float(elem.attributes['width']) if 'width' in elem.attributes else 0
+                if 'width' in elem.attributes:
+                    width = float(elem.attributes['width'])
             else:
                 warn(elem)
         elif isinstance(elem, pf.BlockQuote):
-            if caption is not None:
-                warn(caption)
-
-            caption = elem
+            kwargs['caption'].content.append(elem)
         elif isinstance(elem, pf.CodeBlock):
             if first_row:
                 headers.append(header)
-                widths.append(width)
+                kwargs['colspec'].append(('AlignDefault', width))
 
                 header = pf.Null()
-                width = 0
+                width = 'ColWidthDefault'
 
             examples.append(elem)
         elif isinstance(elem, pf.HorizontalRule) and examples:
@@ -476,14 +475,11 @@ def cmptable(table, doc):
             warn(elem)
 
     if not all(isinstance(header, pf.Null) for header in headers):
-        kwargs['header'] = pf.TableRow(*[pf.TableCell(header) for header in headers])
+        kwargs['head'] = pf.TableHead(pf.TableRow(*[pf.TableCell(header) for header in headers]))
 
-    if caption is not None:
-        kwargs['caption'] = caption.content[0].content
+    # caption.content[0].content
 
-    kwargs['width'] = widths
-
-    return pf.Table(*rows, **kwargs)
+    return pf.Table(pf.TableBody(*rows), **kwargs)
 
 def table(elem, doc):
     if not isinstance(elem, pf.Table):
@@ -498,8 +494,8 @@ def table(elem, doc):
                      pf.Strong(*elem.content)),
             attributes={'style': 'text-align:center'})
 
-    if elem.header is not None:
-        elem.header.walk(header)
+    if elem.head is not None:
+        elem.head.walk(header)
 
 if __name__ == '__main__':
   pf.run_filters([
