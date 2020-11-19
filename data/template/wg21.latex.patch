@@ -1,0 +1,48 @@
+diff --git a/data/template/wg21.latex b/data/template/wg21.latex
+index b03c4d8..0bb7dd6 100644
+--- a/data/template/wg21.latex
++++ b/data/template/wg21.latex
+@@ -228,7 +228,7 @@ $if(colorlinks)$
+ $else$
+   hidelinks,
+ $endif$
+-  pdfcreator={LaTeX via pandoc}}
++  pdfcreator={mpark/wg21}}
+ \urlstyle{same} % disable monospaced font for URLs
+ $if(verbatim-in-note)$
+ \VerbatimFootnotes % allow verbatim text in footnotes
+@@ -368,6 +368,25 @@ $for(bibliography)$
+ \addbibresource{$bibliography$}
+ $endfor$
+ $endif$
++\makeatletter
++\def\@maketitle{
++  \newpage \null \vskip 2em
++  {\center \LARGE \@title \par}
++  \vskip 1.5em
++  \begin{flushright}
++    \begin{tabular}{ll}
++Document \#:&$document$\\
++Date:       &\@date\\
++Project:    &Programming Language C++\\
++Audience:   $for(audience)$&$audience$\\$endfor$
++$if(revises)$
++Revises:    &$revises$\\
++$endif$
++Reply-to:   \@author
++    \end{tabular}
++  \end{flushright}
++}
++\makeatother
+ $if(csl-refs)$
+ \newlength{\cslhangindent}
+ \setlength{\cslhangindent}{1.5em}
+@@ -406,7 +425,7 @@ $else$
+ $endif$
+ \subtitle{$subtitle$}
+ $endif$
+-\author{$for(author)$$author$$sep$ \and $endfor$}
++\author{$for(author)$&$author.name$\\$for(author.email)$&<$author.email$>\\$endfor$$endfor$}
+ \date{$date$}
+ $if(beamer)$
+ $if(institute)$

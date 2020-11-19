@@ -23,7 +23,8 @@ $(if $(filter %.html, $@),
 $(CMD)
 endef
 
-override DEPS := $(addprefix $(DATADIR)/, defaults.yaml index.yaml annex-f)
+override BASE_DEPS := $(addprefix $(DATADIR)/, defaults.yaml template/wg21.latex annex-f index.yaml)
+override DEPS = $(BASE_DEPS)
 $(eval $(and $(DEFAULTS), override DEPS += $(DEFAULTS)))
 $(eval $(and $(METADATA), override DEPS += $(METADATA)))
 
@@ -41,7 +42,7 @@ endif
 
 .PHONY: update
 update:
-	@$(MAKE) --always-make $(DATADIR)/index.yaml $(DATADIR)/annex-f
+	@$(MAKE) --always-make $(BASE_DEPS)
 
 $(OUTDIR):
 	mkdir -p $@
@@ -54,6 +55,10 @@ $(DATADIR)/index.yaml:
 
 $(DATADIR)/annex-f:
 	wget https://timsong-cpp.github.io/cppwp/annex-f -O $@
+
+$(DATADIR)/template/wg21.latex: $(DATADIR)/template/wg21.latex.patch
+	pandoc -o $@ --print-default-template=latex
+	(cd $(DATADIR)/.. && git apply $<)
 
 $(OUTDIR)/%.html $(OUTDIR)/%.latex $(OUTDIR)/%.pdf: $(DEPS) $(SRCDIR)/%.md | $(OUTDIR)
 	$(PANDOC) \
