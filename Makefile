@@ -36,7 +36,7 @@ $(if $(filter %.html, $@),
 $(CMD)
 endef
 
-override DATA := $(addprefix $(DATADIR)/, defaults.yaml index.yaml annex-f)
+override DATA := $(addprefix $(DATADIR)/, defaults.yaml refs.json annex-f)
 $(eval $(and $(DEFAULTS), override DATA += $(DEFAULTS)))
 $(eval $(and $(METADATA), override DATA += $(METADATA)))
 
@@ -54,7 +54,7 @@ endif
 
 .PHONY: update
 update:
-	@$(MAKE) --always-make $(DATADIR)/index.yaml $(DATADIR)/annex-f
+	@$(MAKE) --always-make $(DATADIR)/refs.json $(DATADIR)/annex-f
 
 $(OUTDIR):
 	mkdir -p $@
@@ -70,11 +70,11 @@ $(PYTHON_DIR): $(DEPSDIR)/requirements.txt
 $(DATADIR)/defaults.yaml: $(DATADIR)/defaults.sh
 	DATADIR=$(abspath $(DATADIR)) $< > $@
 
-$(DATADIR)/index.yaml:
-	curl -sSL https://wg21.link/index.yaml -o $@
+$(DATADIR)/refs.json: $(DATADIR)/refs.py $(PYTHON_DIR)
+	curl -sSL https://wg21.link/index.yaml | $< > $@
 
 $(DATADIR)/annex-f:
 	curl -sSL https://timsong-cpp.github.io/cppwp/annex-f -o $@
 
 $(OUTDIR)/%.html $(OUTDIR)/%.latex $(OUTDIR)/%.pdf: $(SRCDIR)/%.md $(DEPS) $(DATA) | $(OUTDIR)
-	$(PANDOC) --bibliography $(DATADIR)/index.yaml
+	$(PANDOC) --bibliography $(DATADIR)/refs.json
