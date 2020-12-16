@@ -50,10 +50,10 @@ $(DATADIR)/defaults.yaml: $(DATADIR)/defaults.py
 	$< > $@
 
 $(DATADIR)/index.yaml:
-	wget https://wg21.link/index.yaml -O $@
+	curl -sSL https://wg21.link/index.yaml -o $@
 
 $(DATADIR)/annex-f:
-	wget https://timsong-cpp.github.io/cppwp/annex-f -O $@
+	curl -sSL https://timsong-cpp.github.io/cppwp/annex-f -o $@
 
 $(OUTDIR)/%.html $(OUTDIR)/%.latex $(OUTDIR)/%.pdf: $(DEPS) $(SRCDIR)/%.md | $(OUTDIR)
 	$(PANDOC) \
