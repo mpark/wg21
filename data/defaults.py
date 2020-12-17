@@ -10,8 +10,9 @@ self-contained: true
 
 filters: [pandoc-citeproc, {datadir}/filter/wg21.py]
 template: {datadir}/template/wg21
-
 css: {datadir}/template/14882.css
+
+pdf-engine: xelatex
 
 metadata:
   datadir: {datadir}

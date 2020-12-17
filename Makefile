@@ -56,5 +56,4 @@ $(DATADIR)/annex-f:
 	curl -sSL https://timsong-cpp.github.io/cppwp/annex-f -o $@
 
 $(OUTDIR)/%.html $(OUTDIR)/%.latex $(OUTDIR)/%.pdf: $(DEPS) $(SRCDIR)/%.md | $(OUTDIR)
-	$(PANDOC) \
-    --pdf-engine=xelatex --include-in-header=header.tex --bibliography $(DATADIR)/index.yaml
+	$(PANDOC) --bibliography $(DATADIR)/index.yaml
