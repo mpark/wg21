@@ -9,6 +9,9 @@ $if(latex-dir-rtl)$
 \PassOptionsToPackage{RTLdocument}{bidi}
 $endif$
 $endif$
+$if(CJKmainfont)$
+\PassOptionsToPackage{space}{xeCJK}
+$endif$
 %
 \documentclass[
 $if(fontsize)$
@@ -137,7 +140,7 @@ $endif$
 $endif$
 $if(CJKmainfont)$
   \ifxetex
-    \usepackage[space]{xeCJK}
+    \usepackage{xeCJK}
     \setCJKmainfont[$for(CJKoptions)$$CJKoptions$$sep$,$endfor$]{$CJKmainfont$}
   \fi
 $endif$
@@ -359,7 +362,6 @@ $for(bibliography)$
 \addbibresource{$bibliography$}
 $endfor$
 $endif$
-
 \makeatletter
 \def\@maketitle{
   \newpage \null \vskip 2em
@@ -379,7 +381,6 @@ Reply-to:   \@author
   \end{flushright}
 }
 \makeatother
-
 $if(csl-refs)$
 \newlength{\cslhangindent}
 \setlength{\cslhangindent}{1.5em}
