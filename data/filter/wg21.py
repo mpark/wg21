@@ -29,11 +29,12 @@ def prepare(doc):
 
     def highlighting(output_format):
         return pf.convert_text(
-            '`_`{.default}',
+            '`-`{.default}',
             output_format=output_format,
             extra_args=[
               '--highlight-style', os.path.join(datadir, 'syntax', 'wg21.theme'),
-              '--template', os.path.join(datadir, 'template', 'highlighting')
+              '--template', os.path.join(datadir, 'template', 'highlighting'),
+              '--metadata', 'title="-"',
             ])
 
     doc.metadata['highlighting-macros'] = pf.MetaBlocks(
