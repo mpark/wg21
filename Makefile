@@ -67,8 +67,8 @@ $(PYTHON_DIR): $(DEPSDIR)/requirements.txt
 	$@/bin/pip3 install --upgrade pip -r $<
 	touch $(PYTHON_DIR)
 
-$(DATADIR)/defaults.yaml: $(DATADIR)/defaults.py
-	python3 $< > $@
+$(DATADIR)/defaults.yaml: $(DATADIR)/defaults.sh
+	DATADIR=$(abspath $(DATADIR)) $< > $@
 
 $(DATADIR)/index.yaml:
 	curl -sSL https://wg21.link/index.yaml -o $@
