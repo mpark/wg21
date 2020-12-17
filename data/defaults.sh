@@ -22,6 +22,7 @@ pdf-engine: xelatex
 
 metadata:
   datadir: ${DATADIR}
+  bibliography: ${DATADIR}/refs.json
   csl: ${DATADIR}/csl/wg21.csl
 
 metadata-file: ${DATADIR}/metadata.yaml
