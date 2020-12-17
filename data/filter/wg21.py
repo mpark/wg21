@@ -1,8 +1,5 @@
 #!/usr/bin/env python3
 
-"""
-"""
-
 import datetime
 import html
 import os.path
