@@ -5,11 +5,9 @@
 
 import datetime
 import html
-import json
 import os.path
 import panflute as pf
 import re
-import tempfile
 
 embedded_md = re.compile('@@(.*?)@@|@(.*?)@')
 stable_names = {}
