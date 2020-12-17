@@ -30,7 +30,7 @@ def prepare(doc):
             output_format=output_format,
             extra_args=[
               '--highlight-style', os.path.join(datadir, 'syntax', 'wg21.theme'),
-              '--template', os.path.join(datadir, 'template', 'highlighting'),
+              '--template', os.path.join(datadir, 'templates', 'highlighting'),
               '--metadata', 'title="-"',
             ])
 
@@ -175,7 +175,7 @@ def finalize(doc):
         if 'diff' not in elem.classes:
             return result
 
-        # For HTML, this is handled via CSS in `data/template/wg21.html`.
+        # For HTML, this is handled via CSS in `data/templates/wg21.html`.
         command = '\\renewcommand{{\\{}}}[1]{{\\textcolor[HTML]{{{}}}{{#1}}}}'
 
         uc = command.format('NormalTok', doc.get_metadata('uccolor'))
