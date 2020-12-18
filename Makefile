@@ -36,7 +36,7 @@ $(if $(filter %.html, $@),
 $(CMD)
 endef
 
-override DEPS += $(addprefix $(DATADIR)/, defaults.yaml refs.json annex-f)
+override DEPS += $(addprefix $(DATADIR)/, defaults.yaml csl.json annex-f)
 $(eval $(and $(DEFAULTS), override DEPS += $(DEFAULTS)))
 $(eval $(and $(METADATA), override DEPS += $(METADATA)))
 
@@ -54,7 +54,7 @@ endif
 
 .PHONY: update
 update:
-	@$(MAKE) --always-make $(DATADIR)/refs.json $(DATADIR)/annex-f
+	@$(MAKE) --always-make $(DATADIR)/csl.json $(DATADIR)/annex-f
 
 $(OUTDIR):
 	mkdir -p $@
@@ -70,11 +70,11 @@ $(PYTHON_DIR): $(DEPSDIR)/requirements.txt
 $(DATADIR)/defaults.yaml: $(DATADIR)/defaults.sh
 	DATADIR=$(abspath $(DATADIR)) $< > $@
 
-$(DATADIR)/refs.json: $(DATADIR)/refs.py $(PYTHON_DIR)
+$(DATADIR)/csl.json: $(DATADIR)/refs.py $(PYTHON_DIR)
 	$< > $@
 
 $(DATADIR)/annex-f:
 	curl -sSL https://timsong-cpp.github.io/cppwp/annex-f -o $@
 
 $(OUTDIR)/%.html $(OUTDIR)/%.latex $(OUTDIR)/%.pdf: $(SRCDIR)/%.md $(DEPS) | $(OUTDIR)
-	$(PANDOC) --bibliography $(DATADIR)/refs.json
+	$(PANDOC) --bibliography $(DATADIR)/csl.json
