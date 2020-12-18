@@ -77,4 +77,4 @@ $(DATADIR)/annex-f:
 	curl -sSL https://timsong-cpp.github.io/cppwp/annex-f -o $@
 
 $(OUTDIR)/%.html $(OUTDIR)/%.latex $(OUTDIR)/%.pdf: $(SRCDIR)/%.md $(DEPS) | $(OUTDIR)
-	$(PANDOC)
+	$(PANDOC) --bibliography $(DATADIR)/refs.json
