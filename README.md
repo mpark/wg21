@@ -456,31 +456,20 @@ If you want the list of available fonts on your system, most supported systems w
 
 ## Requirements
 
-  - `pdflatex`
-  - `pandoc` (>= 2.8.1)
-  - `pandoc-citeproc`
   - `python3`
-  - `panflute`
+  - `xelatex`
 
 ### OS X
 
 ```bash
 brew cask install mactex
-brew install pandoc pandoc-citeproc python
-pip3 install panflute
 ```
 
 ### Ubuntu
 
-Manually install the [latest pandoc release] following their [instructions].
-
 ```bash
 sudo apt-get install texlive-latex-base
-pip3 install panflute
 ```
-
-[latest pandoc release]: https://github.com/jgm/pandoc/releases/latest
-[instructions]: https://pandoc.org/installing.html
 
 ### Debian
 
