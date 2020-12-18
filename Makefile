@@ -71,7 +71,7 @@ $(DATADIR)/defaults.yaml: $(DATADIR)/defaults.sh
 	DATADIR=$(abspath $(DATADIR)) $< > $@
 
 $(DATADIR)/refs.json: $(DATADIR)/refs.py $(PYTHON_DIR)
-	curl -sSL https://wg21.link/index.yaml | $< > $@
+	$< > $@
 
 $(DATADIR)/annex-f:
 	curl -sSL https://timsong-cpp.github.io/cppwp/annex-f -o $@
