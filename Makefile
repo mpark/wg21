@@ -36,9 +36,9 @@ $(if $(filter %.html, $@),
 $(CMD)
 endef
 
-override DATA := $(addprefix $(DATADIR)/, defaults.yaml refs.json annex-f)
-$(eval $(and $(DEFAULTS), override DATA += $(DEFAULTS)))
-$(eval $(and $(METADATA), override DATA += $(METADATA)))
+override DEPS += $(addprefix $(DATADIR)/, defaults.yaml refs.json annex-f)
+$(eval $(and $(DEFAULTS), override DEPS += $(DEFAULTS)))
+$(eval $(and $(METADATA), override DEPS += $(METADATA)))
 
 .PHONY: all
 all: $(PDF)
@@ -46,7 +46,7 @@ all: $(PDF)
 ifneq ($(SRCDIR), $(OUTDIR))
 .PHONY: clean
 clean:
-	rm -rf $(DEPSDIR)/pandoc $(DEPS) $(DATA) $(OUTDIR)
+	rm -rf $(DEPSDIR)/pandoc $(DEPS) $(OUTDIR)
 
 .PHONY: $(HTML) $(LATEX) $(PDF)
 $(HTML) $(LATEX) $(PDF): $(SRCDIR)/%: $(OUTDIR)/%
@@ -76,5 +76,5 @@ $(DATADIR)/refs.json: $(DATADIR)/refs.py $(PYTHON_DIR)
 $(DATADIR)/annex-f:
 	curl -sSL https://timsong-cpp.github.io/cppwp/annex-f -o $@
 
-$(OUTDIR)/%.html $(OUTDIR)/%.latex $(OUTDIR)/%.pdf: $(SRCDIR)/%.md $(DEPS) $(DATA) | $(OUTDIR)
+$(OUTDIR)/%.html $(OUTDIR)/%.latex $(OUTDIR)/%.pdf: $(SRCDIR)/%.md $(DEPS) | $(OUTDIR)
 	$(PANDOC)
