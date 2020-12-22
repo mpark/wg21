@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+set -e
+set -o pipefail
+
 : "${PANDOC_VER:?Set 'PANDOC_VER' to the desired version of Pandoc}"
 : "${PANDOC_DIR:?Set 'PANDOC_DIR' to the directory to install Pandoc.}"
 
