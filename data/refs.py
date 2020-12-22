@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 import sys
-import datetime
+from datetime import datetime
 import requests
 
 from bs4 import BeautifulSoup
@@ -19,7 +19,7 @@ for elem in BeautifulSoup(requests.get(url + '.html').text, 'lxml').find_all('li
 index_yaml = yaml.safe_load(requests.get(url + '.yaml').text)['references']
 for item in index_yaml:
   if item.pop('issued', None) is not None:
-    date = datetime.date.fromisoformat(dates[item['id']])
+    date = datetime.strptime(dates[item['id']], '%Y-%m-%d')
     item['issued'] = { 'date-parts' : [[ date.year, date.month, date.day ]] }
 
 json.dump(index_yaml, sys.stdout, ensure_ascii=False, indent=2)
