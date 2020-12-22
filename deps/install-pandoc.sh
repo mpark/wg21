@@ -15,5 +15,5 @@ case "${OS}" in
 esac
 
 mkdir -p "${PANDOC_DIR}"
-curl -sSL "${URL}" | tar xz --strip-components 2 -C "${PANDOC_DIR}" -m - "pandoc-${PANDOC_VER}/bin"
+curl -sSL "${URL}" | tar xz --strip-components 2 -C "${PANDOC_DIR}" -m "pandoc-${PANDOC_VER}/bin"
 chmod -R u+x "${PANDOC_DIR}"
