@@ -15,6 +15,7 @@ import re
 
 embedded_md = re.compile('@@(.*?)@@|@(.*?)@')
 stable_names = {}
+current_pnum = {}
 refs = {}
 
 def wrap_elem(opening, elem, closing):
@@ -320,7 +321,50 @@ def divspan(elem, doc):
         _color(doc.get_metadata(color))
 
     def pnum():
+        global current_pnum
         num = pf.stringify(elem)
+
+        depth = num.count('.')
+        parts = num.split('.')
+
+        def reset_below(i):
+            to_delete = [k for k in current_pnum if k > i]
+            for k in to_delete:
+                del current_pnum[k]
+
+        # If we see a level N, always reset levels below it.
+        reset_below(depth)
+
+        for i in range(len(parts)):
+            # placeholder pnum parts are expressed by #
+            if parts[i] == '#':
+                # replace placeholder by:
+                # - last used value if this is not the last part
+                # - last used value + 1 otherwise
+                if i == depth:
+                    pt = current_pnum.get(i, 0) + 1
+                    parts[i] = str(pt)
+                    current_pnum[i] = pt
+                else:
+                    pt = current_pnum.get(i)
+                    if pt is None:
+                      pf.debug('Missing current value for non-lowest-level placeholder in {}'.format(num))
+                      pt = 1
+                      current_pnum[i] = pt
+                      reset_below(i)
+                    parts[i] = str(pt)
+            else:
+                try:
+                    val = int(parts[i])
+                    if i not in current_pnum or current_pnum[i] != val:
+                        current_pnum[i] = val
+                        # When we see a new value at a level,
+                        # reset everything below that level.
+                        reset_below(i)
+                except ValueError:
+                  pass
+
+        num = '.'.join(parts)
 
         if '.' in num:
             num = f'({num})'
@@ -347,6 +391,11 @@ def divspan(elem, doc):
 
     def add(): _diff('addcolor', 'uline', 'ins')
     def rm():  _diff('rmcolor', 'sout', 'del')
+
+    if isinstance(elem, pf.Header):
+        # When entering a new section, reset auto paragraph numbering.
+        global current_pnum
+        current_pnum = {}
 
     if not any(isinstance(elem, cls) for cls in [pf.Div, pf.Span]):
         return None
