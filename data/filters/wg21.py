@@ -16,6 +16,9 @@ import re
 embedded_md = re.compile('@@(.*?)@@|@(.*?)@')
 stable_names = {}
 current_pnum = {}
+current_note = 0
+current_example = 0
+
 refs = {}
 
 def wrap_elem(opening, elem, closing):
@@ -393,9 +396,11 @@ def divspan(elem, doc):
     def rm():  _diff('rmcolor', 'sout', 'del')
 
     if isinstance(elem, pf.Header):
-        # When entering a new section, reset auto paragraph numbering.
-        global current_pnum
+        # When entering a new section, reset all auto numbering.
+        global current_pnum, current_example, current_note
         current_pnum = {}
+        current_example = 0
+        current_note = 0
 
     if not any(isinstance(elem, cls) for cls in [pf.Div, pf.Span]):
         return None
@@ -416,10 +421,38 @@ def divspan(elem, doc):
             return link
 
     for cls in elem.classes:
-        if cls.startswith('note'):      note(cls[4:] or '?')
-        elif cls.startswith('example'): example(cls[7:] or '?')
-        elif note_cls == 'ednote':      ednote(); return
-        elif note_cls == 'draftnote':   draftnote(); return
+        if cls.startswith('note'):
+            num = cls[4:]
+            if num == '-':
+                num = '?'
+            elif num:
+                try:
+                    current_note = int(num)
+                except ValueError:
+                    pass
+            else:
+                current_note = current_note + 1
+                num = str(current_note)
+            note(num)
+        elif cls.startswith('example'):
+            num = cls[7:]
+            if num == '-':
+              num = '?'
+            elif num:
+                try:
+                    current_example = int(num)
+                except ValueError:
+                    pass
+            else:
+                current_example = current_example + 1
+                num = str(current_example)
+            example(num)
+        elif note_cls == 'ednote':
+            ednote()
+            return
+        elif note_cls == 'draftnote':
+            draftnote()
+            return
 
     diff_cls = next(iter(cls for cls in elem.classes if cls in {'add', 'rm'}), None)
     if diff_cls == 'add':  add()
