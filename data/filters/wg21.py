@@ -18,6 +18,7 @@ stable_names = {}
 current_pnum = {}
 current_note = 0
 current_example = 0
+current_pnum_count = 0
 
 refs = {}
 
@@ -372,11 +373,15 @@ def divspan(elem, doc):
         if '.' in num:
             num = f'({num})'
 
+        global current_pnum_count
+        current_pnum_count = current_pnum_count + 1
+
         if doc.format == 'latex':
             return pf.RawInline(f'\\pnum{{{num}}}', 'latex')
         elif doc.format == 'html':
             return pf.Span(
-                pf.RawInline(f'<a class="marginalized">{num}</a>', 'html'),
+                pf.RawInline(f'<a class="marginalized" href="#pnum_{current_pnum_count}"'
+                f' id="pnum_{current_pnum_count}">{num}</a>', 'html'),
                 classes=['marginalizedparent'])
 
         return pf.Superscript(pf.Str(num))
