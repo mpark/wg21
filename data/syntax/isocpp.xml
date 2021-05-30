@@ -300,6 +300,8 @@
         <!-- Match embedded Markdown -->
         <RegExpr attribute="Ignore" context="#stay" String="@@.*?@@" />
         <RegExpr attribute="Ignore" context="#stay" String="@.*?@" />
+        <!-- Match exposition-only names -->
+        <RegExpr attribute="Ignore" context="#stay" String="\$[\w\-\s]*?\$" />
         <!-- Match keywords -->
         <IncludeRules context="match keywords" />
         <!-- Match string literals -->
