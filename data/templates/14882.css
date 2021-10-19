@@ -7,6 +7,13 @@ body {
 		   from surrounding text by virtue of being sans serif. */
 	hyphens: auto;
 	line-height: 1.35;
+	text-align: justify;
+}
+
+@media screen and (max-width: 30em) {
+	body {
+		margin: 1.5em;
+	}
 }
 
 div.wrapper {
