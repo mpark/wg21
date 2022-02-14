@@ -479,6 +479,10 @@ Debian installation may require these additional packages:
   - `texlive-latex-recommended`
   - `texlive-latex-extra`
 
+## License
+
+Distributed under the [Boost Software License, Version 1.0](LICENSE.md).
+
 ## Resources
 
   - Blog Post: [How I format my C++ papers](https://mpark.github.io/programming/2018/11/16/how-i-format-my-cpp-papers)
