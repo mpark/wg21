@@ -280,8 +280,8 @@ def divspan(elem, doc):
         elem.attributes['style'] = 'color: #{}'.format(html_color)
 
     def _bgcolor(html_color):
-        _wrap(pf.RawInline('\\hl{{'.format(html_color), 'latex'),
-              pf.RawInline('}', 'latex'))
+        _wrap(pf.RawInline('\\hl{\\mbox{', 'latex'),
+              pf.RawInline('}}', 'latex'))
         elem.attributes['style'] = 'background-color: #{}'.format(html_color)
 
     def _nonnormative(name):
