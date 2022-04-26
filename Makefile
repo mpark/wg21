@@ -4,7 +4,7 @@ OUTDIR ?= generated
 DEFAULTS ?= $(wildcard $(SRCDIR)/defaults.yaml)
 METADATA ?= $(wildcard $(SRCDIR)/metadata.yaml)
 
-override SRC := $(filter-out %/README.md, $(wildcard $(SRCDIR)/*.md))
+override SRC := $(filter-out %/LICENSE.md %/README.md, $(wildcard $(SRCDIR)/*.md))
 
 override HTML := $(SRC:.md=.html)
 override LATEX := $(SRC:.md=.latex)
@@ -19,7 +19,8 @@ override PANDOC_DIR := $(DEPSDIR)/pandoc/$(PANDOC_VER)
 override PYTHON_DIR := $(DEPSDIR)/python
 override PYTHON_BIN := $(PYTHON_DIR)/bin/python3
 
-export PATH := $(PANDOC_DIR):$(PATH)
+export SHELL := bash
+export PATH := $(PANDOC_DIR):$(PYTHON_DIR)/bin:$(PATH)
 
 override DEPS := $(PANDOC_DIR) $(PYTHON_DIR)
 
