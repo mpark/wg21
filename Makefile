@@ -43,6 +43,15 @@ $(eval $(and $(METADATA), override DEPS += $(METADATA)))
 .PHONY: all
 all: $(PDF)
 
+.PHONY: html
+html: $(HTML)
+
+.PHONY: latex
+latex: $(LATEX)
+
+.PHONY: pdf
+pdf: $(PDF)
+
 ifneq ($(SRCDIR), $(OUTDIR))
 .PHONY: clean
 clean:
