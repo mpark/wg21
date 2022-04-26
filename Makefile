@@ -17,9 +17,9 @@ override DEPSDIR := $(ROOTDIR)deps
 override PANDOC_VER := $(shell cat $(DEPSDIR)/pandoc.ver)
 override PANDOC_DIR := $(DEPSDIR)/pandoc/$(PANDOC_VER)
 override PYTHON_DIR := $(DEPSDIR)/python
+override PYTHON_BIN := $(PYTHON_DIR)/bin/python3
 
-export SHELL := bash
-export PATH := $(PANDOC_DIR):$(PYTHON_DIR)/bin:$(PATH)
+export PATH := $(PANDOC_DIR):$(PATH)
 
 override DEPS := $(PANDOC_DIR) $(PYTHON_DIR)
 
@@ -31,7 +31,7 @@ $(eval override CMD := pandoc $(FILE) -o $@ -d $(DATADIR)/defaults.yaml)
 $(eval $(and $(DEFAULTS), override CMD += -d $(DEFAULTS)))
 $(eval $(and $(METADATA), override CMD += --metadata-file $(METADATA)))
 $(if $(filter %.html, $@),
-  $(eval override TOCDEPTH := $(shell $(DATADIR)/toc-depth.py < $(FILE)))
+  $(eval override TOCDEPTH := $(shell $(PYTHON_BIN) $(DATADIR)/toc-depth.py < $(FILE)))
   $(eval $(and $(TOCDEPTH), override CMD += --toc-depth $(TOCDEPTH))))
 $(CMD)
 endef
@@ -71,7 +71,7 @@ $(DATADIR)/defaults.yaml: $(DATADIR)/defaults.sh
 	DATADIR=$(abspath $(DATADIR)) $< > $@
 
 $(DATADIR)/csl.json: $(DATADIR)/refs.py $(PYTHON_DIR)
-	$< > $@
+	$(PYTHON_BIN) $< > $@
 
 $(DATADIR)/annex-f:
 	curl -sSL https://timsong-cpp.github.io/cppwp/annex-f -o $@

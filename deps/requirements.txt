@@ -2,3 +2,4 @@ panflute~=1.12
 beautifulsoup4
 lxml
 requests
+pyyaml
