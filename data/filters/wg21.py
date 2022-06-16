@@ -56,7 +56,7 @@ def finalize(doc):
 
         # Mark code elements within colored divspan as default.
         if any(isinstance(elem, cls) for cls in [pf.Div, pf.Span]) and \
-           any(cls in elem.classes for cls in ['add', 'rm', 'ednote']):
+           any(cls in elem.classes for cls in ['add', 'rm', 'ednote', 'hl']):
             elem.walk(lambda elem, doc:
                 elem.classes.insert(0, 'default')
                 if any(isinstance(elem, cls) for cls in [pf.Code, pf.CodeBlock])
@@ -187,12 +187,14 @@ def finalize(doc):
 
         uc = command.format('NormalTok', doc.get_metadata('uccolor'))
         add = command.format('VariableTok', doc.get_metadata('addcolor'))
+        hl = command.format('VariableTok', doc.get_metadata('hlcolor'))
         rm = command.format('StringTok', doc.get_metadata('rmcolor'))
 
         if isinstance(elem, pf.Code):
             return pf.Span(
                 pf.RawInline(uc, 'latex'),
                 pf.RawInline(add, 'latex'),
+                pf.RawInline(hl, 'latex'),
                 pf.RawInline(rm, 'latex'),
                 result)
         elif isinstance(elem, pf.CodeBlock):
@@ -200,6 +202,7 @@ def finalize(doc):
                 pf.RawBlock('{', 'latex'),
                 pf.RawBlock(uc, 'latex'),
                 pf.RawBlock(add, 'latex'),
+                pf.RawBlock(hl, 'latex'),
                 pf.RawBlock(rm, 'latex'),
                 result,
                 pf.RawBlock('}', 'latex'))
@@ -276,6 +279,11 @@ def divspan(elem, doc):
               pf.RawInline('}', 'latex'))
         elem.attributes['style'] = 'color: #{}'.format(html_color)
 
+    def _bgcolor(html_color):
+        _wrap(pf.RawInline('\\hl{\\mbox{', 'latex'),
+              pf.RawInline('}}', 'latex'))
+        elem.attributes['style'] = 'background-color: #{}'.format(html_color)
+
     def _nonnormative(name):
         _wrap(pf.Span(pf.Str('[ '), pf.Emph(pf.Str('{}:'.format(name.title()))), pf.Space),
               pf.Span(pf.Str(' — '), pf.Emph(pf.Str('end {}'.format(name.lower()))), pf.Str(' ]')))
@@ -335,6 +343,9 @@ def divspan(elem, doc):
         else:
             pf.debug('mpark/wg21: stable name', target, 'not found')
             return link
+
+    if 'hl' in elem.classes and isinstance(elem, pf.Span):
+        _bgcolor('')
 
     note_cls = next(iter(cls for cls in elem.classes if cls in {'example', 'note', 'ednote'}), None)
     if note_cls == 'example':  example()
