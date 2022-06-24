@@ -16,6 +16,20 @@ import re
 embedded_md = re.compile('@@(.*?)@@|@(.*?)@')
 stable_names = {}
 
+def wrap_elem(opening, elem, closing):
+    if isinstance(elem, pf.Div):
+        if elem.content and isinstance(elem.content[0], pf.Para):
+            elem.content[0].content.insert(0, opening)
+        else:
+            elem.content.insert(0, pf.Plain(opening))
+        if elem.content and isinstance(elem.content[-1], pf.Para):
+            elem.content[-1].content.append(closing)
+        else:
+            elem.content.append(pf.Plain(closing))
+    elif isinstance(elem, pf.Span):
+        elem.content.insert(0, opening)
+        elem.content.append(closing)
+
 def prepare(doc):
     date = doc.get_metadata('date')
     if date == 'today':
@@ -257,28 +271,18 @@ def divspan(elem, doc):
     > The return type is `decltype(`_e_(`m`)`)` [for the first form]{.add}.
     """
 
-    def _wrap(opening, closing):
-        if isinstance(elem, pf.Div):
-            if elem.content and isinstance(elem.content[0], pf.Para):
-                elem.content[0].content.insert(0, opening)
-            else:
-                elem.content.insert(0, pf.Plain(opening))
-            if elem.content and isinstance(elem.content[-1], pf.Para):
-                elem.content[-1].content.append(closing)
-            else:
-                elem.content.append(pf.Plain(closing))
-        elif isinstance(elem, pf.Span):
-            elem.content.insert(0, opening)
-            elem.content.append(closing)
-
     def _color(html_color):
-        _wrap(pf.RawInline('{{\\color[HTML]{{{}}}'.format(html_color), 'latex'),
-              pf.RawInline('}', 'latex'))
+        wrap_elem(
+            pf.RawInline('{{\\color[HTML]{{{}}}'.format(html_color), 'latex'),
+            elem,
+            pf.RawInline('}', 'latex'))
         elem.attributes['style'] = 'color: #{}'.format(html_color)
 
     def _nonnormative(name):
-        _wrap(pf.Span(pf.Str('[ '), pf.Emph(pf.Str('{}:'.format(name.title()))), pf.Space),
-              pf.Span(pf.Str(' — '), pf.Emph(pf.Str('end {}'.format(name.lower()))), pf.Str(' ]')))
+        wrap_elem(
+            pf.Span(pf.Str('[ '), pf.Emph(pf.Str('{}:'.format(name.title()))), pf.Space),
+            elem,
+            pf.Span(pf.Str(' — '), pf.Emph(pf.Str('end {}'.format(name.lower()))), pf.Str(' ]')))
 
     def _diff(color, latex_tag, html_tag):
         if isinstance(elem, pf.Span):
@@ -288,10 +292,14 @@ def divspan(elem, doc):
                                    elem,
                                    pf.RawInline('}', 'latex'))
             elem.walk(protect_code)
-            _wrap(pf.RawInline('\\{}{{'.format(latex_tag), 'latex'),
-                  pf.RawInline('}', 'latex'))
-            _wrap(pf.RawInline('<{}>'.format(html_tag), 'html'),
-                  pf.RawInline('</{}>'.format(html_tag), 'html'))
+            wrap_elem(
+                pf.RawInline('\\{}{{'.format(latex_tag), 'latex'),
+                elem,
+                pf.RawInline('}', 'latex'))
+            wrap_elem(
+                pf.RawInline('<{}>'.format(html_tag), 'html'),
+                elem,
+                pf.RawInline('</{}>'.format(html_tag), 'html'))
         _color(doc.get_metadata(color))
 
     def pnum():
@@ -312,7 +320,7 @@ def divspan(elem, doc):
     def example(): _nonnormative('example')
     def note():    _nonnormative('note')
     def ednote():
-        _wrap(pf.Str("[ Editor's note: "), pf.Str(' ]'))
+        wrap_elem(pf.Str("[ Editor's note: "), elem, pf.Str(' ]'))
         _color('0000ff')
 
     def add(): _diff('addcolor', 'uline', 'ins')
@@ -437,7 +445,7 @@ def cmptable(table, doc):
 
     header = pf.Null()
     caption = None
-    width = 0
+    width = 'ColWidthDefault'
 
     first_row = True
     table.content.append(pf.HorizontalRule())
@@ -453,23 +461,31 @@ def cmptable(table, doc):
 
             if first_row:
                 header = pf.Plain(*elem.content)
-                width = float(elem.attributes['width']) if 'width' in elem.attributes else 0
+                width = (float(elem.attributes['width'])
+                         if 'width' in elem.attributes else
+                         'ColWidthDefault')
             else:
                 warn(elem)
         elif isinstance(elem, pf.BlockQuote):
             if caption is not None:
                 warn(caption)
 
-            caption = elem
+            caption = pf.Caption(elem)
         elif isinstance(elem, pf.CodeBlock):
             if first_row:
                 headers.append(header)
                 widths.append(width)
 
                 header = pf.Null()
-                width = 0
+                width = 'ColWidthDefault'
 
-            examples.append(elem)
+            codeblock = pf.Div(elem)
+            wrap_elem(
+                pf.RawInline('\\begin{minipage}[t]{\\linewidth}\\raggedright', 'latex'),
+                codeblock,
+                pf.RawInline('\\end{minipage}', 'latex'));
+
+            examples.append(codeblock)
         elif isinstance(elem, pf.HorizontalRule) and examples:
             first_row = False
 
@@ -479,14 +495,11 @@ def cmptable(table, doc):
             warn(elem)
 
     if not all(isinstance(header, pf.Null) for header in headers):
-        kwargs['header'] = pf.TableRow(*[pf.TableCell(header) for header in headers])
+        kwargs['head'] = pf.TableHead(pf.TableRow(*[pf.TableCell(header) for header in headers]))
 
-    if caption is not None:
-        kwargs['caption'] = caption.content[0].content
-
-    kwargs['width'] = widths
-
-    return pf.Table(*rows, **kwargs)
+    kwargs['caption'] = pf.Caption() if caption is None else caption
+    kwargs['colspec'] = [('AlignDefault', w) for w in widths]
+    return pf.Table(pf.TableBody(*rows), **kwargs)
 
 def table(elem, doc):
     if not isinstance(elem, pf.Table):
@@ -497,12 +510,12 @@ def table(elem, doc):
             return None
 
         return pf.Div(
-            pf.Plain(pf.RawInline('\\centering', 'latex'),
+            pf.Plain(pf.RawInline('\\centering\\arraybackslash', 'latex'),
                      pf.Strong(*elem.content)),
             attributes={'style': 'text-align:center'})
 
-    if elem.header is not None:
-        elem.header.walk(header)
+    if elem.head is not None:
+        elem.head.walk(header)
 
 if __name__ == '__main__':
   pf.run_filters([

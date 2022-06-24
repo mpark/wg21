@@ -32,6 +32,7 @@ header-includes:
     ```{=latex}
     % adjust quote indent
     \renewenvironment{quote}{\list{}{\leftmargin=0.2in}\item[]}{\endlist}
+    \renewcommand{\CSLBlock}[1]{\hfill\break#1\hfill\break}
 
     % https://github.com/cplusplus/draft/blob/97b615a5a6ab0598b624ee05402c531d0421cff6/source/styles.tex#L127-L133
     \renewcommand{\labelitemi}{---}

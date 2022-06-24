@@ -1,4 +1,4 @@
-panflute~=1.12
+panflute~=2.1.3
 beautifulsoup4
 lxml
 requests

@@ -1,0 +1,71 @@
+diff --git a/acm.csl b/wg21.csl
+index 4247262..45ffe25 100644
+--- a/acm.csl
++++ b/wg21.csl
+@@ -11,7 +11,7 @@
+       <name>Patrick O'Brien</name>
+       <email>obrienpat86@gmail.com</email>
+     </author>
+-    <category citation-format="numeric"/>
++    <category citation-format="label"/>
+     <category field="engineering"/>
+     <updated>2019-12-18T14:04:18+00:00</updated>
+     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
+@@ -49,9 +49,11 @@
+       </else>
+     </choose>
+   </macro>
+-  <macro name="year">
++  <macro name="date">
+     <date variable="issued">
+       <date-part name="year"/>
++      <date-part name="month" form="numeric-leading-zeros" prefix="-"/>
++      <date-part name="day" form="numeric-leading-zeros" prefix="-"/>
+     </date>
+   </macro>
+   <macro name="journal">
+@@ -91,36 +93,30 @@
+         <text variable="DOI" prefix="DOI:https://doi.org/"/>
+       </if>
+       <else-if variable="URL">
+-        <group delimiter=" ">
+-          <text term="retrieved" text-case="capitalize-first"/>
+-          <date variable="accessed" form="text"/>
+-          <text term="from"/>
+-          <text variable="URL"/>
+-        </group>
++        <text display="block" variable="URL"/>
+       </else-if>
+     </choose>
+   </macro>
+-  <citation collapse="citation-number">
++  <citation collapse="citation-label">
+     <sort>
+-      <key variable="citation-number"/>
++      <key variable="citation-label"/>
+     </sort>
+     <layout prefix="[" suffix="]" delimiter=",">
+       <group delimiter=":">
+-        <text variable="citation-number"/>
++        <text variable="citation-label"/>
+         <text variable="locator"/>
+       </group>
+     </layout>
+   </citation>
+-  <bibliography second-field-align="flush" entry-spacing="0">
++  <bibliography hanging-indent="true" entry-spacing="0">
+     <sort>
+-      <key macro="author"/>
+-      <key variable="issued"/>
++      <key variable="citation-label"/>
+     </sort>
+     <layout>
+-      <text variable="citation-number" prefix="[" suffix="]"/>
++      <text variable="citation-label" prefix="[" suffix="] "/>
+       <group delimiter=". " suffix=". ">
+         <text macro="author"/>
+-        <text macro="year"/>
++        <text macro="date"/>
+         <text macro="title"/>
+       </group>
+       <group suffix=".">

@@ -1,0 +1,125 @@
+diff --git a/data/templates/default.html b/data/templates/wg21.html
+index dda7e8c..e0b6c1c 100644
+--- a/data/templates/default.html
++++ b/data/templates/wg21.html
+@@ -2,7 +2,7 @@
+ <html xmlns="http://www.w3.org/1999/xhtml" lang="$lang$" xml:lang="$lang$"$if(dir)$ dir="$dir$"$endif$>
+ <head>
+   <meta charset="utf-8" />
+-  <meta name="generator" content="pandoc" />
++  <meta name="generator" content="mpark/wg21" />
+   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+ $for(author-meta)$
+   <meta name="author" content="$author-meta$" />
+@@ -18,11 +18,26 @@ $if(description-meta)$
+ $endif$
+   <title>$if(title-prefix)$$title-prefix$ – $endif$$pagetitle$</title>
+   <style>
+-    $styles.html()$
++      code{white-space: pre-wrap;}
++      span.smallcaps{font-variant: small-caps;}
++      span.underline{text-decoration: underline;}
++      div.column{display: inline-block; vertical-align: top; width: 50%;}
++      div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
++      ul.task-list{list-style: none;}
++$if(quotes)$
++      q { quotes: "“" "”" "‘" "’"; }
++$endif$
++$if(highlighting-css)$
++      $highlighting-css$
++      code.diff {color: #$uccolor$}
++      code.diff span.va {color: #$addcolor$}
++      code.diff span.st {color: #$rmcolor$}
++$endif$
+   </style>
+ $for(css)$
+   <link rel="stylesheet" href="$css$" />
+ $endfor$
++  <link rel="icon" href="$datadir$/favicon.ico" />
+ $for(header-includes)$
+   $header-includes$
+ $endfor$
+@@ -34,40 +49,66 @@ $endif$
+   <![endif]-->
+ </head>
+ <body>
++<div class="wrapper">
+ $for(include-before)$
+ $include-before$
+ $endfor$
+ $if(title)$
+ <header id="title-block-header">
+-<h1 class="title">$title$</h1>
++<h1 class="title" style="text-align:center">$title$</h1>
+ $if(subtitle)$
+-<p class="subtitle">$subtitle$</p>
++<h3 class="subtitle" style="text-align:center">$subtitle$</h3>
+ $endif$
+-$for(author)$
+-<p class="author">$author$</p>
++<table style="border:none;float:right">
++  <tr>
++    <td>Document #:</td>
++    <td>$document$</td>
++  </tr>
++  <tr>
++    <td>Date:</td>
++    <td>$date$</td>
++  </tr>
++  <tr>
++    <td style="vertical-align:top">Project:</td>
++    <td>Programming Language C++</td>
++  </tr>
++  <tr>
++    <td style="vertical-align:top">Audience:</td>
++    <td>
++$for(audience)$
++      $audience$<br>
+ $endfor$
+-$if(date)$
+-<p class="date">$date$</p>
+-$endif$
+-$if(abstract)$
+-<div class="abstract">
+-<div class="abstract-title">$abstract-title$</div>
+-$abstract$
+-</div>
++    </td>
++  </tr>
++$if(revises)$
++  <tr>
++    <td>Revises: </td>
++    <td>$revises$</td>
++  </tr>
+ $endif$
++  <tr>
++    <td style="vertical-align:top">Reply-to:</td>
++    <td>
++$for(author)$
++      $author.name$<br><$author.email$><br>
++$endfor$
++    </td>
++  </tr>
++</table>
+ </header>
+ $endif$
++<div style="clear:both">
+ $if(toc)$
+-<nav id="$idprefix$TOC" role="doc-toc">
+-$if(toc-title)$
+-<h2 id="$idprefix$toc-title">$toc-title$</h2>
+-$endif$
++<div id="$idprefix$TOC" role="doc-toc">
++<h1 id="$idprefix$toctitle">Contents</h1>
+ $table-of-contents$
+-</nav>
++</div>
+ $endif$
+ $body$
+ $for(include-after)$
+ $include-after$
+ $endfor$
++</div>
++</div>
+ </body>
+ </html>

@@ -1,14 +1,17 @@
 ---
 title: "Test document for mpark/wg21"
 subtitle: "Visual inspection of various features of the framework"
-document: D0000R0
+document: D0000R1
 date: today
 audience:
   - Library Evolution
   - Library
+revises: D0000R0
 author:
-  - name: Michael Park
-    email: <mcypark@gmail.com>
+  - name: Author 0
+    email: <author0@gmail.com>
+  - name: Author 1
+    email: <author1@gmail.com>
 toc: true
 toc-depth: 2
 ---
@@ -210,7 +213,7 @@ inspect (x) {
 
 ::: cmptable
 
-### Before
+### Before {width=.6}
 ```cpp
 switch (x) {
   case 0: std::cout << "got zero"; break;
@@ -219,7 +222,7 @@ switch (x) {
 }
 ```
 
-### After
+### After {width=.4}
 ```cpp
 inspect (x) {
   0: std::cout << "got zero";

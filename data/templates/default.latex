@@ -406,27 +406,8 @@ $if(colorlinks)$
 $else$
   hidelinks,
 $endif$
-  pdfcreator={mpark/wg21}}
+  pdfcreator={LaTeX via pandoc}}
 
-\makeatletter
-\def\@maketitle{
-  \newpage \null \vskip 2em
-  {\center \LARGE \@title \par}
-  \vskip 1.5em
-  \begin{flushright}
-    \begin{tabular}{ll}
-Document \#:&$document$\\
-Date:       &\@date\\
-Project:    &Programming Language C++\\
-Audience:   $for(audience)$&$audience$\\$endfor$
-$if(revises)$
-Revises:    &$revises$\\
-$endif$
-Reply-to:   \@author
-    \end{tabular}
-  \end{flushright}
-}
-\makeatother
 $if(title)$
 \title{$title$$if(thanks)$\thanks{$thanks$}$endif$}
 $endif$
@@ -442,7 +423,7 @@ $else$
 $endif$
 \subtitle{$subtitle$}
 $endif$
-\author{$for(author)$&$author.name$\\$for(author.email)$&<$author.email$>\\$endfor$$endfor$}
+\author{$for(author)$$author$$sep$ \and $endfor$}
 \date{$date$}
 $if(beamer)$
 $if(institute)$

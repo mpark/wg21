@@ -11,7 +11,7 @@
       <name>Patrick O'Brien</name>
       <email>obrienpat86@gmail.com</email>
     </author>
-    <category citation-format="label"/>
+    <category citation-format="numeric"/>
     <category field="engineering"/>
     <updated>2019-12-18T14:04:18+00:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
@@ -49,11 +49,9 @@
       </else>
     </choose>
   </macro>
-  <macro name="date">
+  <macro name="year">
     <date variable="issued">
       <date-part name="year"/>
-      <date-part name="month" form="numeric-leading-zeros" prefix="-"/>
-      <date-part name="day" form="numeric-leading-zeros" prefix="-"/>
     </date>
   </macro>
   <macro name="journal">
@@ -93,30 +91,36 @@
         <text variable="DOI" prefix="DOI:https://doi.org/"/>
       </if>
       <else-if variable="URL">
-        <text display="block" variable="URL"/>
+        <group delimiter=" ">
+          <text term="retrieved" text-case="capitalize-first"/>
+          <date variable="accessed" form="text"/>
+          <text term="from"/>
+          <text variable="URL"/>
+        </group>
       </else-if>
     </choose>
   </macro>
-  <citation collapse="citation-label">
+  <citation collapse="citation-number">
     <sort>
-      <key variable="citation-label"/>
+      <key variable="citation-number"/>
     </sort>
     <layout prefix="[" suffix="]" delimiter=",">
       <group delimiter=":">
-        <text variable="citation-label"/>
+        <text variable="citation-number"/>
         <text variable="locator"/>
       </group>
     </layout>
   </citation>
-  <bibliography hanging-indent="true" entry-spacing="0">
+  <bibliography second-field-align="flush" entry-spacing="0">
     <sort>
-      <key variable="citation-label"/>
+      <key macro="author"/>
+      <key variable="issued"/>
     </sort>
     <layout>
-      <text variable="citation-label" prefix="[" suffix="] "/>
+      <text variable="citation-number" prefix="[" suffix="]"/>
       <group delimiter=". " suffix=". ">
         <text macro="author"/>
-        <text macro="date"/>
+        <text macro="year"/>
         <text macro="title"/>
       </group>
       <group suffix=".">

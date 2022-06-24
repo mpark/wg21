@@ -17,7 +17,7 @@ self-contained: true
 data-dir: ${DATADIR}
 
 filters:
-  - pandoc-citeproc
+  - citeproc
   - wg21.py
 
 template: wg21

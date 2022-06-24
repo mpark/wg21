@@ -1,20 +1,14 @@
-diff --git a/data/template/wg21.latex b/data/template/wg21.latex
-index b03c4d8..0bb7dd6 100644
---- a/data/template/wg21.latex
-+++ b/data/template/wg21.latex
-@@ -228,7 +228,7 @@ $if(colorlinks)$
+diff --git a/data/templates/default.latex b/data/templates/wg21.latex
+index 7d539fe..723e93e 100644
+--- a/data/templates/default.latex
++++ b/data/templates/wg21.latex
+@@ -406,8 +406,27 @@ $if(colorlinks)$
  $else$
    hidelinks,
  $endif$
 -  pdfcreator={LaTeX via pandoc}}
 +  pdfcreator={mpark/wg21}}
- \urlstyle{same} % disable monospaced font for URLs
- $if(verbatim-in-note)$
- \VerbatimFootnotes % allow verbatim text in footnotes
-@@ -368,6 +368,25 @@ $for(bibliography)$
- \addbibresource{$bibliography$}
- $endfor$
- $endif$
+ 
 +\makeatletter
 +\def\@maketitle{
 +  \newpage \null \vskip 2em
@@ -34,10 +28,10 @@ index b03c4d8..0bb7dd6 100644
 +  \end{flushright}
 +}
 +\makeatother
- $if(csl-refs)$
- \newlength{\cslhangindent}
- \setlength{\cslhangindent}{1.5em}
-@@ -406,7 +425,7 @@ $else$
+ $if(title)$
+ \title{$title$$if(thanks)$\thanks{$thanks$}$endif$}
+ $endif$
+@@ -423,7 +442,7 @@ $else$
  $endif$
  \subtitle{$subtitle$}
  $endif$
