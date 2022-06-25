@@ -243,7 +243,7 @@ def header(elem, doc):
         elem.classes.remove('unnumbered')
 
     elem.content.append(
-        pf.Link(url='#{}'.format(elem.identifier), classes=['self-link']))
+        pf.Link(url=f'#{elem.identifier}', classes=['self-link']))
 
 def divspan(elem, doc):
     """
@@ -273,16 +273,16 @@ def divspan(elem, doc):
 
     def _color(html_color):
         wrap_elem(
-            pf.RawInline('{{\\color[HTML]{{{}}}'.format(html_color), 'latex'),
+            pf.RawInline(f'{{\\color[HTML]{{{html_color}}}', 'latex'),
             elem,
             pf.RawInline('}', 'latex'))
-        elem.attributes['style'] = 'color: #{}'.format(html_color)
+        elem.attributes['style'] = f'color: #{html_color}'
 
     def _nonnormative(name):
         wrap_elem(
-            pf.Span(pf.Str('[ '), pf.Emph(pf.Str('{}:'.format(name.title()))), pf.Space),
+            pf.Span(pf.Str('[ '), pf.Emph(pf.Str(f'{name.title()}:')), pf.Space),
             elem,
-            pf.Span(pf.Str(' — '), pf.Emph(pf.Str('end {}'.format(name.lower()))), pf.Str(' ]')))
+            pf.Span(pf.Str(' — '), pf.Emph(pf.Str(f'end {name.lower()}')), pf.Str(' ]')))
 
     def _diff(color, latex_tag, html_tag):
         if isinstance(elem, pf.Span):
@@ -293,26 +293,26 @@ def divspan(elem, doc):
                                    pf.RawInline('}', 'latex'))
             elem.walk(protect_code)
             wrap_elem(
-                pf.RawInline('\\{}{{'.format(latex_tag), 'latex'),
+                pf.RawInline(f'\\{latex_tag}{{', 'latex'),
                 elem,
                 pf.RawInline('}', 'latex'))
             wrap_elem(
-                pf.RawInline('<{}>'.format(html_tag), 'html'),
+                pf.RawInline(f'<{html_tag}>', 'html'),
                 elem,
-                pf.RawInline('</{}>'.format(html_tag), 'html'))
+                pf.RawInline(f'</{html_tag}>', 'html'))
         _color(doc.get_metadata(color))
 
     def pnum():
         num = pf.stringify(elem)
 
         if '.' in num:
-            num = '({})'.format(num)
+            num = f'({num})'
 
         if doc.format == 'latex':
-            return pf.RawInline('\\pnum{{{}}}'.format(num), 'latex')
+            return pf.RawInline(f'\\pnum{{{num}}}', 'latex')
         elif doc.format == 'html':
             return pf.Span(
-                pf.RawInline('<a class="marginalized">{}</a>'.format(num), 'html'),
+                pf.RawInline(f'<a class="marginalized">{num}</a>', 'html'),
                 classes=['marginalizedparent'])
 
         return pf.Superscript(pf.Str(num))
@@ -336,8 +336,8 @@ def divspan(elem, doc):
         target = pf.stringify(elem)
         number = stable_names.get(target)
         link = pf.Link(
-            pf.Str('[{}]'.format(target)),
-            url='https://wg21.link/{}'.format(target))
+            pf.Str(f'[{target}]'),
+            url=f'https://wg21.link/{target}')
         if number is not None:
             return pf.Span(pf.Str(number), pf.Space(), link)
         else:
