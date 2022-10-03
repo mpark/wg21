@@ -19,6 +19,7 @@ data-dir: ${DATADIR}
 filters:
   - citeproc
   - wg21.py
+  - pandoc_plantuml_filter.py
 
 template: wg21
 
