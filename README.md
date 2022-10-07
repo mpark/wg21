@@ -503,17 +503,22 @@ If you want the list of available fonts on your system, most supported systems w
 
   - `python3`
   - `xelatex`
+  - `plantuml`
 
 ### OS X
 
 ```bash
-brew cask install mactex
+brew install --cask mactex
+```
+
+```bash
+brew install plantuml
 ```
 
 ### Ubuntu
 
 ```bash
-sudo apt-get install texlive-latex-base
+sudo apt-get install texlive-latex-base plantuml
 ```
 
 ### Debian

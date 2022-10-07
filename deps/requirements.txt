@@ -1,4 +1,5 @@
 panflute~=2.1.3
+pandocfilters
 beautifulsoup4
 lxml
 requests

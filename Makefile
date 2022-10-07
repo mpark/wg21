@@ -56,7 +56,7 @@ pdf: $(PDF)
 ifneq ($(SRCDIR), $(OUTDIR))
 .PHONY: clean
 clean:
-	rm -rf $(DEPSDIR)/pandoc $(DEPS) $(OUTDIR)
+	rm -rf $(DEPSDIR)/pandoc $(DEPS) $(OUTDIR) plantuml-images
 
 .PHONY: $(HTML) $(LATEX) $(PDF)
 $(HTML) $(LATEX) $(PDF): $(SRCDIR)/%: $(OUTDIR)/%
@@ -87,4 +87,5 @@ $(DATADIR)/annex-f:
 	curl -sSL https://timsong-cpp.github.io/cppwp/annex-f -o $@
 
 $(OUTDIR)/%.html $(OUTDIR)/%.latex $(OUTDIR)/%.pdf: $(SRCDIR)/%.md $(DEPS) | $(OUTDIR)
+	rm -rf plantuml-images
 	$(PANDOC) --bibliography $(DATADIR)/csl.json
