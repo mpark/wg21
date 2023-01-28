@@ -60,18 +60,23 @@ $if(subtitle)$
 <h3 class="subtitle" style="text-align:center">$subtitle$</h3>
 $endif$
 <table style="border:none;float:right">
+$if(document)$
   <tr>
     <td>Document #:</td>
     <td>$document$</td>
   </tr>
+$endif$
   <tr>
     <td>Date:</td>
     <td>$date$</td>
   </tr>
+  $if(document)$
   <tr>
     <td style="vertical-align:top">Project:</td>
     <td>Programming Language C++</td>
   </tr>
+  $endif$
+  $if(audience)$
   <tr>
     <td style="vertical-align:top">Audience:</td>
     <td>
@@ -80,12 +85,14 @@ $for(audience)$
 $endfor$
     </td>
   </tr>
+$endif$
 $if(revises)$
   <tr>
     <td>Revises: </td>
     <td>$revises$</td>
   </tr>
 $endif$
+$if(author)$
   <tr>
     <td style="vertical-align:top">Reply-to:</td>
     <td>
@@ -94,6 +101,7 @@ $for(author)$
 $endfor$
     </td>
   </tr>
+$endif$
 </table>
 </header>
 $endif$
