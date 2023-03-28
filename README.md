@@ -37,6 +37,8 @@ make <paper>.html # `<paper>.md` -> `generated/<paper>.html`
 
 ## Integration
 
+Install the necessary [requirements](#requirements) for your platform, then:
+
 ```bash
 git submodule add https://github.com/mpark/wg21.git
 
