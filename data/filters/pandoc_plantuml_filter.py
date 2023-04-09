@@ -50,7 +50,7 @@ def plantuml(key, value, format_, meta):
                 sys.stderr.write('Created image ' + dest + '\n')
             if outputtype.startswith("latex:nopreamble"):
                 latex = open(dest).read()
-                return RawBlock('latex', latex)
+                return RawBlock('latex', "\\begin{adjustbox}{width=\\textwidth}\n" + latex + "\n\\end{adjustbox}\n")
             else:
                 return Para([Image([ident, [], keyvals], caption, [dest, typef])])
 
