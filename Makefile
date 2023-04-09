@@ -23,6 +23,7 @@ override PLANTUML_BIN := java -jar $(PLANTUML_DIR)/plantuml.jar
 
 export SHELL := bash
 export PATH := $(PANDOC_DIR):$(PYTHON_DIR)/bin:$(PLANTUML_DIR):$(PATH)
+export PLANTUML_BIN := $(PLANTUML_BIN)
 
 override DEPS := $(PANDOC_DIR) $(PLANTUML_DIR) $(PYTHON_DIR)
 
@@ -95,4 +96,4 @@ $(DATADIR)/annex-f:
 
 $(OUTDIR)/%.html $(OUTDIR)/%.latex $(OUTDIR)/%.pdf: $(SRCDIR)/%.md $(DEPS) | $(OUTDIR)
 	rm -rf plantuml-images
-	PLANTUML_BIN="$(PLANTUML_BIN)" $(PANDOC) --bibliography $(DATADIR)/csl.json
+	$(PANDOC) --bibliography $(DATADIR)/csl.json
