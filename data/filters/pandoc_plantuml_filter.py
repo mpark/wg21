@@ -32,7 +32,10 @@ def plantuml(key, value, format_, meta):
             caption, typef, keyvals = get_caption(keyvals)
 
             filename = get_filename4code("plantuml", code)
-            filetype = get_extension(format_, "png", html="svg", latex="latex", beamer="latex")
+            filetype = get_extension(format_, "png", html="svg", latex="tex", beamer="tex")
+            outputtype = filetype
+            if filetype.startswith("tex"):
+                outputtype = "latex:nopreamble"
 
             src = filename + '.uml'
             dest = filename + '.' + filetype
@@ -43,14 +46,11 @@ def plantuml(key, value, format_, meta):
                     txt = b"@startuml\n" + txt + b"\n@enduml\n"
                 with open(src, "wb") as f:
                     f.write(txt)
-                subprocess.check_call(PLANTUML_BIN.split() + ["-t" + filetype, src])
+                subprocess.check_call(PLANTUML_BIN.split() + ["-t" + outputtype, src])
                 sys.stderr.write('Created image ' + dest + '\n')
-            if (filetype == "latex"):
+            if outputtype.startswith("latex:nopreamble"):
                 latex = open(dest).read()
-                return RawBlock('latex', 
-                  latex.split("\\begin{document}")[-1].split("\\end{document}")[0]
-                  .replace("\\begin{tikzpicture}", "\\adjustbox{max width=\\textwidth}{\\begin{tikzpicture}")
-                  .replace("\\end{tikzpicture}", "\\end{tikzpicture}}"))
+                return RawBlock('latex', latex)
             else:
                 return Para([Image([ident, [], keyvals], caption, [dest, typef])])
 
