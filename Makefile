@@ -18,11 +18,13 @@ override PANDOC_VER := $(shell cat $(DEPSDIR)/pandoc.ver)
 override PANDOC_DIR := $(DEPSDIR)/pandoc/$(PANDOC_VER)
 override PYTHON_DIR := $(DEPSDIR)/python
 override PYTHON_BIN := $(PYTHON_DIR)/bin/python3
+override PLANTUML_DIR := $(DEPSDIR)/plantuml
+override PLANTUML_BIN := java -jar $(PLANTUML_DIR)/plantuml.jar 
 
 export SHELL := bash
-export PATH := $(PANDOC_DIR):$(PYTHON_DIR)/bin:$(PATH)
+export PATH := $(PANDOC_DIR):$(PYTHON_DIR)/bin:$(PLANTUML_DIR):$(PATH)
 
-override DEPS := $(PANDOC_DIR) $(PYTHON_DIR)
+override DEPS := $(PANDOC_DIR) $(PLANTUML_DIR) $(PYTHON_DIR)
 
 override DATADIR := $(ROOTDIR)data
 
@@ -64,13 +66,18 @@ endif
 
 .PHONY: update
 update:
-	@$(MAKE) --always-make $(DATADIR)/csl.json $(DATADIR)/annex-f
+	@$(MAKE) --always-make $(DATADIR)/csl.json $(DATADIR)/annex-f $(PLANTUML_BIN).jar
 
 $(OUTDIR):
 	mkdir -p $@
 
 $(PANDOC_DIR):
 	PANDOC_VER=$(PANDOC_VER) PANDOC_DIR=$@ $(DEPSDIR)/install-pandoc.sh
+
+$(PLANTUML_DIR):
+	mkdir -p $@
+	curl -L -o $@/plantuml.jar https://github.com/plantuml/plantuml/releases/latest/download/plantuml.jar
+	chmod -R u+x $@
 
 $(PYTHON_DIR): $(DEPSDIR)/requirements.txt
 	python3 -m venv $(PYTHON_DIR)
@@ -88,4 +95,4 @@ $(DATADIR)/annex-f:
 
 $(OUTDIR)/%.html $(OUTDIR)/%.latex $(OUTDIR)/%.pdf: $(SRCDIR)/%.md $(DEPS) | $(OUTDIR)
 	rm -rf plantuml-images
-	$(PANDOC) --bibliography $(DATADIR)/csl.json
+	PLANTUML_BIN="$(PLANTUML_BIN)" $(PANDOC) --bibliography $(DATADIR)/csl.json
