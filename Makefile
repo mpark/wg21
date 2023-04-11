@@ -19,7 +19,7 @@ override PANDOC_DIR := $(DEPSDIR)/pandoc/$(PANDOC_VER)
 override PYTHON_DIR := $(DEPSDIR)/python
 override PYTHON_BIN := $(PYTHON_DIR)/bin/python3
 override PLANTUML_DIR := $(DEPSDIR)/plantuml
-override PLANTUML_BIN := java -jar $(PLANTUML_DIR)/plantuml.jar 
+override PLANTUML_BIN := "java -jar $(PLANTUML_DIR)/plantuml.jar"
 
 export SHELL := bash
 export PATH := $(PANDOC_DIR):$(PYTHON_DIR)/bin:$(PLANTUML_DIR):$(PATH)
@@ -65,9 +65,13 @@ clean:
 $(HTML) $(LATEX) $(PDF): $(SRCDIR)/%: $(OUTDIR)/%
 endif
 
+.PHONY: update-dependencies
+update-dependencies:
+	@$(MAKE) --always-make $(DEPS)
+
 .PHONY: update
 update:
-	@$(MAKE) --always-make $(DATADIR)/csl.json $(DATADIR)/annex-f $(PLANTUML_BIN).jar
+	@$(MAKE) --always-make $(DATADIR)/csl.json $(DATADIR)/annex-f
 
 $(OUTDIR):
 	mkdir -p $@
