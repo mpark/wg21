@@ -19,7 +19,7 @@ override PANDOC_DIR := $(DEPSDIR)/pandoc/$(PANDOC_VER)
 override PYTHON_DIR := $(DEPSDIR)/python
 override PYTHON_BIN := $(PYTHON_DIR)/bin/python3
 override PLANTUML_DIR := $(DEPSDIR)/plantuml
-override PLANTUML_BIN := "java -jar $(PLANTUML_DIR)/plantuml.jar"
+override PLANTUML_BIN := java -jar $(PLANTUML_DIR)/plantuml.jar
 
 export SHELL := bash
 export PATH := $(PANDOC_DIR):$(PYTHON_DIR)/bin:$(PLANTUML_DIR):$(PATH)
