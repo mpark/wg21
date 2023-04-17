@@ -98,6 +98,8 @@ $(DATADIR)/csl.json: $(DATADIR)/refs.py $(PYTHON_DIR)
 $(DATADIR)/annex-f:
 	curl -sSL https://timsong-cpp.github.io/cppwp/annex-f -o $@
 
-$(OUTDIR)/%.html $(OUTDIR)/%.latex $(OUTDIR)/%.pdf: $(SRCDIR)/%.md $(DEPS) | $(OUTDIR)
-	rm -rf plantuml-images
+plantuml-images/%.svg plantuml-images/%.tex plantuml-images/%.png: plantuml-images/%.uml $(DEPS) | plantuml-images
+	$(PANDOC) --bibliography $(DATADIR)/csl.json
+
+$(OUTDIR)/%.html $(OUTDIR)/%.latex $(OUTDIR)/%.pdf : $(SRCDIR)/%.md $(DEPS) | $(OUTDIR)
 	$(PANDOC) --bibliography $(DATADIR)/csl.json
