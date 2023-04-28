@@ -415,14 +415,22 @@ $endif$
   \vskip 1.5em
   \begin{flushright}
     \begin{tabular}{ll}
+$if(document)$
 Document \#:&$document$\\
+$endif$
 Date:       &\@date\\
+$if(document)$
 Project:    &Programming Language C++\\
+$endif$
+$if(audience)$
 Audience:   $for(audience)$&$audience$\\$endfor$
+$endif$
 $if(revises)$
 Revises:    &$revises$\\
 $endif$
+$if(author)$
 Reply-to:   \@author
+$endif$
     \end{tabular}
   \end{flushright}
 }

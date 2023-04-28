@@ -18,11 +18,14 @@ override PANDOC_VER := $(shell cat $(DEPSDIR)/pandoc.ver)
 override PANDOC_DIR := $(DEPSDIR)/pandoc/$(PANDOC_VER)
 override PYTHON_DIR := $(DEPSDIR)/python
 override PYTHON_BIN := $(PYTHON_DIR)/bin/python3
+override PLANTUML_DIR := $(DEPSDIR)/plantuml
+override PLANTUML_BIN := java -jar $(PLANTUML_DIR)/plantuml.jar
 
 export SHELL := bash
-export PATH := $(PANDOC_DIR):$(PYTHON_DIR)/bin:$(PATH)
+export PATH := $(PANDOC_DIR):$(PYTHON_DIR)/bin:$(PLANTUML_DIR):$(PATH)
+export PLANTUML_BIN := $(PLANTUML_BIN)
 
-override DEPS := $(PANDOC_DIR) $(PYTHON_DIR)
+override DEPS := $(PANDOC_DIR) $(PLANTUML_DIR) $(PYTHON_DIR)
 
 override DATADIR := $(ROOTDIR)data
 
@@ -56,11 +59,15 @@ pdf: $(PDF)
 ifneq ($(SRCDIR), $(OUTDIR))
 .PHONY: clean
 clean:
-	rm -rf $(DEPSDIR)/pandoc $(DEPS) $(OUTDIR)
+	rm -rf $(DEPSDIR)/pandoc $(DEPS) $(OUTDIR) plantuml-images
 
 .PHONY: $(HTML) $(LATEX) $(PDF)
 $(HTML) $(LATEX) $(PDF): $(SRCDIR)/%: $(OUTDIR)/%
 endif
+
+.PHONY: update-dependencies
+update-dependencies:
+	@$(MAKE) --always-make $(DEPS)
 
 .PHONY: update
 update:
@@ -71,6 +78,11 @@ $(OUTDIR):
 
 $(PANDOC_DIR):
 	PANDOC_VER=$(PANDOC_VER) PANDOC_DIR=$@ $(DEPSDIR)/install-pandoc.sh
+
+$(PLANTUML_DIR):
+	mkdir -p $@
+	curl -L -o $@/plantuml.jar https://github.com/plantuml/plantuml/releases/latest/download/plantuml.jar
+	chmod -R u+x $@
 
 $(PYTHON_DIR): $(DEPSDIR)/requirements.txt
 	python3 -m venv $(PYTHON_DIR)
@@ -86,5 +98,8 @@ $(DATADIR)/csl.json: $(DATADIR)/refs.py $(PYTHON_DIR)
 $(DATADIR)/annex-f:
 	curl -sSL https://timsong-cpp.github.io/cppwp/annex-f -o $@
 
-$(OUTDIR)/%.html $(OUTDIR)/%.latex $(OUTDIR)/%.pdf: $(SRCDIR)/%.md $(DEPS) | $(OUTDIR)
+plantuml-images/%.svg plantuml-images/%.tex plantuml-images/%.png: plantuml-images/%.uml $(DEPS) | plantuml-images
+	$(PANDOC) --bibliography $(DATADIR)/csl.json
+
+$(OUTDIR)/%.html $(OUTDIR)/%.latex $(OUTDIR)/%.pdf : $(SRCDIR)/%.md $(DEPS) | $(OUTDIR)
 	$(PANDOC) --bibliography $(DATADIR)/csl.json

@@ -2,4 +2,6 @@ data/defaults.yaml
 data/csl.json
 data/annex-f
 deps/pandoc
+deps/plantuml
 deps/python
+plantuml-images

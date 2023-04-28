@@ -271,6 +271,51 @@ inspect (x) {
 
 ![](img/cmptable-3.png)
 
+### PlantUML Diagrams
+
+PlantUML diagrams are supported as code-blocks.
+
+``````md
+```plantuml
+title Omits Connect & Start
+caption sequence diagram for set_next()
+autonumber
+hide footbox
+participant consumer as cnm
+participant producer as pdc
+participant transformer as trn
+activate cnm
+group connect/start sequence
+activate trn
+activate pdc
+end
+loop values 0..N
+pdc --> trn : processValN = set_next(produceValN)
+activate pdc
+activate trn
+trn --> cnm : consumeValN = set_next(transformValN)
+activate cnm
+group connect/start valueN
+end
+pdc --> trn : set_value(transformValNRcvr, ValN...)
+trn --> cnm : set_value(consumeValNRcvr, transformValN...)
+cnm --> pdc : set_value(produceValN+1Rcvr)
+deactivate pdc
+deactivate trn
+deactivate cnm
+end
+group end sequence
+pdc --> trn : set_value(transformRcvr)
+trn --> cnm : set_value(consumeRcvr)
+deactivate pdc
+deactivate trn
+end
+deactivate cnm
+```
+``````
+
+![](img/plantuml.png)
+
 ### Proposed Wording
 
 #### Paragraph Numbers
@@ -458,17 +503,22 @@ If you want the list of available fonts on your system, most supported systems w
 
   - `python3`
   - `xelatex`
+  - `plantuml`
 
 ### OS X
 
 ```bash
-brew cask install mactex
+brew install --cask mactex
+```
+
+```bash
+brew install plantuml
 ```
 
 ### Ubuntu
 
 ```bash
-sudo apt-get install texlive-latex-base
+sudo apt-get install texlive-latex-base plantuml
 ```
 
 ### Debian
