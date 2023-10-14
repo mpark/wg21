@@ -28,7 +28,7 @@ override DATADIR := $(ROOTDIR)data
 
 override define PANDOC
 $(eval override FILE := $(filter %.md, $^))
-$(eval override CMD := pandoc $(FILE) -o $@ -d $(DATADIR)/defaults.yaml)
+$(eval override CMD := pandoc $(FILE) -o $@ --mathjax -d $(DATADIR)/defaults.yaml)
 $(eval $(and $(DEFAULTS), override CMD += -d $(DEFAULTS)))
 $(eval $(and $(METADATA), override CMD += --metadata-file $(METADATA)))
 $(if $(filter %.html, $@),
