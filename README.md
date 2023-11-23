@@ -1,10 +1,12 @@
-# WG21: Framework for C++ Standards Committee Papers
+# Framework for Authoring C++ Standards Committee Papers
 
 ## Introduction
 
-This is a paper-writing framework designed for WG21 built on top of [Pandoc].
+This is a paper-writing framework designed to ease the pain of authoring papers
+for WG21, built on top of [Pandoc].
 
-In short, you write your papers in Markdown and the framework produces either HTML or PDF.
+In short, you write your papers in Markdown and the framework produces the paper
+either in HTML or PDF.
 
 [Pandoc]: https://pandoc.org
 
@@ -43,6 +45,10 @@ echo "include wg21/Makefile" > Makefile
 make <paper>.pdf  # `<paper>.md` -> `generated/<paper>.pdf`
 make <paper>.html # `<paper>.md` -> `generated/<paper>.html`
 ```
+
+See [mpark/wg21-papers] for an example use of this project.
+
+[mpark/wg21-papers]: https://github.com/mpark/wg21-papers
 
 ## Generation
 
