@@ -1,4 +1,4 @@
-# Framework for Authoring C++ Standards Committee Papers
+# Framework for Authoring C++ Committee Papers
 
 ## Introduction
 
