@@ -1,9 +1,10 @@
-# WG21: C++ Standards Committee Paper-Writing Framework
+# WG21: Framework for C++ Standards Committee Papers
 
 ## Introduction
 
 This is a paper-writing framework designed for WG21 built on top of [Pandoc].
-In short, you write your papers in Markdown and produce either HTML or PDF.
+
+In short, you write your papers in Markdown and the framework produces either HTML or PDF.
 
 [Pandoc]: https://pandoc.org
 
