@@ -30,6 +30,9 @@ pdf-engine: xelatex
 metadata:
   datadir: ${DATADIR}
   csl: ${DATADIR}/csl/wg21.csl
+  highlighting:
+    inline-code:
+      cpp
 
 metadata-file: ${DATADIR}/metadata.yaml
 EOF
