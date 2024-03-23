@@ -17,10 +17,10 @@ URL="https://github.com/jgm/pandoc/releases/download/${PANDOC_VER}/"
 OS="$(uname -s)"
 case "${OS}" in
   Linux ) URL+="pandoc-${PANDOC_VER}-linux-amd64.tar.gz"  ;;
-  Darwin) URL+="pandoc-${PANDOC_VER}-macOS.zip"           ;;
+  Darwin) URL+="pandoc-${PANDOC_VER}-$(arch)-macOS.zip"   ;;
   *     ) echo "Unspported OS: ${OS}."; exit 1 ;;
 esac
 
 mkdir -p "${PANDOC_DIR}"
-curl -sSL "${URL}" | tar xz --strip-components 2 -C "${PANDOC_DIR}" -m "pandoc-${PANDOC_VER}/bin"
+curl -sSL "${URL}" | tar xz --strip-components 2 -C "${PANDOC_DIR}"
 chmod -R u+x "${PANDOC_DIR}"

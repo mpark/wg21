@@ -1,17 +1,17 @@
-diff --git a/acm.csl b/wg21.csl
-index 4247262..45ffe25 100644
---- a/acm.csl
-+++ b/wg21.csl
-@@ -11,7 +11,7 @@
-       <name>Patrick O'Brien</name>
-       <email>obrienpat86@gmail.com</email>
-     </author>
+diff --git a/data/csl/acm.csl b/data/csl/wg21.csl
+index 686c45a..b67ff86 100644
+--- a/data/csl/acm.csl
++++ b/data/csl/wg21.csl
+@@ -15,7 +15,7 @@
+       <name>Junliang Hu</name>
+       <email>vtta0124@gmail.com</email>
+     </contributor>
 -    <category citation-format="numeric"/>
 +    <category citation-format="label"/>
      <category field="engineering"/>
-     <updated>2019-12-18T14:04:18+00:00</updated>
+     <updated>2024-03-10T19:16:53+00:00</updated>
      <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
-@@ -49,9 +49,11 @@
+@@ -53,9 +53,11 @@
        </else>
      </choose>
    </macro>
@@ -24,8 +24,8 @@ index 4247262..45ffe25 100644
      </date>
    </macro>
    <macro name="journal">
-@@ -91,36 +93,30 @@
-         <text variable="DOI" prefix="DOI:https://doi.org/"/>
+@@ -95,36 +97,30 @@
+         <text variable="DOI" prefix="https://doi.org/"/>
        </if>
        <else-if variable="URL">
 -        <group delimiter=" ">
@@ -34,17 +34,16 @@ index 4247262..45ffe25 100644
 -          <text term="from"/>
 -          <text variable="URL"/>
 -        </group>
-+        <text display="block" variable="URL"/>
++        <text variable="URL"/>
        </else-if>
      </choose>
    </macro>
--  <citation collapse="citation-number">
-+  <citation collapse="citation-label">
+   <citation collapse="citation-number">
      <sort>
 -      <key variable="citation-number"/>
 +      <key variable="citation-label"/>
      </sort>
-     <layout prefix="[" suffix="]" delimiter=",">
+     <layout prefix="[" suffix="]" delimiter=", ">
        <group delimiter=":">
 -        <text variable="citation-number"/>
 +        <text variable="citation-label"/>

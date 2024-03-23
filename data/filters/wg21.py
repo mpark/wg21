@@ -340,8 +340,8 @@ def divspan(elem, doc):
         wrap_elem(pf.Str("[ Editor's note: "), elem, pf.Str(' ]'))
         _color('0000ff')
 
-    def add(): _diff('addcolor', 'uline', 'ins')
-    def rm():  _diff('rmcolor', 'sout', 'del')
+    def add(): _diff('addcolor', 'ul', 'ins')
+    def rm():  _diff('rmcolor', 'st', 'del')
 
     if not any(isinstance(elem, cls) for cls in [pf.Div, pf.Span]):
         return None
