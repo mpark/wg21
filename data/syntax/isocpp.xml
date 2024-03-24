@@ -55,6 +55,11 @@
       <item>throw</item>
       <item>try</item>
       <item>while</item>
+      <item>match</item>
+      <item>let</item>
+      <item>inspect</item>
+      <item>is</item>
+      <item>as</item>
     </list>
 
     <list name="keywords">
