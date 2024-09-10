@@ -36,6 +36,11 @@ def prepare(doc):
     if date == 'today':
         doc.metadata['date'] = datetime.date.today().isoformat()
 
+    draft, document, revision = re.match("([PD])([0-9]+)R([0-9]+)", doc.get_metadata('document').upper()).groups()
+    doc.metadata['draft'] = draft == 'D'
+    doc.metadata['document'] = document
+    doc.metadata['revision'] = revision
+
     doc.metadata['pagetitle'] = pf.convert_text(
         pf.Plain(*doc.metadata['title'].content),
         input_format='panflute',
