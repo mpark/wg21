@@ -349,17 +349,26 @@ def divspan(elem, doc):
     if 'pnum' in elem.classes and isinstance(elem, pf.Span):
         return pnum()
 
-    if 'sref' in elem.classes and isinstance(elem, pf.Span):
+    def process_sref(with_number):
         target = pf.stringify(elem)
         number = stable_names.get(target)
         link = pf.Link(
             pf.Str(f'[{target}]'),
             url=f'https://wg21.link/{target}')
         if number is not None:
-            return pf.Span(pf.Str(number), pf.Space(), link)
+            if with_number:
+                return pf.Span(pf.Str(number), pf.Space(), link)
+            else:
+                return pf.Span(link)
         else:
             pf.debug('mpark/wg21: stable name', target, 'not found')
             return link
+
+    if 'sref' in elem.classes and isinstance(elem, pf.Span):
+        return process_sref(True)
+
+    if 'srefnn' in elem.classes and isinstance(elem, pf.Span):
+        return process_sref(False)
 
     note_cls = next(iter(cls for cls in elem.classes if cls in {'example', 'note', 'ednote'}), None)
     if note_cls == 'example':  example()
