@@ -331,7 +331,15 @@ Small, inline changes are done with `[new text]{.add}` or `[old text]{.rm}`.
 # Stable Names
 
 Stable names are written as `[basic.life]{.sref}`, and renders as [basic.life]{.sref}.
-It uses <https://timsong-cpp.github.io/cppwp/annex-f>.
+You can also add a class `-` or `.unnumbered` to omit the section number.
+
+It uses <https://timsong-cpp.github.io/cppwp/annex-f> as the underlying database.
+
+Examples:
+
+  - `[basic.life]{.sref}` → [basic.life]{.sref}
+  - `[basic.life]{- .sref}` → [basic.life]{- .sref}
+  - `[basic.life]{.unnumbered .sref}` → [basic.life]{.unnumbered .sref}
 
 # Citation
 

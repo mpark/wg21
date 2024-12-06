@@ -369,6 +369,10 @@ The `sizeof...` operator yields the number of [arguments provided for]{.rm}
 
 ![](img/sref.png)
 
+You may can also add a class `-` or `.unnumbered` to omit the section number.
+
+For example, `[expr.sizeof]{- .sref}` or `[expr.sizeof]{.unnumbered .sref}`
+
 > Run `make update` to update the local cache of `annex-f`.
 
 ### Citations
