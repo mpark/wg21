@@ -356,7 +356,7 @@ def divspan(elem, doc):
             pf.Str(f'[{target}]'),
             url=f'https://wg21.link/{target}')
         if number is not None:
-            return pf.Span(pf.Str(number), pf.Space(), link)
+            return pf.Span(link) if 'unnumbered' in elem.classes else pf.Span(pf.Str(number), pf.Space(), link)
         else:
             pf.debug('mpark/wg21: stable name', target, 'not found')
             return link
