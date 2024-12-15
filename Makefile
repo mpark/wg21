@@ -37,7 +37,7 @@ $(if $(filter %.html, $@),
 $(CMD)
 endef
 
-override DEPS += $(addprefix $(DATADIR)/, defaults.yaml csl.json annex-f)
+override DEPS += $(addprefix $(DATADIR)/, defaults.yaml csl.json annex-f filters/wg21.py)
 $(eval $(and $(DEFAULTS), override DEPS += $(DEFAULTS)))
 $(eval $(and $(METADATA), override DEPS += $(METADATA)))
 
