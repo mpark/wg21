@@ -364,11 +364,13 @@ There are three supported styles of note:
   [Notes will look like this]{.note}
   ```
   ![](img/note.png)
+
 - Use the `ednote` for editorial notes, these will be formatted as
   ```markdown
   [Editorial notes are important]{.ednote}
   ```
   ![](img/ednote.png)
+
 - Use `draftnote` to include text that is intended as questions or information for reviews and
   working groups.
   ```markdown

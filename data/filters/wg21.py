@@ -340,10 +340,9 @@ def divspan(elem, doc):
         wrap_elem(pf.Str("[ Editor's note: "), elem, pf.Str(' ]'))
         _color('0000ff')
     def draftnote():
-        note_text = "Drafting note";
-        if "audience" in elem.attributes:
-            note_text = "Drafting note for " + elem.attributes['audience']
-        wrap_elem(pf.Str("[ %s: " % note_text), elem, pf.Str(' ]'))
+        audience = elem.attributes.get('audience')
+        text = 'Drafting note' + (f' for {audience}' if audience is not None else '')
+        wrap_elem(pf.Str(f'[ {text}: '), elem, pf.Str(' ]'))
         _color('0000ff')
 
     def add(): _diff('addcolor', 'uline', 'ins')
@@ -370,7 +369,7 @@ def divspan(elem, doc):
     note_cls = next(iter(cls for cls in elem.classes if cls in {'example', 'note', 'ednote', 'draftnote'}), None)
     if note_cls == 'example':  example()
     elif note_cls == 'note':   note()
-    elif note_cls == 'ednote': ednote()
+    elif note_cls == 'ednote': ednote(); return
     elif note_cls == 'draftnote': draftnote(); return
 
     diff_cls = next(iter(cls for cls in elem.classes if cls in {'add', 'rm'}), None)
