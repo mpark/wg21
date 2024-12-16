@@ -355,6 +355,31 @@ Use [line blocks][lineblock] (`|`) in order to preserve the leading spaces.
 
 ![](img/grammar.png)
 
+#### Notes
+
+There are three supported styles of note:
+
+- Use the `note` class for notes that are expected to appear in the specification wording
+  ```markdown
+  [Notes will look like this]{.note}
+  ```
+  ![](img/note.png)
+
+- Use the `ednote` for editorial notes, these will be formatted as
+  ```markdown
+  [Editorial notes are important]{.ednote}
+  ```
+  ![](img/ednote.png)
+
+- Use `draftnote` to include text that is intended as questions or information for reviews and
+  working groups.
+  ```markdown
+  [Drafting notes can be used to provide comments for reviewers that are explicitly not to be
+   included in the specification.]{.draftnote} [It is also possible to indicate the a note is for
+   a specific `audience` via this optional attribute.]{.draftnote audience="the reader"}
+  ```
+  ![](img/draftnote.png)
+
 ### Stable Names
 
 Stable names are [bracketed `Span` elements][divspan] that look like: `[stable.name]{.sref}`.

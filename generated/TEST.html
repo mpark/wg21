@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="generator" content="mpark/wg21" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-  <meta name="dcterms.date" content="2024-12-06" />
+  <meta name="dcterms.date" content="2024-12-15" />
   <title>Test document for mpark/wg21</title>
   <style>
       code{white-space: pre-wrap;}
@@ -430,7 +430,7 @@ various features of the framework</h3>
   </tr>
   <tr>
     <td>Date:</td>
-    <td>2024-12-06</td>
+    <td>2024-12-15</td>
   </tr>
   <tr>
     <td style="vertical-align:top">Project:</td>
@@ -483,8 +483,9 @@ Changes<span></span></a></li>
 Changes<span></span></a></li>
 </ul></li>
 <li><a href="#stable-names" id="toc-stable-names"><span class="toc-section-number">6</span> Stable Names<span></span></a></li>
-<li><a href="#citation" id="toc-citation"><span class="toc-section-number">7</span> Citation<span></span></a></li>
-<li><a href="#bibliography" id="toc-bibliography"><span class="toc-section-number">8</span> References<span></span></a></li>
+<li><a href="#notes" id="toc-notes"><span class="toc-section-number">7</span> Notes<span></span></a></li>
+<li><a href="#citation" id="toc-citation"><span class="toc-section-number">8</span> Citation<span></span></a></li>
+<li><a href="#bibliography" id="toc-bibliography"><span class="toc-section-number">9</span> References<span></span></a></li>
 </ul>
 </div>
 <h1 data-number="1" id="introduction"><span class="header-section-number">1</span> Introduction<a href="#introduction" class="self-link"></a></h1>
@@ -767,7 +768,7 @@ additions,
 <code class="sourceCode cpp"><span class="op">:::</span> rm</code> for
 removals.</p>
 <blockquote>
-<p>Modify section <span>22.14.5
+<p>Modify section <span>28.5.5
 <a href="https://wg21.link/format.functions">[format.functions]</a></span>:</p>
 <div class="add" style="color: #006e28">
 
@@ -880,7 +881,36 @@ underlying database.</p>
 <li><code class="sourceCode cpp"><span class="op">[</span>basic<span class="op">.</span>life<span class="op">]{.</span>unnumbered <span class="op">.</span>sref<span class="op">}</span></code>
 → <span><a href="https://wg21.link/basic.life">[basic.life]</a></span></li>
 </ul>
-<h1 data-number="7" id="citation"><span class="header-section-number">7</span> Citation<a href="#citation" class="self-link"></a></h1>
+<h1 data-number="7" id="notes"><span class="header-section-number">7</span> Notes<a href="#notes" class="self-link"></a></h1>
+<p>There are three supported styles of note:</p>
+<ul>
+<li><p>Use the <code class="sourceCode cpp">note</code> class for notes
+that are expected to appear in the specification wording</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>[Notes will look like this]{.note}</span></code></pre></div>
+<p><span class="note"><span>[ <em>Note:</em> </span>Notes will look like
+this<span> — <em>end note</em> ]</span></span></p></li>
+<li><p>Use the <code class="sourceCode cpp">ednote</code> for editorial
+notes, these will be formatted as</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>[Editorial notes are important]{.ednote}</span></code></pre></div>
+<p><span class="ednote" style="color: #0000ff">[ Editor&#39;s note:
+Editorial notes are important ]</span></p></li>
+<li><p>Use <code class="sourceCode cpp">draftnote</code> to include text
+that is intended as questions or information for reviews and working
+groups.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>[Drafting notes can be used to provide comments for reviewers that are explicitly not to be</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a> included in the specification.]{.draftnote}</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a> [It is also possible to indicate the a note is for</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a> a specific `audience` via this optional attribute.]{.draftnote audience=&quot;the reader&quot;}</span></code></pre></div>
+<p><span class="draftnote" style="color: #0000ff">[ Drafting note:
+Drafting notes can be used to provide comments for reviewers that are
+explicitly not to be included in the specification. ]</span></p>
+<p><span class="draftnote" data-audience="the reader" style="color: #0000ff">[ Drafting note for the reader: It is also
+possible to indicate the a note is for a specific
+<code class="sourceCode default">audience</code> via this optional
+attribute. ]</span></p></li>
+</ul>
+<h1 data-number="8" id="citation"><span class="header-section-number">8</span> Citation<a href="#citation" class="self-link"></a></h1>
 <p>Automatic references are written as <code class="sourceCode cpp"><span class="op">[@</span>N4762<span class="op">]</span></code>
 and renders as <span class="citation" data-cites="N4762">[<a href="https://wg21.link/n4762" role="doc-biblioref">N4762</a>]</span>.
 Anything in <a href="https://wg21.link/index.yaml" class="uri">https://wg21.link/index.yaml</a> are linked
@@ -899,7 +929,7 @@ automatically.</p>
 <li>Standing Documents (e.g., <code class="sourceCode cpp"><span class="op">[@</span>SD6<span class="op">]</span></code>
 <span class="citation" data-cites="SD6">[<a href="https://wg21.link/sd6" role="doc-biblioref">SD6</a>]</span>)</li>
 </ul>
-<h1 data-number="8" id="bibliography"><span class="header-section-number">8</span> References<a href="#bibliography" class="self-link"></a></h1>
+<h1 data-number="9" id="bibliography"><span class="header-section-number">9</span> References<a href="#bibliography" class="self-link"></a></h1>
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="1" role="doc-bibliography">
 <div id="ref-CWG1234" class="csl-entry" role="doc-biblioentry">
 [CWG1234] Johannes Schaub. 2011-01-18. abstract-declarator does not
