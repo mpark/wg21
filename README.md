@@ -301,6 +301,23 @@ the set contains the potential results of that operand.
 
 ![](img/pnum.png)
 
+If paragraph numbers are being added or changed we can use the `old` attribute:
+
+```markdown
+
+[3]{.pnum old=""} We can indicate new paragraph numbers via an empty `old` attribute
+
+[4]{.pnum old="3"} And old paragraph numbers
+
+[4.1]{.pnum old="4"} And changing the nesting
+
+[5]{.pnum old="5.1"} And vice versa
+
+[6.1]{.pnum old="5.1"} And both
+```
+
+![](img/pnum-old.png)
+
 #### Code Changes
 
 ![](img/code-diff.png)

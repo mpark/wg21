@@ -32,6 +32,19 @@ $if(highlighting-css)$
       code.diff {color: #$uccolor$}
       code.diff span.va {color: #$addcolor$}
       code.diff span.st {color: #$rmcolor$}
+
+      .marginalized[data-old]::before {
+        text-decoration-line: line-through;
+        color: #$rmcolor$;
+        content: attr(data-old);
+      }
+      .marginalized[data-old] {
+        color: #$addcolor$;
+      }
+      .add .marginalized {
+        color: #$addcolor$;
+      }
+
 $endif$
   </style>
 $for(css)$
