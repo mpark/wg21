@@ -321,7 +321,12 @@ def divspan(elem, doc):
 
     def pnum():
         num = pf.stringify(elem)
-
+        old_attribute = None
+        if "old" in elem.attributes:
+            old = elem.attributes["old"]
+            if '.' in old:
+                old = f'({old})'
+            old_attribute = f' data-old="{old}"';
         if '.' in num:
             num = f'({num})'
 
@@ -329,7 +334,7 @@ def divspan(elem, doc):
             return pf.RawInline(f'\\pnum{{{num}}}', 'latex')
         elif doc.format == 'html':
             return pf.Span(
-                pf.RawInline(f'<a class="marginalized">{num}</a>', 'html'),
+                pf.RawInline(f'<a class="marginalized"{old_attribute if old_attribute != None else '' }>{num}</a>', 'html'),
                 classes=['marginalizedparent'])
 
         return pf.Superscript(pf.Str(num))
