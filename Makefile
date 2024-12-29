@@ -3,6 +3,7 @@ OUTDIR ?= generated
 
 DEFAULTS ?= $(wildcard $(SRCDIR)/defaults.yaml)
 METADATA ?= $(wildcard $(SRCDIR)/metadata.yaml)
+REQUIREMENTS ?= $(wildcard $(SRCDIR)/requirements.txt)
 
 override SRC := $(filter-out %/LICENSE.md %/README.md, $(wildcard $(SRCDIR)/*.md))
 
@@ -22,8 +23,6 @@ override PYTHON_BIN := $(PYTHON_DIR)/bin/python3
 export SHELL := bash
 export PATH := $(PANDOC_DIR):$(PYTHON_DIR)/bin:$(PATH)
 
-override DEPS := $(PANDOC_DIR) $(PYTHON_DIR)
-
 override DATADIR := $(ROOTDIR)data
 
 override define PANDOC
@@ -37,9 +36,11 @@ $(if $(filter %.html, $@),
 $(CMD)
 endef
 
-override DEPS += $(addprefix $(DATADIR)/, defaults.yaml csl.json annex-f filters/wg21.py)
-$(eval $(and $(DEFAULTS), override DEPS += $(DEFAULTS)))
-$(eval $(and $(METADATA), override DEPS += $(METADATA)))
+override SRCDEPS := $(addprefix $(DATADIR)/, metadata.yaml filters/wg21.py)
+$(eval $(and $(DEFAULTS), override SRCDEPS += $(DEFAULTS)))
+$(eval $(and $(METADATA), override SRCDEPS += $(METADATA)))
+
+override GENDEPS := $(PANDOC_DIR) $(PYTHON_DIR) $(addprefix $(DATADIR)/, defaults.yaml csl.json annex-f)
 
 .PHONY: all
 all: $(PDF)
@@ -56,7 +57,7 @@ pdf: $(PDF)
 ifneq ($(SRCDIR), $(OUTDIR))
 .PHONY: clean
 clean:
-	rm -rf $(DEPSDIR)/pandoc $(DEPS) $(OUTDIR)
+	rm -rf $(DEPSDIR)/pandoc $(GENDEPS) $(OUTDIR)
 
 .PHONY: $(HTML) $(LATEX) $(PDF)
 $(HTML) $(LATEX) $(PDF): $(SRCDIR)/%: $(OUTDIR)/%
@@ -72,9 +73,10 @@ $(OUTDIR):
 $(PANDOC_DIR):
 	PANDOC_VER=$(PANDOC_VER) PANDOC_DIR=$@ $(DEPSDIR)/install-pandoc.sh
 
-$(PYTHON_DIR): $(DEPSDIR)/requirements.txt
+$(PYTHON_DIR): $(DEPSDIR)/requirements.txt $(REQUIREMENTS)
 	python3 -m venv $(PYTHON_DIR)
-	$@/bin/pip3 install --upgrade pip -r $<
+	$@/bin/pip3 install --upgrade pip -r $(DEPSDIR)/requirements.txt
+	if [ -n "$(REQUIREMENTS)" ]; then $@/bin/pip3 install --upgrade pip -r $(REQUIREMENTS); fi
 	touch $(PYTHON_DIR)
 
 $(DATADIR)/defaults.yaml: $(DATADIR)/defaults.sh
@@ -86,5 +88,5 @@ $(DATADIR)/csl.json: $(DATADIR)/refs.py $(PYTHON_DIR)
 $(DATADIR)/annex-f:
 	curl -sSL https://timsong-cpp.github.io/cppwp/annex-f -o $@
 
-$(OUTDIR)/%.html $(OUTDIR)/%.latex $(OUTDIR)/%.pdf: $(SRCDIR)/%.md $(DEPS) | $(OUTDIR)
+$(OUTDIR)/%.html $(OUTDIR)/%.latex $(OUTDIR)/%.pdf: $(SRCDIR)/%.md $(SRCDEPS) $(GENDEPS) | $(OUTDIR)
 	$(PANDOC) --bibliography $(DATADIR)/csl.json
