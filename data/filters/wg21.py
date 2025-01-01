@@ -14,6 +14,7 @@ import panflute as pf
 import re
 
 embedded_md = re.compile('@@(.*?)@@|@(.*?)@')
+expos_name = re.compile('\$([\w\-\s]*?)\$')
 stable_names = {}
 refs = {}
 
@@ -205,10 +206,27 @@ def finalize(doc):
             if group is not None:
                 return repl2(group)
 
+        def repl_expos(match_obj):
+            match = match_obj[1]
+            if not match or match.isspace():  # $  $
+                return match
+            if doc.format == 'latex':
+                pf.debug('Exposition-only names in latex is totally untested')
+                result = "\\textitalic{{{}}}".format(match)
+            elif doc.format == 'html':
+                result = '<em>{}</em>'.format(match)
+            else:
+                raise ValueError('Unsupported doc format for expos-name')
+            return result
+
         if isinstance(elem, pf.Code):
-            result = pf.RawInline(embedded_md.sub(repl, text), doc.format)
+            text = embedded_md.sub(repl, text)
+            text = expos_name.sub(repl_expos, text)
+            result = pf.RawInline(text, doc.format)
         elif isinstance(elem, pf.CodeBlock):
-            result = pf.RawBlock(embedded_md.sub(repl, text), doc.format)
+            text = embedded_md.sub(repl, text)
+            text = expos_name.sub(repl_expos, text)
+            result = pf.RawBlock(text, doc.format)
 
         if 'diff' not in elem.classes:
             return result
