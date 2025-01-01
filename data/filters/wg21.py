@@ -452,10 +452,10 @@ def divspan(elem, doc):
                 current_example = current_example + 1
                 num = str(current_example)
             example(num)
-        elif note_cls == 'ednote':
+        elif cls == 'ednote':
             ednote()
             return
-        elif note_cls == 'draftnote':
+        elif cls == 'draftnote':
             draftnote()
             return
 
