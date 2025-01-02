@@ -33,8 +33,7 @@ def wrap_elem(opening, elem, closing):
         elem.content.append(closing)
 
 def prepare(doc):
-    date = doc.get_metadata('date')
-    if date == 'today':
+    if doc.get_metadata('date') == 'today':
         doc.metadata['date'] = datetime.date.today().isoformat()
 
     document = doc.get_metadata('document')
