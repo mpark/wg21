@@ -36,7 +36,7 @@ $(if $(filter %.html, $@),
 $(CMD)
 endef
 
-override SRCDEPS := $(addprefix $(DATADIR)/, metadata.yaml filters/wg21.py)
+override SRCDEPS := $(shell find $(DATADIR) -type f)
 $(eval $(and $(DEFAULTS), override SRCDEPS += $(DEFAULTS)))
 $(eval $(and $(METADATA), override SRCDEPS += $(METADATA)))
 
