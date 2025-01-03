@@ -62,7 +62,13 @@ $endif$
 <table style="border:none;float:right">
   <tr>
     <td>Document #:</td>
-    <td>$if(draft)$D$else$P$endif$$document$R$revision$ <a href="https://wg21.link/P$document$">[Latest]</a> <a href="https://wg21.link/P$document$/status">[Status]</a></td>
+    <td>
+      $document$
+$if(number)$
+      <a href="https://wg21.link/P$number$">[Latest]</a>
+      <a href="https://wg21.link/P$number$/status">[Status]</a>
+$endif$
+    </td>
   </tr>
   <tr>
     <td>Date:</td>

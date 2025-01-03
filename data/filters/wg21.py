@@ -36,11 +36,12 @@ def prepare(doc):
     if date == 'today':
         doc.metadata['date'] = datetime.date.today().isoformat()
 
-    draft, document, revision = re.match("([PD])([0-9]+)R([0-9]+)", doc.get_metadata('document').upper()).groups()
-    doc.metadata['draft'] = draft == 'D'
-    doc.metadata['document'] = document
-    doc.metadata['revision'] = revision
-
+    document = doc.get_metadata('document')
+    number = re.match("[PD]([0-9]+)R[0-9]+", document.upper())
+    if number is not None:
+        doc.metadata['number'] = number.group(1)
+    else:
+        pf.debug('mpark/wg21: document ', document, 'is in an unrecognized format')
     doc.metadata['pagetitle'] = pf.convert_text(
         pf.Plain(*doc.metadata['title'].content),
         input_format='panflute',
