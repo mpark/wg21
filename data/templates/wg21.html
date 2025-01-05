@@ -62,7 +62,13 @@ $endif$
 <table style="border:none;float:right">
   <tr>
     <td>Document #:</td>
-    <td>$document$</td>
+    <td>
+      $document$
+$if(number)$
+      [<a href="https://wg21.link/P$number$">Latest</a>]
+      [<a href="https://wg21.link/P$number$/status">Status</a>]
+$endif$
+    </td>
   </tr>
   <tr>
     <td>Date:</td>
