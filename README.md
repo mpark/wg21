@@ -127,9 +127,10 @@ Refer to the full [Pandoc Markdown] spec for useful extensions!
 
 ### Embedded Markdown within Code
 
-Within default, `cpp`, and `diff` code elements, any text surrounded by the `@`
-symbol is formatted as Markdown! This is useful for conventions such as
-_`see below`_, _`unspecified`_, and _exposition-only_ variable names.
+Within default, `cpp`, `diff`, `nasm` and `rust` code elements, any text
+surrounded by the `@` symbol is formatted as Markdown! This is useful for
+conventions such as _`see below`_, _`unspecified`_, and _exposition-only_
+variable names.
 
 ![](img/code-cpp.png)
 
