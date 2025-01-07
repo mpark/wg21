@@ -250,7 +250,7 @@ def finalize(doc):
         if 'raw' in elem.classes:
             return None
 
-        if not any(cls in elem.classes for cls in ['cpp', 'default', 'diff']):
+        if not any(cls in elem.classes for cls in classes_with_embedded_md):
             return None
 
         return convert(*next(converted))

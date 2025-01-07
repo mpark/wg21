@@ -185,6 +185,20 @@ some things just don't change.
 - @_unspecified_@ detail::foo::template foo;
 ```
 
+### `rust` Syntax Highlighting
+
+```rust
+enum Result<T, E> {
+  Ok(T),
+  Err(E),
+}
+
+match parse(some_input) {
+  Ok(v) => // use `v`
+  Err(err) => // use `err`
+}
+```
+
 # Comparison Tables
 
 ::: cmptable
