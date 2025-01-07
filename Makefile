@@ -15,7 +15,7 @@ override ROOTDIR := $(dir $(lastword $(MAKEFILE_LIST)))
 
 override DEPSDIR := $(ROOTDIR)deps
 
-override PANDOC_VER := $(shell cat $(DEPSDIR)/pandoc.ver)
+override PANDOC_VER := 2.18
 override PANDOC_DIR := $(DEPSDIR)/pandoc/$(PANDOC_VER)
 override PYTHON_DIR := $(DEPSDIR)/python
 override PYTHON_BIN := $(PYTHON_DIR)/bin/python3
