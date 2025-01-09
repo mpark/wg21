@@ -424,6 +424,10 @@ In-text citations look like this: `[@id]`
 
 ![](img/citation.png)
 
+You may also include the title of the paper like `[@P1240R2]{.title}` which generates:
+
+![](img/citetitle.png)
+
 ### References
 
 #### Automatic References

@@ -101,10 +101,14 @@
     <sort>
       <key variable="citation-label"/>
     </sort>
-    <layout prefix="[" suffix="]" delimiter=",">
-      <group delimiter=":">
-        <text variable="citation-label"/>
-        <text variable="locator"/>
+    <layout delimiter=",">
+      <group delimiter=" ">
+        <text variable="citation-label" prefix="[" suffix="]"/>
+        <choose>
+          <if variable="locator">
+            <text macro="title" prefix="(" suffix=")"/>
+          </if>
+        </choose>
       </group>
     </layout>
   </citation>

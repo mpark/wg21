@@ -932,23 +932,27 @@ attribute. ]</span></p></li>
 </ul>
 <h1 data-number="8" id="citation"><span class="header-section-number">8</span> Citation<a href="#citation" class="self-link"></a></h1>
 <p>Automatic references are written as <code class="sourceCode cpp"><span class="op">[@</span>N4762<span class="op">]</span></code>
-and renders as <span class="citation" data-cites="N4762">[<a href="https://wg21.link/n4762" role="doc-biblioref">N4762</a>]</span>.
+and renders as <span class="citation" data-cites="N4762"><a href="https://wg21.link/n4762" role="doc-biblioref">[N4762]</a></span>.
 Anything in <a href="https://wg21.link/index.yaml" class="uri">https://wg21.link/index.yaml</a> are linked
 automatically.</p>
 <ul>
 <li><code class="sourceCode cpp">N</code> Papers (e.g., <code class="sourceCode cpp"><span class="op">[@</span>N3887<span class="op">]</span></code>
-<span class="citation" data-cites="N3887">[<a href="https://wg21.link/n3887" role="doc-biblioref">N3887</a>]</span>)</li>
+→ <span class="citation" data-cites="N3887"><a href="https://wg21.link/n3887" role="doc-biblioref">[N3887]</a></span>)</li>
 <li><code class="sourceCode cpp">P</code> Papers (e.g., <code class="sourceCode cpp"><span class="op">[@</span>P1371R1<span class="op">]</span></code>
-<span class="citation" data-cites="P1371R1">[<a href="https://wg21.link/p1371r1" role="doc-biblioref">P1371R1</a>]</span>)</li>
+→ <span class="citation" data-cites="P1371R1"><a href="https://wg21.link/p1371r1" role="doc-biblioref">[P1371R1]</a></span>)</li>
 <li>CWG Issues (e.g., <code class="sourceCode cpp"><span class="op">[@</span>CWG1234<span class="op">]</span></code>
-<span class="citation" data-cites="CWG1234">[<a href="https://wg21.link/cwg1234" role="doc-biblioref">CWG1234</a>]</span>)</li>
+→ <span class="citation" data-cites="CWG1234"><a href="https://wg21.link/cwg1234" role="doc-biblioref">[CWG1234]</a></span>)</li>
 <li>LWG Issues (e.g., <code class="sourceCode cpp"><span class="op">[@</span>LWG1234<span class="op">]</span></code>
-<span class="citation" data-cites="LWG1234">[<a href="https://wg21.link/lwg1234" role="doc-biblioref">LWG1234</a>]</span>)</li>
+→ <span class="citation" data-cites="LWG1234"><a href="https://wg21.link/lwg1234" role="doc-biblioref">[LWG1234]</a></span>)</li>
 <li>Github Edits (e.g, <code class="sourceCode cpp"><span class="op">[@</span>EDIT1234<span class="op">]</span></code>
-<span class="citation" data-cites="EDIT1234">[<a href="https://wg21.link/edit1234" role="doc-biblioref">EDIT1234</a>]</span>)</li>
+→ <span class="citation" data-cites="EDIT1234"><a href="https://wg21.link/edit1234" role="doc-biblioref">[EDIT1234]</a></span>)</li>
 <li>Standing Documents (e.g., <code class="sourceCode cpp"><span class="op">[@</span>SD6<span class="op">]</span></code>
-<span class="citation" data-cites="SD6">[<a href="https://wg21.link/sd6" role="doc-biblioref">SD6</a>]</span>)</li>
+→ <span class="citation" data-cites="SD6"><a href="https://wg21.link/sd6" role="doc-biblioref">[SD6]</a></span>)</li>
 </ul>
+<p>You may also write
+<code class="sourceCode default">[@P2996R8]{.title}</code> to include
+the title of the paper, and renders as: <span class="title"><span class="citation" data-cites="P2996R8"><a href="https://wg21.link/p2996r8" role="doc-biblioref">[P2996R8]
+(Reflection for C++26)</a></span></span>.</p>
 <h1 data-number="9" id="bibliography"><span class="header-section-number">9</span> References<a href="#bibliography" class="self-link"></a></h1>
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="1" role="doc-bibliography">
 <div id="ref-CWG1234" class="csl-entry" role="doc-biblioentry">
@@ -972,6 +976,11 @@ Programming Language C++. <a href="https://wg21.link/n4762"><div class="csl-bloc
 <div id="ref-P1371R1" class="csl-entry" role="doc-biblioentry">
 [P1371R1] Sergei Murzin, Michael Park, David Sankel, Dan Sarginson.
 2019-06-17. Pattern Matching. <a href="https://wg21.link/p1371r1"><div class="csl-block">https://wg21.link/p1371r1</div></a>
+</div>
+<div id="ref-P2996R8" class="csl-entry" role="doc-biblioentry">
+[P2996R8] Barry Revzin, Wyatt Childers, Peter Dimov, Andrew Sutton,
+Faisal Vali, Daveed Vandevoorde, Dan Katz. 2024-12-17. Reflection for
+C++26. <a href="https://wg21.link/p2996r8"><div class="csl-block">https://wg21.link/p2996r8</div></a>
 </div>
 <div id="ref-SD6" class="csl-entry" role="doc-biblioentry">
 [SD6] SG10 Feature Test Recommendations. <a href="https://wg21.link/sd6"><div class="csl-block">https://wg21.link/sd6</div></a>
