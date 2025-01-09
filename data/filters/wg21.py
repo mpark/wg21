@@ -17,7 +17,7 @@ embedded_md = re.compile('@@(.*?)@@|@(.*?)@')
 classes_with_embedded_md = ('cpp', 'default', 'diff', 'nasm', 'rust')
 stable_names = {}
 refs = {}
-self_links = {}
+headers = {}
 
 def wrap_elem(opening, elem, closing):
     if isinstance(elem, pf.Div):
@@ -266,11 +266,10 @@ def header(elem, doc):
     if elem.identifier == 'bibliography':
         elem.classes.remove('unnumbered')
 
-    string_url = f'#{elem.identifier}'
-    self_link = pf.Link(url=string_url, classes=['self-link'])
-    self_links[string_url] = pf.stringify(elem)
+    url = f'#{elem.identifier}'
+    headers[url] = pf.stringify(elem)
 
-    elem.content.append(self_link)
+    elem.content.append(pf.Link(url=url, classes=['self-link']))
 
 def divspan(elem, doc):
     """
@@ -562,19 +561,17 @@ def citation_link(elem, doc):
     return elem
 
 def automatic_cross_reference_text(elem, doc):
-    if not isinstance(elem, pf.Link) or ('self-link' in elem.classes) or not (elem.url.startswith('#')):
+    if not (isinstance(elem, pf.Link) and
+           elem.url.startswith('#') and
+           ('self-link' not in elem.classes) and
+           pf.stringify(elem) == ""):
         return None
 
-    link_text = pf.stringify(elem)
-    if link_text == "":
-        res = self_links.get(elem.url)
-        if res == None:
-            pf.debug('mpark/wg21: cannot find automatic text for cross-reference for:', elem.url)
-        else:
-            link = pf.Link(pf.Str(res), url=elem.url)
-            return link
+    if (header_text := headers.get(elem.url)) is None:
+        pf.debug('mpark/wg21: cannot find automatic text for cross-reference for:', elem.url)
+        return None
 
-    return elem
+    return pf.Link(pf.Str(header_text), url=elem.url)
 
 if __name__ == '__main__':
   pf.run_filters([
