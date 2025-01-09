@@ -76,6 +76,7 @@ This framework provides support for various common elements for C++ papers.
 - [References](#references)
   - [Automatic References](#automatic-references)
   - [Manual References](#manual-references)
+  - [Automatic Cross-References](#automatic-cross-references)
 - [Unicode Considerations](#unicode-considerations)
 
 ### Title
@@ -395,7 +396,7 @@ The `sizeof...` operator yields the number of [arguments provided for]{.rm}
 
 ![](img/sref.png)
 
-You may can also add a class `-` or `.unnumbered` to omit the section number.
+You may also add a class `-` or `.unnumbered` to omit the section number.
 
 For example, `[expr.sizeof]{- .sref}` or `[expr.sizeof]{.unnumbered .sref}`
 
@@ -451,6 +452,24 @@ references:
 ```
 
 ![](img/manual-reference.png)
+
+#### Automatic Cross-References
+
+To refer to a header by its ID and have the cross-reference text automatically extracted,
+use the following syntax:
+
+`[](#header-id)`
+
+For example, if your source code has a header like `# Algorithm Return Type # {#return_type}`,
+you can reference it using `[](#return_type)`. The rendered document will automatically display
+'Algorithm Return Type' as the cross-reference text.
+
+```markdown
+- Except as mentioned above, the parallel range algorithms should return the same type as the corresponding serial range
+  algorithms. See [](#return_type).
+```
+
+![](img/automatic-cross-reference.png)
 
 ### Unicode Considerations
 
