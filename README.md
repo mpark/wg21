@@ -396,7 +396,7 @@ The `sizeof...` operator yields the number of [arguments provided for]{.rm}
 
 ![](img/sref.png)
 
-You may also add a class `-` or `.unnumbered` to omit the section number.
+You can also add a class `-` or `.unnumbered` to omit the section number.
 
 For example, `[expr.sizeof]{- .sref}` or `[expr.sizeof]{.unnumbered .sref}`
 
@@ -465,8 +465,8 @@ you can reference it using `[](#return_type)`. The rendered document will automa
 'Algorithm Return Type' as the cross-reference text.
 
 ```markdown
-- Except as mentioned above, the parallel range algorithms should return the same type as the corresponding serial range
-  algorithms. See [](#return_type).
+- Except as mentioned above, the parallel range algorithms should return
+  the same type as the corresponding serial range algorithms. See [](#return_type).
 ```
 
 ![](img/automatic-cross-reference.png)
