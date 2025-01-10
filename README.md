@@ -64,6 +64,7 @@ This framework provides support for various common elements for C++ papers.
 - [Title](#title)
 - [Table of Contents](#table-of-contents)
 - [Markdown](#markdown)
+  - [Automatic Header Links](#automatic-header-links)
 - [Embedded Markdown within Code](#embedded-markdown-within-code)
 - [Comparison Tables](#comparison-tables)
 - [Proposed Wording](#proposed-wording)
@@ -124,6 +125,22 @@ The default `toc-depth` is `3`, but it can be specified to go deeper:
 Refer to the full [Pandoc Markdown] spec for useful extensions!
 
 [Pandoc Markdown]: https://pandoc.org/MANUAL.html#pandocs-markdown
+
+#### Automatic Header Links
+
+To link to a header by its ID and have the header title automatically extracted
+as the link text, you may omit the link text like this: `[](#header-id)`.
+
+For example, if your source code has a header like `# Algorithm Return Type # {#return-type}`,
+you can reference it using `[](#return-type)`. The rendered document will automatically display
+'Algorithm Return Type' as the link text.
+
+```markdown
+- Except as mentioned above, the parallel range algorithms should return
+  the same type as the corresponding serial range algorithms. See [](#return-type).
+```
+
+![](img/automatic-header-link.png)
 
 ### Embedded Markdown within Code
 
@@ -395,7 +412,7 @@ The `sizeof...` operator yields the number of [arguments provided for]{.rm}
 
 ![](img/sref.png)
 
-You may can also add a class `-` or `.unnumbered` to omit the section number.
+You can also add a class `-` or `.unnumbered` to omit the section number.
 
 For example, `[expr.sizeof]{- .sref}` or `[expr.sizeof]{.unnumbered .sref}`
 

@@ -376,7 +376,7 @@ There are three supported styles of note:
   ```
   [Drafting notes can be used to provide comments for reviewers that are explicitly not to be
    included in the specification.]{.draftnote}
-   
+
    [It is also possible to indicate the a note is for
    a specific `audience` via this optional attribute.]{.draftnote audience="the reader"}
   ```
@@ -397,3 +397,8 @@ Anything in <https://wg21.link/index.yaml> are linked automatically.
   - LWG Issues (e.g., `[@LWG1234]` [@LWG1234])
   - Github Edits (e.g, `[@EDIT1234]` [@EDIT1234])
   - Standing Documents (e.g., `[@SD6]` [@SD6])
+
+# Automatic Header Links # {#auto-header-links}
+
+Automatic header links are written as `[](#auto-header-links)`{.markdown},
+and renders as [](#auto-header-links).
