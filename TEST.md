@@ -398,12 +398,7 @@ Anything in <https://wg21.link/index.yaml> are linked automatically.
   - Github Edits (e.g, `[@EDIT1234]` [@EDIT1234])
   - Standing Documents (e.g., `[@SD6]` [@SD6])
 
-# Automatic Cross-References # {#auto-cross-ref}
+# Automatic Header Links # {#auto-header-links}
 
-Automatic cross-references to a header can be achieved by the following syntax:
-
-You see 'Automatic Cross-Reference' text if you syntax above.
-
-Example:
-
-  - `[](#auto-cross-ref)` → [](#auto-cross-ref)
+Automatic header links are written as `[](#auto-header-links)`{.markdown},
+and renders as [](#auto-header-links).

@@ -64,6 +64,7 @@ This framework provides support for various common elements for C++ papers.
 - [Title](#title)
 - [Table of Contents](#table-of-contents)
 - [Markdown](#markdown)
+  - [Automatic Header Links](#automatic-header-links)
 - [Embedded Markdown within Code](#embedded-markdown-within-code)
 - [Comparison Tables](#comparison-tables)
 - [Proposed Wording](#proposed-wording)
@@ -76,7 +77,6 @@ This framework provides support for various common elements for C++ papers.
 - [References](#references)
   - [Automatic References](#automatic-references)
   - [Manual References](#manual-references)
-  - [Automatic Cross-References](#automatic-cross-references)
 - [Unicode Considerations](#unicode-considerations)
 
 ### Title
@@ -125,6 +125,22 @@ The default `toc-depth` is `3`, but it can be specified to go deeper:
 Refer to the full [Pandoc Markdown] spec for useful extensions!
 
 [Pandoc Markdown]: https://pandoc.org/MANUAL.html#pandocs-markdown
+
+#### Automatic Header Links
+
+To link to a header by its ID and have the header title automatically extracted
+as the link text, you may omit the link text like this: `[](#header-id)`.
+
+For example, if your source code has a header like `# Algorithm Return Type # {#return-type}`,
+you can reference it using `[](#return-type)`. The rendered document will automatically display
+'Algorithm Return Type' as the link text.
+
+```markdown
+- Except as mentioned above, the parallel range algorithms should return
+  the same type as the corresponding serial range algorithms. See [](#return-type).
+```
+
+![](img/automatic-header-link.png)
 
 ### Embedded Markdown within Code
 
@@ -452,24 +468,6 @@ references:
 ```
 
 ![](img/manual-reference.png)
-
-#### Automatic Cross-References
-
-To refer to a header by its ID and have the cross-reference text automatically extracted,
-use the following syntax:
-
-`[](#header-id)`
-
-For example, if your source code has a header like `# Algorithm Return Type # {#return_type}`,
-you can reference it using `[](#return_type)`. The rendered document will automatically display
-'Algorithm Return Type' as the cross-reference text.
-
-```markdown
-- Except as mentioned above, the parallel range algorithms should return
-  the same type as the corresponding serial range algorithms. See [](#return_type).
-```
-
-![](img/automatic-cross-reference.png)
 
 ### Unicode Considerations
 
