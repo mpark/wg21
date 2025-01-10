@@ -133,11 +133,17 @@ Refer to the full [Pandoc Markdown] spec for useful extensions!
 To link to a header by its ID and have the header title automatically extracted
 as the link text, you may omit the link text like this: `[](#header-id)`.
 
-For example, if your source code has a header like `# Algorithm Return Type {#return-type}`,
-you can reference it using `[](#return-type)`. The rendered document will automatically display
+Assign an explicit ID to a header like this: `# Algorithm Return Type {#return-type}`.
+Then a link without a link text like `[](#return-type)` will automatically display
 "Algorithm Return Type" as the link text.
 
 ```markdown
+# Algorithm Return Type {#return-type}
+
+Text describing the return type...
+
+# Section
+
 - Except as mentioned above, the parallel range algorithms should return
   the same type as the corresponding serial range algorithms. See [](#return-type).
 ```
