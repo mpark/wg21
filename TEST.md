@@ -199,6 +199,11 @@ match parse(some_input) {
 }
 ```
 
+## Automatic Header Links {#auto-header-links}
+
+Automatic header links are written as `[](#auto-header-links)`{.markdown},
+and renders as [](#auto-header-links).
+
 # Comparison Tables
 
 ::: cmptable
@@ -397,8 +402,3 @@ Anything in <https://wg21.link/index.yaml> are linked automatically.
   - LWG Issues (e.g., `[@LWG1234]` [@LWG1234])
   - Github Edits (e.g, `[@EDIT1234]` [@EDIT1234])
   - Standing Documents (e.g., `[@SD6]` [@SD6])
-
-# Automatic Header Links # {#auto-header-links}
-
-Automatic header links are written as `[](#auto-header-links)`{.markdown},
-and renders as [](#auto-header-links).
