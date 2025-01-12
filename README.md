@@ -24,7 +24,7 @@ brew install mactex # Only for PDF papers
 ### Ubuntu
 
 ```bash
-sudo apt-get install texlive-latex-base # Only for PDF papers
+sudo apt-get install texlive-xetex # Only for PDF papers
 ```
 
 ### Debian
