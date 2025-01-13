@@ -16,6 +16,11 @@ import re
 embedded_md = re.compile('@@(.*?)@@|@(.*?)@')
 classes_with_embedded_md = ('cpp', 'default', 'diff', 'nasm', 'rust')
 stable_names = {}
+current_pnum = {}
+current_note = 0
+current_example = 0
+current_pnum_count = 0
+
 refs = {}
 headers = {}
 
@@ -46,12 +51,12 @@ def prepare(doc):
     doc.metadata['pagetitle'] = pf.convert_text(
         pf.Plain(*doc.metadata['title'].content),
         input_format='panflute',
-        output_format='markdown')
+        output_format='plain')
 
     datadir = doc.get_metadata('datadir')
 
     with open(os.path.join(datadir, 'annex-f'), 'r') as f:
-        stable_names.update(line.split(maxsplit=1) for line in f)
+        stable_names.update(line.rstrip().split(maxsplit=1) for line in f)
 
     def highlighting(output_format):
         return pf.convert_text(
@@ -304,11 +309,11 @@ def divspan(elem, doc):
             pf.RawInline('}', 'latex'))
         elem.attributes['style'] = f'color: #{html_color}'
 
-    def _nonnormative(name):
+    def _nonnormative(name, number='?'):
         wrap_elem(
-            pf.Span(pf.Str('[ '), pf.Emph(pf.Str(f'{name.title()}:')), pf.Space),
+            pf.Span(pf.Str('[\xa0'), pf.Emph(pf.Str(f'{name.title()} {number}:')), pf.Space),
             elem,
-            pf.Span(pf.Str(' — '), pf.Emph(pf.Str(f'end {name.lower()}')), pf.Str(' ]')))
+            pf.Span(pf.Str(' —\xa0'), pf.Emph(pf.Str(f'end {name.lower()}')), pf.Str('\xa0]')))
 
     def _diff(color, latex_tag, html_tag):
         if isinstance(elem, pf.Span):
@@ -329,22 +334,69 @@ def divspan(elem, doc):
         _color(doc.get_metadata(color))
 
     def pnum():
+        global current_pnum
         num = pf.stringify(elem)
+
+        depth = num.count('.')
+        parts = num.split('.')
+
+        def reset_below(i):
+            to_delete = [k for k in current_pnum if k > i]
+            for k in to_delete:
+                del current_pnum[k]
+
+        # If we see a level N, always reset levels below it.
+        reset_below(depth)
+
+        for i in range(len(parts)):
+            # placeholder pnum parts are expressed by #
+            if parts[i] == '#':
+                # replace placeholder by:
+                # - last used value if this is not the last part
+                # - last used value + 1 otherwise
+                if i == depth:
+                    pt = current_pnum.get(i, 0) + 1
+                    parts[i] = str(pt)
+                    current_pnum[i] = pt
+                else:
+                    pt = current_pnum.get(i)
+                    if pt is None:
+                      pf.debug('Missing current value for non-lowest-level placeholder in {}'.format(num))
+                      pt = 1
+                      current_pnum[i] = pt
+                      reset_below(i)
+                    parts[i] = str(pt)
+            else:
+                try:
+                    val = int(parts[i])
+                    if i not in current_pnum or current_pnum[i] != val:
+                        current_pnum[i] = val
+                        # When we see a new value at a level,
+                        # reset everything below that level.
+                        reset_below(i)
+                except ValueError:
+                  pass
+
+        num = '.'.join(parts)
 
         if '.' in num:
             num = f'({num})'
+
+        global current_pnum_count
+        current_pnum_count = current_pnum_count + 1
 
         if doc.format == 'latex':
             return pf.RawInline(f'\\pnum{{{num}}}', 'latex')
         elif doc.format == 'html':
             return pf.Span(
-                pf.RawInline(f'<a class="marginalized">{num}</a>', 'html'),
+                pf.RawInline(f'<a class="marginalized" href="#pnum_{current_pnum_count}"'
+                f' id="pnum_{current_pnum_count}">{num}</a>', 'html'),
                 classes=['marginalizedparent'])
 
         return pf.Superscript(pf.Str(num))
 
-    def example(): _nonnormative('example')
-    def note():    _nonnormative('note')
+    def example(number='?'): _nonnormative('example', number)
+    def note(number='?'):    _nonnormative('note', number)
     def ednote():
         wrap_elem(pf.Str("[ Editor's note: "), elem, pf.Str(' ]'))
         _color('0000ff')
@@ -356,6 +408,13 @@ def divspan(elem, doc):
 
     def add(): _diff('addcolor', 'uline', 'ins')
     def rm():  _diff('rmcolor', 'sout', 'del')
+
+    if isinstance(elem, pf.Header):
+        # When entering a new section, reset all auto numbering.
+        global current_pnum, current_example, current_note
+        current_pnum = {}
+        current_example = 0
+        current_note = 0
 
     if not any(isinstance(elem, cls) for cls in [pf.Div, pf.Span]):
         return None
@@ -375,11 +434,39 @@ def divspan(elem, doc):
             pf.debug('mpark/wg21: stable name', target, 'not found')
             return link
 
-    note_cls = next(iter(cls for cls in elem.classes if cls in {'example', 'note', 'ednote', 'draftnote'}), None)
-    if note_cls == 'example':  example()
-    elif note_cls == 'note':   note()
-    elif note_cls == 'ednote': ednote(); return
-    elif note_cls == 'draftnote': draftnote(); return
+    for cls in elem.classes:
+        if cls.startswith('note'):
+            num = cls[4:]
+            if num == '-':
+                num = '?'
+            elif num:
+                try:
+                    current_note = int(num)
+                except ValueError:
+                    pass
+            else:
+                current_note = current_note + 1
+                num = str(current_note)
+            note(num)
+        elif cls.startswith('example'):
+            num = cls[7:]
+            if num == '-':
+              num = '?'
+            elif num:
+                try:
+                    current_example = int(num)
+                except ValueError:
+                    pass
+            else:
+                current_example = current_example + 1
+                num = str(current_example)
+            example(num)
+        elif cls == 'ednote':
+            ednote()
+            return
+        elif cls == 'draftnote':
+            draftnote()
+            return
 
     diff_cls = next(iter(cls for cls in elem.classes if cls in {'add', 'rm'}), None)
     if diff_cls == 'add':  add()
