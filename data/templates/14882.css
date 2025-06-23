@@ -8,6 +8,14 @@ body {
 	hyphens: auto;
 	line-height: 1.35;
 	text-align: justify;
+		/* Some browsers, particularly mobile Safari, implement text inflation
+		   algorithms intended to improve readability of text on small display
+		   sizes. This interacts badly with papers because it can lead to
+		   different font size settings being applied to each individual line of
+		   code. These properties disable the text inflation algorithm. */
+	-webkit-text-size-adjust: none;
+	-moz-text-size-adjust: none;
+	text-size-adjust: none;
 }
 
 @media screen and (max-width: 30em) {
