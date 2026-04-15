@@ -356,9 +356,12 @@ It uses <https://timsong-cpp.github.io/cppwp/annex-f> as the underlying database
 
 Examples:
 
-  - `[basic.life]{.sref}` → [basic.life]{.sref}
-  - `[basic.life]{- .sref}` → [basic.life]{- .sref}
-  - `[basic.life]{.unnumbered .sref}` → [basic.life]{.unnumbered .sref}
+| Source Text                                 | Rendered                        |
+| ------------------------------------------- | ------------------------------- |
+| `[basic.life]{.sref}`{.default}             | [basic.life]{.sref}             |
+| `[basic.life#1]{.sref}`{.default}           | [basic.life#1]{.sref}           |
+| `[basic.life]{- .sref}`{.default}           | [basic.life]{- .sref}           |
+| `[basic.life]{.unnumbered .sref}`{.default} | [basic.life]{.unnumbered .sref} |
 
 # Notes
 

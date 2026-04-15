@@ -365,14 +365,15 @@ def divspan(elem, doc):
 
     if 'sref' in elem.classes and isinstance(elem, pf.Span):
         target = pf.stringify(elem)
-        number = stable_names.get(target.split('#')[0])
+        name = target.split('#')[0]
+        number = stable_names.get(name)
         link = pf.Link(
             pf.Str(f'[{target}]'),
             url=f'https://wg21.link/{target}')
         if number is not None:
             return pf.Span(link) if 'unnumbered' in elem.classes else pf.Span(pf.Str(number), pf.Space(), link)
         else:
-            pf.debug('mpark/wg21: stable name', target, 'not found')
+            pf.debug('mpark/wg21: stable name', name, 'not found')
             return link
 
     note_cls = next(iter(cls for cls in elem.classes if cls in {'example', 'note', 'ednote', 'draftnote'}), None)

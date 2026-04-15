@@ -499,20 +499,12 @@ Use [line blocks][lineblock] (`|`) in order to preserve the leading spaces.
 ### Stable Names
 
 Stable names are [bracketed `Span` elements][divspan] that look like: `[stable.name]{.sref}`.
-
-```markdown
-In [expr.sizeof]{.sref}/5:
-
-The identifier in a `sizeof...` expression shall name a [parameter]{.rm} pack.
-The `sizeof...` operator yields the number of [arguments provided for]{.rm}
-[elements in]{.add} the [parameter]{.rm} pack [identifier]{.rm} ([temp.variadic]{.sref}).
-```
-
-![](img/sref.png)
+They may also include a paragraph suffix such as `[stable.name#1]{.sref}`.
 
 You can also add a class `-` or `.unnumbered` to omit the section number.
-
 For example, `[expr.sizeof]{- .sref}` or `[expr.sizeof]{.unnumbered .sref}`
+
+![](img/sref.png)
 
 > Run `make update` to update the local cache of `annex-f`.
 

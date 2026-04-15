@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="generator" content="mpark/wg21" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-  <meta name="dcterms.date" content="2025-01-10" />
+  <meta name="dcterms.date" content="2026-04-15" />
   <title>Test document for mpark/wg21</title>
   <style>
       code{white-space: pre-wrap;}
@@ -90,6 +90,10 @@ font-family: serif;
 hyphens: auto;
 line-height: 1.35;
 text-align: justify;
+
+-webkit-text-size-adjust: none;
+-moz-text-size-adjust: none;
+text-size-adjust: none;
 }
 @media screen and (max-width: 30em) {
 body {
@@ -434,7 +438,7 @@ various features of the framework</h3>
   </tr>
   <tr>
     <td>Date:</td>
-    <td>2025-01-10</td>
+    <td>2026-04-15</td>
   </tr>
   <tr>
     <td style="vertical-align:top">Project:</td>
@@ -883,7 +887,7 @@ is thrown</ins></span>.</td>
 </blockquote>
 <h1 data-number="6" id="stable-names"><span class="header-section-number">6</span> Stable Names<a href="#stable-names" class="self-link"></a></h1>
 <p>Stable names are written as <code class="sourceCode cpp"><span class="op">[</span>basic<span class="op">.</span>life<span class="op">]{.</span>sref<span class="op">}</span></code>,
-and renders as <span>6.7.4
+and renders as <span>6.8.4
 <a href="https://wg21.link/basic.life">[basic.life]</a></span>. You can
 also add a class
 <code class="sourceCode cpp"><span class="op">-</span></code> or
@@ -892,15 +896,42 @@ to omit the section number.</p>
 <p>It uses <a href="https://timsong-cpp.github.io/cppwp/annex-f" class="uri">https://timsong-cpp.github.io/cppwp/annex-f</a> as the
 underlying database.</p>
 <p>Examples:</p>
-<ul>
-<li><code class="sourceCode cpp"><span class="op">[</span>basic<span class="op">.</span>life<span class="op">]{.</span>sref<span class="op">}</span></code>
-→ <span>6.7.4
-<a href="https://wg21.link/basic.life">[basic.life]</a></span></li>
-<li><code class="sourceCode cpp"><span class="op">[</span>basic<span class="op">.</span>life<span class="op">]{-</span> <span class="op">.</span>sref<span class="op">}</span></code>
-→ <span><a href="https://wg21.link/basic.life">[basic.life]</a></span></li>
-<li><code class="sourceCode cpp"><span class="op">[</span>basic<span class="op">.</span>life<span class="op">]{.</span>unnumbered <span class="op">.</span>sref<span class="op">}</span></code>
-→ <span><a href="https://wg21.link/basic.life">[basic.life]</a></span></li>
-</ul>
+<table>
+<colgroup>
+<col style="width: 58%" />
+<col style="width: 41%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th><div style="text-align:center">
+<strong>Source Text</strong>
+</div></th>
+<th><div style="text-align:center">
+<strong>Rendered</strong>
+</div></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code class="sourceCode default">[basic.life]{.sref}</code></td>
+<td><span>6.8.4
+<a href="https://wg21.link/basic.life">[basic.life]</a></span></td>
+</tr>
+<tr class="even">
+<td><code class="sourceCode default">[basic.life#1]{.sref}</code></td>
+<td><span>6.8.4
+<a href="https://wg21.link/basic.life#1">[basic.life#1]</a></span></td>
+</tr>
+<tr class="odd">
+<td><code class="sourceCode default">[basic.life]{- .sref}</code></td>
+<td><span><a href="https://wg21.link/basic.life">[basic.life]</a></span></td>
+</tr>
+<tr class="even">
+<td><code class="sourceCode default">[basic.life]{.unnumbered .sref}</code></td>
+<td><span><a href="https://wg21.link/basic.life">[basic.life]</a></span></td>
+</tr>
+</tbody>
+</table>
 <h1 data-number="7" id="notes"><span class="header-section-number">7</span> Notes<a href="#notes" class="self-link"></a></h1>
 <p>There are three supported styles of note:</p>
 <ul>
