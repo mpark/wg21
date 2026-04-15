@@ -365,7 +365,7 @@ def divspan(elem, doc):
 
     if 'sref' in elem.classes and isinstance(elem, pf.Span):
         target = pf.stringify(elem)
-        number = stable_names.get(target)
+        number = stable_names.get(target.split('#')[0])
         link = pf.Link(
             pf.Str(f'[{target}]'),
             url=f'https://wg21.link/{target}')
