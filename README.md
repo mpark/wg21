@@ -166,24 +166,22 @@ Recall the `static_cast`{.cpp} syntax: `static_cast < @_type-id_@ > ( @_expressi
 
 ![](img/inline-code-cpp.png)
 
-If you need to nest embedded Markdown, surround the outer context with `@@`.
-This comes up sometimes if you want to produce inline diffs within a code block,
-and some of the inner code need to be marked up.
+You can get quite far using just `@`:
 
 ``````markdown
 ```
-template <@[`invocable`]{.rm}[`class`]{.add}@ F@[`, class`]{.add}@>
+template <@[invocable]{.rm}[class]{.add}@ F@[, class]{.add}@>
 struct @_as-receiver_@ {
-@[`private:`]{.rm}@
-  @[`using invocable_type = std::remove_cvref_t<F>;`]{.rm}@
-  @[`invocable_type`]{.rm}[`F`]{.add}@ f_;
-@[`public:`]{.rm}@
-  @@[`explicit @_as-receiver_@(invocable_type&& f)`]{.rm}@@
-  @@[`@_as-receiver_@(@_as-receiver_@&& other) = default;`]{.rm}@@
-  void set_value() @[`noexcept(is_nothrow_invocable_v<F&>)`]{.add}@ {
+@[private:]{.rm}@
+  @[using invocable_type = std::remove_cvref_t<F>;]{.rm}@
+  @[invocable_type]{.rm}[F]{.add}@ f_;
+@[public:]{.rm}@
+  @[explicit _as-receiver_(invocable_type&& f)]{.rm}@
+  @[_as-receiver_(_as-receiver_&& other) = default;]{.rm}@
+  void set_value() @[noexcept(is_nothrow_invocable_v<F&>)]{.add}@ {
     invoke(f_);
   }
-  @[`[[noreturn]]`]{.add}@ void set_error(std::exception_ptr) @[`noexcept`]{.add}@ {
+  @[[[noreturn]]]{.add}@ void set_error(std::exception_ptr) @[noexcept]{.add}@ {
     terminate();
   }
   void set_done() noexcept {}
@@ -192,6 +190,29 @@ struct @_as-receiver_@ {
 ``````
 
 ![](img/nested-inline-code-cpp.png)
+
+There are some cases you really need to **nest** embedded Markdown. In this case,
+you can surround the outer context with `@@`.
+
+For example, suppose you want to add a parameter `int *const *ptr` to a function `f`
+and italicize the `ptr`. A naive approach might look something like this:
+
+``````markdown
+```
+void f(@[int *const *_ptr_]{.add}@); // The * italicizes the const!
+```
+``````
+
+In a situation like this (should be pretty rare), you need:
+
+``````markdown
+```
+void f(@@[`int *const *@_ptr_@`]{.add}@@);
+       ^^                             ^^ @@
+          ^                   ^ inner code
+                       ^     ^ nested @
+```
+``````
 
 ### Comparison Tables
 

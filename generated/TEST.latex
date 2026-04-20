@@ -1,0 +1,938 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+%
+\documentclass[
+  10pt,
+  a4paperpaper,
+  oneside,
+  openany,
+  final]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[left=2.245cm,right=2.245cm,top=2.5cm,bottom=2.5cm]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{246,248,250}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{#1}}
+\newcommand{\AnnotationTok}[1]{#1}
+\newcommand{\AttributeTok}[1]{#1}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.62,0.41,0.03}{#1}}
+\newcommand{\BuiltInTok}[1]{\textcolor[rgb]{0.62,0.41,0.03}{#1}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.62,0.41,0.03}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.00,0.50,0.00}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.00,0.50,0.00}{\textit{#1}}}
+\newcommand{\ConstantTok}[1]{#1}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.38,0.49}{#1}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.00,0.38,0.49}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.62,0.41,0.03}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.00,0.50,0.00}{#1}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.62,0.41,0.03}{#1}}
+\newcommand{\FunctionTok}[1]{#1}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.00,0.50,0.00}{#1}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.38,0.49}{#1}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.69,0.10,0.08}{#1}}
+\newcommand{\OtherTok}[1]{#1}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.44,0.31,0.22}{#1}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.62,0.41,0.03}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.62,0.41,0.03}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.62,0.41,0.03}{#1}}
+\newcommand{\VariableTok}[1]{#1}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.62,0.41,0.03}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.00,0.50,0.00}{\textbf{#1}}}
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage[normalem]{ulem}
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{5}
+% Make \paragraph and \subparagraph free-standing
+\ifx\paragraph\undefined\else
+  \let\oldparagraph\paragraph
+  \renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+  \let\oldsubparagraph\subparagraph
+  \renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+\newlength{\cslhangindent}
+\setlength{\cslhangindent}{1.5em}
+\newlength{\csllabelwidth}
+\setlength{\csllabelwidth}{3em}
+\newlength{\cslentryspacingunit} % times entry-spacing
+\setlength{\cslentryspacingunit}{\parskip}
+\newenvironment{CSLReferences}[2] % #1 hanging-ident, #2 entry spacing
+ {% don't indent paragraphs
+  \setlength{\parindent}{0pt}
+  % turn on hanging indent if param 1 is 1
+  \ifodd #1
+  \let\oldpar\par
+  \def\par{\hangindent=\cslhangindent\oldpar}
+  \fi
+  % set entry spacing
+  \setlength{\parskip}{#2\cslentryspacingunit}
+ }%
+ {}
+\usepackage{calc}
+\newcommand{\CSLBlock}[1]{#1\hfill\break}
+\newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{#1}}
+\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{#1}\break}
+\newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
+\ifLuaTeX
+\usepackage[bidi=basic]{babel}
+\else
+\usepackage[bidi=default]{babel}
+\fi
+\babelprovide[main,import]{english}
+% get rid of language-specific shorthands (see #6817):
+\let\LanguageShortHands\languageshorthands
+\def\languageshorthands#1{}
+% adjust quote indent
+\renewenvironment{quote}{\list{}{\leftmargin=0.2in}\item[]}{\endlist}
+\providecommand{\CSLBlock}{}
+\renewcommand{\CSLBlock}[1]{\hfill\break\parbox[t]{\linewidth}{\strut\ignorespaces#1\strut}}
+
+% https://github.com/cplusplus/draft/blob/97b615a5a6ab0598b624ee05402c531d0421cff6/source/styles.tex#L127-L133
+\renewcommand{\labelitemi}{---}
+\renewcommand{\labelitemii}{---}
+\renewcommand{\labelitemiii}{---}
+\renewcommand{\labelitemiv}{---}
+
+% https://github.com/cplusplus/draft/blob/97b615a5a6ab0598b624ee05402c531d0421cff6/source/layout.tex#L32-L68
+\makeatletter
+\newcommand{\pnum}[1]{%
+\noindent\makebox[0pt][l]{\makebox[0pt][r]{%
+\scriptsize\raisebox{.7ex}{#1}%
+\hspace{\@totalleftmargin}\quad%
+}}\ignorespaces}
+\makeatother
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same} % disable monospaced font for URLs
+\hypersetup{
+  pdftitle={Test document for mpark/wg21},
+  pdflang={en},
+  colorlinks=true,
+  linkcolor={blue},
+  filecolor={Maroon},
+  citecolor={blue},
+  urlcolor={blue},
+  pdfcreator={mpark/wg21}}
+
+\makeatletter
+\def\@maketitle{
+  \newpage \null \vskip 2em
+  {\center \LARGE \@title \par}
+  \vskip 1.5em
+  \begin{flushright}
+    \begin{tabular}{ll}
+Document \#:&D0000R1\\
+Date:       &\@date\\
+Project:    &Programming Language C++\\
+Audience:   &Library Evolution\\&Library\\
+Revises:    &D0000R0\\
+Reply-to:   \@author
+    \end{tabular}
+  \end{flushright}
+}
+\makeatother
+\title{Test document for mpark/wg21}
+\usepackage{etoolbox}
+\makeatletter
+\providecommand{\subtitle}[1]{% add subtitle to \maketitle
+  \apptocmd{\@title}{\par {\large #1 \par}}{}{}
+}
+\makeatother
+\subtitle{Visual inspection of various features of the framework}
+\author{&Author
+0\\&<\href{mailto:author0@gmail.com}{\nolinkurl{author0@gmail.com}}>\\&Author
+1\\&<\href{mailto:author1@gmail.com}{\nolinkurl{author1@gmail.com}}>\\}
+\date{2026-04-20}
+
+\begin{document}
+\maketitle
+
+{
+\hypersetup{linkcolor=black}
+\setcounter{tocdepth}{2}
+\tableofcontents
+}
+\hypertarget{introduction}{%
+\section{\texorpdfstring{Introduction\protect\hyperlink{introduction}{}}{Introduction}}\label{introduction}}
+
+This framework provides support for various common elements for C++
+papers. This document is intended to test various features implemented
+in
+\href{https://github.com/mpark/wg21}{\VERB|\NormalTok{mpark}\OperatorTok{/}\NormalTok{wg21}|}.
+
+\hypertarget{title}{%
+\section{\texorpdfstring{Title\protect\hyperlink{title}{}}{Title}}\label{title}}
+
+The title is specified by YAML metadata block.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\PreprocessorTok{{-}{-}{-}}
+\FunctionTok{title}\KeywordTok{:}\AttributeTok{ Example Title}
+\FunctionTok{subtitle}\KeywordTok{:}\AttributeTok{ Example Subtitle}
+\FunctionTok{document}\KeywordTok{:}\AttributeTok{ DxxxxRn}
+\FunctionTok{date}\KeywordTok{:}\AttributeTok{ 2019{-}06{-}13}
+\FunctionTok{audience}\KeywordTok{:}
+\AttributeTok{  }\KeywordTok{{-}}\AttributeTok{ Library Evolution}
+\AttributeTok{  }\KeywordTok{{-}}\AttributeTok{ Library}
+\FunctionTok{author}\KeywordTok{:}
+\AttributeTok{  }\KeywordTok{{-}}\AttributeTok{ }\FunctionTok{name}\KeywordTok{:}\AttributeTok{ Author One}
+\AttributeTok{    }\FunctionTok{email}\KeywordTok{:}\AttributeTok{ \textless{}one@author.com\textgreater{}}
+\AttributeTok{  }\KeywordTok{{-}}\AttributeTok{ }\FunctionTok{name}\KeywordTok{:}\AttributeTok{ Author Two}
+\AttributeTok{    }\FunctionTok{email}\KeywordTok{:}\AttributeTok{ \textless{}two@author.com\textgreater{}}
+\FunctionTok{toc}\KeywordTok{:}\AttributeTok{ }\CharTok{false}\CommentTok{    \# default: \textasciigrave{}true\textasciigrave{}}
+\FunctionTok{toc{-}depth}\KeywordTok{:}\AttributeTok{ }\DecValTok{4}\CommentTok{  \# default: \textasciigrave{}3\textasciigrave{}}
+\PreprocessorTok{{-}{-}{-}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{quote}
+\VERB|\NormalTok{date}\OperatorTok{:}\NormalTok{ today}| will generate
+today's date in
+\VERB|\NormalTok{YYYY}\OperatorTok{{-}}\NormalTok{MM}\OperatorTok{{-}}\NormalTok{DD}|
+(ISO 8601) format.
+\end{quote}
+
+\hypertarget{markdown}{%
+\section{\texorpdfstring{Markdown\protect\hyperlink{markdown}{}}{Markdown}}\label{markdown}}
+
+\href{https://pandoc.org/MANUAL.html\#pandocs-markdown}{Pandoc Markdown}
+is the Markdown flavor used for this framework.
+
+\hypertarget{inline-formatting}{%
+\subsection{\texorpdfstring{Inline
+Formatting\protect\hyperlink{inline-formatting}{}}{Inline Formatting}}\label{inline-formatting}}
+
+Inline formatting such as \textbf{bold}, \emph{italics}, and
+\VERB|\NormalTok{verbatim}| work as you would expect. There are also
+useful extensions such as \sout{strikeout}, su\textsubscript{b}script,
+su\textsuperscript{per}script, and highlighted code:
+\VERB|\KeywordTok{constexpr}|.
+
+Various compositions in compact list:
+
+\begin{itemize}
+\tightlist
+\item
+  \sout{\VERB|\NormalTok{A}\OperatorTok{\textless{}}\NormalTok{B}\OperatorTok{\textless{}}\NormalTok{T}\OperatorTok{\textgreater{}\textgreater{}}|}
+\item
+  \VERB|\NormalTok{compare\_3way}|
+\item
+  \VERB|\NormalTok{3WAY}|\VERB|\OperatorTok{\textless{}}\NormalTok{R}\OperatorTok{\textgreater{}}|
+\item
+  \VERB|\KeywordTok{operator}\OperatorTok{@}|
+\item
+  \VERB|\KeywordTok{operator}\OperatorTok{+}|
+\item
+  \VERB|\NormalTok{x }\OperatorTok{@}\NormalTok{ y}|
+\item
+  \sout{\VERB|\NormalTok{x }\OperatorTok{\&}\NormalTok{ y}|}
+\item
+  \textbf{foo \VERB|\KeywordTok{constexpr}| bar}
+\item
+  \emph{foo \VERB|\KeywordTok{constexpr}| bar}
+\item
+  \sout{foo \VERB|\KeywordTok{constexpr}| bar}
+\item
+  {{\color[HTML]{006e28}\uline{{\mbox{\VERB|\NormalTok{hello world}|}}}}}
+\item
+  \sout{\emph{\VERB|\NormalTok{hello world}|}}
+\item
+  \sout{\VERB|\NormalTok{hello world}|}
+\item
+  \VERB|\KeywordTok{namespace}\NormalTok{ \emph{unspecified} }\OperatorTok{\{} \KeywordTok{struct}\NormalTok{ sender\_base }\OperatorTok{\{\}}\NormalTok{; }\OperatorTok{\}}|
+\item
+  \VERB|\KeywordTok{namespace}\NormalTok{ \emph{unspecified} }\OperatorTok{\{} \KeywordTok{struct}\NormalTok{ sender\_base }\OperatorTok{\{\}}\NormalTok{; }\OperatorTok{\}}|
+\end{itemize}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+Loose list:
+
+\begin{itemize}
+\item
+  \VERB|\NormalTok{x\textsubscript{\emph{i}} }\OperatorTok{\textless{}=\textgreater{}}\NormalTok{ y\textsubscript{\emph{i}}}|
+\item
+  {{\color[HTML]{bf0303}\sout{foo
+  {\mbox{\VERB|\NormalTok{hello world}|}} bar}}}
+\end{itemize}
+
+\hypertarget{inline-code-in-headers-int-x-y}{%
+\subsection{\texorpdfstring{Inline Code in Headers: \texttt{int},
+\texttt{x\ \&\ y}\protect\hyperlink{inline-code-in-headers-int-x-y}{}}{Inline Code in Headers: int, x \& y}}\label{inline-code-in-headers-int-x-y}}
+
+\hypertarget{code-block}{%
+\subsection{\texorpdfstring{Code
+Block\protect\hyperlink{code-block}{}}{Code Block}}\label{code-block}}
+
+\hypertarget{no-syntax-highlighting}{%
+\subsubsection{\texorpdfstring{No Syntax
+Highlighting\protect\hyperlink{no-syntax-highlighting}{}}{No Syntax Highlighting}}\label{no-syntax-highlighting}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{\#include \textless{}iostream\textgreater{}}
+\NormalTok{\#include "foo.h"}
+
+\NormalTok{\_\_FILE\_\_;}
+
+\NormalTok{int x = 42\textquotesingle{}234\textquotesingle{}234;}
+\NormalTok{const int x = 42ul;}
+\NormalTok{const int x = 0B01011;}
+
+\NormalTok{bool b = true;}
+
+\NormalTok{struct process \{}
+\NormalTok{  hello {{\color[HTML]{bf0303}\sout{constexpr}}} detail::foo::template \emph{foo};}
+
+\NormalTok{  [[using CC: opt(1), debug]] x;}
+
+\NormalTok{  template \textless{}typename I\textgreater{}}
+\NormalTok{  [[nodiscard]] auto operator()(I i) {-}\textgreater{} O\textless{}I\textgreater{} \{ /* ... */ \};}
+\NormalTok{\};}
+
+\NormalTok{{{\color[HTML]{006e28}\uline{namespace \emph{unspecified} \{ struct sender\_base \{\}; \}}}}}
+\NormalTok{{{\color[HTML]{006e28}\uline{{\mbox{\VERB|\NormalTok{namespace \emph{unspecified} \{ struct sender\_base \{\}; \}}|}}}}}}
+
+\NormalTok{{{\color[HTML]{006e28}\uline{using \emph{unspecified}::sender\_base;}}}}
+\NormalTok{{{\color[HTML]{006e28}\uline{{\mbox{\VERB|\NormalTok{using \emph{unspecified}::sender\_base;}|}}}}}}
+
+\NormalTok{{{\color[HTML]{006e28}\uline{template\textless{}class, class\textgreater{} struct \emph{as-receiver}; \emph{// exposition only}}}}}
+\NormalTok{{{\color[HTML]{006e28}\uline{{\mbox{\VERB|\NormalTok{template\textless{}class, class\textgreater{} struct \emph{as-receiver}; \emph{// exposition only}}|}}}}}}
+
+\NormalTok{{{\color[HTML]{006e28}\uline{template\textless{}class, class\textgreater{} struct \emph{as-invocable}; \emph{// exposition only}}}}}
+\NormalTok{{{\color[HTML]{006e28}\uline{{\mbox{\VERB|\NormalTok{template\textless{}class, class\textgreater{} struct \emph{as-invocable}; \emph{// exposition only}}|}}}}}}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{c-syntax-highlighting}{%
+\subsubsection{\texorpdfstring{C++ Syntax
+Highlighting\protect\hyperlink{c-syntax-highlighting}{}}{C++ Syntax Highlighting}}\label{c-syntax-highlighting}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\PreprocessorTok{\#include }\ImportTok{\textless{}iostream\textgreater{}}
+\PreprocessorTok{\#include }\ImportTok{"foo.h"}
+
+\OtherTok{\_\_FILE\_\_}\NormalTok{;}
+
+\DataTypeTok{int}\NormalTok{ x }\OperatorTok{=} \DecValTok{42\textquotesingle{}234\textquotesingle{}234}\NormalTok{;}
+\KeywordTok{const} \DataTypeTok{int}\NormalTok{ x }\OperatorTok{=} \DecValTok{42}\BuiltInTok{ul}\NormalTok{;}
+\KeywordTok{const} \DataTypeTok{int}\NormalTok{ x }\OperatorTok{=} \BaseNTok{0B01011}\NormalTok{;}
+
+\DataTypeTok{bool}\NormalTok{ b }\OperatorTok{=} \KeywordTok{true}\NormalTok{;}
+
+\KeywordTok{struct}\NormalTok{ process }\OperatorTok{\{}
+\NormalTok{  hello {{\color[HTML]{006e28}\uline{constexpr}}} detail}\OperatorTok{::}\NormalTok{foo}\OperatorTok{::}\KeywordTok{template}\NormalTok{ foo;}
+
+  \OperatorTok{[[}\KeywordTok{using}\AttributeTok{ CC}\OperatorTok{:}\AttributeTok{ opt}\OperatorTok{(}\DecValTok{1}\OperatorTok{)}\NormalTok{,}\AttributeTok{ debug}\OperatorTok{]]}\NormalTok{ x;}
+
+  \KeywordTok{template} \OperatorTok{\textless{}}\KeywordTok{typename}\NormalTok{ I}\OperatorTok{\textgreater{}}
+  \OperatorTok{[[}\AttributeTok{nodiscard}\OperatorTok{]]} \KeywordTok{auto} \KeywordTok{operator}\OperatorTok{()(}\NormalTok{I i}\OperatorTok{)} \OperatorTok{{-}\textgreater{}}\NormalTok{ O}\OperatorTok{\textless{}}\NormalTok{I}\OperatorTok{\textgreater{}} \OperatorTok{\{} \CommentTok{/* ... */} \OperatorTok{\}}\NormalTok{;}
+
+\NormalTok{  x\textsubscript{\emph{i}} }\OperatorTok{\textless{}=\textgreater{}}\NormalTok{ y\textsubscript{\emph{i}};}
+\OperatorTok{\}}\NormalTok{;}
+
+\ControlFlowTok{if} \OperatorTok{(}\NormalTok{x}\OperatorTok{)} \OperatorTok{\{}
+  \ControlFlowTok{return} \StringTok{""}\BuiltInTok{sv}\NormalTok{;}
+  \ControlFlowTok{return} \DecValTok{5}\BuiltInTok{ms}\NormalTok{;}
+\OperatorTok{\}}
+
+\NormalTok{std}\OperatorTok{::}\NormalTok{printf}\OperatorTok{(}\StringTok{"}\SpecialCharTok{\%d}\StringTok{"}\NormalTok{, x}\OperatorTok{)}\NormalTok{;}
+
+\NormalTok{std}\OperatorTok{::}\NormalTok{variant}\OperatorTok{\textless{}}\NormalTok{I1, I2}\OperatorTok{\textgreater{}}\NormalTok{ input }\OperatorTok{=} \CharTok{\textquotesingle{}h\textquotesingle{}}\NormalTok{;}
+\NormalTok{std}\OperatorTok{::}\NormalTok{variant}\OperatorTok{\textless{}}\NormalTok{I1, I2}\OperatorTok{\textgreater{}}\NormalTok{ input }\OperatorTok{=} \StringTok{"h"}\NormalTok{;}
+\NormalTok{std}\OperatorTok{::}\NormalTok{variant}\OperatorTok{\textless{}}\NormalTok{I1, I2}\OperatorTok{\textgreater{}}\NormalTok{ input }\OperatorTok{=} \StringTok{"hello"}\NormalTok{;}
+
+\CommentTok{// mapping from a \textasciigrave{}variant\textasciigrave{} of inputs to a \textasciigrave{}variant\textasciigrave{} of results:}
+\KeywordTok{auto}\NormalTok{ output }\OperatorTok{=}\NormalTok{ std}\OperatorTok{::}\NormalTok{visit}\OperatorTok{\textless{}}\NormalTok{std}\OperatorTok{::}\NormalTok{variant}\OperatorTok{\textless{}}\NormalTok{O}\OperatorTok{\textless{}}\NormalTok{I1}\OperatorTok{\textgreater{}}\NormalTok{, O}\OperatorTok{\textless{}}\NormalTok{I2}\OperatorTok{\textgreater{}\textgreater{}\textgreater{}(}\NormalTok{process}\OperatorTok{\{\}}\NormalTok{, input}\OperatorTok{)}\NormalTok{;}
+
+\CommentTok{// coercing different results to a common type:}
+\KeywordTok{auto}\NormalTok{ result }\OperatorTok{=}\NormalTok{ std}\OperatorTok{::}\NormalTok{visit}\OperatorTok{\textless{}}\NormalTok{std}\OperatorTok{::}\NormalTok{common\_type\_t}\OperatorTok{\textless{}}\NormalTok{O}\OperatorTok{\textless{}}\NormalTok{I1}\OperatorTok{\textgreater{}}\NormalTok{, O}\OperatorTok{\textless{}}\NormalTok{I2}\OperatorTok{\textgreater{}\textgreater{}\textgreater{}(}\NormalTok{process}\OperatorTok{\{\}}\NormalTok{, input}\OperatorTok{)}\NormalTok{;}
+
+\CommentTok{// visiting a \textasciigrave{}variant\textasciigrave{} for the side{-}effects, discarding results:}
+\NormalTok{std}\OperatorTok{::}\NormalTok{visit}\OperatorTok{\textless{}}\DataTypeTok{void}\OperatorTok{\textgreater{}(}\NormalTok{process}\OperatorTok{\{\}}\NormalTok{, input}\OperatorTok{)}\NormalTok{;}
+
+\NormalTok{{{\color[HTML]{006e28}\uline{{\mbox{\VERB|\NormalTok{namespace \emph{unspecified} \{ struct sender\_base \{\}; \}}|}}}}}}
+\NormalTok{{{\color[HTML]{006e28}\uline{{\mbox{\VERB|\NormalTok{using \emph{unspecified}::sender\_base;}|}}}}}}
+
+\KeywordTok{template} \OperatorTok{\textless{}}\NormalTok{{{\color[HTML]{bf0303}\sout{invocable}}}{{\color[HTML]{006e28}\uline{class}}} F{{\color[HTML]{006e28}\uline{, class}}}}\OperatorTok{\textgreater{}}
+\KeywordTok{struct}\NormalTok{ \emph{as-receiver} }\OperatorTok{\{}
+\NormalTok{{{\color[HTML]{bf0303}\sout{private:}}}}
+\NormalTok{  {{\color[HTML]{bf0303}\sout{using invocable\_type = std::remove\_cvref\_t;}}}}
+\NormalTok{  {{\color[HTML]{bf0303}\sout{invocable\_type}}}{{\color[HTML]{006e28}\uline{F}}} f\_;}
+\NormalTok{{{\color[HTML]{bf0303}\sout{public:}}}}
+\NormalTok{  {{\color[HTML]{bf0303}\sout{explicit \emph{as-receiver}(invocable\_type\&\& f)}}}}
+\NormalTok{  {{\color[HTML]{bf0303}\sout{\emph{as-receiver}(\emph{as-receiver}\&\& other) = default;}}}}
+  \DataTypeTok{void}\NormalTok{ set\_value}\OperatorTok{()}\NormalTok{ {{\color[HTML]{006e28}\uline{noexcept(is\_nothrow\_invocable\_v\textless{}F\&\textgreater)}}} }\OperatorTok{\{}
+\NormalTok{    invoke}\OperatorTok{(}\NormalTok{f\_}\OperatorTok{)}\NormalTok{;}
+  \OperatorTok{\}}
+\NormalTok{  {{\color[HTML]{006e28}\uline{{[}{[}noreturn{]}{]}}}} }\DataTypeTok{void}\NormalTok{ set\_error}\OperatorTok{(}\NormalTok{std}\OperatorTok{::}\NormalTok{exception\_ptr}\OperatorTok{)}\NormalTok{ {{\color[HTML]{006e28}\uline{noexcept}}} }\OperatorTok{\{}
+\NormalTok{    terminate}\OperatorTok{()}\NormalTok{;}
+  \OperatorTok{\}}
+  \DataTypeTok{void}\NormalTok{ set\_done}\OperatorTok{()} \KeywordTok{noexcept} \OperatorTok{\{\}}
+\OperatorTok{\}}\NormalTok{;}
+
+\KeywordTok{template} \OperatorTok{\textless{}}\NormalTok{{{\color[HTML]{bf0303}\sout{{\mbox{\VERB|\NormalTok{invocable}|}}}}}{{\color[HTML]{006e28}\uline{{\mbox{\VERB|\NormalTok{class}|}}}}} F{{\color[HTML]{006e28}\uline{{\mbox{\VERB|\NormalTok{, class}|}}}}}}\OperatorTok{\textgreater{}}
+\KeywordTok{struct}\NormalTok{ \emph{as-receiver} }\OperatorTok{\{}
+\NormalTok{{{\color[HTML]{bf0303}\sout{{\mbox{\VERB|\NormalTok{private:}|}}}}}}
+\NormalTok{  {{\color[HTML]{bf0303}\sout{{\mbox{\VERB|\NormalTok{using invocable\_type = std::remove\_cvref\_t\textless{}F\textgreater{};}|}}}}}}
+\NormalTok{  {{\color[HTML]{bf0303}\sout{{\mbox{\VERB|\NormalTok{invocable\_type}|}}}}}{{\color[HTML]{006e28}\uline{{\mbox{\VERB|\NormalTok{F}|}}}}} f\_;}
+\NormalTok{{{\color[HTML]{bf0303}\sout{{\mbox{\VERB|\NormalTok{public:}|}}}}}}
+\NormalTok{  {{\color[HTML]{bf0303}\sout{{\mbox{\VERB|\NormalTok{explicit \emph{as-receiver}(invocable\_type\&\& f)}|}}}}}}
+\NormalTok{  {{\color[HTML]{bf0303}\sout{{\mbox{\VERB|\NormalTok{\emph{as-receiver}(\emph{as-receiver}\&\& other) = default;}|}}}}}}
+  \DataTypeTok{void}\NormalTok{ set\_value}\OperatorTok{()}\NormalTok{ {{\color[HTML]{006e28}\uline{{\mbox{\VERB|\NormalTok{noexcept(is\_nothrow\_invocable\_v\textless{}F\&\textgreater{})}|}}}}} }\OperatorTok{\{}
+\NormalTok{    invoke}\OperatorTok{(}\NormalTok{f\_}\OperatorTok{)}\NormalTok{;}
+  \OperatorTok{\}}
+\NormalTok{  {{\color[HTML]{006e28}\uline{{\mbox{\VERB|\NormalTok{[[noreturn]]}|}}}}} }\DataTypeTok{void}\NormalTok{ set\_error}\OperatorTok{(}\NormalTok{std}\OperatorTok{::}\NormalTok{exception\_ptr}\OperatorTok{)}\NormalTok{ {{\color[HTML]{006e28}\uline{{\mbox{\VERB|\NormalTok{noexcept}|}}}}} }\OperatorTok{\{}
+\NormalTok{    terminate}\OperatorTok{()}\NormalTok{;}
+  \OperatorTok{\}}
+  \DataTypeTok{void}\NormalTok{ set\_done}\OperatorTok{()} \KeywordTok{noexcept} \OperatorTok{\{\}}
+\OperatorTok{\}}\NormalTok{;}
+
+\DataTypeTok{void}\NormalTok{ f}\OperatorTok{(}\NormalTok{{{\color[HTML]{006e28}\uline{{\mbox{\VERB|\NormalTok{int *const *\emph{p\textsubscript{i}}}|}}}}}}\OperatorTok{)}\NormalTok{;}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{diff-syntax-highlighting}{%
+\subsubsection{\texorpdfstring{\texttt{diff} Syntax
+Highlighting\protect\hyperlink{diff-syntax-highlighting}{}}{diff Syntax Highlighting}}\label{diff-syntax-highlighting}}
+
+{
+
+\renewcommand{\NormalTok}[1]{\textcolor[HTML]{898887}{#1}}
+
+\renewcommand{\VariableTok}[1]{\textcolor[HTML]{006e28}{#1}}
+
+\renewcommand{\StringTok}[1]{\textcolor[HTML]{bf0303}{#1}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{some things just don\textquotesingle{}t change.}
+
+\NormalTok{// 20.3.4 tuple{-}like access to pair:}
+\StringTok{{-} constexpr typename tuple\_element\textless{}I, std::pair\textless{}T1, T2\textgreater{} \textgreater{}::type\&}
+\VariableTok{+ constexpr tuple\_element\_t\textless{}I, pair\textless{}T1, T2\textgreater{} \textgreater{}\&}
+\StringTok{{-}   get(std::pair\textless{}T1, T2\textgreater{}\&) noexcept;}
+\VariableTok{+   get(pair\textless{}T1, T2\textgreater{}\&) noexcept;}
+
+\NormalTok{\emph{unspecified} detail::foo::template foo;}
+\VariableTok{+ \emph{unspecified} detail::foo::template foo;}
+\StringTok{{-} \emph{unspecified} detail::foo::template foo;}
+\end{Highlighting}
+\end{Shaded}
+
+}
+
+\hypertarget{rust-syntax-highlighting}{%
+\subsubsection{\texorpdfstring{\texttt{rust} Syntax
+Highlighting\protect\hyperlink{rust-syntax-highlighting}{}}{rust Syntax Highlighting}}\label{rust-syntax-highlighting}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{enum} \DataTypeTok{Result}\OperatorTok{\textless{}}\NormalTok{T}\OperatorTok{,}\NormalTok{ E}\OperatorTok{\textgreater{}} \OperatorTok{\{}
+  \ConstantTok{Ok}\NormalTok{(T)}\OperatorTok{,}
+  \ConstantTok{Err}\NormalTok{(E)}\OperatorTok{,}
+\OperatorTok{\}}
+
+\ControlFlowTok{match}\NormalTok{ parse(some\_input) }\OperatorTok{\{}
+  \ConstantTok{Ok}\NormalTok{(v) }\OperatorTok{=\textgreater{}} \CommentTok{// use \textasciigrave{}v\textasciigrave{}}
+  \ConstantTok{Err}\NormalTok{(err) }\OperatorTok{=\textgreater{}} \CommentTok{// use \textasciigrave{}err\textasciigrave{}}
+\OperatorTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{auto-header-links}{%
+\subsection{\texorpdfstring{Automatic Header
+Links\protect\hyperlink{auto-header-links}{}}{Automatic Header Links}}\label{auto-header-links}}
+
+Automatic header links are written as
+\VERB|\NormalTok{[](\#auto{-}header{-}links)}|, and renders as
+\protect\hyperlink{auto-header-links}{Automatic Header Links}.
+
+\hypertarget{comparison-tables}{%
+\section{\texorpdfstring{Comparison
+Tables\protect\hyperlink{comparison-tables}{}}{Comparison Tables}}\label{comparison-tables}}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\caption{Put your caption here}\tabularnewline
+\toprule()
+\centering\arraybackslash\textbf{Before} &
+\centering\arraybackslash\textbf{After} \\
+\midrule()
+\endfirsthead
+\toprule()
+\centering\arraybackslash\textbf{Before} &
+\centering\arraybackslash\textbf{After} \\
+\midrule()
+\endhead
+\begin{minipage}[t]{\linewidth}\raggedright
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{switch} \OperatorTok{(}\NormalTok{x}\OperatorTok{)} \OperatorTok{\{}
+  \ControlFlowTok{case} \DecValTok{0}\OperatorTok{:}\NormalTok{ std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"got zero"}\NormalTok{; }\ControlFlowTok{break}\NormalTok{;}
+  \ControlFlowTok{case} \DecValTok{1}\OperatorTok{:}\NormalTok{ std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"got one"}\NormalTok{; }\ControlFlowTok{break}\NormalTok{;}
+  \ControlFlowTok{default}\OperatorTok{:}\NormalTok{ std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"don\textquotesingle{}t care"}\NormalTok{;}
+\OperatorTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{inspect }\OperatorTok{(}\NormalTok{x}\OperatorTok{)} \OperatorTok{\{}
+  \DecValTok{0}\OperatorTok{:}\NormalTok{ std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"got zero"}\NormalTok{;}
+  \DecValTok{1}\OperatorTok{:}\NormalTok{ std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"got one"}\NormalTok{;}
+\NormalTok{  \_}\OperatorTok{:}\NormalTok{ std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"don\textquotesingle{}t care"}\NormalTok{;}
+\OperatorTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\end{minipage} \\
+\bottomrule()
+\end{longtable}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.6000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.4000}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+\centering\arraybackslash\textbf{Before}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\centering\arraybackslash\textbf{After}
+\end{minipage} \\
+\midrule()
+\endhead
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{minipage}[t]{\linewidth}\raggedright
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{switch} \OperatorTok{(}\NormalTok{x}\OperatorTok{)} \OperatorTok{\{}
+  \ControlFlowTok{case} \DecValTok{0}\OperatorTok{:}\NormalTok{ std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"got zero"}\NormalTok{; }\ControlFlowTok{break}\NormalTok{;}
+  \ControlFlowTok{case} \DecValTok{1}\OperatorTok{:}\NormalTok{ std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"got one"}\NormalTok{; }\ControlFlowTok{break}\NormalTok{;}
+  \ControlFlowTok{default}\OperatorTok{:}\NormalTok{ std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"don\textquotesingle{}t care"}\NormalTok{;}
+\OperatorTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\end{minipage}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{minipage}[t]{\linewidth}\raggedright
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{inspect }\OperatorTok{(}\NormalTok{x}\OperatorTok{)} \OperatorTok{\{}
+  \DecValTok{0}\OperatorTok{:}\NormalTok{ std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"got zero"}\NormalTok{;}
+  \DecValTok{1}\OperatorTok{:}\NormalTok{ std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"got one"}\NormalTok{;}
+\NormalTok{  \_}\OperatorTok{:}\NormalTok{ std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"don\textquotesingle{}t care"}\NormalTok{;}
+\OperatorTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\end{minipage}
+\end{minipage} \\
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{minipage}[t]{\linewidth}\raggedright
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{if} \OperatorTok{(}\NormalTok{s }\OperatorTok{==} \StringTok{"foo"}\OperatorTok{)} \OperatorTok{\{}
+\NormalTok{  std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"got foo"}\NormalTok{;}
+\OperatorTok{\}} \ControlFlowTok{else} \ControlFlowTok{if} \OperatorTok{(}\NormalTok{s }\OperatorTok{==} \StringTok{"bar"}\OperatorTok{)} \OperatorTok{\{}
+\NormalTok{  std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"got bar"}\NormalTok{;}
+\OperatorTok{\}} \ControlFlowTok{else} \OperatorTok{\{}
+\NormalTok{  std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"don\textquotesingle{}t care"}\NormalTok{;}
+\OperatorTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\end{minipage}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{minipage}[t]{\linewidth}\raggedright
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{inspect }\OperatorTok{(}\NormalTok{s}\OperatorTok{)} \OperatorTok{\{}
+  \StringTok{"foo"}\OperatorTok{:}\NormalTok{ std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"got foo"}\NormalTok{;}
+  \StringTok{"bar"}\OperatorTok{:}\NormalTok{ std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"got bar"}\NormalTok{;}
+\NormalTok{  \_}\OperatorTok{:}\NormalTok{ std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"don\textquotesingle{}t care"}\NormalTok{;}
+\OperatorTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\end{minipage}
+\end{minipage} \\
+\bottomrule()
+\end{longtable}
+
+\hypertarget{proposed-wording}{%
+\section{\texorpdfstring{Proposed
+Wording\protect\hyperlink{proposed-wording}{}}{Proposed Wording}}\label{proposed-wording}}
+
+\hypertarget{paragraph-numbers}{%
+\subsection{\texorpdfstring{Paragraph
+Numbers\protect\hyperlink{paragraph-numbers}{}}{Paragraph Numbers}}\label{paragraph-numbers}}
+
+\pnum{2} An expression is \emph{potentially evaluated} unless it is an
+unevaluated operand (7.2) or a subexpression thereof. The set of
+\emph{potential results} of an expression \VERB|\NormalTok{e}| is
+defined as follows:
+
+\begin{itemize}
+\item
+  \pnum{(2.1)} If \VERB|\NormalTok{e}| is an \emph{id-expression}
+  (7.5.4), the set contains only \VERB|\NormalTok{e}|.
+\item
+  \pnum{(2.2)} If \VERB|\NormalTok{e}| is a subscripting operation
+  (7.6.1.1) with an array operand, the set contains the potential
+  results of that operand.
+\end{itemize}
+
+\hypertarget{wording-changes}{%
+\subsection{\texorpdfstring{Wording
+Changes\protect\hyperlink{wording-changes}{}}{Wording Changes}}\label{wording-changes}}
+
+Large changes are \VERB|\OperatorTok{:::}\NormalTok{ add}| for
+additions, \VERB|\OperatorTok{:::}\NormalTok{ rm}| for removals.
+
+\begin{quote}
+Modify section {28.5.5
+\href{https://wg21.link/format.functions}{{[}format.functions{]}}}:
+
+{\color[HTML]{006e28}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{template\textless{}class... Args\textgreater{}}
+\NormalTok{  string format(const locale\& loc, string\_view fmt, const Args\&... args);}
+\end{Highlighting}
+\end{Shaded}
+
+\emph{Returns:}
+\VERB|\NormalTok{vformat(loc, fmt, make\_format\_args(args...))}|.}
+\end{quote}
+
+Small, inline changes are done with
+\VERB|\OperatorTok{[}\KeywordTok{new}\NormalTok{ text}\OperatorTok{]\{.}\NormalTok{add}\OperatorTok{\}}|
+or
+\VERB|\OperatorTok{[}\NormalTok{old text}\OperatorTok{]\{.}\NormalTok{rm}\OperatorTok{\}}|.
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.1481}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.8519}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+\centering\arraybackslash\textbf{Specifier}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\centering\arraybackslash\textbf{Replacement}
+\end{minipage} \\
+\midrule()
+\endhead
+\VERB|\OperatorTok{\%}\NormalTok{a}| & The locale's abbreviated weekday
+name. If the value does not contain a valid weekday,
+{{\color[HTML]{bf0303}\sout{{\mbox{\VERB|\NormalTok{setstate(ios::failbit)}|}}
+is called}}}
+{{\color[HTML]{006e28}\uline{{\mbox{\VERB|\NormalTok{format\_error}|}}
+is thrown}}}. \\
+\VERB|\OperatorTok{\%}\NormalTok{A}| & The locale's full weekday name.
+If the value does not contain a valid weekday,
+{{\color[HTML]{bf0303}\sout{{\mbox{\VERB|\NormalTok{setstate(ios::failbit)}|}}
+is called}}}
+{{\color[HTML]{006e28}\uline{{\mbox{\VERB|\NormalTok{format\_error}|}}
+is thrown}}}. \\
+\bottomrule()
+\end{longtable}
+
+\hypertarget{grammar-changes}{%
+\subsection{\texorpdfstring{Grammar
+Changes\protect\hyperlink{grammar-changes}{}}{Grammar Changes}}\label{grammar-changes}}
+
+\begin{quote}
+\emph{selection-statement:}\\
+\hspace*{0.333em}\hspace*{0.333em}\hspace*{0.333em}\hspace*{0.333em}\VERB|\ControlFlowTok{if} \KeywordTok{constexpr}|\emph{\textsubscript{opt}}
+\VERB|\OperatorTok{(}| \emph{init-statement\textsubscript{opt}}
+\emph{condition} \VERB|\OperatorTok{)}| \emph{statement}\\
+\hspace*{0.333em}\hspace*{0.333em}\hspace*{0.333em}\hspace*{0.333em}\VERB|\ControlFlowTok{if} \KeywordTok{constexpr}|\emph{\textsubscript{opt}}
+\VERB|\OperatorTok{(}| \emph{init-statement\textsubscript{opt}}
+\emph{condition} \VERB|\OperatorTok{)}| \emph{statement}
+\VERB|\ControlFlowTok{else}| \emph{statement}\\
+\hspace*{0.333em}\hspace*{0.333em}\hspace*{0.333em}\hspace*{0.333em}\VERB|\ControlFlowTok{switch} \OperatorTok{(}|
+\emph{init-statement\textsubscript{opt}} \emph{condition}
+\VERB|\OperatorTok{)}| \emph{statement}\\
+\hspace*{0.333em}\hspace*{0.333em}\hspace*{0.333em}\hspace*{0.333em}{{\color[HTML]{006e28}\uline{{\mbox{\VERB|\NormalTok{inspect}|}}
+{\mbox{\VERB|\NormalTok{constexpr}|}}\textsubscript{\emph{opt}}
+{\mbox{\VERB|\NormalTok{(}|}} \emph{init-statement\textsubscript{opt}}
+\emph{condition} {\mbox{\VERB|\NormalTok{)}|}}
+{\mbox{\VERB|\NormalTok{\{}|}} \emph{inspect-case-seq}
+{\mbox{\VERB|\NormalTok{\}}|}}}}}
+
+{\color[HTML]{006e28}
+
+\emph{inspect-case-seq:}\\
+\hspace*{0.333em}\hspace*{0.333em}\hspace*{0.333em}\hspace*{0.333em}\emph{inspect-case}\\
+\hspace*{0.333em}\hspace*{0.333em}\hspace*{0.333em}\hspace*{0.333em}\emph{inspect-case-seq}
+\emph{inspect-case}
+
+\emph{inspect-case:}\\
+\hspace*{0.333em}\hspace*{0.333em}\hspace*{0.333em}\hspace*{0.333em}\emph{attribute-specifier-seq\textsubscript{opt}}
+\emph{inspect-pattern} \emph{inspect-guard\textsubscript{opt}}
+\VERB|\NormalTok{:}| \emph{statement}
+
+\emph{inspect-pattern:}\\
+\hspace*{0.333em}\hspace*{0.333em}\hspace*{0.333em}\hspace*{0.333em}\emph{wildcard-pattern}\\
+\hspace*{0.333em}\hspace*{0.333em}\hspace*{0.333em}\hspace*{0.333em}\emph{identifier-pattern}\\
+\hspace*{0.333em}\hspace*{0.333em}\hspace*{0.333em}\hspace*{0.333em}\emph{constant-pattern}\\
+\hspace*{0.333em}\hspace*{0.333em}\hspace*{0.333em}\hspace*{0.333em}\emph{structured-binding-pattern}\\
+\hspace*{0.333em}\hspace*{0.333em}\hspace*{0.333em}\hspace*{0.333em}\emph{alternative-pattern}\\
+\hspace*{0.333em}\hspace*{0.333em}\hspace*{0.333em}\hspace*{0.333em}\emph{binding-pattern}\\
+\hspace*{0.333em}\hspace*{0.333em}\hspace*{0.333em}\hspace*{0.333em}\emph{extractor-pattern}
+
+\emph{inspect-guard:}\\
+\hspace*{0.333em}\hspace*{0.333em}\hspace*{0.333em}\hspace*{0.333em}\VERB|\NormalTok{if (}|
+\emph{expression} \VERB|\NormalTok{)}|
+
+}
+\end{quote}
+
+\hypertarget{stable-names}{%
+\section{\texorpdfstring{Stable
+Names\protect\hyperlink{stable-names}{}}{Stable Names}}\label{stable-names}}
+
+Stable names are written as
+\VERB|\OperatorTok{[}\NormalTok{basic}\OperatorTok{.}\NormalTok{life}\OperatorTok{]\{.}\NormalTok{sref}\OperatorTok{\}}|,
+and renders as {6.8.4
+\href{https://wg21.link/basic.life}{{[}basic.life{]}}}. You can also add
+a class \VERB|\OperatorTok{{-}}| or
+\VERB|\OperatorTok{.}\NormalTok{unnumbered}| to omit the section number.
+
+It uses \url{https://timsong-cpp.github.io/cppwp/annex-f} as the
+underlying database.
+
+Examples:
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5811}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.4189}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+\centering\arraybackslash\textbf{Source Text}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\centering\arraybackslash\textbf{Rendered}
+\end{minipage} \\
+\midrule()
+\endhead
+\VERB|\NormalTok{[basic.life]\{.sref\}}| & {6.8.4
+\href{https://wg21.link/basic.life}{{[}basic.life{]}}} \\
+\VERB|\NormalTok{[basic.life\#1]\{.sref\}}| & {6.8.4
+\href{https://wg21.link/basic.life\#1}{{[}basic.life\#1{]}}} \\
+\VERB|\NormalTok{[basic.life]\{{-} .sref\}}| &
+{\href{https://wg21.link/basic.life}{{[}basic.life{]}}} \\
+\VERB|\NormalTok{[basic.life]\{.unnumbered .sref\}}| &
+{\href{https://wg21.link/basic.life}{{[}basic.life{]}}} \\
+\bottomrule()
+\end{longtable}
+
+\hypertarget{notes}{%
+\section{\texorpdfstring{Notes\protect\hyperlink{notes}{}}{Notes}}\label{notes}}
+
+There are three supported styles of note:
+
+\begin{itemize}
+\item
+  Use the \VERB|\NormalTok{note}| class for notes that are expected to
+  appear in the specification wording
+
+  \begin{Shaded}
+  \begin{Highlighting}[]
+  \NormalTok{[Notes will look like this]\{.note\}}
+  \end{Highlighting}
+  \end{Shaded}
+
+  {{{[} \emph{Note:} }Notes will look like
+  this{ --- \emph{end note} {]}}}
+\item
+  Use the \VERB|\NormalTok{ednote}| for editorial notes, these will be
+  formatted as
+
+  \begin{Shaded}
+  \begin{Highlighting}[]
+  \NormalTok{[Editorial notes are important]\{.ednote\}}
+  \end{Highlighting}
+  \end{Shaded}
+
+  {{\color[HTML]{0000ff}{[} Editor's note: Editorial notes are
+  important {]}}}
+\item
+  Use \VERB|\NormalTok{draftnote}| to include text that is intended as
+  questions or information for reviews and working groups.
+
+  \begin{Shaded}
+  \begin{Highlighting}[]
+  \NormalTok{[Drafting notes can be used to provide comments for reviewers that are explicitly not to be}
+  \NormalTok{ included in the specification.]\{.draftnote\}}
+
+  \NormalTok{ [It is also possible to indicate the a note is for}
+  \NormalTok{ a specific \textasciigrave{}audience\textasciigrave{} via this optional attribute.]\{.draftnote audience="the reader"\}}
+  \end{Highlighting}
+  \end{Shaded}
+
+  {{\color[HTML]{0000ff}{[} Drafting note: Drafting notes can be used to
+  provide comments for reviewers that are explicitly not to be included
+  in the specification. {]}}}
+
+  {{\color[HTML]{0000ff}{[} Drafting note for the reader: It is also
+  possible to indicate the a note is for a specific
+  \VERB|\NormalTok{audience}| via this optional attribute. {]}}}
+\end{itemize}
+
+\hypertarget{citation}{%
+\section{\texorpdfstring{Citation\protect\hyperlink{citation}{}}{Citation}}\label{citation}}
+
+Automatic references are written as
+\VERB|\OperatorTok{[@}\NormalTok{N4762}\OperatorTok{]}| and renders as
+\href{https://wg21.link/n4762}{{[}N4762{]}}. Anything in
+\url{https://wg21.link/index.yaml} are linked automatically.
+
+\begin{itemize}
+\tightlist
+\item
+  \VERB|\NormalTok{N}| Papers (e.g.,
+  \VERB|\OperatorTok{[@}\NormalTok{N3887}\OperatorTok{]}| →
+  \href{https://wg21.link/n3887}{{[}N3887{]}})
+\item
+  \VERB|\NormalTok{P}| Papers (e.g.,
+  \VERB|\OperatorTok{[@}\NormalTok{P1371R1}\OperatorTok{]}| →
+  \href{https://wg21.link/p1371r1}{{[}P1371R1{]}})
+\item
+  CWG Issues (e.g.,
+  \VERB|\OperatorTok{[@}\NormalTok{CWG1234}\OperatorTok{]}| →
+  \href{https://wg21.link/cwg1234}{{[}CWG1234{]}})
+\item
+  LWG Issues (e.g.,
+  \VERB|\OperatorTok{[@}\NormalTok{LWG1234}\OperatorTok{]}| →
+  \href{https://wg21.link/lwg1234}{{[}LWG1234{]}})
+\item
+  Github Edits (e.g,
+  \VERB|\OperatorTok{[@}\NormalTok{EDIT1234}\OperatorTok{]}| →
+  \href{https://wg21.link/edit1234}{{[}EDIT1234{]}})
+\item
+  Standing Documents (e.g.,
+  \VERB|\OperatorTok{[@}\NormalTok{SD6}\OperatorTok{]}| →
+  \href{https://wg21.link/sd6}{{[}SD6{]}})
+\end{itemize}
+
+You may also write \VERB|\NormalTok{[@P2996R8]\{.title\}}| to include
+the title of the paper, and renders as:
+{\href{https://wg21.link/p2996r8}{{[}P2996R8{]} (Reflection for
+C++26)}}.
+
+\hypertarget{bibliography}{%
+\section{\texorpdfstring{References\protect\hyperlink{bibliography}{}}{References}}\label{bibliography}}
+
+\hypertarget{refs}{}
+\begin{CSLReferences}{1}{1}
+\leavevmode\vadjust pre{\hypertarget{ref-CWG1234}{}}%
+{[}CWG1234{]} Johannes Schaub. 2011-01-18. abstract-declarator does not
+permit ... after ptr-operator. \href{https://wg21.link/cwg1234}{
+\CSLBlock{https://wg21.link/cwg1234}}
+
+\leavevmode\vadjust pre{\hypertarget{ref-EDIT1234}{}}%
+{[}EDIT1234{]} {[}intro.races{]} Remove duplicated index entry for
+{``data race.''} \href{https://wg21.link/edit1234}{
+\CSLBlock{https://wg21.link/edit1234}}
+
+\leavevmode\vadjust pre{\hypertarget{ref-LWG1234}{}}%
+{[}LWG1234{]} Matt Austern. {``Do the right thing''} and NULL.
+\href{https://wg21.link/lwg1234}{
+\CSLBlock{https://wg21.link/lwg1234}}
+
+\leavevmode\vadjust pre{\hypertarget{ref-N3887}{}}%
+{[}N3887{]} Michael Park. 2013-12-26. Consistent Metafunction Aliases.
+\href{https://wg21.link/n3887}{
+\CSLBlock{https://wg21.link/n3887}}
+
+\leavevmode\vadjust pre{\hypertarget{ref-N4762}{}}%
+{[}N4762{]} Richard Smith. 2018-07-07. Working Draft, Standard for
+Programming Language C++. \href{https://wg21.link/n4762}{
+\CSLBlock{https://wg21.link/n4762}}
+
+\leavevmode\vadjust pre{\hypertarget{ref-P1371R1}{}}%
+{[}P1371R1{]} Sergei Murzin, Michael Park, David Sankel, Dan Sarginson.
+2019-06-17. Pattern Matching. \href{https://wg21.link/p1371r1}{
+\CSLBlock{https://wg21.link/p1371r1}}
+
+\leavevmode\vadjust pre{\hypertarget{ref-P2996R8}{}}%
+{[}P2996R8{]} Barry Revzin, Wyatt Childers, Peter Dimov, Andrew Sutton,
+Faisal Vali, Daveed Vandevoorde, Dan Katz. 2024-12-17. Reflection for
+C++26. \href{https://wg21.link/p2996r8}{
+\CSLBlock{https://wg21.link/p2996r8}}
+
+\leavevmode\vadjust pre{\hypertarget{ref-SD6}{}}%
+{[}SD6{]} SG10 Feature Test Recommendations.
+\href{https://wg21.link/sd6}{
+\CSLBlock{https://wg21.link/sd6}}
+
+\end{CSLReferences}
+
+\end{document}

@@ -137,13 +137,14 @@ def finalize(doc):
         return result
 
     datadir = doc.get_metadata('datadir')
+    syntax = ['--syntax-definition', os.path.join(datadir, 'syntax', 'isocpp.xml')]
     text = pf.convert_text(
         intersperse(
             [pf.Plain(elem) if isinstance(elem, pf.Code) else elem for elem in code_elems],
             pf.Plain(pf.RawInline('---', doc.format))),
         input_format='panflute',
         output_format=doc.format,
-        extra_args=['--syntax-definition', os.path.join(datadir, 'syntax', 'isocpp.xml')])
+        extra_args=syntax)
 
     # Workaround for https://github.com/jgm/skylighting/issues/91.
     if doc.format == 'latex':
@@ -188,13 +189,23 @@ def finalize(doc):
             elif doc.format == 'html':
                 match = html.unescape(match)
 
+            # -smart to disable Pandoc smart extension
+            content = pf.Plain(*pf.convert_text(match, 'markdown-smart')[0].content)
             result = pf.convert_text(
-                pf.Plain(*pf.convert_text(match)[0].content)
-                    .walk(divspan, doc)
-                    .walk(init_code_elems, doc),
+                content.walk(divspan, doc).walk(init_code_elems, doc),
                 input_format='panflute',
                 output_format=doc.format,
-                extra_args=['--syntax-definition', os.path.join(datadir, 'syntax', 'isocpp.xml')])
+                extra_args=syntax + ['--wrap', 'none'])
+
+            if doc.format == 'latex':
+                # The normal text mode such as "template<class" gets translated
+                # to "template\textless class" rather than "text\textless{}class".
+                result = result.replace(r'\textless ', r'\textless{}') \
+                               .replace(r'\textgreater ', r'\textgreater{}') \
+                               .replace(r'\textasciitilde ', r'\textasciitilde{}') \
+                               .replace(r'\textbackslash ', r'\textbackslash{}') \
+                               .replace(r'\textbar ', r'\textbar{}') \
+                               .replace(r'\textquotesingle ', r'\textquotesingle{}')
 
             convert.cache[match] = result
             return result

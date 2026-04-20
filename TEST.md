@@ -113,10 +113,16 @@ struct process {
   [[nodiscard]] auto operator()(I i) -> O<I> { /* ... */ };
 };
 
+@[namespace _unspecified_ { struct sender_base {}; }]{.add}@
 @@[`namespace @_unspecified_@ { struct sender_base {}; }`]{.add}@@
+
+@[using _unspecified_::sender_base;]{.add}@
 @@[`using @_unspecified_@::sender_base;`]{.add}@@
 
+@[template<class, class> struct _as-receiver_; _// exposition only_]{.add}@
 @@[`template<class, class> struct @_as-receiver_@; @_// exposition only_@`]{.add}@@
+
+@[template<class, class> struct _as-invocable_; _// exposition only_]{.add}@
 @@[`template<class, class> struct @_as-invocable_@; @_// exposition only_@`]{.add}@@
 ```
 
@@ -135,7 +141,7 @@ const int x = 0B01011;
 bool b = true;
 
 struct process {
-  hello @[`constexpr`]{.add}@ detail::foo::template foo;
+  hello @[constexpr]{.add}@ detail::foo::template foo;
 
   [[using CC: opt(1), debug]] x;
 
@@ -167,6 +173,42 @@ std::visit<void>(process{}, input);
 
 @@[`namespace @_unspecified_@ { struct sender_base {}; }`]{.add}@@
 @@[`using @_unspecified_@::sender_base;`]{.add}@@
+
+template <@[invocable]{.rm}[class]{.add}@ F@[, class]{.add}@>
+struct @_as-receiver_@ {
+@[private:]{.rm}@
+  @[using invocable_type = std::remove_cvref_t<F>;]{.rm}@
+  @[invocable_type]{.rm}[F]{.add}@ f_;
+@[public:]{.rm}@
+  @[explicit _as-receiver_(invocable_type&& f)]{.rm}@
+  @[_as-receiver_(_as-receiver_&& other) = default;]{.rm}@
+  void set_value() @[noexcept(is_nothrow_invocable_v<F&>)]{.add}@ {
+    invoke(f_);
+  }
+  @[[[noreturn]]]{.add}@ void set_error(std::exception_ptr) @[noexcept]{.add}@ {
+    terminate();
+  }
+  void set_done() noexcept {}
+};
+
+template <@[`invocable`]{.rm}[`class`]{.add}@ F@[`, class`]{.add}@>
+struct @_as-receiver_@ {
+@[`private:`]{.rm}@
+  @[`using invocable_type = std::remove_cvref_t<F>;`]{.rm}@
+  @[`invocable_type`]{.rm}[`F`]{.add}@ f_;
+@[`public:`]{.rm}@
+  @@[`explicit @_as-receiver_@(invocable_type&& f)`]{.rm}@@
+  @@[`@_as-receiver_@(@_as-receiver_@&& other) = default;`]{.rm}@@
+  void set_value() @[`noexcept(is_nothrow_invocable_v<F&>)`]{.add}@ {
+    invoke(f_);
+  }
+  @[`[[noreturn]]`]{.add}@ void set_error(std::exception_ptr) @[`noexcept`]{.add}@ {
+    terminate();
+  }
+  void set_done() noexcept {}
+};
+
+void f(@@[`int *const *@_p~i~_@`]{.add}@@);
 ```
 
 ### `diff` Syntax Highlighting
