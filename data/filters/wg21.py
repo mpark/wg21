@@ -8,12 +8,10 @@
 # (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
 
 import datetime
-import html
 import os.path
 import panflute as pf
 import re
 
-embedded_md = re.compile('@@(.*?)@@|@(.*?)@')
 classes_with_embedded_md = ('cpp', 'default', 'diff', 'nasm', 'rust')
 stable_names = {}
 refs = {}
@@ -131,6 +129,82 @@ def finalize(doc):
     if not code_elems:
         return
 
+    # Embedded Markdown is extracted from the raw code text before
+    # syntax highlighting. This keeps the highlighter away from
+    # `@...@` and `@@...@@`, so we can restore the rendered Markdown
+    # afterward without any HTML / LaTeX unescaping.
+    placeholder_prefix = 'MPARKWG21EMBEDDEDMDX'
+    while any(placeholder_prefix in elem.text for elem in code_elems):
+        import uuid
+        placeholder_prefix = f'MPARKWG21EMBEDDEDMD{uuid.uuid4().hex.upper()}X'
+
+    num_placeholder = 0
+    embedded_md_fragments = {}
+
+    def replace_embedded_md_with_placeholders(text):
+        # Returns the placeholder for the parsed embedded Markdown region and
+        # the index where parsing should continue.
+        #
+        # For @@FOO @BAR@ BAZ@@, store:
+        #   PH1 -> BAR
+        #   PH2 -> FOO PH1 BAZ
+        # The outer @@...@@ parse returns PH2, and the inner @...@ parse
+        # returns PH1.
+        def process_embedded_md(text, i, closing):
+            pieces = []
+            start = i
+
+            while i < len(text):
+                if text[i] == '\n':
+                    return None
+
+                if text.startswith(closing, i):
+                    pieces.append(text[start:i])
+                    nonlocal num_placeholder
+                    key = f'{placeholder_prefix}{num_placeholder}X'
+                    num_placeholder += 1
+                    embedded_md_fragments[key] = ''.join(pieces)
+                    return key, i + len(closing)
+
+                if closing == '@@' and text.startswith('@', i):
+                    replaced = process_embedded_md(text, i + 1, '@')
+                    if replaced is not None:
+                        pieces.append(text[start:i])
+                        placeholder, i = replaced
+                        pieces.append(placeholder)
+                        start = i
+                        continue
+
+                i += 1
+
+            return None
+
+        pieces = []
+        start = 0
+        i = 0
+
+        while i < len(text):
+            replaced = None
+            if text.startswith('@@', i):
+                replaced = process_embedded_md(text, i + 2, '@@')
+            elif text.startswith('@', i):
+                replaced = process_embedded_md(text, i + 1, '@')
+
+            if replaced is not None:
+                pieces.append(text[start:i])
+                placeholder, i = replaced
+                pieces.append(placeholder)
+                start = i
+                continue
+
+            i += 1
+
+        pieces.append(text[start:])
+        return ''.join(pieces)
+
+    for elem in code_elems:
+        elem.text = replace_embedded_md_with_placeholders(elem.text)
+
     def intersperse(lst, item):
         result = [item] * (len(lst) * 2 - 1)
         result[0::2] = lst
@@ -158,39 +232,32 @@ def finalize(doc):
 
     assert(len(code_elems) == len(texts))
 
-    def convert(elem, text):
-        def repl2(match):
-            if match.isspace():  # @  @
-                return match
+    placeholder_re = re.compile(re.escape(placeholder_prefix) + r'\d+X')
+    render_embedded_md_cache = {}
 
-            result = convert.cache.get(match)
+    def convert(elem, text):
+        # Render the stored Markdown fragments after highlighting and
+        # recursively restore nested placeholders that were extracted
+        # from the raw code text earlier.
+        def restore_embedded_md(text):
+            if placeholder_prefix not in text:
+                return text
+
+            return placeholder_re.sub(
+                lambda match: render_embedded_md(
+                    embedded_md_fragments[match.group(0)]),
+                text)
+
+        def render_embedded_md(fragment):
+            if not fragment or fragment.isspace():  # @@@@, @  @
+                return fragment
+
+            result = render_embedded_md_cache.get(fragment)
             if result is not None:
                 return result
 
-            if doc.format == 'latex':
-                # Undo `escapeLaTeX` from https://github.com/jgm/skylighting
-                match = match.replace('\\textbackslash{}', '\\') \
-                             .replace('\\{', '{') \
-                             .replace('\\}', '}') \
-                             .replace('\\VerbBar{}', '|') \
-                             .replace('\\_', '_') \
-                             .replace('\\&', '&') \
-                             .replace('\\%', '%') \
-                             .replace('\\#', '#') \
-                             .replace('\\textasciigrave{}', '`') \
-                             .replace('\\textquotesingle{}', '\'') \
-                             .replace('{-}', '-') \
-                             .replace('\\textasciitilde{}', '~') \
-                             .replace('\\^{}', '^')
-
-                # Undo the workaround escaping.
-                match = match.replace('\\textless{}', '<') \
-                             .replace('\\textgreater{}', '>')
-            elif doc.format == 'html':
-                match = html.unescape(match)
-
             # -smart to disable Pandoc smart extension
-            content = pf.Plain(*pf.convert_text(match, 'markdown-smart')[0].content)
+            content = pf.Plain(*pf.convert_text(fragment, 'markdown-smart')[0].content)
             result = pf.convert_text(
                 content.walk(divspan, doc).walk(init_code_elems, doc),
                 input_format='panflute',
@@ -207,26 +274,15 @@ def finalize(doc):
                                .replace(r'\textbar ', r'\textbar{}') \
                                .replace(r'\textquotesingle ', r'\textquotesingle{}')
 
-            convert.cache[match] = result
+            result = restore_embedded_md(result)
+            render_embedded_md_cache[fragment] = result
             return result
 
-        def repl(match_obj):
-            groups = match_obj.groups()
-            if not any(groups):
-                return match_obj.group()
-
-            group = groups[0]
-            if group is not None:
-                return embedded_md.sub(repl, repl2(group))
-
-            group = groups[1]
-            if group is not None:
-                return repl2(group)
-
+        text = restore_embedded_md(text)
         if isinstance(elem, pf.Code):
-            result = pf.RawInline(embedded_md.sub(repl, text), doc.format)
+            result = pf.RawInline(text, doc.format)
         elif isinstance(elem, pf.CodeBlock):
-            result = pf.RawBlock(embedded_md.sub(repl, text), doc.format)
+            result = pf.RawBlock(text, doc.format)
 
         if 'diff' not in elem.classes:
             return result
@@ -252,8 +308,6 @@ def finalize(doc):
                 pf.RawBlock(rm, 'latex'),
                 result,
                 pf.RawBlock('}', 'latex'))
-
-    convert.cache = {}
 
     def code_elem(elem, doc):
         if not any(isinstance(elem, cls) for cls in [pf.Code, pf.CodeBlock]):
