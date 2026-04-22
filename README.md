@@ -157,6 +157,9 @@ surrounded by the `@` symbol is formatted as Markdown! This is useful for
 conventions such as _`see below`_, _`unspecified`_, and _exposition-only_
 variable names.
 
+Within those code elements, `$foo$` is shorthand for `@*foo*@`. This also works inside
+a larger embedded Markdown region such as ``@[`using $unspecified$ = $see below$;`]{.add}@``.
+
 ![](img/code-cpp.png)
 
 This also works for inline code, e.g.,

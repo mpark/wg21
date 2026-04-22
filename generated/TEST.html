@@ -561,7 +561,7 @@ bar</del></li>
 <hr />
 <p>Loose list:</p>
 <ul>
-<li><p><code class="sourceCode cpp">x<sub><em>i</em></sub> <span class="op">&lt;=&gt;</span> y<sub><em>i</em></sub></code></p></li>
+<li><p><code class="sourceCode cpp">x<em><sub>i</sub></em> <span class="op">&lt;=&gt;</span> y<em><sub>i</sub></em></code></p></li>
 <li><p><span class="rm" style="color: #bf0303"><del>foo
 <span><code class="sourceCode default">hello world</code></span>
 bar</del></span></p></li>
@@ -593,15 +593,19 @@ bar</del></span></p></li>
 <span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="add" style="color: #006e28"><ins>namespace <em>unspecified</em> { struct sender_base {}; }</ins></span></span>
 <span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="add" style="color: #006e28"><ins><span><code class="sourceCode default">namespace <em>unspecified</em> { struct sender_base {}; }</code></span></ins></span></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="add" style="color: #006e28"><ins>using <em>unspecified</em>::sender_base;</ins></span></span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="add" style="color: #006e28"><ins><span><code class="sourceCode default">using <em>unspecified</em>::sender_base;</code></span></ins></span></span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="add" style="color: #006e28"><ins>template&lt;class, class&gt; struct <em>as-receiver</em>; <em>// exposition only</em></ins></span></span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="add" style="color: #006e28"><ins><span><code class="sourceCode default">template&lt;class, class&gt; struct <em>as-receiver</em>; <em>// exposition only</em></code></span></ins></span></span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="add" style="color: #006e28"><ins>template&lt;class, class&gt; struct <em>as-invocable</em>; <em>// exposition only</em></ins></span></span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a><span class="add" style="color: #006e28"><ins><span><code class="sourceCode default">template&lt;class, class&gt; struct <em>as-invocable</em>; <em>// exposition only</em></code></span></ins></span></span></code></pre></div>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="add" style="color: #006e28"><ins><span><code class="sourceCode default">namespace <em>unspecified</em> { struct sender_base {}; }</code></span></ins></span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="add" style="color: #006e28"><ins>using <em>unspecified</em>::sender_base;</ins></span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="add" style="color: #006e28"><ins><span><code class="sourceCode default">using <em>unspecified</em>::sender_base;</code></span></ins></span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="add" style="color: #006e28"><ins><span><code class="sourceCode default">using <em>unspecified</em>::sender_base;</code></span></ins></span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="add" style="color: #006e28"><ins>template&lt;class, class&gt; struct <em>as-receiver</em>; <em>// exposition only</em></ins></span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="add" style="color: #006e28"><ins><span><code class="sourceCode default">template&lt;class, class&gt; struct <em>as-receiver</em>; <em>// exposition only</em></code></span></ins></span></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a><span class="add" style="color: #006e28"><ins><span><code class="sourceCode default">template&lt;class, class&gt; struct <em>as-receiver</em>; <em>// exposition only</em></code></span></ins></span></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a><span class="add" style="color: #006e28"><ins>template&lt;class, class&gt; struct <em>as-invocable</em>; <em>// exposition only</em></ins></span></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a><span class="add" style="color: #006e28"><ins><span><code class="sourceCode default">template&lt;class, class&gt; struct <em>as-invocable</em>; <em>// exposition only</em></code></span></ins></span></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a><span class="add" style="color: #006e28"><ins><span><code class="sourceCode default">template&lt;class, class&gt; struct <em>as-invocable</em>; <em>// exposition only</em></code></span></ins></span></span></code></pre></div>
 <h3 data-number="3.3.2" id="c-syntax-highlighting"><span class="header-section-number">3.3.2</span> C++ Syntax Highlighting<a href="#c-syntax-highlighting" class="self-link"></a></h3>
 <div class="sourceCode" id="cb2"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;iostream&gt;</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&quot;foo.h&quot;</span></span>
@@ -622,7 +626,7 @@ bar</del></span></p></li>
 <span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>  <span class="kw">template</span> <span class="op">&lt;</span><span class="kw">typename</span> I<span class="op">&gt;</span></span>
 <span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>  <span class="op">[[</span><span class="at">nodiscard</span><span class="op">]]</span> <span class="kw">auto</span> <span class="kw">operator</span><span class="op">()(</span>I i<span class="op">)</span> <span class="op">-&gt;</span> O<span class="op">&lt;</span>I<span class="op">&gt;</span> <span class="op">{</span> <span class="co">/* ... */</span> <span class="op">}</span>;</span>
 <span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>  x<sub><em>i</em></sub> <span class="op">&lt;=&gt;</span> y<sub><em>i</em></sub>;</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>  x<em><sub>i</sub></em> <span class="op">&lt;=&gt;</span> y<em><sub>i</sub></em>;</span>
 <span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="op">}</span>;</span>
 <span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="op">(</span>x<span class="op">)</span> <span class="op">{</span></span>

@@ -198,7 +198,7 @@ Reply-to:   \@author
 \author{&Author
 0\\&<\href{mailto:author0@gmail.com}{\nolinkurl{author0@gmail.com}}>\\&Author
 1\\&<\href{mailto:author1@gmail.com}{\nolinkurl{author1@gmail.com}}>\\}
-\date{2026-04-20}
+\date{2026-04-22}
 
 \begin{document}
 \maketitle
@@ -307,7 +307,7 @@ Loose list:
 
 \begin{itemize}
 \item
-  \VERB|\NormalTok{x\textsubscript{\emph{i}} }\OperatorTok{\textless{}=\textgreater{}}\NormalTok{ y\textsubscript{\emph{i}}}|
+  \VERB|\NormalTok{x\emph{\textsubscript{i}} }\OperatorTok{\textless{}=\textgreater{}}\NormalTok{ y\emph{\textsubscript{i}}}|
 \item
   {{\color[HTML]{bf0303}\sout{foo
   {\mbox{\VERB|\NormalTok{hello world}|}} bar}}}
@@ -349,14 +349,18 @@ Highlighting\protect\hyperlink{no-syntax-highlighting}{}}{No Syntax Highlighting
 
 \NormalTok{{{\color[HTML]{006e28}\uline{namespace \emph{unspecified} \{ struct sender\_base \{\}; \}}}}}
 \NormalTok{{{\color[HTML]{006e28}\uline{{\mbox{\VERB|\NormalTok{namespace \emph{unspecified} \{ struct sender\_base \{\}; \}}|}}}}}}
+\NormalTok{{{\color[HTML]{006e28}\uline{{\mbox{\VERB|\NormalTok{namespace \emph{unspecified} \{ struct sender\_base \{\}; \}}|}}}}}}
 
 \NormalTok{{{\color[HTML]{006e28}\uline{using \emph{unspecified}::sender\_base;}}}}
+\NormalTok{{{\color[HTML]{006e28}\uline{{\mbox{\VERB|\NormalTok{using \emph{unspecified}::sender\_base;}|}}}}}}
 \NormalTok{{{\color[HTML]{006e28}\uline{{\mbox{\VERB|\NormalTok{using \emph{unspecified}::sender\_base;}|}}}}}}
 
 \NormalTok{{{\color[HTML]{006e28}\uline{template\textless{}class, class\textgreater{} struct \emph{as-receiver}; \emph{// exposition only}}}}}
 \NormalTok{{{\color[HTML]{006e28}\uline{{\mbox{\VERB|\NormalTok{template\textless{}class, class\textgreater{} struct \emph{as-receiver}; \emph{// exposition only}}|}}}}}}
+\NormalTok{{{\color[HTML]{006e28}\uline{{\mbox{\VERB|\NormalTok{template\textless{}class, class\textgreater{} struct \emph{as-receiver}; \emph{// exposition only}}|}}}}}}
 
 \NormalTok{{{\color[HTML]{006e28}\uline{template\textless{}class, class\textgreater{} struct \emph{as-invocable}; \emph{// exposition only}}}}}
+\NormalTok{{{\color[HTML]{006e28}\uline{{\mbox{\VERB|\NormalTok{template\textless{}class, class\textgreater{} struct \emph{as-invocable}; \emph{// exposition only}}|}}}}}}
 \NormalTok{{{\color[HTML]{006e28}\uline{{\mbox{\VERB|\NormalTok{template\textless{}class, class\textgreater{} struct \emph{as-invocable}; \emph{// exposition only}}|}}}}}}
 \end{Highlighting}
 \end{Shaded}
@@ -386,7 +390,7 @@ Highlighting\protect\hyperlink{c-syntax-highlighting}{}}{C++ Syntax Highlighting
   \KeywordTok{template} \OperatorTok{\textless{}}\KeywordTok{typename}\NormalTok{ I}\OperatorTok{\textgreater{}}
   \OperatorTok{[[}\AttributeTok{nodiscard}\OperatorTok{]]} \KeywordTok{auto} \KeywordTok{operator}\OperatorTok{()(}\NormalTok{I i}\OperatorTok{)} \OperatorTok{{-}\textgreater{}}\NormalTok{ O}\OperatorTok{\textless{}}\NormalTok{I}\OperatorTok{\textgreater{}} \OperatorTok{\{} \CommentTok{/* ... */} \OperatorTok{\}}\NormalTok{;}
 
-\NormalTok{  x\textsubscript{\emph{i}} }\OperatorTok{\textless{}=\textgreater{}}\NormalTok{ y\textsubscript{\emph{i}};}
+\NormalTok{  x\emph{\textsubscript{i}} }\OperatorTok{\textless{}=\textgreater{}}\NormalTok{ y\emph{\textsubscript{i}};}
 \OperatorTok{\}}\NormalTok{;}
 
 \ControlFlowTok{if} \OperatorTok{(}\NormalTok{x}\OperatorTok{)} \OperatorTok{\{}

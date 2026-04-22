@@ -73,14 +73,14 @@ Various compositions in compact list:
   - [`hello world`]{.add}
   - ~~_`hello world`_~~
   - ~~`hello world`~~
-  - `namespace @_unspecified_@ { struct sender_base {}; }`
-  - `namespace @_unspecified_@ { struct sender_base {}; }`{.cpp}
+  - `namespace $unspecified$ { struct sender_base {}; }`
+  - `namespace $unspecified$ { struct sender_base {}; }`{.cpp}
 
 ---
 
 Loose list:
 
-  - `x@~_i_~@ <=> y@~_i_~@`{.cpp}
+  - `x$~i~$ <=> y$~i~$`{.cpp}
 
   - [foo `hello world` bar]{.rm}
 
@@ -105,7 +105,7 @@ const int x = 0B01011;
 bool b = true;
 
 struct process {
-  hello @[constexpr]{.rm}@ detail::foo::template @_foo_@;
+  hello @[constexpr]{.rm}@ detail::foo::template $foo$;
 
   [[using CC: opt(1), debug]] x;
 
@@ -114,15 +114,19 @@ struct process {
 };
 
 @[namespace _unspecified_ { struct sender_base {}; }]{.add}@
+@[`namespace $unspecified$ { struct sender_base {}; }`]{.add}@
 @@[`namespace @_unspecified_@ { struct sender_base {}; }`]{.add}@@
 
 @[using _unspecified_::sender_base;]{.add}@
+@[`using $unspecified$::sender_base;`]{.add}@
 @@[`using @_unspecified_@::sender_base;`]{.add}@@
 
 @[template<class, class> struct _as-receiver_; _// exposition only_]{.add}@
+@[`template<class, class> struct $as-receiver$; $// exposition only$`]{.add}@
 @@[`template<class, class> struct @_as-receiver_@; @_// exposition only_@`]{.add}@@
 
 @[template<class, class> struct _as-invocable_; _// exposition only_]{.add}@
+@[`template<class, class> struct $as-invocable$; $// exposition only$`]{.add}@
 @@[`template<class, class> struct @_as-invocable_@; @_// exposition only_@`]{.add}@@
 ```
 
@@ -148,7 +152,7 @@ struct process {
   template <typename I>
   [[nodiscard]] auto operator()(I i) -> O<I> { /* ... */ };
 
-  x@~_i_~@ <=> y@~_i_~@;
+  x$~i~$ <=> y$~i~$;
 };
 
 if (x) {
@@ -222,9 +226,9 @@ some things just don't change.
 -   get(std::pair<T1, T2>&) noexcept;
 +   get(pair<T1, T2>&) noexcept;
 
-@_unspecified_@ detail::foo::template foo;
-+ @_unspecified_@ detail::foo::template foo;
-- @_unspecified_@ detail::foo::template foo;
+$unspecified$ detail::foo::template foo;
++ $unspecified$ detail::foo::template foo;
+- $unspecified$ detail::foo::template foo;
 ```
 
 ### `rust` Syntax Highlighting

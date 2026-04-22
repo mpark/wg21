@@ -131,8 +131,8 @@ def finalize(doc):
 
     # Embedded Markdown is extracted from the raw code text before
     # syntax highlighting. This keeps the highlighter away from
-    # `@...@` and `@@...@@`, so we can restore the rendered Markdown
-    # afterward without any HTML / LaTeX unescaping.
+    # `@...@`, `@@...@@`, and `$...$`, so we can restore the rendered
+    # Markdown afterward without any HTML / LaTeX unescaping.
     placeholder_prefix = 'MPARKWG21EMBEDDEDMDX'
     while any(placeholder_prefix in elem.text for elem in code_elems):
         import uuid
@@ -140,6 +140,13 @@ def finalize(doc):
 
     num_placeholder = 0
     embedded_md_fragments = {}
+
+    def store_embedded_md(fragment):
+        nonlocal num_placeholder
+        placeholder = f'{placeholder_prefix}{num_placeholder}X'
+        num_placeholder += 1
+        embedded_md_fragments[placeholder] = fragment
+        return placeholder
 
     def replace_embedded_md_with_placeholders(text):
         # Returns the placeholder for the parsed embedded Markdown region and
@@ -150,7 +157,7 @@ def finalize(doc):
         #   PH2 -> FOO PH1 BAZ
         # The outer @@...@@ parse returns PH2, and the inner @...@ parse
         # returns PH1.
-        def process_embedded_md(text, i, closing):
+        def process_embedded_md(text, i, closing, wrap=lambda fragment: fragment):
             pieces = []
             start = i
 
@@ -160,20 +167,22 @@ def finalize(doc):
 
                 if text.startswith(closing, i):
                     pieces.append(text[start:i])
-                    nonlocal num_placeholder
-                    key = f'{placeholder_prefix}{num_placeholder}X'
-                    num_placeholder += 1
-                    embedded_md_fragments[key] = ''.join(pieces)
-                    return key, i + len(closing)
+                    return store_embedded_md(wrap(''.join(pieces))), i + len(closing)
+
+                nested = None
 
                 if closing == '@@' and text.startswith('@', i):
-                    replaced = process_embedded_md(text, i + 1, '@')
-                    if replaced is not None:
-                        pieces.append(text[start:i])
-                        placeholder, i = replaced
-                        pieces.append(placeholder)
-                        start = i
-                        continue
+                    nested = process_embedded_md(text, i + 1, '@')
+                elif text[i] == '$':
+                    nested = process_embedded_md(
+                        text, i + 1, '$', lambda fragment: f'*{fragment}*')
+
+                if nested is not None:
+                    pieces.append(text[start:i])
+                    placeholder, i = nested
+                    pieces.append(placeholder)
+                    start = i
+                    continue
 
                 i += 1
 
@@ -189,6 +198,9 @@ def finalize(doc):
                 replaced = process_embedded_md(text, i + 2, '@@')
             elif text.startswith('@', i):
                 replaced = process_embedded_md(text, i + 1, '@')
+            elif text[i] == '$':
+                replaced = process_embedded_md(
+                    text, i + 1, '$', lambda fragment: f'*{fragment}*')
 
             if replaced is not None:
                 pieces.append(text[start:i])
