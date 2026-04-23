@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="generator" content="mpark/wg21" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-  <meta name="dcterms.date" content="2026-04-22" />
+  <meta name="dcterms.date" content="2026-04-23" />
   <title>Test document for mpark/wg21</title>
   <style>
       code{white-space: pre-wrap;}
@@ -438,7 +438,7 @@ various features of the framework</h3>
   </tr>
   <tr>
     <td>Date:</td>
-    <td>2026-04-22</td>
+    <td>2026-04-23</td>
   </tr>
   <tr>
     <td style="vertical-align:top">Project:</td>
@@ -475,8 +475,10 @@ various features of the framework</h3>
 <li><a href="#inline-formatting" id="toc-inline-formatting"><span class="toc-section-number">3.1</span> Inline
 Formatting<span></span></a></li>
 <li><a href="#inline-code-in-headers-int-x-y" id="toc-inline-code-in-headers-int-x-y"><span class="toc-section-number">3.2</span> Inline Code in Headers:
-<code class="sourceCode cpp"><span class="dt">int</span></code>,
-<code class="sourceCode cpp">x <span class="op">&amp;</span> y</code><span></span></a></li>
+<code class="sourceCode cpp"><span class="dt">int</span></code>
+,
+<code class="sourceCode cpp">x <span class="op">&amp;</span> y</code>
+<span></span></a></li>
 <li><a href="#code-block" id="toc-code-block"><span class="toc-section-number">3.3</span> Code Block<span></span></a></li>
 <li><a href="#auto-header-links" id="toc-auto-header-links"><span class="toc-section-number">3.4</span> Automatic Header
 Links<span></span></a></li>
@@ -501,7 +503,8 @@ Changes<span></span></a></li>
 <h1 data-number="1" id="introduction"><span class="header-section-number">1</span> Introduction<a href="#introduction" class="self-link"></a></h1>
 <p>This framework provides support for various common elements for C++
 papers. This document is intended to test various features implemented
-in <a href="https://github.com/mpark/wg21"><code class="sourceCode cpp">mpark<span class="op">/</span>wg21</code></a>.</p>
+in <a href="https://github.com/mpark/wg21"><code class="sourceCode cpp">mpark<span class="op">/</span>wg21</code>
+</a>.</p>
 <h1 data-number="2" id="title"><span class="header-section-number">2</span> Title<a href="#title" class="self-link"></a></h1>
 <p>The title is specified by YAML metadata block.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
@@ -521,8 +524,10 @@ in <a href="https://github.com/mpark/wg21"><code class="sourceCode cpp">mpark<sp
 <span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="fu">toc-depth</span><span class="kw">:</span><span class="at"> </span><span class="dv">4</span><span class="co">  # default: `3`</span></span>
 <span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code></pre></div>
 <blockquote>
-<p><code class="sourceCode cpp">date<span class="op">:</span> today</code>
-will generate today’s date in <code class="sourceCode cpp">YYYY<span class="op">-</span>MM<span class="op">-</span>DD</code>
+<p>
+<code class="sourceCode cpp">date<span class="op">:</span> today</code>
+will generate today’s date in
+<code class="sourceCode cpp">YYYY<span class="op">-</span>MM<span class="op">-</span>DD</code>
 (ISO 8601) format.</p>
 </blockquote>
 <h1 data-number="3" id="markdown"><span class="header-section-number">3</span> Markdown<a href="#markdown" class="self-link"></a></h1>
@@ -530,19 +535,38 @@ will generate today’s date in <code class="sourceCode cpp">YYYY<span class="op
 Markdown</a> is the Markdown flavor used for this framework.</p>
 <h2 data-number="3.1" id="inline-formatting"><span class="header-section-number">3.1</span> Inline Formatting<a href="#inline-formatting" class="self-link"></a></h2>
 <p>Inline formatting such as <strong>bold</strong>, <em>italics</em>,
-and <code class="sourceCode cpp">verbatim</code> work as you would
-expect. There are also useful extensions such as <del>strikeout</del>,
-su<sub>b</sub>script, su<sup>per</sup>script, and highlighted code:
-<code class="sourceCode cpp"><span class="kw">constexpr</span></code>.</p>
+and
+<code class="sourceCode cpp">verbatim</code>
+work as you would expect. There are also useful extensions such as
+<del>strikeout</del>, su<sub>b</sub>script, su<sup>per</sup>script, and
+highlighted code:
+<code class="sourceCode cpp"><span class="kw">constexpr</span></code>
+.</p>
 <p>Various compositions in compact list:</p>
 <ul>
-<li><del><code class="sourceCode cpp">A<span class="op">&lt;</span>B<span class="op">&lt;</span>T<span class="op">&gt;&gt;</span></code></del></li>
-<li><code class="sourceCode cpp">compare_3way</code></li>
-<li><code class="sourceCode default">3WAY</code><code class="sourceCode cpp"><span class="op">&lt;</span>R<span class="op">&gt;</span></code></li>
-<li><code class="sourceCode cpp"><span class="kw">operator</span><span class="op">@</span></code></li>
-<li><code class="sourceCode cpp"><span class="kw">operator</span><span class="op">+</span></code></li>
-<li><code class="sourceCode cpp">x <span class="op">@</span> y</code></li>
-<li><del><code class="sourceCode cpp">x <span class="op">&amp;</span> y</code></del></li>
+<li><del>
+<code class="sourceCode cpp">A<span class="op">&lt;</span>B<span class="op">&lt;</span>T<span class="op">&gt;&gt;</span></code>
+</del></li>
+<li>
+<code class="sourceCode cpp">compare_3way</code>
+</li>
+<li>
+<code class="sourceCode default">3WAY</code>
+
+<code class="sourceCode cpp"><span class="op">&lt;</span>R<span class="op">&gt;</span></code>
+</li>
+<li>
+<code class="sourceCode cpp"><span class="kw">operator</span><span class="op">@</span></code>
+</li>
+<li>
+<code class="sourceCode cpp"><span class="kw">operator</span><span class="op">+</span></code>
+</li>
+<li>
+<code class="sourceCode cpp">x <span class="op">@</span> y</code>
+</li>
+<li><del>
+<code class="sourceCode cpp">x <span class="op">&amp;</span> y</code>
+</del></li>
 <li><strong>foo
 <code class="sourceCode cpp"><span class="kw">constexpr</span></code>
 bar</strong></li>
@@ -552,25 +576,40 @@ bar</em></li>
 <li><del>foo
 <code class="sourceCode cpp"><span class="kw">constexpr</span></code>
 bar</del></li>
-<li><span class="add" style="color: #006e28"><ins><span><code class="sourceCode default">hello world</code></span></ins></span></li>
-<li><del><em><code class="sourceCode cpp">hello world</code></em></del></li>
-<li><del><code class="sourceCode cpp">hello world</code></del></li>
-<li><code class="sourceCode cpp"><span class="kw">namespace</span> <em>unspecified</em> <span class="op">{</span> <span class="kw">struct</span> sender_base <span class="op">{}</span>; <span class="op">}</span></code></li>
-<li><code class="sourceCode cpp"><span class="kw">namespace</span> <em>unspecified</em> <span class="op">{</span> <span class="kw">struct</span> sender_base <span class="op">{}</span>; <span class="op">}</span></code></li>
+<li><span class="add" style="color: #006e28"><ins><span>
+<code class="sourceCode default">hello world</code>
+</span></ins></span></li>
+<li><del><em>
+<code class="sourceCode cpp">hello world</code>
+</em></del></li>
+<li><del>
+<code class="sourceCode cpp">hello world</code>
+</del></li>
+<li>
+<code class="sourceCode cpp"><span class="kw">namespace</span> <em>unspecified</em> <span class="op">{</span> <span class="kw">struct</span> sender_base <span class="op">{}</span>; <span class="op">}</span></code>
+</li>
+<li>
+<code class="sourceCode cpp"><span class="kw">namespace</span> <em>unspecified</em> <span class="op">{</span> <span class="kw">struct</span> sender_base <span class="op">{}</span>; <span class="op">}</span></code>
+</li>
 </ul>
 <hr />
 <p>Loose list:</p>
 <ul>
-<li><p><code class="sourceCode cpp">x<em><sub>i</sub></em> <span class="op">&lt;=&gt;</span> y<em><sub>i</sub></em></code></p></li>
-<li><p><span class="rm" style="color: #bf0303"><del>foo
-<span><code class="sourceCode default">hello world</code></span>
-bar</del></span></p></li>
+<li><p>
+<code class="sourceCode cpp">x<em><sub>i</sub></em> <span class="op">&lt;=&gt;</span> y<em><sub>i</sub></em></code>
+</p></li>
+<li><p><span class="rm" style="color: #bf0303"><del>foo <span>
+<code class="sourceCode default">hello world</code>
+</span> bar</del></span></p></li>
 </ul>
 <h2 data-number="3.2" id="inline-code-in-headers-int-x-y"><span class="header-section-number">3.2</span> Inline Code in Headers:
-<code class="sourceCode cpp"><span class="dt">int</span></code>,
-<code class="sourceCode cpp">x <span class="op">&amp;</span> y</code><a href="#inline-code-in-headers-int-x-y" class="self-link"></a></h2>
+<code class="sourceCode cpp"><span class="dt">int</span></code>
+,
+<code class="sourceCode cpp">x <span class="op">&amp;</span> y</code>
+<a href="#inline-code-in-headers-int-x-y" class="self-link"></a></h2>
 <h2 data-number="3.3" id="code-block"><span class="header-section-number">3.3</span> Code Block<a href="#code-block" class="self-link"></a></h2>
 <h3 data-number="3.3.1" id="no-syntax-highlighting"><span class="header-section-number">3.3.1</span> No Syntax Highlighting<a href="#no-syntax-highlighting" class="self-link"></a></h3>
+
 <div class="sourceCode" id="cb1"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>#include &lt;iostream&gt;</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>#include &quot;foo.h&quot;</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -606,7 +645,9 @@ bar</del></span></p></li>
 <span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a><span class="add" style="color: #006e28"><ins>template&lt;class, class&gt; struct <em>as-invocable</em>; <em>// exposition only</em></ins></span></span>
 <span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a><span class="add" style="color: #006e28"><ins><span><code class="sourceCode default">template&lt;class, class&gt; struct <em>as-invocable</em>; <em>// exposition only</em></code></span></ins></span></span>
 <span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a><span class="add" style="color: #006e28"><ins><span><code class="sourceCode default">template&lt;class, class&gt; struct <em>as-invocable</em>; <em>// exposition only</em></code></span></ins></span></span></code></pre></div>
+
 <h3 data-number="3.3.2" id="c-syntax-highlighting"><span class="header-section-number">3.3.2</span> C++ Syntax Highlighting<a href="#c-syntax-highlighting" class="self-link"></a></h3>
+
 <div class="sourceCode" id="cb2"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;iostream&gt;</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&quot;foo.h&quot;</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -687,9 +728,12 @@ bar</del></span></p></li>
 <span id="cb2-78"><a href="#cb2-78" aria-hidden="true" tabindex="-1"></a><span class="op">}</span>;</span>
 <span id="cb2-79"><a href="#cb2-79" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-80"><a href="#cb2-80" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> f<span class="op">(</span><span class="add" style="color: #006e28"><ins><span><code class="sourceCode default">int *const *<em>p<sub>i</sub></em></code></span></ins></span><span class="op">)</span>;</span></code></pre></div>
+
 <h3 data-number="3.3.3" id="diff-syntax-highlighting"><span class="header-section-number">3.3.3</span>
-<code class="sourceCode cpp">diff</code> Syntax Highlighting<a href="#diff-syntax-highlighting" class="self-link"></a></h3>
+<code class="sourceCode cpp">diff</code>
+Syntax Highlighting<a href="#diff-syntax-highlighting" class="self-link"></a></h3>
 <div>
+
 <div class="sourceCode" id="cb3"><pre class="sourceCode diff"><code class="sourceCode diff"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>some things just don&#39;t change.</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>// 20.3.4 tuple-like access to pair:</span>
@@ -701,9 +745,12 @@ bar</del></span></p></li>
 <span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><em>unspecified</em> detail::foo::template foo;</span>
 <span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="va">+ <em>unspecified</em> detail::foo::template foo;</span></span>
 <span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="st">- <em>unspecified</em> detail::foo::template foo;</span></span></code></pre></div>
+
 </div>
 <h3 data-number="3.3.4" id="rust-syntax-highlighting"><span class="header-section-number">3.3.4</span>
-<code class="sourceCode cpp">rust</code> Syntax Highlighting<a href="#rust-syntax-highlighting" class="self-link"></a></h3>
+<code class="sourceCode cpp">rust</code>
+Syntax Highlighting<a href="#rust-syntax-highlighting" class="self-link"></a></h3>
+
 <div class="sourceCode" id="cb4"><pre class="sourceCode rust"><code class="sourceCode rust"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">enum</span> <span class="dt">Result</span><span class="op">&lt;</span>T<span class="op">,</span> E<span class="op">&gt;</span> <span class="op">{</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="cn">Ok</span>(T)<span class="op">,</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="cn">Err</span>(E)<span class="op">,</span></span>
@@ -713,6 +760,7 @@ bar</del></span></p></li>
 <span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="cn">Ok</span>(v) <span class="op">=&gt;</span> <span class="co">// use `v`</span></span>
 <span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="cn">Err</span>(err) <span class="op">=&gt;</span> <span class="co">// use `err`</span></span>
 <span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+
 <h2 data-number="3.4" id="auto-header-links"><span class="header-section-number">3.4</span> Automatic Header Links<a href="#auto-header-links" class="self-link"></a></h2>
 <p>Automatic header links are written as <code class="sourceCode markdown">[](#auto-header-links)</code>, and renders
 as <a href="#auto-header-links">Automatic Header Links</a>.</p>
@@ -735,20 +783,24 @@ as <a href="#auto-header-links">Automatic Header Links</a>.</p>
 <tr class="odd">
 <td><div>
 
+
 <div class="sourceCode" id="cb5"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="cf">switch</span> <span class="op">(</span>x<span class="op">)</span> <span class="op">{</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">case</span> <span class="dv">0</span><span class="op">:</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;got zero&quot;</span>; <span class="cf">break</span>;</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">case</span> <span class="dv">1</span><span class="op">:</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;got one&quot;</span>; <span class="cf">break</span>;</span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">default</span><span class="op">:</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;don&#39;t care&quot;</span>;</span>
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 
+
 </div></td>
 <td><div>
+
 
 <div class="sourceCode" id="cb6"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>inspect <span class="op">(</span>x<span class="op">)</span> <span class="op">{</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="dv">0</span><span class="op">:</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;got zero&quot;</span>;</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="dv">1</span><span class="op">:</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;got one&quot;</span>;</span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  _<span class="op">:</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;don&#39;t care&quot;</span>;</span>
 <span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+
 
 </div></td>
 </tr>
@@ -773,14 +825,17 @@ as <a href="#auto-header-links">Automatic Header Links</a>.</p>
 <tr class="odd">
 <td><div>
 
+
 <div class="sourceCode" id="cb7"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="cf">switch</span> <span class="op">(</span>x<span class="op">)</span> <span class="op">{</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">case</span> <span class="dv">0</span><span class="op">:</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;got zero&quot;</span>; <span class="cf">break</span>;</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">case</span> <span class="dv">1</span><span class="op">:</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;got one&quot;</span>; <span class="cf">break</span>;</span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">default</span><span class="op">:</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;don&#39;t care&quot;</span>;</span>
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 
+
 </div></td>
 <td><div>
+
 
 <div class="sourceCode" id="cb8"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>inspect <span class="op">(</span>x<span class="op">)</span> <span class="op">{</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="dv">0</span><span class="op">:</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;got zero&quot;</span>;</span>
@@ -788,10 +843,12 @@ as <a href="#auto-header-links">Automatic Header Links</a>.</p>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  _<span class="op">:</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;don&#39;t care&quot;</span>;</span>
 <span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 
+
 </div></td>
 </tr>
 <tr class="even">
 <td><div>
+
 
 <div class="sourceCode" id="cb9"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="op">(</span>s <span class="op">==</span> <span class="st">&quot;foo&quot;</span><span class="op">)</span> <span class="op">{</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;got foo&quot;</span>;</span>
@@ -801,14 +858,17 @@ as <a href="#auto-header-links">Automatic Header Links</a>.</p>
 <span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;don&#39;t care&quot;</span>;</span>
 <span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 
+
 </div></td>
 <td><div>
+
 
 <div class="sourceCode" id="cb10"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>inspect <span class="op">(</span>s<span class="op">)</span> <span class="op">{</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;foo&quot;</span><span class="op">:</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;got foo&quot;</span>;</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;bar&quot;</span><span class="op">:</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;got bar&quot;</span>;</span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  _<span class="op">:</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;don&#39;t care&quot;</span>;</span>
 <span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+
 
 </div></td>
 </tr>
@@ -820,35 +880,44 @@ as <a href="#auto-header-links">Automatic Header Links</a>.</p>
 An expression is <em>potentially evaluated</em> unless it is an
 unevaluated operand (7.2) or a subexpression thereof. The set of
 <em>potential results</em> of an expression
-<code class="sourceCode cpp">e</code> is defined as follows:</p>
+<code class="sourceCode cpp">e</code>
+is defined as follows:</p>
 <ul>
 <li><p><span class="marginalizedparent"><a class="marginalized">(2.1)</a></span> If
-<code class="sourceCode cpp">e</code> is an <em>id-expression</em>
-(7.5.4), the set contains only
-<code class="sourceCode cpp">e</code>.</p></li>
+<code class="sourceCode cpp">e</code>
+is an <em>id-expression</em> (7.5.4), the set contains only
+<code class="sourceCode cpp">e</code>
+.</p></li>
 <li><p><span class="marginalizedparent"><a class="marginalized">(2.2)</a></span> If
-<code class="sourceCode cpp">e</code> is a subscripting operation
-(7.6.1.1) with an array operand, the set contains the potential results
-of that operand.</p></li>
+<code class="sourceCode cpp">e</code>
+is a subscripting operation (7.6.1.1) with an array operand, the set
+contains the potential results of that operand.</p></li>
 </ul>
 <h2 data-number="5.2" id="wording-changes"><span class="header-section-number">5.2</span> Wording Changes<a href="#wording-changes" class="self-link"></a></h2>
 <p>Large changes are
-<code class="sourceCode cpp"><span class="op">:::</span> add</code> for
-additions,
-<code class="sourceCode cpp"><span class="op">:::</span> rm</code> for
-removals.</p>
+<code class="sourceCode cpp"><span class="op">:::</span> add</code>
+for additions,
+<code class="sourceCode cpp"><span class="op">:::</span> rm</code>
+for removals.</p>
 <blockquote>
 <p>Modify section <span>28.5.5
 <a href="https://wg21.link/format.functions">[format.functions]</a></span>:</p>
 <div class="add" style="color: #006e28">
 
+
 <div class="sourceCode" id="cb11"><pre class="sourceCode default default"><code class="sourceCode default"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>template&lt;class... Args&gt;</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  string format(const locale&amp; loc, string_view fmt, const Args&amp;... args);</span></code></pre></div>
-<p><em>Returns:</em> <code class="sourceCode default">vformat(loc, fmt, make_format_args(args...))</code>.</p>
+
+<p><em>Returns:</em>
+<code class="sourceCode default">vformat(loc, fmt, make_format_args(args...))</code>
+.</p>
 </div>
 </blockquote>
-<p>Small, inline changes are done with <code class="sourceCode cpp"><span class="op">[</span><span class="kw">new</span> text<span class="op">]{.</span>add<span class="op">}</span></code>
-or <code class="sourceCode cpp"><span class="op">[</span>old text<span class="op">]{.</span>rm<span class="op">}</span></code>.</p>
+<p>Small, inline changes are done with
+<code class="sourceCode cpp"><span class="op">[</span><span class="kw">new</span> text<span class="op">]{.</span>add<span class="op">}</span></code>
+or
+<code class="sourceCode cpp"><span class="op">[</span>old text<span class="op">]{.</span>rm<span class="op">}</span></code>
+.</p>
 <table>
 <colgroup>
 <col style="width: 14%" />
@@ -866,48 +935,66 @@ or <code class="sourceCode cpp"><span class="op">[</span>old text<span class="op
 </thead>
 <tbody>
 <tr class="odd">
-<td><code class="sourceCode cpp"><span class="op">%</span>a</code></td>
+<td>
+<code class="sourceCode cpp"><span class="op">%</span>a</code>
+</td>
 <td>The locale’s abbreviated weekday name. If the value does not contain
-a valid weekday, <span class="rm" style="color: #bf0303"><del><span><code class="sourceCode default">setstate(ios::failbit)</code></span>
-is called</del></span> <span class="add" style="color: #006e28"><ins><span><code class="sourceCode default">format_error</code></span>
-is thrown</ins></span>.</td>
+a valid weekday, <span class="rm" style="color: #bf0303"><del><span>
+<code class="sourceCode default">setstate(ios::failbit)</code>
+</span> is called</del></span> <span class="add" style="color: #006e28"><ins><span>
+<code class="sourceCode default">format_error</code>
+</span> is thrown</ins></span>.</td>
 </tr>
 <tr class="even">
-<td><code class="sourceCode cpp"><span class="op">%</span>A</code></td>
+<td>
+<code class="sourceCode cpp"><span class="op">%</span>A</code>
+</td>
 <td>The locale’s full weekday name. If the value does not contain a
-valid weekday, <span class="rm" style="color: #bf0303"><del><span><code class="sourceCode default">setstate(ios::failbit)</code></span>
-is called</del></span> <span class="add" style="color: #006e28"><ins><span><code class="sourceCode default">format_error</code></span>
-is thrown</ins></span>.</td>
+valid weekday, <span class="rm" style="color: #bf0303"><del><span>
+<code class="sourceCode default">setstate(ios::failbit)</code>
+</span> is called</del></span> <span class="add" style="color: #006e28"><ins><span>
+<code class="sourceCode default">format_error</code>
+</span> is thrown</ins></span>.</td>
 </tr>
 </tbody>
 </table>
 <h2 data-number="5.3" id="grammar-changes"><span class="header-section-number">5.3</span> Grammar Changes<a href="#grammar-changes" class="self-link"></a></h2>
 <blockquote>
 <div class="line-block"><em>selection-statement:</em><br />
-    <code class="sourceCode cpp"><span class="cf">if</span> <span class="kw">constexpr</span></code><em><sub>opt</sub></em>
+    
+<code class="sourceCode cpp"><span class="cf">if</span> <span class="kw">constexpr</span></code>
+<em><sub>opt</sub></em>
 <code class="sourceCode cpp"><span class="op">(</span></code>
 <em>init-statement<sub>opt</sub></em> <em>condition</em>
 <code class="sourceCode cpp"><span class="op">)</span></code>
 <em>statement</em><br />
-    <code class="sourceCode cpp"><span class="cf">if</span> <span class="kw">constexpr</span></code><em><sub>opt</sub></em>
+    
+<code class="sourceCode cpp"><span class="cf">if</span> <span class="kw">constexpr</span></code>
+<em><sub>opt</sub></em>
 <code class="sourceCode cpp"><span class="op">(</span></code>
 <em>init-statement<sub>opt</sub></em> <em>condition</em>
 <code class="sourceCode cpp"><span class="op">)</span></code>
 <em>statement</em>
 <code class="sourceCode cpp"><span class="cf">else</span></code>
 <em>statement</em><br />
-    <code class="sourceCode cpp"><span class="cf">switch</span> <span class="op">(</span></code>
+    
+<code class="sourceCode cpp"><span class="cf">switch</span> <span class="op">(</span></code>
 <em>init-statement<sub>opt</sub></em> <em>condition</em>
 <code class="sourceCode cpp"><span class="op">)</span></code>
 <em>statement</em><br />
-    <span class="add" style="color: #006e28"><ins><span><code class="sourceCode default">inspect</code></span>
-<span><code class="sourceCode default">constexpr</code></span><sub><em>opt</em></sub>
-<span><code class="sourceCode default">(</code></span>
-<em>init-statement<sub>opt</sub></em> <em>condition</em>
-<span><code class="sourceCode default">)</code></span>
-<span><code class="sourceCode default">{</code></span>
-<em>inspect-case-seq</em>
-<span><code class="sourceCode default">}</code></span></ins></span></div>
+    <span class="add" style="color: #006e28"><ins><span>
+<code class="sourceCode default">inspect</code>
+</span> <span>
+<code class="sourceCode default">constexpr</code>
+</span><sub><em>opt</em></sub> <span>
+<code class="sourceCode default">(</code>
+</span> <em>init-statement<sub>opt</sub></em> <em>condition</em> <span>
+<code class="sourceCode default">)</code>
+</span> <span>
+<code class="sourceCode default">{</code>
+</span> <em>inspect-case-seq</em> <span>
+<code class="sourceCode default">}</code>
+</span></ins></span></div>
 <div class="add" style="color: #006e28">
 
 <div class="line-block"><em>inspect-case-seq:</em><br />
@@ -916,7 +1003,8 @@ is thrown</ins></span>.</td>
 <div class="line-block"><em>inspect-case:</em><br />
     <em>attribute-specifier-seq<sub>opt</sub></em>
 <em>inspect-pattern</em> <em>inspect-guard<sub>opt</sub></em>
-<code class="sourceCode default">:</code> <em>statement</em></div>
+<code class="sourceCode default">:</code>
+<em>statement</em></div>
 <div class="line-block"><em>inspect-pattern:</em><br />
     <em>wildcard-pattern</em><br />
     <em>identifier-pattern</em><br />
@@ -926,17 +1014,22 @@ is thrown</ins></span>.</td>
     <em>binding-pattern</em><br />
     <em>extractor-pattern</em></div>
 <div class="line-block"><em>inspect-guard:</em><br />
-    <code class="sourceCode default">if (</code> <em>expression</em>
-<code class="sourceCode default">)</code></div>
+    
+<code class="sourceCode default">if (</code>
+<em>expression</em>
+<code class="sourceCode default">)</code>
+</div>
 
 </div>
 </blockquote>
 <h1 data-number="6" id="stable-names"><span class="header-section-number">6</span> Stable Names<a href="#stable-names" class="self-link"></a></h1>
-<p>Stable names are written as <code class="sourceCode cpp"><span class="op">[</span>basic<span class="op">.</span>life<span class="op">]{.</span>sref<span class="op">}</span></code>,
-and renders as <span>6.8.4
+<p>Stable names are written as
+<code class="sourceCode cpp"><span class="op">[</span>basic<span class="op">.</span>life<span class="op">]{.</span>sref<span class="op">}</span></code>
+, and renders as <span>6.8.4
 <a href="https://wg21.link/basic.life">[basic.life]</a></span>. You can
 also add a class
-<code class="sourceCode cpp"><span class="op">-</span></code> or
+<code class="sourceCode cpp"><span class="op">-</span></code>
+or
 <code class="sourceCode cpp"><span class="op">.</span>unnumbered</code>
 to omit the section number.</p>
 <p>It uses <a href="https://timsong-cpp.github.io/cppwp/annex-f" class="uri">https://timsong-cpp.github.io/cppwp/annex-f</a> as the
@@ -959,21 +1052,29 @@ underlying database.</p>
 </thead>
 <tbody>
 <tr class="odd">
-<td><code class="sourceCode default">[basic.life]{.sref}</code></td>
+<td>
+<code class="sourceCode default">[basic.life]{.sref}</code>
+</td>
 <td><span>6.8.4
 <a href="https://wg21.link/basic.life">[basic.life]</a></span></td>
 </tr>
 <tr class="even">
-<td><code class="sourceCode default">[basic.life#1]{.sref}</code></td>
+<td>
+<code class="sourceCode default">[basic.life#1]{.sref}</code>
+</td>
 <td><span>6.8.4
 <a href="https://wg21.link/basic.life#1">[basic.life#1]</a></span></td>
 </tr>
 <tr class="odd">
-<td><code class="sourceCode default">[basic.life]{- .sref}</code></td>
+<td>
+<code class="sourceCode default">[basic.life]{- .sref}</code>
+</td>
 <td><span><a href="https://wg21.link/basic.life">[basic.life]</a></span></td>
 </tr>
 <tr class="even">
-<td><code class="sourceCode default">[basic.life]{.unnumbered .sref}</code></td>
+<td>
+<code class="sourceCode default">[basic.life]{.unnumbered .sref}</code>
+</td>
 <td><span><a href="https://wg21.link/basic.life">[basic.life]</a></span></td>
 </tr>
 </tbody>
@@ -981,49 +1082,70 @@ underlying database.</p>
 <h1 data-number="7" id="notes"><span class="header-section-number">7</span> Notes<a href="#notes" class="self-link"></a></h1>
 <p>There are three supported styles of note:</p>
 <ul>
-<li><p>Use the <code class="sourceCode cpp">note</code> class for notes
-that are expected to appear in the specification wording</p>
+<li><p>Use the
+<code class="sourceCode cpp">note</code>
+class for notes that are expected to appear in the specification
+wording</p>
+
 <div class="sourceCode" id="cb12"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>[Notes will look like this]{.note}</span></code></pre></div>
+
 <p><span class="note"><span>[ <em>Note:</em> </span>Notes will look like
 this<span> — <em>end note</em> ]</span></span></p></li>
-<li><p>Use the <code class="sourceCode cpp">ednote</code> for editorial
-notes, these will be formatted as</p>
+<li><p>Use the
+<code class="sourceCode cpp">ednote</code>
+for editorial notes, these will be formatted as</p>
+
 <div class="sourceCode" id="cb13"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>[Editorial notes are important]{.ednote}</span></code></pre></div>
+
 <p><span class="ednote" style="color: #0000ff">[ Editor&#39;s note:
 Editorial notes are important ]</span></p></li>
-<li><p>Use <code class="sourceCode cpp">draftnote</code> to include text
-that is intended as questions or information for reviews and working
-groups.</p>
+<li><p>Use
+<code class="sourceCode cpp">draftnote</code>
+to include text that is intended as questions or information for reviews
+and working groups.</p>
+
 <div class="sourceCode" id="cb14"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>[Drafting notes can be used to provide comments for reviewers that are explicitly not to be</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a> included in the specification.]{.draftnote}</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a> [It is also possible to indicate the a note is for</span>
 <span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a> a specific `audience` via this optional attribute.]{.draftnote audience=&quot;the reader&quot;}</span></code></pre></div>
+
 <p><span class="draftnote" style="color: #0000ff">[ Drafting note:
 Drafting notes can be used to provide comments for reviewers that are
 explicitly not to be included in the specification. ]</span></p>
 <p><span class="draftnote" data-audience="the reader" style="color: #0000ff">[ Drafting note for the reader: It is also
 possible to indicate the a note is for a specific
-<code class="sourceCode default">audience</code> via this optional
-attribute. ]</span></p></li>
+<code class="sourceCode default">audience</code>
+via this optional attribute. ]</span></p></li>
 </ul>
 <h1 data-number="8" id="citation"><span class="header-section-number">8</span> Citation<a href="#citation" class="self-link"></a></h1>
-<p>Automatic references are written as <code class="sourceCode cpp"><span class="op">[@</span>N4762<span class="op">]</span></code>
+<p>Automatic references are written as
+<code class="sourceCode cpp"><span class="op">[@</span>N4762<span class="op">]</span></code>
 and renders as <span class="citation" data-cites="N4762"><a href="https://wg21.link/n4762" role="doc-biblioref">[N4762]</a></span>.
 Anything in <a href="https://wg21.link/index.yaml" class="uri">https://wg21.link/index.yaml</a> are linked
 automatically.</p>
 <ul>
-<li><code class="sourceCode cpp">N</code> Papers (e.g., <code class="sourceCode cpp"><span class="op">[@</span>N3887<span class="op">]</span></code>
+<li>
+<code class="sourceCode cpp">N</code>
+Papers (e.g.,
+<code class="sourceCode cpp"><span class="op">[@</span>N3887<span class="op">]</span></code>
 → <span class="citation" data-cites="N3887"><a href="https://wg21.link/n3887" role="doc-biblioref">[N3887]</a></span>)</li>
-<li><code class="sourceCode cpp">P</code> Papers (e.g., <code class="sourceCode cpp"><span class="op">[@</span>P1371R1<span class="op">]</span></code>
+<li>
+<code class="sourceCode cpp">P</code>
+Papers (e.g.,
+<code class="sourceCode cpp"><span class="op">[@</span>P1371R1<span class="op">]</span></code>
 → <span class="citation" data-cites="P1371R1"><a href="https://wg21.link/p1371r1" role="doc-biblioref">[P1371R1]</a></span>)</li>
-<li>CWG Issues (e.g., <code class="sourceCode cpp"><span class="op">[@</span>CWG1234<span class="op">]</span></code>
+<li>CWG Issues (e.g.,
+<code class="sourceCode cpp"><span class="op">[@</span>CWG1234<span class="op">]</span></code>
 → <span class="citation" data-cites="CWG1234"><a href="https://wg21.link/cwg1234" role="doc-biblioref">[CWG1234]</a></span>)</li>
-<li>LWG Issues (e.g., <code class="sourceCode cpp"><span class="op">[@</span>LWG1234<span class="op">]</span></code>
+<li>LWG Issues (e.g.,
+<code class="sourceCode cpp"><span class="op">[@</span>LWG1234<span class="op">]</span></code>
 → <span class="citation" data-cites="LWG1234"><a href="https://wg21.link/lwg1234" role="doc-biblioref">[LWG1234]</a></span>)</li>
-<li>Github Edits (e.g, <code class="sourceCode cpp"><span class="op">[@</span>EDIT1234<span class="op">]</span></code>
+<li>Github Edits (e.g,
+<code class="sourceCode cpp"><span class="op">[@</span>EDIT1234<span class="op">]</span></code>
 → <span class="citation" data-cites="EDIT1234"><a href="https://wg21.link/edit1234" role="doc-biblioref">[EDIT1234]</a></span>)</li>
-<li>Standing Documents (e.g., <code class="sourceCode cpp"><span class="op">[@</span>SD6<span class="op">]</span></code>
+<li>Standing Documents (e.g.,
+<code class="sourceCode cpp"><span class="op">[@</span>SD6<span class="op">]</span></code>
 → <span class="citation" data-cites="SD6"><a href="https://wg21.link/sd6" role="doc-biblioref">[SD6]</a></span>)</li>
 </ul>
 <p>You may also write

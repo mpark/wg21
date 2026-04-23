@@ -12,7 +12,6 @@ import os.path
 import panflute as pf
 import re
 
-classes_with_embedded_md = ('cpp', 'default', 'diff', 'nasm', 'rust')
 stable_names = {}
 refs = {}
 headers = {}
@@ -65,260 +64,6 @@ def prepare(doc):
         pf.RawBlock(highlighting('latex'), 'latex'))
     doc.metadata['highlighting-css'] = pf.MetaBlocks(
         pf.RawBlock(highlighting('html'), 'html'))
-
-def finalize(doc):
-    def init_code_elems(elem, doc):
-        if isinstance(elem, pf.Header) and doc.format == 'latex':
-            elem.walk(lambda elem, doc:
-                elem.classes.append('raw')
-                if any(isinstance(elem, cls) for cls in [pf.Code, pf.CodeBlock])
-                else None)
-
-        # Mark code elements within colored divspan as default.
-        if any(isinstance(elem, cls) for cls in [pf.Div, pf.Span]) and \
-           any(cls in elem.classes for cls in ['add', 'rm', 'ednote', 'draftnote']):
-            elem.walk(lambda elem, doc:
-                elem.classes.insert(0, 'default')
-                if any(isinstance(elem, cls) for cls in [pf.Code, pf.CodeBlock])
-                else None)
-
-        if not any(isinstance(elem, cls) for cls in [pf.Code, pf.CodeBlock]):
-            return None
-
-        # As `walk` performs post-order traversal, this is
-        # guaranteed to run before the 'raw' code path.
-        if not elem.classes:
-            if isinstance(elem, pf.Code):
-                cls = doc.get_metadata('highlighting.inline-code', 'default')
-            elif isinstance(elem, pf.CodeBlock):
-                cls = doc.get_metadata('highlighting.code-block', 'default')
-            elem.classes.append(cls)
-
-    doc.walk(init_code_elems)
-
-    def collect_code_elems(elem, doc):
-        if not any(isinstance(elem, cls) for cls in [pf.Code, pf.CodeBlock]):
-            return None
-
-        if 'raw' in elem.classes:
-            return None
-
-        if not any(cls in elem.classes for cls in classes_with_embedded_md):
-            return None
-
-        code_elems.append(elem)
-
-    code_elems = []
-    doc.walk(collect_code_elems)
-    if not code_elems:
-        return
-
-    # Embedded Markdown is extracted from the raw code text before
-    # syntax highlighting. This keeps the highlighter away from
-    # `@...@`, `@@...@@`, and `$...$`, so we can restore the rendered
-    # Markdown afterward without any HTML / LaTeX unescaping.
-    placeholder_prefix = 'MPARKWG21EMBEDDEDMDX'
-    while any(placeholder_prefix in elem.text for elem in code_elems):
-        import uuid
-        placeholder_prefix = f'MPARKWG21EMBEDDEDMD{uuid.uuid4().hex.upper()}X'
-
-    num_placeholder = 0
-    embedded_md_fragments = {}
-
-    def store_embedded_md(fragment):
-        nonlocal num_placeholder
-        placeholder = f'{placeholder_prefix}{num_placeholder}X'
-        num_placeholder += 1
-        embedded_md_fragments[placeholder] = fragment
-        return placeholder
-
-    def replace_embedded_md_with_placeholders(text):
-        # Returns the placeholder for the parsed embedded Markdown region and
-        # the index where parsing should continue.
-        #
-        # For @@FOO @BAR@ BAZ@@, store:
-        #   PH1 -> BAR
-        #   PH2 -> FOO PH1 BAZ
-        # The outer @@...@@ parse returns PH2, and the inner @...@ parse
-        # returns PH1.
-        def process_embedded_md(text, i, closing, wrap=lambda fragment: fragment):
-            pieces = []
-            start = i
-
-            while i < len(text):
-                if text[i] == '\n':
-                    return None
-
-                if text.startswith(closing, i):
-                    pieces.append(text[start:i])
-                    return store_embedded_md(wrap(''.join(pieces))), i + len(closing)
-
-                nested = None
-
-                if closing == '@@' and text.startswith('@', i):
-                    nested = process_embedded_md(text, i + 1, '@')
-                elif text[i] == '$':
-                    nested = process_embedded_md(
-                        text, i + 1, '$', lambda fragment: f'*{fragment}*')
-
-                if nested is not None:
-                    pieces.append(text[start:i])
-                    placeholder, i = nested
-                    pieces.append(placeholder)
-                    start = i
-                    continue
-
-                i += 1
-
-            return None
-
-        pieces = []
-        start = 0
-        i = 0
-
-        while i < len(text):
-            replaced = None
-            if text.startswith('@@', i):
-                replaced = process_embedded_md(text, i + 2, '@@')
-            elif text.startswith('@', i):
-                replaced = process_embedded_md(text, i + 1, '@')
-            elif text[i] == '$':
-                replaced = process_embedded_md(
-                    text, i + 1, '$', lambda fragment: f'*{fragment}*')
-
-            if replaced is not None:
-                pieces.append(text[start:i])
-                placeholder, i = replaced
-                pieces.append(placeholder)
-                start = i
-                continue
-
-            i += 1
-
-        pieces.append(text[start:])
-        return ''.join(pieces)
-
-    for elem in code_elems:
-        elem.text = replace_embedded_md_with_placeholders(elem.text)
-
-    def intersperse(lst, item):
-        result = [item] * (len(lst) * 2 - 1)
-        result[0::2] = lst
-        return result
-
-    datadir = doc.get_metadata('datadir')
-    syntax = ['--syntax-definition', os.path.join(datadir, 'syntax', 'isocpp.xml')]
-    text = pf.convert_text(
-        intersperse(
-            [pf.Plain(elem) if isinstance(elem, pf.Code) else elem for elem in code_elems],
-            pf.Plain(pf.RawInline('---', doc.format))),
-        input_format='panflute',
-        output_format=doc.format,
-        extra_args=syntax)
-
-    # Workaround for https://github.com/jgm/skylighting/issues/91.
-    if doc.format == 'latex':
-        text = text.replace('<', '\\textless{}') \
-                   .replace('>', '\\textgreater{}')
-
-    if doc.format == 'latex':
-        texts = text.split('\n\n---\n\n')
-    elif doc.format == 'html':
-        texts = text.split('\n---\n')
-
-    assert(len(code_elems) == len(texts))
-
-    placeholder_re = re.compile(re.escape(placeholder_prefix) + r'\d+X')
-    render_embedded_md_cache = {}
-
-    def convert(elem, text):
-        # Render the stored Markdown fragments after highlighting and
-        # recursively restore nested placeholders that were extracted
-        # from the raw code text earlier.
-        def restore_embedded_md(text):
-            if placeholder_prefix not in text:
-                return text
-
-            return placeholder_re.sub(
-                lambda match: render_embedded_md(
-                    embedded_md_fragments[match.group(0)]),
-                text)
-
-        def render_embedded_md(fragment):
-            if not fragment or fragment.isspace():  # @@@@, @  @
-                return fragment
-
-            result = render_embedded_md_cache.get(fragment)
-            if result is not None:
-                return result
-
-            # -smart to disable Pandoc smart extension
-            content = pf.Plain(*pf.convert_text(fragment, 'markdown-smart')[0].content)
-            result = pf.convert_text(
-                content.walk(divspan, doc).walk(init_code_elems, doc),
-                input_format='panflute',
-                output_format=doc.format,
-                extra_args=syntax + ['--wrap', 'none'])
-
-            if doc.format == 'latex':
-                # The normal text mode such as "template<class" gets translated
-                # to "template\textless class" rather than "text\textless{}class".
-                result = result.replace(r'\textless ', r'\textless{}') \
-                               .replace(r'\textgreater ', r'\textgreater{}') \
-                               .replace(r'\textasciitilde ', r'\textasciitilde{}') \
-                               .replace(r'\textbackslash ', r'\textbackslash{}') \
-                               .replace(r'\textbar ', r'\textbar{}') \
-                               .replace(r'\textquotesingle ', r'\textquotesingle{}')
-
-            result = restore_embedded_md(result)
-            render_embedded_md_cache[fragment] = result
-            return result
-
-        text = restore_embedded_md(text)
-        if isinstance(elem, pf.Code):
-            result = pf.RawInline(text, doc.format)
-        elif isinstance(elem, pf.CodeBlock):
-            result = pf.RawBlock(text, doc.format)
-
-        if 'diff' not in elem.classes:
-            return result
-
-        # For HTML, this is handled via CSS in `data/templates/wg21.html`.
-        command = '\\renewcommand{{\\{}}}[1]{{\\textcolor[HTML]{{{}}}{{#1}}}}'
-
-        uc = command.format('NormalTok', doc.get_metadata('uccolor'))
-        add = command.format('VariableTok', doc.get_metadata('addcolor'))
-        rm = command.format('StringTok', doc.get_metadata('rmcolor'))
-
-        if isinstance(elem, pf.Code):
-            return pf.Span(
-                pf.RawInline(uc, 'latex'),
-                pf.RawInline(add, 'latex'),
-                pf.RawInline(rm, 'latex'),
-                result)
-        elif isinstance(elem, pf.CodeBlock):
-            return pf.Div(
-                pf.RawBlock('{', 'latex'),
-                pf.RawBlock(uc, 'latex'),
-                pf.RawBlock(add, 'latex'),
-                pf.RawBlock(rm, 'latex'),
-                result,
-                pf.RawBlock('}', 'latex'))
-
-    def code_elem(elem, doc):
-        if not any(isinstance(elem, cls) for cls in [pf.Code, pf.CodeBlock]):
-            return None
-
-        if 'raw' in elem.classes:
-            return None
-
-        if not any(cls in elem.classes for cls in classes_with_embedded_md):
-            return None
-
-        return convert(*next(converted))
-
-    converted = zip(code_elems, texts)
-    doc.walk(code_elem)
 
 def divspan(elem, doc):
     """
@@ -649,6 +394,291 @@ def automatic_header_link(elem, doc):
 
     return pf.Link(pf.Str(header_text), url=elem.url)
 
+class CodeElems:
+    """
+    High-level description of embedded markdown handling:
+
+      1. Collect relevant code elements
+      2. Pick a unique placeholder prefix
+      3. Replace embedded markdown fragment with a placeholder.
+         Same fragments are assigned the same placeholder.
+      4. All of the fragments are batched and converted in a single
+         `convert_text` invocation, and stored in `converted_fragments`.
+      5. All of the code elements are batched and converted in a single
+         `convert_text` invocation.
+      6. Restore the embedded markdown fragments into the batch converted
+         code text, by doing a recursive regex substitution with
+         `converted_fragments` as the look-up table.
+      7. Split the batch converted code text into individual elements, and
+         update the code elements with the fully processed elements.
+    """
+    code_elems = []
+    code_elems_iter = None
+
+    # Code elements for which embedded markdown is allowed
+    embedded_md_classes = ['cpp', 'default', 'diff', 'nasm', 'rust']
+
+    placeholder_prefix = None
+
+    # Unique list of fragments, kept track in `fragment_idx`.
+    fragments = []
+
+    # Mapping from embedded md fragment to its index within `fragments`
+    fragment_idx = {}
+    
+    converted_fragments = None
+
+    @staticmethod
+    def init(elem, doc):
+        if isinstance(elem, pf.Header) and doc.format == 'latex':
+            elem.walk(lambda elem, doc:
+                elem.classes.append('raw')
+                if any(isinstance(elem, cls) for cls in [pf.Code, pf.CodeBlock])
+                else None)
+
+        # Mark code elements within colored divspan as default.
+        if any(isinstance(elem, cls) for cls in [pf.Div, pf.Span]) and \
+           any(cls in elem.classes for cls in ['add', 'rm', 'ednote', 'draftnote']):
+            elem.walk(lambda elem, doc:
+                elem.classes.insert(0, 'default')
+                if any(isinstance(elem, cls) for cls in [pf.Code, pf.CodeBlock])
+                else None)
+
+        if not any(isinstance(elem, cls) for cls in [pf.Code, pf.CodeBlock]):
+            return None
+
+        # As `walk` performs post-order traversal, this is
+        # guaranteed to run before the 'raw' code path.
+        if not elem.classes:
+            if isinstance(elem, pf.Code):
+                cls = doc.get_metadata('highlighting.inline-code', 'default')
+            elif isinstance(elem, pf.CodeBlock):
+                cls = doc.get_metadata('highlighting.code-block', 'default')
+            elem.classes.append(cls)
+
+
+    @staticmethod
+    def collect(elem, doc):
+        if not any(isinstance(elem, cls) for cls in [pf.Code, pf.CodeBlock]):
+            return None
+
+        if 'raw' in elem.classes or not any(cls in elem.classes for cls in CodeElems.embedded_md_classes):
+            return None
+
+        CodeElems.code_elems.append(elem)
+
+    @staticmethod
+    def update(elem, doc):
+        if not any(isinstance(elem, cls) for cls in [pf.Code, pf.CodeBlock]):
+            return None
+
+        if 'raw' in elem.classes or not any(cls in elem.classes for cls in CodeElems.embedded_md_classes):
+            return None
+
+        code_elem = next(CodeElems.code_elems_iter)
+        result = None
+        if isinstance(elem, pf.Code):
+            result = pf.RawInline(code_elem, doc.format)
+        elif isinstance(elem, pf.CodeBlock):
+            result = pf.RawBlock(code_elem, doc.format)
+
+        if 'diff' not in elem.classes:
+            return result
+
+        # For HTML, this is handled via CSS in `data/templates/wg21.html`.
+        command = '\\renewcommand{{\\{}}}[1]{{\\textcolor[HTML]{{{}}}{{#1}}}}'
+
+        uc = command.format('NormalTok', doc.get_metadata('uccolor'))
+        add = command.format('VariableTok', doc.get_metadata('addcolor'))
+        rm = command.format('StringTok', doc.get_metadata('rmcolor'))
+
+        if isinstance(elem, pf.Code):
+            return pf.Span(
+                pf.RawInline(uc, 'latex'),
+                pf.RawInline(add, 'latex'),
+                pf.RawInline(rm, 'latex'),
+                result)
+        elif isinstance(elem, pf.CodeBlock):
+            return pf.Div(
+                pf.RawBlock('{', 'latex'),
+                pf.RawBlock(uc, 'latex'),
+                pf.RawBlock(add, 'latex'),
+                pf.RawBlock(rm, 'latex'),
+                result,
+                pf.RawBlock('}', 'latex'))
+
+    @staticmethod
+    def _compute_unique_placeholder(texts):
+        import uuid
+        while True:
+             placeholder = f'X{uuid.uuid4().hex.upper()}X'
+             if not any(placeholder in text for text in texts):
+                 return placeholder
+
+    @staticmethod
+    def _convert_fragments(fragments, doc):
+        separator = CodeElems._compute_unique_placeholder(fragments)
+        # -smart to disable Pandoc smart extension
+        pf_fragments = (
+            pf.Plain(*fragment.content).walk(CodeElems.init, doc).walk(divspan, doc)
+            for fragment
+            in pf.convert_text(f'\n\n{separator}\n\n'.join(fragments), input_format='markdown-smart'))
+        text = pf.convert_text(
+            pf_fragments,
+            input_format='panflute',
+            output_format=doc.format,
+            extra_args=[
+                '--syntax-definition',
+                os.path.join(doc.get_metadata('datadir'), 'syntax', 'isocpp.xml'),
+                '--wrap',
+                'none'])
+
+        if doc.format == 'latex':
+            # The normal text mode such as "template<class" gets translated
+            # to "template\textless class" rather than "text\textless{}class".
+            text = text.replace(r'\textless ', r'\textless{}') \
+                       .replace(r'\textgreater ', r'\textgreater{}') \
+                       .replace(r'\textasciitilde ', r'\textasciitilde{}') \
+                       .replace(r'\textbackslash ', r'\textbackslash{}') \
+                       .replace(r'\textbar ', r'\textbar{}') \
+                       .replace(r'\textquotesingle ', r'\textquotesingle{}')
+
+        return text.split('{1}{0}{1}'.format(separator, '\n\n' if doc.format == 'latex' else '\n'))
+
+    @classmethod
+    def _store_fragment(cls, fragment):
+        if (idx := cls.fragment_idx.get(fragment)) is None:
+            idx = len(cls.fragments)
+            cls.fragments.append(fragment)
+            cls.fragment_idx[fragment] = idx
+
+        return f'{cls.placeholder_prefix}{idx}X'
+
+    @classmethod
+    def _process_fragment(cls, text, i, closing, wrap=lambda fragment: fragment):
+        """
+        Returns the placeholder for the parsed embedded Markdown region and
+        the index where parsing should continue.
+
+        For @@FOO @BAR@ BAZ@@, store:
+          PH1 -> BAR
+          PH2 -> FOO PH1 BAZ
+        The outer @@...@@ parse returns PH2, and the inner @...@ parse
+        returns PH1.
+        """
+        pieces = []
+        start = i
+
+        while i < len(text):
+            if text[i] == '\n':
+                return None
+
+            if text.startswith(closing, i):
+                pieces.append(text[start:i])
+                placeholder = cls._store_fragment(wrap(''.join(pieces)))
+                return placeholder, i + len(closing)
+
+            result = None
+
+            if closing == '@@' and text.startswith('@', i):
+                result = cls._process_fragment(text, i + 1, '@')
+            elif text.startswith('$', i):
+                result = cls._process_fragment(
+                    text, i + 1, '$', lambda fragment: f'*{fragment}*')
+
+            if result is not None:
+                pieces.append(text[start:i])
+                placeholder, i = result
+                pieces.append(placeholder)
+                start = i
+                continue
+
+            i += 1
+
+        return None
+
+    @classmethod
+    def _replace_fragments_with_placeholders(cls, text):
+        pieces = []
+        start = 0
+        i = 0
+
+        while i < len(text):
+            result = None
+            if text.startswith('@@', i):
+                result = cls._process_fragment(text, i + 2, '@@')
+            elif text.startswith('@', i):
+                result = cls._process_fragment(text, i + 1, '@')
+            elif text.startswith('$', i):
+                result = cls._process_fragment(
+                    text, i + 1, '$', lambda fragment: f'*{fragment}*')
+
+            if result is not None:
+                pieces.append(text[start:i])
+                placeholder, i = result
+                pieces.append(placeholder)
+                start = i
+                continue
+
+            i += 1
+
+        pieces.append(text[start:])
+        return ''.join(pieces)
+
+    @classmethod
+    def run(cls, doc):
+        doc.walk(cls.init)
+        doc.walk(cls.collect)
+        if not cls.code_elems:
+            return
+
+        cls.placeholder_prefix = cls._compute_unique_placeholder(elem.text for elem in cls.code_elems)
+        for elem in cls.code_elems:
+            elem.text = cls._replace_fragments_with_placeholders(elem.text)
+
+        cls.converted_fragments = cls._convert_fragments(cls.fragments, doc)
+
+        def intersperse(lst, item):
+            result = [item] * (len(lst) * 2 - 1)
+            result[0::2] = lst
+            return result
+
+        # Intersperse the separator and batch convert all of the code elements at once.
+        separator = cls._compute_unique_placeholder(elem.text for elem in cls.code_elems)
+        text = pf.convert_text(
+            intersperse(
+                [pf.Plain(elem) if isinstance(elem, pf.Code) else elem for elem in cls.code_elems],
+                pf.Plain(pf.RawInline(separator, doc.format))),
+            input_format='panflute',
+            output_format=doc.format,
+            extra_args=[
+                '--syntax-definition',
+                os.path.join(doc.get_metadata('datadir'), 'syntax', 'isocpp.xml')])
+
+        placeholder_re = re.compile(fr'{cls.placeholder_prefix}(\d+)X')
+        def restore_fragments(text):
+            return placeholder_re.sub(
+                lambda match: restore_fragments(cls.converted_fragments[int(match.group(1))]),
+                text)
+
+        text = restore_fragments(text)
+
+        # Workaround for https://github.com/jgm/skylighting/issues/91.
+        if doc.format == 'latex':
+            text = text.replace('<', '\\textless{}') \
+                       .replace('>', '\\textgreater{}')
+
+        code_elems = text.split('{1}{0}{1}'.format(separator, '\n' if doc.format == 'latex' else ''))
+
+        assert(len(cls.code_elems) == len(code_elems))
+
+        cls.code_elems = code_elems
+        cls.code_elems_iter = iter(cls.code_elems)
+        doc.walk(cls.update)
+
+def finalize(doc):
+    CodeElems.run(doc)
+
 if __name__ == '__main__':
   pf.run_filters([
       divspan,
@@ -657,5 +687,5 @@ if __name__ == '__main__':
       header, # doesn't apply to the "headers" in comparison table.
       table,  # also applies to tables generated by `cmptable`.
       *[collect_refs, citation_link],
-      automatic_header_link,
+      automatic_header_link, # needs to be after `header`
   ], prepare, finalize)

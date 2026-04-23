@@ -198,7 +198,7 @@ Reply-to:   \@author
 \author{&Author
 0\\&<\href{mailto:author0@gmail.com}{\nolinkurl{author0@gmail.com}}>\\&Author
 1\\&<\href{mailto:author1@gmail.com}{\nolinkurl{author1@gmail.com}}>\\}
-\date{2026-04-22}
+\date{2026-04-23}
 
 \begin{document}
 \maketitle
@@ -214,7 +214,8 @@ Reply-to:   \@author
 This framework provides support for various common elements for C++
 papers. This document is intended to test various features implemented
 in
-\href{https://github.com/mpark/wg21}{\VERB|\NormalTok{mpark}\OperatorTok{/}\NormalTok{wg21}|}.
+\href{https://github.com/mpark/wg21}{\VERB|\NormalTok{mpark}\OperatorTok{/}\NormalTok{wg21}|
+}.
 
 \hypertarget{title}{%
 \section{\texorpdfstring{Title\protect\hyperlink{title}{}}{Title}}\label{title}}
@@ -243,8 +244,9 @@ The title is specified by YAML metadata block.
 \end{Shaded}
 
 \begin{quote}
-\VERB|\NormalTok{date}\OperatorTok{:}\NormalTok{ today}| will generate
-today's date in
+
+\VERB|\NormalTok{date}\OperatorTok{:}\NormalTok{ today}|
+will generate today's date in
 \VERB|\NormalTok{YYYY}\OperatorTok{{-}}\NormalTok{MM}\OperatorTok{{-}}\NormalTok{DD}|
 (ISO 8601) format.
 \end{quote}
@@ -260,44 +262,71 @@ is the Markdown flavor used for this framework.
 Formatting\protect\hyperlink{inline-formatting}{}}{Inline Formatting}}\label{inline-formatting}}
 
 Inline formatting such as \textbf{bold}, \emph{italics}, and
-\VERB|\NormalTok{verbatim}| work as you would expect. There are also
-useful extensions such as \sout{strikeout}, su\textsubscript{b}script,
+\VERB|\NormalTok{verbatim}|
+work as you would expect. There are also useful extensions such as
+\sout{strikeout}, su\textsubscript{b}script,
 su\textsuperscript{per}script, and highlighted code:
-\VERB|\KeywordTok{constexpr}|.
+\VERB|\KeywordTok{constexpr}|
+.
 
 Various compositions in compact list:
 
 \begin{itemize}
 \tightlist
 \item
-  \sout{\VERB|\NormalTok{A}\OperatorTok{\textless{}}\NormalTok{B}\OperatorTok{\textless{}}\NormalTok{T}\OperatorTok{\textgreater{}\textgreater{}}|}
+  \sout{
+  \VERB|\NormalTok{A}\OperatorTok{\textless{}}\NormalTok{B}\OperatorTok{\textless{}}\NormalTok{T}\OperatorTok{\textgreater{}\textgreater{}}|
+  }
 \item
+
   \VERB|\NormalTok{compare\_3way}|
 \item
-  \VERB|\NormalTok{3WAY}|\VERB|\OperatorTok{\textless{}}\NormalTok{R}\OperatorTok{\textgreater{}}|
+
+  \VERB|\NormalTok{3WAY}|
+
+  \VERB|\OperatorTok{\textless{}}\NormalTok{R}\OperatorTok{\textgreater{}}|
 \item
+
   \VERB|\KeywordTok{operator}\OperatorTok{@}|
 \item
+
   \VERB|\KeywordTok{operator}\OperatorTok{+}|
 \item
+
   \VERB|\NormalTok{x }\OperatorTok{@}\NormalTok{ y}|
 \item
-  \sout{\VERB|\NormalTok{x }\OperatorTok{\&}\NormalTok{ y}|}
+  \sout{
+  \VERB|\NormalTok{x }\OperatorTok{\&}\NormalTok{ y}|
+  }
 \item
-  \textbf{foo \VERB|\KeywordTok{constexpr}| bar}
+  \textbf{foo
+  \VERB|\KeywordTok{constexpr}|
+  bar}
 \item
-  \emph{foo \VERB|\KeywordTok{constexpr}| bar}
+  \emph{foo
+  \VERB|\KeywordTok{constexpr}|
+  bar}
 \item
-  \sout{foo \VERB|\KeywordTok{constexpr}| bar}
+  \sout{foo
+  \VERB|\KeywordTok{constexpr}|
+  bar}
 \item
-  {{\color[HTML]{006e28}\uline{{\mbox{\VERB|\NormalTok{hello world}|}}}}}
+  {{\color[HTML]{006e28}\uline{{\mbox{
+  \VERB|\NormalTok{hello world}|
+  }}}}}
 \item
-  \sout{\emph{\VERB|\NormalTok{hello world}|}}
+  \sout{\emph{
+  \VERB|\NormalTok{hello world}|
+  }}
 \item
-  \sout{\VERB|\NormalTok{hello world}|}
+  \sout{
+  \VERB|\NormalTok{hello world}|
+  }
 \item
+
   \VERB|\KeywordTok{namespace}\NormalTok{ \emph{unspecified} }\OperatorTok{\{} \KeywordTok{struct}\NormalTok{ sender\_base }\OperatorTok{\{\}}\NormalTok{; }\OperatorTok{\}}|
 \item
+
   \VERB|\KeywordTok{namespace}\NormalTok{ \emph{unspecified} }\OperatorTok{\{} \KeywordTok{struct}\NormalTok{ sender\_base }\OperatorTok{\{\}}\NormalTok{; }\OperatorTok{\}}|
 \end{itemize}
 
@@ -307,10 +336,12 @@ Loose list:
 
 \begin{itemize}
 \item
+
   \VERB|\NormalTok{x\emph{\textsubscript{i}} }\OperatorTok{\textless{}=\textgreater{}}\NormalTok{ y\emph{\textsubscript{i}}}|
 \item
-  {{\color[HTML]{bf0303}\sout{foo
-  {\mbox{\VERB|\NormalTok{hello world}|}} bar}}}
+  {{\color[HTML]{bf0303}\sout{foo {\mbox{
+  \VERB|\NormalTok{hello world}|
+  }} bar}}}
 \end{itemize}
 
 \hypertarget{inline-code-in-headers-int-x-y}{%
@@ -640,25 +671,33 @@ Numbers\protect\hyperlink{paragraph-numbers}{}}{Paragraph Numbers}}\label{paragr
 
 \pnum{2} An expression is \emph{potentially evaluated} unless it is an
 unevaluated operand (7.2) or a subexpression thereof. The set of
-\emph{potential results} of an expression \VERB|\NormalTok{e}| is
-defined as follows:
+\emph{potential results} of an expression
+\VERB|\NormalTok{e}|
+is defined as follows:
 
 \begin{itemize}
 \item
-  \pnum{(2.1)} If \VERB|\NormalTok{e}| is an \emph{id-expression}
-  (7.5.4), the set contains only \VERB|\NormalTok{e}|.
+  \pnum{(2.1)} If
+  \VERB|\NormalTok{e}|
+  is an \emph{id-expression} (7.5.4), the set contains only
+  \VERB|\NormalTok{e}|
+  .
 \item
-  \pnum{(2.2)} If \VERB|\NormalTok{e}| is a subscripting operation
-  (7.6.1.1) with an array operand, the set contains the potential
-  results of that operand.
+  \pnum{(2.2)} If
+  \VERB|\NormalTok{e}|
+  is a subscripting operation (7.6.1.1) with an array operand, the set
+  contains the potential results of that operand.
 \end{itemize}
 
 \hypertarget{wording-changes}{%
 \subsection{\texorpdfstring{Wording
 Changes\protect\hyperlink{wording-changes}{}}{Wording Changes}}\label{wording-changes}}
 
-Large changes are \VERB|\OperatorTok{:::}\NormalTok{ add}| for
-additions, \VERB|\OperatorTok{:::}\NormalTok{ rm}| for removals.
+Large changes are
+\VERB|\OperatorTok{:::}\NormalTok{ add}|
+for additions,
+\VERB|\OperatorTok{:::}\NormalTok{ rm}|
+for removals.
 
 \begin{quote}
 Modify section {28.5.5
@@ -674,13 +713,15 @@ Modify section {28.5.5
 \end{Shaded}
 
 \emph{Returns:}
-\VERB|\NormalTok{vformat(loc, fmt, make\_format\_args(args...))}|.}
+\VERB|\NormalTok{vformat(loc, fmt, make\_format\_args(args...))}|
+.}
 \end{quote}
 
 Small, inline changes are done with
 \VERB|\OperatorTok{[}\KeywordTok{new}\NormalTok{ text}\OperatorTok{]\{.}\NormalTok{add}\OperatorTok{\}}|
 or
-\VERB|\OperatorTok{[}\NormalTok{old text}\OperatorTok{]\{.}\NormalTok{rm}\OperatorTok{\}}|.
+\VERB|\OperatorTok{[}\NormalTok{old text}\OperatorTok{]\{.}\NormalTok{rm}\OperatorTok{\}}|
+.
 
 \begin{longtable}[]{@{}
   >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.1481}}
@@ -693,18 +734,22 @@ or
 \end{minipage} \\
 \midrule()
 \endhead
-\VERB|\OperatorTok{\%}\NormalTok{a}| & The locale's abbreviated weekday
-name. If the value does not contain a valid weekday,
-{{\color[HTML]{bf0303}\sout{{\mbox{\VERB|\NormalTok{setstate(ios::failbit)}|}}
-is called}}}
-{{\color[HTML]{006e28}\uline{{\mbox{\VERB|\NormalTok{format\_error}|}}
-is thrown}}}. \\
-\VERB|\OperatorTok{\%}\NormalTok{A}| & The locale's full weekday name.
-If the value does not contain a valid weekday,
-{{\color[HTML]{bf0303}\sout{{\mbox{\VERB|\NormalTok{setstate(ios::failbit)}|}}
-is called}}}
-{{\color[HTML]{006e28}\uline{{\mbox{\VERB|\NormalTok{format\_error}|}}
-is thrown}}}. \\
+
+\VERB|\OperatorTok{\%}\NormalTok{a}|
+& The locale's abbreviated weekday name. If the value does not contain a
+valid weekday, {{\color[HTML]{bf0303}\sout{{\mbox{
+\VERB|\NormalTok{setstate(ios::failbit)}|
+}} is called}}} {{\color[HTML]{006e28}\uline{{\mbox{
+\VERB|\NormalTok{format\_error}|
+}} is thrown}}}. \\
+
+\VERB|\OperatorTok{\%}\NormalTok{A}|
+& The locale's full weekday name. If the value does not contain a valid
+weekday, {{\color[HTML]{bf0303}\sout{{\mbox{
+\VERB|\NormalTok{setstate(ios::failbit)}|
+}} is called}}} {{\color[HTML]{006e28}\uline{{\mbox{
+\VERB|\NormalTok{format\_error}|
+}} is thrown}}}. \\
 \bottomrule()
 \end{longtable}
 
@@ -714,22 +759,40 @@ Changes\protect\hyperlink{grammar-changes}{}}{Grammar Changes}}\label{grammar-ch
 
 \begin{quote}
 \emph{selection-statement:}\\
-\hspace*{0.333em}\hspace*{0.333em}\hspace*{0.333em}\hspace*{0.333em}\VERB|\ControlFlowTok{if} \KeywordTok{constexpr}|\emph{\textsubscript{opt}}
-\VERB|\OperatorTok{(}| \emph{init-statement\textsubscript{opt}}
-\emph{condition} \VERB|\OperatorTok{)}| \emph{statement}\\
-\hspace*{0.333em}\hspace*{0.333em}\hspace*{0.333em}\hspace*{0.333em}\VERB|\ControlFlowTok{if} \KeywordTok{constexpr}|\emph{\textsubscript{opt}}
-\VERB|\OperatorTok{(}| \emph{init-statement\textsubscript{opt}}
-\emph{condition} \VERB|\OperatorTok{)}| \emph{statement}
-\VERB|\ControlFlowTok{else}| \emph{statement}\\
-\hspace*{0.333em}\hspace*{0.333em}\hspace*{0.333em}\hspace*{0.333em}\VERB|\ControlFlowTok{switch} \OperatorTok{(}|
+\hspace*{0.333em}\hspace*{0.333em}\hspace*{0.333em}\hspace*{0.333em}
+\VERB|\ControlFlowTok{if} \KeywordTok{constexpr}|
+\emph{\textsubscript{opt}}
+\VERB|\OperatorTok{(}|
 \emph{init-statement\textsubscript{opt}} \emph{condition}
-\VERB|\OperatorTok{)}| \emph{statement}\\
-\hspace*{0.333em}\hspace*{0.333em}\hspace*{0.333em}\hspace*{0.333em}{{\color[HTML]{006e28}\uline{{\mbox{\VERB|\NormalTok{inspect}|}}
-{\mbox{\VERB|\NormalTok{constexpr}|}}\textsubscript{\emph{opt}}
-{\mbox{\VERB|\NormalTok{(}|}} \emph{init-statement\textsubscript{opt}}
-\emph{condition} {\mbox{\VERB|\NormalTok{)}|}}
-{\mbox{\VERB|\NormalTok{\{}|}} \emph{inspect-case-seq}
-{\mbox{\VERB|\NormalTok{\}}|}}}}}
+\VERB|\OperatorTok{)}|
+\emph{statement}\\
+\hspace*{0.333em}\hspace*{0.333em}\hspace*{0.333em}\hspace*{0.333em}
+\VERB|\ControlFlowTok{if} \KeywordTok{constexpr}|
+\emph{\textsubscript{opt}}
+\VERB|\OperatorTok{(}|
+\emph{init-statement\textsubscript{opt}} \emph{condition}
+\VERB|\OperatorTok{)}|
+\emph{statement}
+\VERB|\ControlFlowTok{else}|
+\emph{statement}\\
+\hspace*{0.333em}\hspace*{0.333em}\hspace*{0.333em}\hspace*{0.333em}
+\VERB|\ControlFlowTok{switch} \OperatorTok{(}|
+\emph{init-statement\textsubscript{opt}} \emph{condition}
+\VERB|\OperatorTok{)}|
+\emph{statement}\\
+\hspace*{0.333em}\hspace*{0.333em}\hspace*{0.333em}\hspace*{0.333em}{{\color[HTML]{006e28}\uline{{\mbox{
+\VERB|\NormalTok{inspect}|
+}} {\mbox{
+\VERB|\NormalTok{constexpr}|
+}}\textsubscript{\emph{opt}} {\mbox{
+\VERB|\NormalTok{(}|
+}} \emph{init-statement\textsubscript{opt}} \emph{condition} {\mbox{
+\VERB|\NormalTok{)}|
+}} {\mbox{
+\VERB|\NormalTok{\{}|
+}} \emph{inspect-case-seq} {\mbox{
+\VERB|\NormalTok{\}}|
+}}}}}
 
 {\color[HTML]{006e28}
 
@@ -741,7 +804,8 @@ Changes\protect\hyperlink{grammar-changes}{}}{Grammar Changes}}\label{grammar-ch
 \emph{inspect-case:}\\
 \hspace*{0.333em}\hspace*{0.333em}\hspace*{0.333em}\hspace*{0.333em}\emph{attribute-specifier-seq\textsubscript{opt}}
 \emph{inspect-pattern} \emph{inspect-guard\textsubscript{opt}}
-\VERB|\NormalTok{:}| \emph{statement}
+\VERB|\NormalTok{:}|
+\emph{statement}
 
 \emph{inspect-pattern:}\\
 \hspace*{0.333em}\hspace*{0.333em}\hspace*{0.333em}\hspace*{0.333em}\emph{wildcard-pattern}\\
@@ -753,8 +817,10 @@ Changes\protect\hyperlink{grammar-changes}{}}{Grammar Changes}}\label{grammar-ch
 \hspace*{0.333em}\hspace*{0.333em}\hspace*{0.333em}\hspace*{0.333em}\emph{extractor-pattern}
 
 \emph{inspect-guard:}\\
-\hspace*{0.333em}\hspace*{0.333em}\hspace*{0.333em}\hspace*{0.333em}\VERB|\NormalTok{if (}|
-\emph{expression} \VERB|\NormalTok{)}|
+\hspace*{0.333em}\hspace*{0.333em}\hspace*{0.333em}\hspace*{0.333em}
+\VERB|\NormalTok{if (}|
+\emph{expression}
+\VERB|\NormalTok{)}|
 
 }
 \end{quote}
@@ -764,11 +830,14 @@ Changes\protect\hyperlink{grammar-changes}{}}{Grammar Changes}}\label{grammar-ch
 Names\protect\hyperlink{stable-names}{}}{Stable Names}}\label{stable-names}}
 
 Stable names are written as
-\VERB|\OperatorTok{[}\NormalTok{basic}\OperatorTok{.}\NormalTok{life}\OperatorTok{]\{.}\NormalTok{sref}\OperatorTok{\}}|,
-and renders as {6.8.4
+\VERB|\OperatorTok{[}\NormalTok{basic}\OperatorTok{.}\NormalTok{life}\OperatorTok{]\{.}\NormalTok{sref}\OperatorTok{\}}|
+, and renders as {6.8.4
 \href{https://wg21.link/basic.life}{{[}basic.life{]}}}. You can also add
-a class \VERB|\OperatorTok{{-}}| or
-\VERB|\OperatorTok{.}\NormalTok{unnumbered}| to omit the section number.
+a class
+\VERB|\OperatorTok{{-}}|
+or
+\VERB|\OperatorTok{.}\NormalTok{unnumbered}|
+to omit the section number.
 
 It uses \url{https://timsong-cpp.github.io/cppwp/annex-f} as the
 underlying database.
@@ -786,14 +855,20 @@ Examples:
 \end{minipage} \\
 \midrule()
 \endhead
-\VERB|\NormalTok{[basic.life]\{.sref\}}| & {6.8.4
+
+\VERB|\NormalTok{[basic.life]\{.sref\}}|
+& {6.8.4
 \href{https://wg21.link/basic.life}{{[}basic.life{]}}} \\
-\VERB|\NormalTok{[basic.life\#1]\{.sref\}}| & {6.8.4
+
+\VERB|\NormalTok{[basic.life\#1]\{.sref\}}|
+& {6.8.4
 \href{https://wg21.link/basic.life\#1}{{[}basic.life\#1{]}}} \\
-\VERB|\NormalTok{[basic.life]\{{-} .sref\}}| &
-{\href{https://wg21.link/basic.life}{{[}basic.life{]}}} \\
-\VERB|\NormalTok{[basic.life]\{.unnumbered .sref\}}| &
-{\href{https://wg21.link/basic.life}{{[}basic.life{]}}} \\
+
+\VERB|\NormalTok{[basic.life]\{{-} .sref\}}|
+& {\href{https://wg21.link/basic.life}{{[}basic.life{]}}} \\
+
+\VERB|\NormalTok{[basic.life]\{.unnumbered .sref\}}|
+& {\href{https://wg21.link/basic.life}{{[}basic.life{]}}} \\
 \bottomrule()
 \end{longtable}
 
@@ -804,8 +879,10 @@ There are three supported styles of note:
 
 \begin{itemize}
 \item
-  Use the \VERB|\NormalTok{note}| class for notes that are expected to
-  appear in the specification wording
+  Use the
+  \VERB|\NormalTok{note}|
+  class for notes that are expected to appear in the specification
+  wording
 
   \begin{Shaded}
   \begin{Highlighting}[]
@@ -816,8 +893,9 @@ There are three supported styles of note:
   {{{[} \emph{Note:} }Notes will look like
   this{ --- \emph{end note} {]}}}
 \item
-  Use the \VERB|\NormalTok{ednote}| for editorial notes, these will be
-  formatted as
+  Use the
+  \VERB|\NormalTok{ednote}|
+  for editorial notes, these will be formatted as
 
   \begin{Shaded}
   \begin{Highlighting}[]
@@ -828,8 +906,10 @@ There are three supported styles of note:
   {{\color[HTML]{0000ff}{[} Editor's note: Editorial notes are
   important {]}}}
 \item
-  Use \VERB|\NormalTok{draftnote}| to include text that is intended as
-  questions or information for reviews and working groups.
+  Use
+  \VERB|\NormalTok{draftnote}|
+  to include text that is intended as questions or information for
+  reviews and working groups.
 
   \begin{Shaded}
   \begin{Highlighting}[]
@@ -847,49 +927,54 @@ There are three supported styles of note:
 
   {{\color[HTML]{0000ff}{[} Drafting note for the reader: It is also
   possible to indicate the a note is for a specific
-  \VERB|\NormalTok{audience}| via this optional attribute. {]}}}
+  \VERB|\NormalTok{audience}|
+  via this optional attribute. {]}}}
 \end{itemize}
 
 \hypertarget{citation}{%
 \section{\texorpdfstring{Citation\protect\hyperlink{citation}{}}{Citation}}\label{citation}}
 
 Automatic references are written as
-\VERB|\OperatorTok{[@}\NormalTok{N4762}\OperatorTok{]}| and renders as
-\href{https://wg21.link/n4762}{{[}N4762{]}}. Anything in
+\VERB|\OperatorTok{[@}\NormalTok{N4762}\OperatorTok{]}|
+and renders as \href{https://wg21.link/n4762}{{[}N4762{]}}. Anything in
 \url{https://wg21.link/index.yaml} are linked automatically.
 
 \begin{itemize}
 \tightlist
 \item
-  \VERB|\NormalTok{N}| Papers (e.g.,
-  \VERB|\OperatorTok{[@}\NormalTok{N3887}\OperatorTok{]}| →
-  \href{https://wg21.link/n3887}{{[}N3887{]}})
+
+  \VERB|\NormalTok{N}|
+  Papers (e.g.,
+  \VERB|\OperatorTok{[@}\NormalTok{N3887}\OperatorTok{]}|
+  → \href{https://wg21.link/n3887}{{[}N3887{]}})
 \item
-  \VERB|\NormalTok{P}| Papers (e.g.,
-  \VERB|\OperatorTok{[@}\NormalTok{P1371R1}\OperatorTok{]}| →
-  \href{https://wg21.link/p1371r1}{{[}P1371R1{]}})
+
+  \VERB|\NormalTok{P}|
+  Papers (e.g.,
+  \VERB|\OperatorTok{[@}\NormalTok{P1371R1}\OperatorTok{]}|
+  → \href{https://wg21.link/p1371r1}{{[}P1371R1{]}})
 \item
   CWG Issues (e.g.,
-  \VERB|\OperatorTok{[@}\NormalTok{CWG1234}\OperatorTok{]}| →
-  \href{https://wg21.link/cwg1234}{{[}CWG1234{]}})
+  \VERB|\OperatorTok{[@}\NormalTok{CWG1234}\OperatorTok{]}|
+  → \href{https://wg21.link/cwg1234}{{[}CWG1234{]}})
 \item
   LWG Issues (e.g.,
-  \VERB|\OperatorTok{[@}\NormalTok{LWG1234}\OperatorTok{]}| →
-  \href{https://wg21.link/lwg1234}{{[}LWG1234{]}})
+  \VERB|\OperatorTok{[@}\NormalTok{LWG1234}\OperatorTok{]}|
+  → \href{https://wg21.link/lwg1234}{{[}LWG1234{]}})
 \item
   Github Edits (e.g,
-  \VERB|\OperatorTok{[@}\NormalTok{EDIT1234}\OperatorTok{]}| →
-  \href{https://wg21.link/edit1234}{{[}EDIT1234{]}})
+  \VERB|\OperatorTok{[@}\NormalTok{EDIT1234}\OperatorTok{]}|
+  → \href{https://wg21.link/edit1234}{{[}EDIT1234{]}})
 \item
   Standing Documents (e.g.,
-  \VERB|\OperatorTok{[@}\NormalTok{SD6}\OperatorTok{]}| →
-  \href{https://wg21.link/sd6}{{[}SD6{]}})
+  \VERB|\OperatorTok{[@}\NormalTok{SD6}\OperatorTok{]}|
+  → \href{https://wg21.link/sd6}{{[}SD6{]}})
 \end{itemize}
 
-You may also write \VERB|\NormalTok{[@P2996R8]\{.title\}}| to include
-the title of the paper, and renders as:
-{\href{https://wg21.link/p2996r8}{{[}P2996R8{]} (Reflection for
-C++26)}}.
+You may also write
+\VERB|\NormalTok{[@P2996R8]\{.title\}}| to include the title of the
+paper, and renders as: {\href{https://wg21.link/p2996r8}{{[}P2996R8{]}
+(Reflection for C++26)}}.
 
 \hypertarget{bibliography}{%
 \section{\texorpdfstring{References\protect\hyperlink{bibliography}{}}{References}}\label{bibliography}}
