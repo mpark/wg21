@@ -27,35 +27,35 @@
         },
 
         "Comment": {
-            "text-color": "#008000",
+            "text-color": "#6a737d",
             "background-color": null,
             "bold": false,
             "italic": true,
             "underline": false
         },
         "CommentVar": {
-            "text-color": "#008000",
+            "text-color": "#6a737d",
             "background-color": null,
             "bold": false,
             "italic": true,
             "underline": false
         },
         "Documentation": {
-            "text-color": "#008000",
+            "text-color": "#6a737d",
             "background-color": null,
             "bold": false,
             "italic": false,
             "underline": false
         },
         "Information": {
-            "text-color": "#008000",
+            "text-color": "#6a737d",
             "background-color": null,
             "bold": false,
             "italic": false,
             "underline": false
         },
         "Warning": {
-            "text-color": "#008000",
+            "text-color": "#6a737d",
             "background-color": null,
             "bold": true,
             "italic": false,
@@ -135,7 +135,7 @@
         },
 
         "Operator": {
-            "text-color": "#af1915",
+            "text-color": "#7b3e91",
             "background-color": null,
             "bold": false,
             "italic": false,

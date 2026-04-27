@@ -54,22 +54,22 @@
 \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.62,0.41,0.03}{#1}}
 \newcommand{\BuiltInTok}[1]{\textcolor[rgb]{0.62,0.41,0.03}{#1}}
 \newcommand{\CharTok}[1]{\textcolor[rgb]{0.62,0.41,0.03}{#1}}
-\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.00,0.50,0.00}{\textit{#1}}}
-\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.00,0.50,0.00}{\textit{#1}}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.42,0.45,0.49}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.42,0.45,0.49}{\textit{#1}}}
 \newcommand{\ConstantTok}[1]{#1}
 \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.38,0.49}{#1}}
 \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.00,0.38,0.49}{#1}}
 \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.62,0.41,0.03}{#1}}
-\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.00,0.50,0.00}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.42,0.45,0.49}{#1}}
 \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{#1}}}
 \newcommand{\ExtensionTok}[1]{#1}
 \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.62,0.41,0.03}{#1}}
 \newcommand{\FunctionTok}[1]{#1}
 \newcommand{\ImportTok}[1]{#1}
-\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.00,0.50,0.00}{#1}}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.42,0.45,0.49}{#1}}
 \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.38,0.49}{#1}}
 \newcommand{\NormalTok}[1]{#1}
-\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.69,0.10,0.08}{#1}}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.48,0.24,0.57}{#1}}
 \newcommand{\OtherTok}[1]{#1}
 \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.44,0.31,0.22}{#1}}
 \newcommand{\RegionMarkerTok}[1]{#1}
@@ -78,7 +78,7 @@
 \newcommand{\StringTok}[1]{\textcolor[rgb]{0.62,0.41,0.03}{#1}}
 \newcommand{\VariableTok}[1]{#1}
 \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.62,0.41,0.03}{#1}}
-\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.00,0.50,0.00}{\textbf{#1}}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.42,0.45,0.49}{\textbf{#1}}}
 \usepackage{longtable,booktabs,array}
 \usepackage{calc} % for calculating minipage widths
 % Correct order of tables after \paragraph or \subparagraph
@@ -198,7 +198,7 @@ Reply-to:   \@author
 \author{&Author
 0\\&<\href{mailto:author0@gmail.com}{\nolinkurl{author0@gmail.com}}>\\&Author
 1\\&<\href{mailto:author1@gmail.com}{\nolinkurl{author1@gmail.com}}>\\}
-\date{2026-04-23}
+\date{2026-04-27}
 
 \begin{document}
 \maketitle
