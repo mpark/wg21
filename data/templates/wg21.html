@@ -33,6 +33,45 @@ $if(highlighting-css)$
       code.diff span.va {color: #$addcolor$}
       code.diff span.st {color: #$rmcolor$}
 $endif$
+      .view-controls {
+        position: sticky;
+        top: 0.75rem;
+        z-index: 1000;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.35rem;
+        width: fit-content;
+        margin-left: auto;
+        margin-bottom: 1rem;
+        padding: 0.45rem 0.8rem;
+        border: 1px solid #b7c0c8;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.96);
+        color: #22303c;
+        font: 600 0.9rem/1.1 sans-serif;
+        box-shadow: 0 0.2rem 0.8rem rgba(34, 48, 60, 0.12);
+      }
+      .view-controls:hover {
+        background: #f3f6f8;
+      }
+      .view-controls label {
+        display: flex;
+        align-items: center;
+        gap: 0.45rem;
+      }
+      .view-controls input {
+        margin: 0;
+      }
+      .view-controls span {
+        white-space: nowrap;
+      }
+      body[data-syntax-highlighting="off"] code.sourceCode:not(.diff) span:not(.add, .rm, .co, .cv, .do, .in) {
+        color: inherit !important;
+        font-style: inherit !important;
+        font-weight: inherit !important;
+        text-decoration: inherit !important;
+      }
   </style>
 $for(css)$
   <link rel="stylesheet" href="$css$" />
@@ -48,7 +87,13 @@ $endif$
     <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
   <![endif]-->
 </head>
-<body>
+<body data-syntax-highlighting="on">
+<form class="view-controls">
+<label for="no-syntax-highlighting-toggle">
+<input id="no-syntax-highlighting-toggle" type="checkbox" />
+<span>No syntax highlighting</span>
+</label>
+</form>
 <div class="wrapper">
 $for(include-before)$
 $include-before$
@@ -116,5 +161,13 @@ $include-after$
 $endfor$
 </div>
 </div>
+<script>
+const body = document.body;
+const noSyntaxHighlightingCheckbox = document.getElementById('no-syntax-highlighting-toggle');
+noSyntaxHighlightingCheckbox.checked = false;
+noSyntaxHighlightingCheckbox.addEventListener('change', () => {
+  body.dataset.syntaxHighlighting = noSyntaxHighlightingCheckbox.checked ? 'off' : 'on';
+});
+</script>
 </body>
 </html>
