@@ -15,6 +15,7 @@ import re
 stable_names = {}
 refs = {}
 headers = {}
+document_pattern = r"[PD]([0-9]+)R[0-9]+"
 
 def wrap_elem(opening, elem, closing):
     if isinstance(elem, pf.Div):
@@ -35,11 +36,12 @@ def prepare(doc):
         doc.metadata['date'] = datetime.date.today().isoformat()
 
     document = doc.get_metadata('document')
-    number = re.match("[PD]([0-9]+)R[0-9]+", document.upper())
+    number = re.match(document_pattern, document.upper())
     if number is not None:
         doc.metadata['number'] = number.group(1)
     else:
-        pf.debug('mpark/wg21: document ', document, 'is in an unrecognized format')
+        pf.debug(f"""mpark/wg21: {document} is an unrecognized format; expected "{document_pattern}".
+            This just means that [Latest] and [Status] links will be missing.""")
     doc.metadata['pagetitle'] = pf.convert_text(
         pf.Plain(*doc.metadata['title'].content),
         input_format='panflute',
