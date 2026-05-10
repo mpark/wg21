@@ -62,6 +62,7 @@ Various compositions in compact list:
 
   - ~~`A<B<T>>`{.cpp}~~
   - `compare_3way`{.cpp}
+  - [`compare_3way`]{.add}
   - `3WAY`{.default}`<R>`{.cpp}
   - `operator@`{.cpp}
   - `operator+`{.cpp}
