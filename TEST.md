@@ -362,6 +362,12 @@ Small, inline changes are done with `[new text]{.add}` or `[old text]{.rm}`.
 |           | [`format_error` is thrown]{.add}.                                  |
 +-----------+--------------------------------------------------------------------+
 
+The optional _attribute-specifier-seq_ appertains to the [label]{.rm}[_general-label_]{.add}.
+The only use of a [label with an _identifier_]{.rm}[_label_]{.add} is as the target of a `goto`,
+[`break`, or `continue`]{.add}. No two [label]{.rm}[_label_]{.add}s in a function shall have
+the same _identifier_. A [label]{.rm}[_general-label_]{.add} can be used [in a `goto` statement]{.rm}
+before its introduction by a _labeled-statement_.
+
 ## Grammar Changes
 
 > | _selection-statement:_
