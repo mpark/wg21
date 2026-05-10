@@ -908,6 +908,19 @@ removals.</p>
 </blockquote>
 <p>Small, inline changes are done with <code class="sourceCode cpp"><span class="op">[</span><span class="kw">new</span> text<span class="op">]{.</span>add<span class="op">}</span></code>
 or <code class="sourceCode cpp"><span class="op">[</span>old text<span class="op">]{.</span>rm<span class="op">}</span></code>.</p>
+<p>The optional <em>attribute-specifier-seq</em> appertains to the <span class="rm" style="color: #bf0303"><del>label</del></span><span class="add" style="color: #006e28"><ins><em>general-label</em></ins></span>. The
+only use of a <span class="rm" style="color: #bf0303"><del>label with an
+<em>identifier</em></del></span><span class="add" style="color: #006e28"><ins><em>label</em></ins></span> is as the target
+of a <code class="sourceCode cpp"><span class="cf">goto</span></code>,
+<span class="add" style="color: #006e28"><ins><span><code class="sourceCode default">break</code></span>,
+or
+<span><code class="sourceCode default">continue</code></span></ins></span>.
+No two <span class="rm" style="color: #bf0303"><del>label</del></span><span class="add" style="color: #006e28"><ins><em>label</em></ins></span>s in a function
+shall have the same <em>identifier</em>. A <span class="rm" style="color: #bf0303"><del>label</del></span><span class="add" style="color: #006e28"><ins><em>general-label</em></ins></span> can be
+used <span class="rm" style="color: #bf0303"><del>in a
+<span><code class="sourceCode default">goto</code></span>
+statement</del></span> before its introduction by a
+<em>labeled-statement</em>.</p>
 <table>
 <colgroup>
 <col style="width: 14%" />
@@ -940,19 +953,6 @@ is thrown</ins></span>.</td>
 </tr>
 </tbody>
 </table>
-<p>The optional <em>attribute-specifier-seq</em> appertains to the <span class="rm" style="color: #bf0303"><del>label</del></span><span class="add" style="color: #006e28"><ins><em>general-label</em></ins></span>. The
-only use of a <span class="rm" style="color: #bf0303"><del>label with an
-<em>identifier</em></del></span><span class="add" style="color: #006e28"><ins><em>label</em></ins></span> is as the target
-of a <code class="sourceCode cpp"><span class="cf">goto</span></code>,
-<span class="add" style="color: #006e28"><ins><span><code class="sourceCode default">break</code></span>,
-or
-<span><code class="sourceCode default">continue</code></span></ins></span>.
-No two <span class="rm" style="color: #bf0303"><del>label</del></span><span class="add" style="color: #006e28"><ins><em>label</em></ins></span>s in a function
-shall have the same <em>identifier</em>. A <span class="rm" style="color: #bf0303"><del>label</del></span><span class="add" style="color: #006e28"><ins><em>general-label</em></ins></span> can be
-used <span class="rm" style="color: #bf0303"><del>in a
-<span><code class="sourceCode default">goto</code></span>
-statement</del></span> before its introduction by a
-<em>labeled-statement</em>.</p>
 <h2 data-number="5.3" id="grammar-changes"><span class="header-section-number">5.3</span> Grammar Changes<a href="#grammar-changes" class="self-link"></a></h2>
 <blockquote>
 <div class="line-block"><em>selection-statement:</em><br />
