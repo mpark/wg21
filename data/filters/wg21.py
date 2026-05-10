@@ -668,7 +668,7 @@ class CodeElems:
             text = text.replace('<', '\\textless{}') \
                        .replace('>', '\\textgreater{}')
 
-        code_elems = text.split('{1}{0}{1}'.format(separator, '\n' if doc.format == 'latex' else ''))
+        code_elems = text.split(f'\n{separator}\n')
 
         assert(len(cls.code_elems) == len(code_elems))
 
