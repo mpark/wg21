@@ -41,9 +41,6 @@ Debian installation may require these additional packages:
 git submodule add https://github.com/mpark/wg21.git
 
 echo "include wg21/Makefile" > Makefile
-
-make <paper>.pdf  # `<paper>.md` -> `generated/<paper>.pdf`
-make <paper>.html # `<paper>.md` -> `generated/<paper>.html`
 ```
 
 See [mpark/wg21-papers] for an example use of this project.
