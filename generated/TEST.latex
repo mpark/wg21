@@ -319,6 +319,9 @@ Various compositions in compact list:
   \VERB|\NormalTok{hello world}|
   }}}}}
 \item
+
+  \VERB|\NormalTok{{{\color[HTML]{006e28}\uline{hello\textless{}T\textgreater{}}}}}|
+\item
   \sout{\emph{
   \VERB|\NormalTok{hello world}|
   }}
@@ -454,7 +457,7 @@ Highlighting\protect\hyperlink{c-syntax-highlighting}{}}{C++ Syntax Highlighting
 \KeywordTok{template} \OperatorTok{\textless{}}\NormalTok{{{\color[HTML]{bf0303}\sout{invocable}}}{{\color[HTML]{006e28}\uline{class}}} F{{\color[HTML]{006e28}\uline{, class}}}}\OperatorTok{\textgreater{}}
 \KeywordTok{struct}\NormalTok{ \emph{as-receiver} }\OperatorTok{\{}
 \NormalTok{{{\color[HTML]{bf0303}\sout{private:}}}}
-\NormalTok{  {{\color[HTML]{bf0303}\sout{using invocable\_type = std::remove\_cvref\_t;}}}}
+\NormalTok{  {{\color[HTML]{bf0303}\sout{using invocable\_type = std::remove\_cvref\_t\textless{}F\textgreater;}}}}
 \NormalTok{  {{\color[HTML]{bf0303}\sout{invocable\_type}}}{{\color[HTML]{006e28}\uline{F}}} f\_;}
 \NormalTok{{{\color[HTML]{bf0303}\sout{public:}}}}
 \NormalTok{  {{\color[HTML]{bf0303}\sout{explicit \emph{as-receiver}(invocable\_type\&\& f)}}}}

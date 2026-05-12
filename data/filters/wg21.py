@@ -520,11 +520,14 @@ class CodeElems:
     @staticmethod
     def _convert_fragments(fragments, doc):
         separator = CodeElems._compute_unique_placeholder(fragments)
-        # -smart to disable Pandoc smart extension
         pf_fragments = (
             pf.Plain(*fragment.content).walk(CodeElems.init, doc).walk(divspan, doc)
             for fragment
-            in pf.convert_text(f'\n\n{separator}\n\n'.join(fragments), input_format='markdown-smart'))
+            in pf.convert_text(
+                f'\n\n{separator}\n\n'.join(fragments),
+                # -smart to avoid things like ... to get transformed
+                # -raw_html to avoid <T> in foo<T> to be interpreted as an HTML tag.
+                input_format='markdown-smart-raw_html'))
         text = pf.convert_text(
             pf_fragments,
             input_format='panflute',

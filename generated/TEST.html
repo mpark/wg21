@@ -714,7 +714,7 @@ bar</del></span></p></li>
 <span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a><span class="kw">template</span> <span class="op">&lt;</span><span class="rm" style="color: #bf0303"><del>invocable</del></span><span class="add" style="color: #006e28"><ins>class</ins></span> F<span class="add" style="color: #006e28"><ins>, class</ins></span><span class="op">&gt;</span></span>
 <span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> <em>as-receiver</em> <span class="op">{</span></span>
 <span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a><span class="rm" style="color: #bf0303"><del>private:</del></span></span>
-<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a>  <span class="rm" style="color: #bf0303"><del>using invocable_type = std::remove_cvref_t<F>;</del></span></span>
+<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a>  <span class="rm" style="color: #bf0303"><del>using invocable_type = std::remove_cvref_t&lt;F&gt;;</del></span></span>
 <span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a>  <span class="rm" style="color: #bf0303"><del>invocable_type</del></span><span class="add" style="color: #006e28"><ins>F</ins></span> f_;</span>
 <span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a><span class="rm" style="color: #bf0303"><del>public:</del></span></span>
 <span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a>  <span class="rm" style="color: #bf0303"><del>explicit <em>as-receiver</em>(invocable_type&amp;&amp; f)</del></span></span>

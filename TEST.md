@@ -72,6 +72,7 @@ Various compositions in compact list:
   - _foo `constexpr`{.cpp} bar_
   - ~~foo `constexpr`{.cpp} bar~~
   - [`hello world`]{.add}
+  - `@[hello<T>]{.add}@`
   - ~~_`hello world`_~~
   - ~~`hello world`~~
   - `namespace $unspecified$ { struct sender_base {}; }`
