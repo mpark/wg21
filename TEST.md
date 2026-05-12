@@ -213,7 +213,7 @@ struct @_as-receiver_@ {
   void set_done() noexcept {}
 };
 
-void f(@@[`int *const *@_p~i~_@`]{.add}@@);
+void f(@[int \*const \*_p~i~_]{.add}@);
 ```
 
 ### `diff` Syntax Highlighting

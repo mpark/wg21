@@ -195,8 +195,7 @@ struct @_as-receiver_@ {
 
 ![](img/nested-inline-code-cpp.png)
 
-There are some cases you really need to **nest** embedded Markdown. In this case,
-you can surround the outer context with `@@`.
+In some cases, you'll need to leverage __escaping characters using backslashes__.
 
 For example, suppose you want to add a parameter `int *const *ptr` to a function `f`
 and italicize the `ptr`. A naive approach might look something like this:
@@ -207,14 +206,27 @@ void f(@[int *const *_ptr_]{.add}@); // The * italicizes the const!
 ```
 ``````
 
-In a situation like this (should be pretty rare), you need:
+In this situation, the `*`s italicizes the `const` since we've in normal Markdown
+land within `@`. We can use Pandoc's [`all_symbols_escapable`](https://pandoc.org/MANUAL.html#extension-all_symbols_escapable) extension functionality to fix it.
+
+``````markdown
+```
+void f(@[int \*const \*_ptr_]{.add}@); // The * are escaped.
+```
+``````
+
+Now, there _may_ be some cases where you really need to **nest** embedded Markdown.
+
+> This used to be needed more often, but nowadays they should be exceedingly rare.
+
+You can surround the outer context with `@@`. The example above for example can __also__ be written as:
 
 ``````markdown
 ```
 void f(@@[`int *const *@_ptr_@`]{.add}@@);
-       ^^                             ^^ @@
-          ^                   ^ inner code
-                       ^     ^ nested @
+       ^^                             ^^ @@ brings you into normal Markdown
+          ^                   ^ ` brings to inline code
+                       ^     ^ nested @ brings you back to normal Markdown again
 ```
 ``````
 

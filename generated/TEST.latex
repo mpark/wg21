@@ -198,7 +198,7 @@ Reply-to:   \@author
 \author{&Author
 0\\&<\href{mailto:author0@gmail.com}{\nolinkurl{author0@gmail.com}}>\\&Author
 1\\&<\href{mailto:author1@gmail.com}{\nolinkurl{author1@gmail.com}}>\\}
-\date{2026-05-10}
+\date{2026-05-12}
 
 \begin{document}
 \maketitle
@@ -485,7 +485,7 @@ Highlighting\protect\hyperlink{c-syntax-highlighting}{}}{C++ Syntax Highlighting
   \DataTypeTok{void}\NormalTok{ set\_done}\OperatorTok{()} \KeywordTok{noexcept} \OperatorTok{\{\}}
 \OperatorTok{\}}\NormalTok{;}
 
-\DataTypeTok{void}\NormalTok{ f}\OperatorTok{(}\NormalTok{{{\color[HTML]{006e28}\uline{{\mbox{\VERB|\NormalTok{int *const *\emph{p\textsubscript{i}}}|}}}}}}\OperatorTok{)}\NormalTok{;}
+\DataTypeTok{void}\NormalTok{ f}\OperatorTok{(}\NormalTok{{{\color[HTML]{006e28}\uline{int *const *\emph{p\textsubscript{i}}}}}}\OperatorTok{)}\NormalTok{;}
 \end{Highlighting}
 \end{Shaded}
 
