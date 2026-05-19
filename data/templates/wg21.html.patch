@@ -19,12 +19,10 @@ index dda7e8c..8e8e1f4 100644
 +      code{white-space: pre-wrap;}
 +      span.smallcaps{font-variant: small-caps;}
 +      span.underline{text-decoration: underline;}
-+      ins, del {
-+        text-decoration-thickness: 1px;
-+      }
-+      ins {
-+        text-underline-offset: 3.5px;
-+      }
++      /* Make the thickness of strikeout and underline consistent in different contexts */
++      ins, del { text-decoration-thickness: 1px; }
++      /* Move underline down slightly as to not overlap with underscore */
++      ins { text-underline-offset: 3.5px; }
 +      div.column{display: inline-block; vertical-align: top; width: 50%;}
 +      div.csl-block{margin-left: 1.5em;}
 +      ul.task-list{list-style: none;}
