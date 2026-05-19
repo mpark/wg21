@@ -406,7 +406,3 @@ span.indented {
 
 ol.enumeratea { list-style-type: none; background: inherit; }
 ol.enumerate { list-style-type: none; background: inherit; }
-
-/* With `display: inline-block` from <https://github.com/jgm/skylighting>,
-   Strikeout in ~~foo `constexpr`{.cpp} bar~~ doesn't go through `constexpr`. */
-code.sourceCode > span { display: inline; }
