@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="generator" content="mpark/wg21" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-  <meta name="dcterms.date" content="2026-05-12" />
+  <meta name="dcterms.date" content="2026-05-19" />
   <title>Test document for mpark/wg21</title>
   <style>
       code{white-space: pre-wrap;}
@@ -496,7 +496,7 @@ various features of the framework</h3>
   </tr>
   <tr>
     <td>Date:</td>
-    <td>2026-05-12</td>
+    <td>2026-05-19</td>
   </tr>
   <tr>
     <td style="vertical-align:top">Project:</td>
@@ -580,7 +580,8 @@ in <a href="https://github.com/mpark/wg21"><code class="sourceCode cpp">mpark<sp
 <span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code></pre></div>
 <blockquote>
 <p><code class="sourceCode cpp">date<span class="op">:</span> today</code>
-will generate today’s date in <code class="sourceCode cpp">YYYY<span class="op">-</span>MM<span class="op">-</span>DD</code>
+will generate today’s date in
+<code class="sourceCode cpp">YYYY<span class="op">-</span>MM<span class="op">-</span>DD</code>
 (ISO 8601) format.</p>
 </blockquote>
 <h1 data-number="3" id="markdown"><span class="header-section-number">3</span> Markdown<a href="#markdown" class="self-link"></a></h1>
@@ -612,6 +613,7 @@ bar</em></li>
 <code class="sourceCode cpp"><span class="kw">constexpr</span></code>
 bar</del></li>
 <li><span class="add" style="color: #006e28"><ins><span><code class="sourceCode default">hello world</code></span></ins></span></li>
+<li><code class="sourceCode cpp"><span class="add" style="color: #006e28"><ins>hello&lt;T&gt;</ins></span></code></li>
 <li><del><em><code class="sourceCode cpp">hello world</code></em></del></li>
 <li><del><code class="sourceCode cpp">hello world</code></del></li>
 <li><code class="sourceCode cpp"><span class="kw">namespace</span> <em>unspecified</em> <span class="op">{</span> <span class="kw">struct</span> sender_base <span class="op">{}</span>; <span class="op">}</span></code></li>
@@ -642,7 +644,7 @@ bar</del></span></p></li>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>bool b = true;</span>
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>struct process {</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  hello <span class="rm" style="color: #bf0303"><del>constexpr</del></span> detail::foo::template <em>foo</em>;</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  hello <span class="rm" style="color: #bf0303"><del>constexpr </del></span>detail::foo::template <em>foo</em>;</span>
 <span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  [[using CC: opt(1), debug]] x;</span>
 <span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
@@ -678,7 +680,7 @@ bar</del></span></p></li>
 <span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="dt">bool</span> b <span class="op">=</span> <span class="kw">true</span>;</span>
 <span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> process <span class="op">{</span></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  hello <span class="add" style="color: #006e28"><ins>constexpr</ins></span> detail<span class="op">::</span>foo<span class="op">::</span><span class="kw">template</span> foo;</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  hello <span class="add" style="color: #006e28"><ins>constexpr </ins></span>detail<span class="op">::</span>foo<span class="op">::</span><span class="kw">template</span> foo;</span>
 <span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  <span class="op">[[</span><span class="kw">using</span><span class="at"> CC</span><span class="op">:</span><span class="at"> opt</span><span class="op">(</span><span class="dv">1</span><span class="op">)</span>,<span class="at"> debug</span><span class="op">]]</span> x;</span>
 <span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
@@ -711,11 +713,11 @@ bar</del></span></p></li>
 <span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a><span class="add" style="color: #006e28"><ins><span><code class="sourceCode default">namespace <em>unspecified</em> { struct sender_base {}; }</code></span></ins></span></span>
 <span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a><span class="add" style="color: #006e28"><ins><span><code class="sourceCode default">using <em>unspecified</em>::sender_base;</code></span></ins></span></span>
 <span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a><span class="kw">template</span> <span class="op">&lt;</span><span class="rm" style="color: #bf0303"><del>invocable</del></span><span class="add" style="color: #006e28"><ins>class</ins></span> F<span class="add" style="color: #006e28"><ins>, class</ins></span><span class="op">&gt;</span></span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a><span class="kw">template</span> <span class="op">&lt;</span><span><span class="rm" style="color: #bf0303"><del>invocable</del></span><span class="add" style="color: #006e28"><ins>class</ins></span></span> F<span class="add" style="color: #006e28"><ins>, class</ins></span><span class="op">&gt;</span></span>
 <span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> <em>as-receiver</em> <span class="op">{</span></span>
 <span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a><span class="rm" style="color: #bf0303"><del>private:</del></span></span>
 <span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a>  <span class="rm" style="color: #bf0303"><del>using invocable_type = std::remove_cvref_t&lt;F&gt;;</del></span></span>
-<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a>  <span class="rm" style="color: #bf0303"><del>invocable_type</del></span><span class="add" style="color: #006e28"><ins>F</ins></span> f_;</span>
+<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a>  <span><span class="rm" style="color: #bf0303"><del>invocable_type</del></span><span class="add" style="color: #006e28"><ins>F</ins></span></span> f_;</span>
 <span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a><span class="rm" style="color: #bf0303"><del>public:</del></span></span>
 <span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a>  <span class="rm" style="color: #bf0303"><del>explicit <em>as-receiver</em>(invocable_type&amp;&amp; f)</del></span></span>
 <span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a>  <span class="rm" style="color: #bf0303"><del><em>as-receiver</em>(<em>as-receiver</em>&amp;&amp; other) = default;</del></span></span>
@@ -728,11 +730,11 @@ bar</del></span></p></li>
 <span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a>  <span class="dt">void</span> set_done<span class="op">()</span> <span class="kw">noexcept</span> <span class="op">{}</span></span>
 <span id="cb2-61"><a href="#cb2-61" aria-hidden="true" tabindex="-1"></a><span class="op">}</span>;</span>
 <span id="cb2-62"><a href="#cb2-62" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a><span class="kw">template</span> <span class="op">&lt;</span><span class="rm" style="color: #bf0303"><del><span><code class="sourceCode default">invocable</code></span></del></span><span class="add" style="color: #006e28"><ins><span><code class="sourceCode default">class</code></span></ins></span> F<span class="add" style="color: #006e28"><ins><span><code class="sourceCode default">, class</code></span></ins></span><span class="op">&gt;</span></span>
+<span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a><span class="kw">template</span> <span class="op">&lt;</span><span><span class="rm" style="color: #bf0303"><del><span><code class="sourceCode default">invocable</code></span></del></span><span class="add" style="color: #006e28"><ins><span><code class="sourceCode default">class</code></span></ins></span></span> F<span class="add" style="color: #006e28"><ins><span><code class="sourceCode default">, class</code></span></ins></span><span class="op">&gt;</span></span>
 <span id="cb2-64"><a href="#cb2-64" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> <em>as-receiver</em> <span class="op">{</span></span>
 <span id="cb2-65"><a href="#cb2-65" aria-hidden="true" tabindex="-1"></a><span class="rm" style="color: #bf0303"><del><span><code class="sourceCode default">private:</code></span></del></span></span>
 <span id="cb2-66"><a href="#cb2-66" aria-hidden="true" tabindex="-1"></a>  <span class="rm" style="color: #bf0303"><del><span><code class="sourceCode default">using invocable_type = std::remove_cvref_t&lt;F&gt;;</code></span></del></span></span>
-<span id="cb2-67"><a href="#cb2-67" aria-hidden="true" tabindex="-1"></a>  <span class="rm" style="color: #bf0303"><del><span><code class="sourceCode default">invocable_type</code></span></del></span><span class="add" style="color: #006e28"><ins><span><code class="sourceCode default">F</code></span></ins></span> f_;</span>
+<span id="cb2-67"><a href="#cb2-67" aria-hidden="true" tabindex="-1"></a>  <span><span class="rm" style="color: #bf0303"><del><span><code class="sourceCode default">invocable_type</code></span></del></span><span class="add" style="color: #006e28"><ins><span><code class="sourceCode default">F</code></span></ins></span></span> f_;</span>
 <span id="cb2-68"><a href="#cb2-68" aria-hidden="true" tabindex="-1"></a><span class="rm" style="color: #bf0303"><del><span><code class="sourceCode default">public:</code></span></del></span></span>
 <span id="cb2-69"><a href="#cb2-69" aria-hidden="true" tabindex="-1"></a>  <span class="rm" style="color: #bf0303"><del><span><code class="sourceCode default">explicit <em>as-receiver</em>(invocable_type&amp;&amp; f)</code></span></del></span></span>
 <span id="cb2-70"><a href="#cb2-70" aria-hidden="true" tabindex="-1"></a>  <span class="rm" style="color: #bf0303"><del><span><code class="sourceCode default"><em>as-receiver</em>(<em>as-receiver</em>&amp;&amp; other) = default;</code></span></del></span></span>
@@ -748,7 +750,6 @@ bar</del></span></p></li>
 <span id="cb2-80"><a href="#cb2-80" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> f<span class="op">(</span><span class="add" style="color: #006e28"><ins>int *const *<em>p<sub>i</sub></em></ins></span><span class="op">)</span>;</span></code></pre></div>
 <h3 data-number="3.3.3" id="diff-syntax-highlighting"><span class="header-section-number">3.3.3</span>
 <code class="sourceCode cpp">diff</code> Syntax Highlighting<a href="#diff-syntax-highlighting" class="self-link"></a></h3>
-<div>
 <div class="sourceCode" id="cb3"><pre class="sourceCode diff"><code class="sourceCode diff"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>some things just don&#39;t change.</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>// 20.3.4 tuple-like access to pair:</span>
@@ -760,7 +761,6 @@ bar</del></span></p></li>
 <span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><em>unspecified</em> detail::foo::template foo;</span>
 <span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="va">+ <em>unspecified</em> detail::foo::template foo;</span></span>
 <span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="st">- <em>unspecified</em> detail::foo::template foo;</span></span></code></pre></div>
-</div>
 <h3 data-number="3.3.4" id="rust-syntax-highlighting"><span class="header-section-number">3.3.4</span>
 <code class="sourceCode cpp">rust</code> Syntax Highlighting<a href="#rust-syntax-highlighting" class="self-link"></a></h3>
 <div class="sourceCode" id="cb4"><pre class="sourceCode rust"><code class="sourceCode rust"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">enum</span> <span class="dt">Result</span><span class="op">&lt;</span>T<span class="op">,</span> E<span class="op">&gt;</span> <span class="op">{</span></span>
@@ -903,21 +903,28 @@ removals.</p>
 
 <div class="sourceCode" id="cb11"><pre class="sourceCode default default"><code class="sourceCode default"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>template&lt;class... Args&gt;</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  string format(const locale&amp; loc, string_view fmt, const Args&amp;... args);</span></code></pre></div>
-<p><em>Returns:</em> <code class="sourceCode default">vformat(loc, fmt, make_format_args(args...))</code>.</p>
+<p><em>Returns:</em>
+<code class="sourceCode default">vformat(loc, fmt, make_format_args(args...))</code>.</p>
 </div>
 </blockquote>
-<p>Small, inline changes are done with <code class="sourceCode cpp"><span class="op">[</span><span class="kw">new</span> text<span class="op">]{.</span>add<span class="op">}</span></code>
-or <code class="sourceCode cpp"><span class="op">[</span>old text<span class="op">]{.</span>rm<span class="op">}</span></code>.</p>
-<p>The optional <em>attribute-specifier-seq</em> appertains to the <span class="rm" style="color: #bf0303"><del>label</del></span><span class="add" style="color: #006e28"><ins><em>general-label</em></ins></span>. The
-only use of a <span class="rm" style="color: #bf0303"><del>label with an
-<em>identifier</em></del></span><span class="add" style="color: #006e28"><ins><em>label</em></ins></span> is as the target
-of a <code class="sourceCode cpp"><span class="cf">goto</span></code>,
-<span class="add" style="color: #006e28"><ins><span><code class="sourceCode default">break</code></span>,
+<p>Small, inline changes are done with
+<code class="sourceCode default">[new text]{.add}</code> or
+<code class="sourceCode default">[old text]{.rm}</code>.</p>
+<p>Substitutions can be written as
+<code class="sourceCode cpp"><span class="op">[</span>old text<span class="op">](</span><span class="kw">new</span> text<span class="op">){.</span>sub<span class="op">}</span></code>.
+This is essentially just a short-form for
+<code class="sourceCode cpp"><span class="op">[</span>old text<span class="op">]{.</span>rm<span class="op">}[</span><span class="kw">new</span> text<span class="op">]{.</span>add<span class="op">}</span></code>.</p>
+<p>The optional <em>attribute-specifier-seq</em> appertains to the
+<span><span class="rm" style="color: #bf0303"><del>label</del></span><span class="add" style="color: #006e28"><ins><em>general-label</em></ins></span></span>.
+The only use of a <span><span class="rm" style="color: #bf0303"><del>label with an
+<em>identifier</em></del></span><span class="add" style="color: #006e28"><ins><em>label</em></ins></span></span> is as the
+target of a
+<code class="sourceCode cpp"><span class="cf">goto</span></code>, <span class="add" style="color: #006e28"><ins><span><code class="sourceCode default">break</code></span>,
 or
 <span><code class="sourceCode default">continue</code></span></ins></span>.
-No two <span class="rm" style="color: #bf0303"><del>label</del></span><span class="add" style="color: #006e28"><ins><em>label</em></ins></span>s in a function
-shall have the same <em>identifier</em>. A <span class="rm" style="color: #bf0303"><del>label</del></span><span class="add" style="color: #006e28"><ins><em>general-label</em></ins></span> can be
-used <span class="rm" style="color: #bf0303"><del>in a
+No two <span><span class="rm" style="color: #bf0303"><del>label</del></span><span class="add" style="color: #006e28"><ins><em>label</em></ins></span></span>s in a
+function shall have the same <em>identifier</em>. A <span><span class="rm" style="color: #bf0303"><del>label</del></span><span class="add" style="color: #006e28"><ins><em>general-label</em></ins></span></span>
+can be used <span class="rm" style="color: #bf0303"><del>in a
 <span><code class="sourceCode default">goto</code></span>
 statement</del></span> before its introduction by a
 <em>labeled-statement</em>.</p>
@@ -1004,7 +1011,8 @@ is thrown</ins></span>.</td>
 </div>
 </blockquote>
 <h1 data-number="6" id="stable-names"><span class="header-section-number">6</span> Stable Names<a href="#stable-names" class="self-link"></a></h1>
-<p>Stable names are written as <code class="sourceCode cpp"><span class="op">[</span>basic<span class="op">.</span>life<span class="op">]{.</span>sref<span class="op">}</span></code>,
+<p>Stable names are written as
+<code class="sourceCode cpp"><span class="op">[</span>basic<span class="op">.</span>life<span class="op">]{.</span>sref<span class="op">}</span></code>,
 and renders as <span>6.8.4
 <a href="https://wg21.link/basic.life">[basic.life]</a></span>. You can
 also add a class
@@ -1080,22 +1088,29 @@ possible to indicate the a note is for a specific
 attribute. ]</span></p></li>
 </ul>
 <h1 data-number="8" id="citation"><span class="header-section-number">8</span> Citation<a href="#citation" class="self-link"></a></h1>
-<p>Automatic references are written as <code class="sourceCode cpp"><span class="op">[@</span>N4762<span class="op">]</span></code>
+<p>Automatic references are written as
+<code class="sourceCode cpp"><span class="op">[@</span>N4762<span class="op">]</span></code>
 and renders as <span class="citation" data-cites="N4762"><a href="https://wg21.link/n4762" role="doc-biblioref">[N4762]</a></span>.
 Anything in <a href="https://wg21.link/index.yaml" class="uri">https://wg21.link/index.yaml</a> are linked
 automatically.</p>
 <ul>
-<li><code class="sourceCode cpp">N</code> Papers (e.g., <code class="sourceCode cpp"><span class="op">[@</span>N3887<span class="op">]</span></code>
+<li><code class="sourceCode cpp">N</code> Papers (e.g.,
+<code class="sourceCode cpp"><span class="op">[@</span>N3887<span class="op">]</span></code>
 → <span class="citation" data-cites="N3887"><a href="https://wg21.link/n3887" role="doc-biblioref">[N3887]</a></span>)</li>
-<li><code class="sourceCode cpp">P</code> Papers (e.g., <code class="sourceCode cpp"><span class="op">[@</span>P1371R1<span class="op">]</span></code>
+<li><code class="sourceCode cpp">P</code> Papers (e.g.,
+<code class="sourceCode cpp"><span class="op">[@</span>P1371R1<span class="op">]</span></code>
 → <span class="citation" data-cites="P1371R1"><a href="https://wg21.link/p1371r1" role="doc-biblioref">[P1371R1]</a></span>)</li>
-<li>CWG Issues (e.g., <code class="sourceCode cpp"><span class="op">[@</span>CWG1234<span class="op">]</span></code>
+<li>CWG Issues (e.g.,
+<code class="sourceCode cpp"><span class="op">[@</span>CWG1234<span class="op">]</span></code>
 → <span class="citation" data-cites="CWG1234"><a href="https://wg21.link/cwg1234" role="doc-biblioref">[CWG1234]</a></span>)</li>
-<li>LWG Issues (e.g., <code class="sourceCode cpp"><span class="op">[@</span>LWG1234<span class="op">]</span></code>
+<li>LWG Issues (e.g.,
+<code class="sourceCode cpp"><span class="op">[@</span>LWG1234<span class="op">]</span></code>
 → <span class="citation" data-cites="LWG1234"><a href="https://wg21.link/lwg1234" role="doc-biblioref">[LWG1234]</a></span>)</li>
-<li>Github Edits (e.g, <code class="sourceCode cpp"><span class="op">[@</span>EDIT1234<span class="op">]</span></code>
+<li>Github Edits (e.g,
+<code class="sourceCode cpp"><span class="op">[@</span>EDIT1234<span class="op">]</span></code>
 → <span class="citation" data-cites="EDIT1234"><a href="https://wg21.link/edit1234" role="doc-biblioref">[EDIT1234]</a></span>)</li>
-<li>Standing Documents (e.g., <code class="sourceCode cpp"><span class="op">[@</span>SD6<span class="op">]</span></code>
+<li>Standing Documents (e.g.,
+<code class="sourceCode cpp"><span class="op">[@</span>SD6<span class="op">]</span></code>
 → <span class="citation" data-cites="SD6"><a href="https://wg21.link/sd6" role="doc-biblioref">[SD6]</a></span>)</li>
 </ul>
 <p>You may also write

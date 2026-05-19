@@ -107,7 +107,7 @@ const int x = 0B01011;
 bool b = true;
 
 struct process {
-  hello @[constexpr]{.rm}@ detail::foo::template $foo$;
+  hello @[constexpr\ ]{.rm}@detail::foo::template $foo$;
 
   [[using CC: opt(1), debug]] x;
 
@@ -147,7 +147,7 @@ const int x = 0B01011;
 bool b = true;
 
 struct process {
-  hello @[constexpr]{.add}@ detail::foo::template foo;
+  hello @[constexpr\ ]{.add}@detail::foo::template foo;
 
   [[using CC: opt(1), debug]] x;
 
@@ -180,11 +180,11 @@ std::visit<void>(process{}, input);
 @@[`namespace @_unspecified_@ { struct sender_base {}; }`]{.add}@@
 @@[`using @_unspecified_@::sender_base;`]{.add}@@
 
-template <@[invocable]{.rm}[class]{.add}@ F@[, class]{.add}@>
-struct @_as-receiver_@ {
+template <@[invocable](class){.sub}@ F@[, class]{.add}@>
+struct $as-receiver$ {
 @[private:]{.rm}@
   @[using invocable_type = std::remove_cvref_t<F>;]{.rm}@
-  @[invocable_type]{.rm}[F]{.add}@ f_;
+  @[invocable_type](F){.sub}@ f_;
 @[public:]{.rm}@
   @[explicit _as-receiver_(invocable_type&& f)]{.rm}@
   @[_as-receiver_(_as-receiver_&& other) = default;]{.rm}@
@@ -197,11 +197,11 @@ struct @_as-receiver_@ {
   void set_done() noexcept {}
 };
 
-template <@[`invocable`]{.rm}[`class`]{.add}@ F@[`, class`]{.add}@>
-struct @_as-receiver_@ {
+template <@[`invocable`](`class`){.sub}@ F@[`, class`]{.add}@>
+struct $as-receiver$ {
 @[`private:`]{.rm}@
   @[`using invocable_type = std::remove_cvref_t<F>;`]{.rm}@
-  @[`invocable_type`]{.rm}[`F`]{.add}@ f_;
+  @[`invocable_type`](`F`){.sub}@ f_;
 @[`public:`]{.rm}@
   @@[`explicit @_as-receiver_@(invocable_type&& f)`]{.rm}@@
   @@[`@_as-receiver_@(@_as-receiver_@&& other) = default;`]{.rm}@@
@@ -350,12 +350,16 @@ Large changes are `::: add` for additions, `::: rm` for removals.
 >
 > :::
 
-Small, inline changes are done with `[new text]{.add}` or `[old text]{.rm}`.
+Small, inline changes are done with `[new text]{.add}`{.default} or
+`[old text]{.rm}`{.default}.
 
-The optional _attribute-specifier-seq_ appertains to the [label]{.rm}[_general-label_]{.add}.
-The only use of a [label with an _identifier_]{.rm}[_label_]{.add} is as the target of a `goto`,
-[`break`, or `continue`]{.add}. No two [label]{.rm}[_label_]{.add}s in a function shall have
-the same _identifier_. A [label]{.rm}[_general-label_]{.add} can be used [in a `goto` statement]{.rm}
+Substitutions can be written as `[old text](new text){.sub}`.
+This is essentially just a short-form for `[old text]{.rm}[new text]{.add}`.
+
+The optional _attribute-specifier-seq_ appertains to the [label](_general-label_){.sub}.
+The only use of a [label with an _identifier_](_label_){.sub} is as the target of a `goto`,
+[`break`, or `continue`]{.add}. No two [label](_label_){.sub}s in a function shall have
+the same _identifier_. A [label](_general-label_){.sub} can be used [in a `goto` statement]{.rm}
 before its introduction by a _labeled-statement_.
 
 +-----------+--------------------------------------------------------------------+

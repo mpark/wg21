@@ -7,7 +7,6 @@
 # Distributed under the Boost Software License, Version 1.0.
 # (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
 
-import datetime
 import os.path
 import panflute as pf
 import re
@@ -31,8 +30,67 @@ def wrap_elem(opening, elem, closing):
         elem.content.insert(0, opening)
         elem.content.append(closing)
 
+def convert_fragments(fragments, input_format):
+    """
+    Converts a list of fragment texts into panflute elements
+    in a single invocation of `pf.convert_text`.
+
+    A fragment is essentially a piece of raw Markdown text that we need to parse
+    ourselves. Examples are the "new text" portion of [old text](new text){.sub}
+    syntax, and embedded Markdown in Code elements within @.
+    """
+    # This separates the fragments structurally in a list, and
+    # injects an empty span []{} in front of the fragment such that a fragment
+    # that starts with a - (dash) doesn't get interpreted as a nested list.
+    result = pf.convert_text(
+               '\n'.join(f'- []{{}}{fragment}' for fragment in fragments),
+               input_format=input_format,
+               output_format='panflute')
+    assert(len(result) == 1)
+    lst = result[0]
+    assert(isinstance(lst, pf.BulletList))
+    assert(len(lst.content) == len(fragments))
+    process_subs(lst, input_format)
+    for item in lst.content:
+        assert(len(item.content) == 1)
+        plain = item.content[0]
+        assert(isinstance(plain, pf.Plain))
+        marker = plain.content.pop(0)
+        assert(isinstance(marker, pf.Span) and not marker.content)
+        yield plain
+
+def process_subs(elem, input_format):
+    """
+    Processes [old text](new text){.sub} elements under a given element
+    by essentially producing [old text]{.rm}[new text]{.add}.
+
+    The complexity is in the fact that (new text) is interpreted as a URL,
+    so we unquote/unescape and treat it as a fragment.
+    """
+    adds = []
+    fragments = []
+    def subs(elem, doc):
+        if not (isinstance(elem, pf.Link) and 'sub' in elem.classes):
+            return None
+
+        classes = [c for c in elem.classes if c != 'sub']
+        rm = pf.Span(*elem.content, classes=['rm']+classes)
+        add = pf.Span(classes=['add']+classes)
+        adds.append(add)
+
+        import html, urllib.parse
+        fragments.append(html.unescape(urllib.parse.unquote(elem.url)))
+        return pf.Span(rm, add)
+
+    elem.walk(subs)
+    assert(len(adds) == len(fragments))
+    if adds:
+        for add, item in zip(adds, convert_fragments(fragments, input_format)):
+            add.content = item.content
+
 def prepare(doc):
     if doc.get_metadata('date') == 'today':
+        import datetime
         doc.metadata['date'] = datetime.date.today().isoformat()
 
     document = doc.get_metadata('document')
@@ -55,6 +113,7 @@ def prepare(doc):
     def highlighting(output_format):
         return pf.convert_text(
             '`-`{.default}',
+            input_format='markdown',
             output_format=output_format,
             extra_args=[
               '--highlight-style', os.path.join(datadir, 'syntax', 'wg21.theme'),
@@ -66,6 +125,8 @@ def prepare(doc):
         pf.RawBlock(highlighting('latex'), 'latex'))
     doc.metadata['highlighting-css'] = pf.MetaBlocks(
         pf.RawBlock(highlighting('html'), 'html'))
+
+    process_subs(doc, 'markdown')
 
 def divspan(elem, doc):
     """
@@ -153,7 +214,7 @@ def divspan(elem, doc):
     def add(): _diff('addcolor', 'uline', 'ins')
     def rm():  _diff('rmcolor', 'sout', 'del')
 
-    if not any(isinstance(elem, cls) for cls in [pf.Div, pf.Span]):
+    if not isinstance(elem, (pf.Div, pf.Span)):
         return None
 
     if 'pnum' in elem.classes and isinstance(elem, pf.Span):
@@ -262,7 +323,7 @@ def cmptable(table, doc):
     if not isinstance(table, pf.Div):
         return None
 
-    if not any(cls in table.classes for cls in ['cmptable', 'tonytable']):
+    if not any(c in {'cmptable', 'tonytable'} for c in table.classes):
         return None
 
     rows = []
@@ -414,11 +475,8 @@ class CodeElems:
       7. Split the batch converted code text into individual elements, and
          update the code elements with the fully processed elements.
     """
-    code_elems = []
-    code_elems_iter = None
-
     # Code elements for which embedded markdown is allowed
-    embedded_md_classes = ['cpp', 'default', 'diff', 'nasm', 'rust']
+    embedded_md_classes = {'cpp', 'default', 'diff', 'nasm', 'rust'}
 
     placeholder_prefix = None
 
@@ -428,86 +486,33 @@ class CodeElems:
     # Mapping from embedded md fragment to its index within `fragments`
     fragment_idx = {}
     
-    converted_fragments = None
-
     @staticmethod
     def init(elem, doc):
         if isinstance(elem, pf.Header) and doc.format == 'latex':
-            elem.walk(lambda elem, doc:
+            elem.walk(lambda elem, _:
                 elem.classes.append('raw')
-                if any(isinstance(elem, cls) for cls in [pf.Code, pf.CodeBlock])
+                if isinstance(elem, (pf.Code, pf.CodeBlock))
                 else None)
 
         # Mark code elements within colored divspan as default.
-        if any(isinstance(elem, cls) for cls in [pf.Div, pf.Span]) and \
-           any(cls in elem.classes for cls in ['add', 'rm', 'ednote', 'draftnote']):
-            elem.walk(lambda elem, doc:
+        if isinstance(elem, (pf.Div, pf.Span)) and \
+           any(c in {'add', 'rm', 'ednote', 'draftnote'} for c in elem.classes):
+            elem.walk(lambda elem, _:
                 elem.classes.insert(0, 'default')
-                if any(isinstance(elem, cls) for cls in [pf.Code, pf.CodeBlock])
+                if isinstance(elem, (pf.Code, pf.CodeBlock))
                 else None)
 
-        if not any(isinstance(elem, cls) for cls in [pf.Code, pf.CodeBlock]):
+        if not isinstance(elem, (pf.Code, pf.CodeBlock)):
             return None
 
         # As `walk` performs post-order traversal, this is
         # guaranteed to run before the 'raw' code path.
         if not elem.classes:
             if isinstance(elem, pf.Code):
-                cls = doc.get_metadata('highlighting.inline-code', 'default')
+                c = doc.get_metadata('highlighting.inline-code', 'default')
             elif isinstance(elem, pf.CodeBlock):
-                cls = doc.get_metadata('highlighting.code-block', 'default')
-            elem.classes.append(cls)
-
-
-    @staticmethod
-    def collect(elem, doc):
-        if not any(isinstance(elem, cls) for cls in [pf.Code, pf.CodeBlock]):
-            return None
-
-        if 'raw' in elem.classes or not any(cls in elem.classes for cls in CodeElems.embedded_md_classes):
-            return None
-
-        CodeElems.code_elems.append(elem)
-
-    @staticmethod
-    def update(elem, doc):
-        if not any(isinstance(elem, cls) for cls in [pf.Code, pf.CodeBlock]):
-            return None
-
-        if 'raw' in elem.classes or not any(cls in elem.classes for cls in CodeElems.embedded_md_classes):
-            return None
-
-        code_elem = next(CodeElems.code_elems_iter)
-        result = None
-        if isinstance(elem, pf.Code):
-            result = pf.RawInline(code_elem, doc.format)
-        elif isinstance(elem, pf.CodeBlock):
-            result = pf.RawBlock(code_elem, doc.format)
-
-        if 'diff' not in elem.classes:
-            return result
-
-        # For HTML, this is handled via CSS in `data/templates/wg21.html`.
-        command = '\\renewcommand{{\\{}}}[1]{{\\textcolor[HTML]{{{}}}{{#1}}}}'
-
-        uc = command.format('NormalTok', doc.get_metadata('uccolor'))
-        add = command.format('VariableTok', doc.get_metadata('addcolor'))
-        rm = command.format('StringTok', doc.get_metadata('rmcolor'))
-
-        if isinstance(elem, pf.Code):
-            return pf.Span(
-                pf.RawInline(uc, 'latex'),
-                pf.RawInline(add, 'latex'),
-                pf.RawInline(rm, 'latex'),
-                result)
-        elif isinstance(elem, pf.CodeBlock):
-            return pf.Div(
-                pf.RawBlock('{', 'latex'),
-                pf.RawBlock(uc, 'latex'),
-                pf.RawBlock(add, 'latex'),
-                pf.RawBlock(rm, 'latex'),
-                result,
-                pf.RawBlock('}', 'latex'))
+                c = doc.get_metadata('highlighting.code-block', 'default')
+            elem.classes.append(c)
 
     @staticmethod
     def _compute_unique_placeholder(texts):
@@ -518,27 +523,25 @@ class CodeElems:
                  return placeholder
 
     @staticmethod
-    def _convert_fragments(fragments, doc):
-        separator = CodeElems._compute_unique_placeholder(fragments)
-        pf_fragments = (
-            pf.Plain(*fragment.content).walk(CodeElems.init, doc).walk(divspan, doc)
-            for fragment
-            in pf.convert_text(
-                f'\n\n{separator}\n\n'.join(fragments),
-                # -smart to avoid things like ... to get transformed
-                # -raw_html to avoid <T> in foo<T> to be interpreted as an HTML tag.
-                input_format='markdown-smart-raw_html'))
+    def _convert_blocks(blocks, token, doc):
+        def intersperse(lst, item):
+            result = [item] * (len(lst) * 2 - 1)
+            result[0::2] = lst
+            return result
+
         text = pf.convert_text(
-            pf_fragments,
+            intersperse(blocks, pf.Plain(pf.RawInline(token, doc.format))),
             input_format='panflute',
             output_format=doc.format,
             extra_args=[
                 '--syntax-definition',
                 os.path.join(doc.get_metadata('datadir'), 'syntax', 'isocpp.xml'),
-                '--wrap',
-                'none'])
+                '--wrap', 'none'])
 
         if doc.format == 'latex':
+            # Workaround for https://github.com/jgm/skylighting/issues/91.
+            text = text.replace('<', r'\textless{}') \
+                       .replace('>', r'\textgreater{}')
             # The normal text mode such as "template<class" gets translated
             # to "template\textless class" rather than "text\textless{}class".
             text = text.replace(r'\textless ', r'\textless{}') \
@@ -548,7 +551,25 @@ class CodeElems:
                        .replace(r'\textbar ', r'\textbar{}') \
                        .replace(r'\textquotesingle ', r'\textquotesingle{}')
 
-        return text.split('{1}{0}{1}'.format(separator, '\n\n' if doc.format == 'latex' else '\n'))
+        sep = f'\n\n{token}\n\n' if doc.format == 'latex' else f'\n{token}\n'
+        return text, sep
+
+    @classmethod
+    def _convert_fragments(cls, fragments, doc):
+        if not fragments:
+            return []
+
+        blocks = [
+            plain.walk(divspan, doc).walk(CodeElems.init, doc)
+            # -smart to avoid things like ... to get transformed into \dots
+            # -raw_html to avoid <T> in foo<T> to be interpreted as an HTML tag.
+            for plain in convert_fragments(fragments, 'markdown-smart-raw_html')
+        ]
+        token = cls._compute_unique_placeholder(fragments)
+        text, sep = cls._convert_blocks(blocks, token, doc)
+        result = text.split(sep)
+        assert(len(result) == len(fragments))
+        return result
 
     @classmethod
     def _store_fragment(cls, fragment):
@@ -633,53 +654,75 @@ class CodeElems:
     @classmethod
     def run(cls, doc):
         doc.walk(cls.init)
-        doc.walk(cls.collect)
-        if not cls.code_elems:
+
+        elems = []
+        containers = []
+        def code(elem, doc):
+            if (
+                isinstance(elem, (pf.Code, pf.CodeBlock)) and
+                'raw' not in elem.classes and
+                any(c in cls.embedded_md_classes for c in elem.classes)
+            ):
+                elems.append(elem)
+                container = (
+                    pf.RawInline('', doc.format)
+                    if isinstance(elem, pf.Code)
+                    else pf.RawBlock('', doc.format))
+                if 'diff' in elem.classes and doc.format == 'latex':
+                    container = pf.Span() if isinstance(elem, pf.Code) else pf.Div()
+                containers.append(container)
+                return container
+
+        doc.walk(code)
+        if not elems:
             return
 
-        cls.placeholder_prefix = cls._compute_unique_placeholder(elem.text for elem in cls.code_elems)
-        for elem in cls.code_elems:
-            elem.text = cls._replace_fragments_with_placeholders(elem.text)
+        cls.placeholder_prefix = cls._compute_unique_placeholder(elem.text for elem in elems)
 
-        cls.converted_fragments = cls._convert_fragments(cls.fragments, doc)
+        for elem in elems:
+           elem.text = cls._replace_fragments_with_placeholders(elem.text)
 
-        def intersperse(lst, item):
-            result = [item] * (len(lst) * 2 - 1)
-            result[0::2] = lst
-            return result
+        converted_fragments = cls._convert_fragments(cls.fragments, doc)
 
         # Intersperse the separator and batch convert all of the code elements at once.
-        separator = cls._compute_unique_placeholder(elem.text for elem in cls.code_elems)
-        text = pf.convert_text(
-            intersperse(
-                [pf.Plain(elem) if isinstance(elem, pf.Code) else elem for elem in cls.code_elems],
-                pf.Plain(pf.RawInline(separator, doc.format))),
-            input_format='panflute',
-            output_format=doc.format,
-            extra_args=[
-                '--syntax-definition',
-                os.path.join(doc.get_metadata('datadir'), 'syntax', 'isocpp.xml')])
+        text, sep = cls._convert_blocks(
+            [pf.Plain(elem) if isinstance(elem, pf.Code) else elem for elem in elems],
+            cls._compute_unique_placeholder(elem.text for elem in elems),
+            doc)
 
         placeholder_re = re.compile(fr'{cls.placeholder_prefix}(\d+)X')
         def restore_fragments(text):
             return placeholder_re.sub(
-                lambda match: restore_fragments(cls.converted_fragments[int(match.group(1))]),
+                lambda match: restore_fragments(converted_fragments[int(match.group(1))]),
                 text)
 
         text = restore_fragments(text)
+        results = text.split(sep)
+        assert(len(results) == len(elems))
 
-        # Workaround for https://github.com/jgm/skylighting/issues/91.
-        if doc.format == 'latex':
-            text = text.replace('<', '\\textless{}') \
-                       .replace('>', '\\textgreater{}')
+        # For HTML, this is handled via CSS in `data/templates/wg21.html`.
+        command = '\\renewcommand{{\\{}}}[1]{{\\textcolor[HTML]{{{}}}{{#1}}}}'
+        colors = [
+          command.format('NormalTok', doc.get_metadata('uccolor')),
+          command.format('VariableTok', doc.get_metadata('addcolor')),
+          command.format('StringTok', doc.get_metadata('rmcolor')),
+        ]
 
-        code_elems = text.split(f'\n{separator}\n')
+        for elem, container, result in zip(elems, containers, results):
+            if isinstance(container, (pf.RawInline, pf.RawBlock)):
+                container.text = result
+                continue
 
-        assert(len(cls.code_elems) == len(code_elems))
-
-        cls.code_elems = code_elems
-        cls.code_elems_iter = iter(cls.code_elems)
-        doc.walk(cls.update)
+            if isinstance(container, pf.Span):
+                container.content = [
+                    *(pf.RawInline(color, 'latex') for color in colors),
+                    pf.RawInline(result, 'latex')]
+            elif isinstance(container, pf.Div):
+                container.content = [
+                    pf.RawBlock('{', 'latex'),
+                    *(pf.RawBlock(color, 'latex') for color in colors),
+                    pf.RawBlock(result, 'latex'),
+                    pf.RawBlock('}', 'latex')]
 
 def finalize(doc):
     CodeElems.run(doc)

@@ -377,6 +377,9 @@ Large changes are [fenced `Div` blocks][divspan] with `::: add` for additions, `
 Small, inline changes are [bracketed `Span` elements][divspan] that looks like
 `[new text]{.add}` or `[old text]{.rm}`.
 
+Substitutions can be written as `[old text](new text){.sub}`.
+This is essentially just a short-form for `[old text]{.rm}[new text]{.add}`.
+
 ![](img/wording-span.png)
 
 #### Examples
