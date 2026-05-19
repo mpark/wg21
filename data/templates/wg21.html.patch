@@ -16,7 +16,7 @@ index dda7e8c..8e8e1f4 100644
    <title>$if(title-prefix)$$title-prefix$ – $endif$$pagetitle$</title>
    <style>
 -    $styles.html()$
-+      code{white-space: pre-wrap;}
++      code.sourceCode{white-space: pre;}
 +      span.smallcaps{font-variant: small-caps;}
 +      span.underline{text-decoration: underline;}
 +      /* Make the thickness of strikeout and underline consistent in different contexts */
