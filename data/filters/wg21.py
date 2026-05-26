@@ -578,7 +578,10 @@ class CodeElems:
             cls.fragments.append(fragment)
             cls.fragment_idx[fragment] = idx
 
-        return f'{cls.placeholder_prefix}{idx}X'
+        # Spaces are added here to make the syntax highlighter parse properly.
+        # For example, given something like `constexpr$~opt~$`, the constexpr
+        # keyword will not be highlighted properly without the spaces.
+        return f' {cls.placeholder_prefix}{idx} '
 
     @classmethod
     def _process_fragment(cls, text, i, closing, wrap=lambda fragment: fragment):
@@ -690,7 +693,11 @@ class CodeElems:
             cls._compute_unique_placeholder(elem.text for elem in elems),
             doc)
 
-        placeholder_re = re.compile(fr'{cls.placeholder_prefix}(\d+)X')
+        # The spaces in the ends are optional because of situations like:
+        # `$unspecified$ f();` that ends up like ` PH  f();`, and the markdown
+        # parser ends up eating the leading space. The resulting sinppet becomes
+        # somerthing ilke <code>PH  f();</code>, so optionally ignore the spaces.
+        placeholder_re = re.compile(fr' ?{cls.placeholder_prefix}(\d+) ?')
         def restore_fragments(text):
             return placeholder_re.sub(
                 lambda match: restore_fragments(converted_fragments[int(match.group(1))]),

@@ -303,6 +303,8 @@ Various compositions in compact list:
   \VERB|\KeywordTok{namespace}\NormalTok{ \emph{unspecified} }\OperatorTok{\{} \KeywordTok{struct}\NormalTok{ sender\_base }\OperatorTok{\{\}}\NormalTok{; }\OperatorTok{\}}|
 \item
   \VERB|\KeywordTok{namespace}\NormalTok{ \emph{unspecified} }\OperatorTok{\{} \KeywordTok{struct}\NormalTok{ sender\_base }\OperatorTok{\{\}}\NormalTok{; }\OperatorTok{\}}|
+\item
+  \VERB|\KeywordTok{constexpr}\NormalTok{\emph{\textsubscript{opt}}}|
 \end{itemize}
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}

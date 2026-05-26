@@ -77,6 +77,7 @@ Various compositions in compact list:
   - ~~`hello world`~~
   - `namespace $unspecified$ { struct sender_base {}; }`
   - `namespace $unspecified$ { struct sender_base {}; }`{.cpp}
+  - `constexpr$~opt~$`{.cpp}
 
 ---
 
