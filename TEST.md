@@ -353,8 +353,8 @@ Large changes are `::: add` for additions, `::: rm` for removals.
 Small, inline changes are done with `[new text]{.add}`{.default} or
 `[old text]{.rm}`{.default}.
 
-Substitutions can be written as `[old text](new text){.sub}`.
-This is essentially just a short-form for `[old text]{.rm}[new text]{.add}`.
+Substitutions can be written as `[old text](new text){.sub}`{.default}.
+This is essentially just a short-form for `[old text]{.rm}[new text]{.add}`{.default}.
 
 The optional _attribute-specifier-seq_ appertains to the [label](_general-label_){.sub}.
 The only use of a [label with an _identifier_](_label_){.sub} is as the target of a `goto`,

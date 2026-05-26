@@ -198,7 +198,7 @@ Reply-to:   \@author
 \author{&Author
 0\\&<\href{mailto:author0@gmail.com}{\nolinkurl{author0@gmail.com}}>\\&Author
 1\\&<\href{mailto:author1@gmail.com}{\nolinkurl{author1@gmail.com}}>\\}
-\date{2026-05-19}
+\date{2026-05-25}
 
 \begin{document}
 \maketitle
@@ -686,9 +686,9 @@ Small, inline changes are done with
 \VERB|\NormalTok{[old text]\{.rm\}}|.
 
 Substitutions can be written as
-\VERB|\OperatorTok{[}\NormalTok{old text}\OperatorTok{](}\KeywordTok{new}\NormalTok{ text}\OperatorTok{)\{.}\NormalTok{sub}\OperatorTok{\}}|.
-This is essentially just a short-form for
-\VERB|\OperatorTok{[}\NormalTok{old text}\OperatorTok{]\{.}\NormalTok{rm}\OperatorTok{\}[}\KeywordTok{new}\NormalTok{ text}\OperatorTok{]\{.}\NormalTok{add}\OperatorTok{\}}|.
+\VERB|\NormalTok{[old text](new text)\{.sub\}}|. This is essentially
+just a short-form for
+\VERB|\NormalTok{[old text]\{.rm\}[new text]\{.add\}}|.
 
 The optional \emph{attribute-specifier-seq} appertains to the
 {{{\color[HTML]{bf0303}\sout{label}}}{{\color[HTML]{006e28}\uline{\emph{general-label}}}}}.
