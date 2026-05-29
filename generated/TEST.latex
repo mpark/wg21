@@ -2,24 +2,29 @@
 \PassOptionsToPackage{unicode}{hyperref}
 \PassOptionsToPackage{hyphens}{url}
 \PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
-%
 \documentclass[
+  english,
   10pt,
-  a4paperpaper,
+  a4paper,
   oneside,
-  openany,
   final]{article}
+\usepackage{xcolor}
+\usepackage[left=2.245cm,right=2.245cm,top=2.5cm,bottom=2.5cm]{geometry}
 \usepackage{amsmath,amssymb}
-\usepackage{lmodern}
+\setcounter{secnumdepth}{5}
 \usepackage{iftex}
 \ifPDFTeX
   \usepackage[T1]{fontenc}
   \usepackage[utf8]{inputenc}
   \usepackage{textcomp} % provide euro and other symbols
 \else % if luatex or xetex
-  \usepackage{unicode-math}
+  \usepackage{unicode-math} % this also loads fontspec
   \defaultfontfeatures{Scale=MatchLowercase}
   \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
 \fi
 % Use upquote if available, for straight quotes in verbatim environments
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
@@ -37,8 +42,29 @@
 }{% if KOMA class
   \KOMAoptions{parskip=half}}
 \makeatother
-\usepackage{xcolor}
-\usepackage[left=2.245cm,right=2.245cm,top=2.5cm,bottom=2.5cm]{geometry}
+% Make \paragraph and \subparagraph free-standing
+\makeatletter
+\ifx\paragraph\undefined\else
+  \let\oldparagraph\paragraph
+  \renewcommand{\paragraph}{
+    \@ifstar
+      \xxxParagraphStar
+      \xxxParagraphNoStar
+  }
+  \newcommand{\xxxParagraphStar}[1]{\oldparagraph*{#1}\mbox{}}
+  \newcommand{\xxxParagraphNoStar}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+  \let\oldsubparagraph\subparagraph
+  \renewcommand{\subparagraph}{
+    \@ifstar
+      \xxxSubParagraphStar
+      \xxxSubParagraphNoStar
+  }
+  \newcommand{\xxxSubParagraphStar}[1]{\oldsubparagraph*{#1}\mbox{}}
+  \newcommand{\xxxSubParagraphNoStar}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+\makeatother
 \usepackage{color}
 \usepackage{fancyvrb}
 \newcommand{\VerbBar}{|}
@@ -80,6 +106,7 @@
 \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.62,0.41,0.03}{#1}}
 \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.42,0.45,0.49}{\textbf{#1}}}
 \usepackage{longtable,booktabs,array}
+\newcounter{none} % for unnumbered tables
 \usepackage{calc} % for calculating minipage widths
 % Correct order of tables after \paragraph or \subparagraph
 \usepackage{etoolbox}
@@ -89,56 +116,62 @@
 % Allow footnotes in longtable head/foot
 \IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
 \makesavenoteenv{longtable}
-\usepackage[normalem]{ulem}
-\setlength{\emergencystretch}{3em} % prevent overfull lines
-\providecommand{\tightlist}{%
-  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
-\setcounter{secnumdepth}{5}
-% Make \paragraph and \subparagraph free-standing
-\ifx\paragraph\undefined\else
-  \let\oldparagraph\paragraph
-  \renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\ifLuaTeX
+  \usepackage{luacolor}
+  \usepackage[soul]{lua-ul}
+\else
+  \usepackage{soul}
 \fi
-\ifx\subparagraph\undefined\else
-  \let\oldsubparagraph\subparagraph
-  \renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
-\fi
+% definitions for citeproc citations
+\NewDocumentCommand\citeproctext{}{}
+\NewDocumentCommand\citeproc{mm}{%
+  \begingroup\def\citeproctext{#2}\cite{#1}\endgroup}
+\makeatletter
+ % allow citations to break across lines
+ \let\@cite@ofmt\@firstofone
+ % avoid brackets around text for \cite:
+ \def\@biblabel#1{}
+ \def\@cite#1#2{{#1\if@tempswa , #2\fi}}
+\makeatother
 \newlength{\cslhangindent}
 \setlength{\cslhangindent}{1.5em}
 \newlength{\csllabelwidth}
 \setlength{\csllabelwidth}{3em}
-\newlength{\cslentryspacingunit} % times entry-spacing
-\setlength{\cslentryspacingunit}{\parskip}
-\newenvironment{CSLReferences}[2] % #1 hanging-ident, #2 entry spacing
- {% don't indent paragraphs
-  \setlength{\parindent}{0pt}
+\newenvironment{CSLReferences}[2] % #1 hanging-indent, #2 entry-spacing
+ {\begin{list}{}{%
+  \setlength{\itemindent}{0pt}
+  \setlength{\leftmargin}{0pt}
+  \setlength{\parsep}{0pt}
   % turn on hanging indent if param 1 is 1
   \ifodd #1
-  \let\oldpar\par
-  \def\par{\hangindent=\cslhangindent\oldpar}
+   \setlength{\leftmargin}{\cslhangindent}
+   \setlength{\itemindent}{-1\cslhangindent}
   \fi
   % set entry spacing
-  \setlength{\parskip}{#2\cslentryspacingunit}
- }%
- {}
+  \setlength{\itemsep}{#2\baselineskip}}}
+ {\end{list}}
 \usepackage{calc}
-\newcommand{\CSLBlock}[1]{#1\hfill\break}
-\newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{#1}}
-\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{#1}\break}
+\newcommand{\CSLBlock}[1]{\hfill\break\parbox[t]{\linewidth}{\strut\ignorespaces#1\strut}}
+\newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{\strut#1\strut}}
+\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{\strut#1\strut}}
 \newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
 \ifLuaTeX
-\usepackage[bidi=basic]{babel}
+\usepackage[bidi=basic,shorthands=off]{babel}
 \else
-\usepackage[bidi=default]{babel}
+\usepackage[bidi=default,shorthands=off]{babel}
 \fi
-\babelprovide[main,import]{english}
-% get rid of language-specific shorthands (see #6817):
-\let\LanguageShortHands\languageshorthands
-\def\languageshorthands#1{}
+\ifLuaTeX
+  \usepackage{selnolig} % disable illegal ligatures
+\fi
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\usepackage[normalem]{ulem}
+\providecommand{\CSLIndent}{}
+\renewcommand{\CSLIndent}[1]{\hfill\break\hspace*{\cslhangindent}\ignorespaces#1}
+
 % adjust quote indent
 \renewenvironment{quote}{\list{}{\leftmargin=0.2in}\item[]}{\endlist}
-\providecommand{\CSLBlock}{}
-\renewcommand{\CSLBlock}[1]{\hfill\break\parbox[t]{\linewidth}{\strut\ignorespaces#1\strut}}
 
 % https://github.com/cplusplus/draft/blob/97b615a5a6ab0598b624ee05402c531d0421cff6/source/styles.tex#L127-L133
 \renewcommand{\labelitemi}{---}
@@ -154,12 +187,9 @@
 \hspace{\@totalleftmargin}\quad%
 }}\ignorespaces}
 \makeatother
-\ifLuaTeX
-  \usepackage{selnolig}  % disable illegal ligatures
-\fi
-\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\usepackage{bookmark}
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
-\urlstyle{same} % disable monospaced font for URLs
+\urlstyle{same}
 \hypersetup{
   pdftitle={Test document for mpark/wg21},
   pdflang={en},
@@ -168,7 +198,8 @@
   filecolor={Maroon},
   citecolor={blue},
   urlcolor={blue},
-  pdfcreator={mpark/wg21}}
+  pdfcreator={LaTeX via pandoc}}
+\hypersetup{pdfcreator={mpark/wg21}}
 
 \makeatletter
 \def\@maketitle{
@@ -187,6 +218,7 @@ Reply-to:   \@author
   \end{flushright}
 }
 \makeatother
+
 \title{Test document for mpark/wg21}
 \usepackage{etoolbox}
 \makeatletter
@@ -198,7 +230,7 @@ Reply-to:   \@author
 \author{&Author
 0\\&<\href{mailto:author0@gmail.com}{\nolinkurl{author0@gmail.com}}>\\&Author
 1\\&<\href{mailto:author1@gmail.com}{\nolinkurl{author1@gmail.com}}>\\}
-\date{2026-05-25}
+\date{2026-05-29}
 
 \begin{document}
 \maketitle
@@ -208,16 +240,14 @@ Reply-to:   \@author
 \setcounter{tocdepth}{2}
 \tableofcontents
 }
-\hypertarget{introduction}{%
-\section{\texorpdfstring{Introduction\protect\hyperlink{introduction}{}}{Introduction}}\label{introduction}}
+\section{\texorpdfstring{Introduction\hyperref[introduction]{}}{Introduction}}\label{introduction}
 
 This framework provides support for various common elements for C++
 papers. This document is intended to test various features implemented
 in
 \href{https://github.com/mpark/wg21}{\VERB|\NormalTok{mpark}\OperatorTok{/}\NormalTok{wg21}|}.
 
-\hypertarget{title}{%
-\section{\texorpdfstring{Title\protect\hyperlink{title}{}}{Title}}\label{title}}
+\section{\texorpdfstring{Title\hyperref[title]{}}{Title}}\label{title}
 
 The title is specified by YAML metadata block.
 
@@ -249,19 +279,17 @@ today's date in
 (ISO 8601) format.
 \end{quote}
 
-\hypertarget{markdown}{%
-\section{\texorpdfstring{Markdown\protect\hyperlink{markdown}{}}{Markdown}}\label{markdown}}
+\section{\texorpdfstring{Markdown\hyperref[markdown]{}}{Markdown}}\label{markdown}
 
 \href{https://pandoc.org/MANUAL.html\#pandocs-markdown}{Pandoc Markdown}
 is the Markdown flavor used for this framework.
 
-\hypertarget{inline-formatting}{%
 \subsection{\texorpdfstring{Inline
-Formatting\protect\hyperlink{inline-formatting}{}}{Inline Formatting}}\label{inline-formatting}}
+Formatting\hyperref[inline-formatting]{}}{Inline Formatting}}\label{inline-formatting}
 
 Inline formatting such as \textbf{bold}, \emph{italics}, and
 \VERB|\NormalTok{verbatim}| work as you would expect. There are also
-useful extensions such as \sout{strikeout}, su\textsubscript{b}script,
+useful extensions such as \st{strikeout}, su\textsubscript{b}script,
 su\textsuperscript{per}script, and highlighted code:
 \VERB|\KeywordTok{constexpr}|.
 
@@ -270,7 +298,7 @@ Various compositions in compact list:
 \begin{itemize}
 \tightlist
 \item
-  \sout{\VERB|\NormalTok{A}\OperatorTok{\textless{}}\NormalTok{B}\OperatorTok{\textless{}}\NormalTok{T}\OperatorTok{\textgreater{}\textgreater{}}|}
+  \st{{\mbox{\VERB|\NormalTok{A}\OperatorTok{\textless{}}\NormalTok{B}\OperatorTok{\textless{}}\NormalTok{T}\OperatorTok{\textgreater{}\textgreater{}}|}}}
 \item
   \VERB|\NormalTok{compare\_3way}|
 \item
@@ -284,21 +312,21 @@ Various compositions in compact list:
 \item
   \VERB|\NormalTok{x }\OperatorTok{@}\NormalTok{ y}|
 \item
-  \sout{\VERB|\NormalTok{x }\OperatorTok{\&}\NormalTok{ y}|}
+  \st{{\mbox{\VERB|\NormalTok{x }\OperatorTok{\&}\NormalTok{ y}|}}}
 \item
   \textbf{foo \VERB|\KeywordTok{constexpr}| bar}
 \item
   \emph{foo \VERB|\KeywordTok{constexpr}| bar}
 \item
-  \sout{foo \VERB|\KeywordTok{constexpr}| bar}
+  \st{foo {\mbox{\VERB|\KeywordTok{constexpr}|}} bar}
 \item
   {{\color[HTML]{006e28}\uline{{\mbox{\VERB|\NormalTok{hello world}|}}}}}
 \item
   \VERB|\NormalTok{{{\color[HTML]{006e28}\uline{hello\textless{}T\textgreater{}}}}}|
 \item
-  \sout{\emph{\VERB|\NormalTok{hello world}|}}
+  \st{\emph{{\mbox{\VERB|\NormalTok{hello world}|}}}}
 \item
-  \sout{\VERB|\NormalTok{hello world}|}
+  \st{{\mbox{\VERB|\NormalTok{hello world}|}}}
 \item
   \VERB|\KeywordTok{namespace}\NormalTok{ \emph{unspecified} }\OperatorTok{\{} \KeywordTok{struct}\NormalTok{ sender\_base }\OperatorTok{\{\}}\NormalTok{; }\OperatorTok{\}}|
 \item
@@ -319,17 +347,14 @@ Loose list:
   {\mbox{\VERB|\NormalTok{hello world}|}} bar}}}
 \end{itemize}
 
-\hypertarget{inline-code-in-headers-int-x-y}{%
 \subsection{\texorpdfstring{Inline Code in Headers: \texttt{int},
-\texttt{x\ \&\ y}\protect\hyperlink{inline-code-in-headers-int-x-y}{}}{Inline Code in Headers: int, x \& y}}\label{inline-code-in-headers-int-x-y}}
+\texttt{x\ \&\ y}\hyperref[inline-code-in-headers-int-x-y]{}}{Inline Code in Headers: int, x \& y}}\label{inline-code-in-headers-int-x-y}
 
-\hypertarget{code-block}{%
 \subsection{\texorpdfstring{Code
-Block\protect\hyperlink{code-block}{}}{Code Block}}\label{code-block}}
+Block\hyperref[code-block]{}}{Code Block}}\label{code-block}
 
-\hypertarget{no-syntax-highlighting}{%
 \subsubsection{\texorpdfstring{No Syntax
-Highlighting\protect\hyperlink{no-syntax-highlighting}{}}{No Syntax Highlighting}}\label{no-syntax-highlighting}}
+Highlighting\hyperref[no-syntax-highlighting]{}}{No Syntax Highlighting}}\label{no-syntax-highlighting}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -371,9 +396,8 @@ Highlighting\protect\hyperlink{no-syntax-highlighting}{}}{No Syntax Highlighting
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{c-syntax-highlighting}{%
 \subsubsection{\texorpdfstring{C++ Syntax
-Highlighting\protect\hyperlink{c-syntax-highlighting}{}}{C++ Syntax Highlighting}}\label{c-syntax-highlighting}}
+Highlighting\hyperref[c-syntax-highlighting]{}}{C++ Syntax Highlighting}}\label{c-syntax-highlighting}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -460,9 +484,8 @@ Highlighting\protect\hyperlink{c-syntax-highlighting}{}}{C++ Syntax Highlighting
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{diff-syntax-highlighting}{%
 \subsubsection{\texorpdfstring{\texttt{diff} Syntax
-Highlighting\protect\hyperlink{diff-syntax-highlighting}{}}{diff Syntax Highlighting}}\label{diff-syntax-highlighting}}
+Highlighting\hyperref[diff-syntax-highlighting]{}}{diff Syntax Highlighting}}\label{diff-syntax-highlighting}
 
 {
 
@@ -490,9 +513,8 @@ Highlighting\protect\hyperlink{diff-syntax-highlighting}{}}{diff Syntax Highligh
 
 }
 
-\hypertarget{rust-syntax-highlighting}{%
 \subsubsection{\texorpdfstring{\texttt{rust} Syntax
-Highlighting\protect\hyperlink{rust-syntax-highlighting}{}}{rust Syntax Highlighting}}\label{rust-syntax-highlighting}}
+Highlighting\hyperref[rust-syntax-highlighting]{}}{rust Syntax Highlighting}}\label{rust-syntax-highlighting}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -508,32 +530,32 @@ Highlighting\protect\hyperlink{rust-syntax-highlighting}{}}{rust Syntax Highligh
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{auto-header-links}{%
 \subsection{\texorpdfstring{Automatic Header
-Links\protect\hyperlink{auto-header-links}{}}{Automatic Header Links}}\label{auto-header-links}}
+Links\hyperref[auto-header-links]{}}{Automatic Header Links}}\label{auto-header-links}
 
 Automatic header links are written as
 \VERB|\NormalTok{[](\#auto{-}header{-}links)}|, and renders as
-\protect\hyperlink{auto-header-links}{Automatic Header Links}.
+\hyperref[auto-header-links]{Automatic Header Links}.
 
-\hypertarget{comparison-tables}{%
 \section{\texorpdfstring{Comparison
-Tables\protect\hyperlink{comparison-tables}{}}{Comparison Tables}}\label{comparison-tables}}
+Tables\hyperref[comparison-tables]{}}{Comparison Tables}}\label{comparison-tables}
 
 \begin{longtable}[]{@{}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}@{}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}@{}}
 \caption{Put your caption here}\tabularnewline
-\toprule()
+\toprule\noalign{}
 \centering\arraybackslash\textbf{Before} &
 \centering\arraybackslash\textbf{After} \\
-\midrule()
+\midrule\noalign{}
 \endfirsthead
-\toprule()
+\toprule\noalign{}
 \centering\arraybackslash\textbf{Before} &
 \centering\arraybackslash\textbf{After} \\
-\midrule()
+\midrule\noalign{}
 \endhead
+\bottomrule\noalign{}
+\endlastfoot
 \begin{minipage}[t]{\linewidth}\raggedright
 
 \begin{Shaded}
@@ -559,20 +581,22 @@ Tables\protect\hyperlink{comparison-tables}{}}{Comparison Tables}}\label{compari
 \end{Shaded}
 
 \end{minipage} \\
-\bottomrule()
 \end{longtable}
 
+{\def\LTcaptype{none} % do not increment counter
 \begin{longtable}[]{@{}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.6000}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.4000}}@{}}
-\toprule()
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.6000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.4000}}@{}}
+\toprule\noalign{}
 \begin{minipage}[b]{\linewidth}\raggedright
 \centering\arraybackslash\textbf{Before}
 \end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
 \centering\arraybackslash\textbf{After}
 \end{minipage} \\
-\midrule()
+\midrule\noalign{}
 \endhead
+\bottomrule\noalign{}
+\endlastfoot
 \begin{minipage}[t]{\linewidth}\raggedright
 \begin{minipage}[t]{\linewidth}\raggedright
 
@@ -633,16 +657,14 @@ Tables\protect\hyperlink{comparison-tables}{}}{Comparison Tables}}\label{compari
 
 \end{minipage}
 \end{minipage} \\
-\bottomrule()
 \end{longtable}
+}
 
-\hypertarget{proposed-wording}{%
 \section{\texorpdfstring{Proposed
-Wording\protect\hyperlink{proposed-wording}{}}{Proposed Wording}}\label{proposed-wording}}
+Wording\hyperref[proposed-wording]{}}{Proposed Wording}}\label{proposed-wording}
 
-\hypertarget{paragraph-numbers}{%
 \subsection{\texorpdfstring{Paragraph
-Numbers\protect\hyperlink{paragraph-numbers}{}}{Paragraph Numbers}}\label{paragraph-numbers}}
+Numbers\hyperref[paragraph-numbers]{}}{Paragraph Numbers}}\label{paragraph-numbers}
 
 \pnum{2} An expression is \emph{potentially evaluated} unless it is an
 unevaluated operand (7.2) or a subexpression thereof. The set of
@@ -659,9 +681,8 @@ defined as follows:
   results of that operand.
 \end{itemize}
 
-\hypertarget{wording-changes}{%
 \subsection{\texorpdfstring{Wording
-Changes\protect\hyperlink{wording-changes}{}}{Wording Changes}}\label{wording-changes}}
+Changes\hyperref[wording-changes]{}}{Wording Changes}}\label{wording-changes}
 
 Large changes are \VERB|\OperatorTok{:::}\NormalTok{ add}| for
 additions, \VERB|\OperatorTok{:::}\NormalTok{ rm}| for removals.
@@ -706,17 +727,20 @@ can be used {{\color[HTML]{bf0303}\sout{in a
 {\mbox{\VERB|\NormalTok{goto}|}} statement}}} before its introduction by
 a \emph{labeled-statement}.
 
+{\def\LTcaptype{none} % do not increment counter
 \begin{longtable}[]{@{}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.1481}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.8519}}@{}}
-\toprule()
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.1481}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.8519}}@{}}
+\toprule\noalign{}
 \begin{minipage}[b]{\linewidth}\raggedright
 \centering\arraybackslash\textbf{Specifier}
 \end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
 \centering\arraybackslash\textbf{Replacement}
 \end{minipage} \\
-\midrule()
+\midrule\noalign{}
 \endhead
+\bottomrule\noalign{}
+\endlastfoot
 \VERB|\OperatorTok{\%}\NormalTok{a}| & The locale's abbreviated weekday
 name. If the value does not contain a valid weekday,
 {{\color[HTML]{bf0303}\sout{{\mbox{\VERB|\NormalTok{setstate(ios::failbit)}|}}
@@ -729,26 +753,25 @@ If the value does not contain a valid weekday,
 is called}}}
 {{\color[HTML]{006e28}\uline{{\mbox{\VERB|\NormalTok{format\_error}|}}
 is thrown}}}. \\
-\bottomrule()
 \end{longtable}
+}
 
-\hypertarget{grammar-changes}{%
 \subsection{\texorpdfstring{Grammar
-Changes\protect\hyperlink{grammar-changes}{}}{Grammar Changes}}\label{grammar-changes}}
+Changes\hyperref[grammar-changes]{}}{Grammar Changes}}\label{grammar-changes}
 
 \begin{quote}
 \emph{selection-statement:}\\
-\hspace*{0.333em}\hspace*{0.333em}\hspace*{0.333em}\hspace*{0.333em}\VERB|\ControlFlowTok{if} \KeywordTok{constexpr}|\emph{\textsubscript{opt}}
+\strut ~~~~\VERB|\ControlFlowTok{if} \KeywordTok{constexpr}|\emph{\textsubscript{opt}}
 \VERB|\OperatorTok{(}| \emph{init-statement\textsubscript{opt}}
 \emph{condition} \VERB|\OperatorTok{)}| \emph{statement}\\
-\hspace*{0.333em}\hspace*{0.333em}\hspace*{0.333em}\hspace*{0.333em}\VERB|\ControlFlowTok{if} \KeywordTok{constexpr}|\emph{\textsubscript{opt}}
+\strut ~~~~\VERB|\ControlFlowTok{if} \KeywordTok{constexpr}|\emph{\textsubscript{opt}}
 \VERB|\OperatorTok{(}| \emph{init-statement\textsubscript{opt}}
 \emph{condition} \VERB|\OperatorTok{)}| \emph{statement}
 \VERB|\ControlFlowTok{else}| \emph{statement}\\
-\hspace*{0.333em}\hspace*{0.333em}\hspace*{0.333em}\hspace*{0.333em}\VERB|\ControlFlowTok{switch} \OperatorTok{(}|
+\strut ~~~~\VERB|\ControlFlowTok{switch} \OperatorTok{(}|
 \emph{init-statement\textsubscript{opt}} \emph{condition}
 \VERB|\OperatorTok{)}| \emph{statement}\\
-\hspace*{0.333em}\hspace*{0.333em}\hspace*{0.333em}\hspace*{0.333em}{{\color[HTML]{006e28}\uline{{\mbox{\VERB|\NormalTok{inspect}|}}
+\strut ~~~~{{\color[HTML]{006e28}\uline{{\mbox{\VERB|\NormalTok{inspect}|}}
 {\mbox{\VERB|\NormalTok{constexpr}|}}\textsubscript{\emph{opt}}
 {\mbox{\VERB|\NormalTok{(}|}} \emph{init-statement\textsubscript{opt}}
 \emph{condition} {\mbox{\VERB|\NormalTok{)}|}}
@@ -758,34 +781,32 @@ Changes\protect\hyperlink{grammar-changes}{}}{Grammar Changes}}\label{grammar-ch
 {\color[HTML]{006e28}
 
 \emph{inspect-case-seq:}\\
-\hspace*{0.333em}\hspace*{0.333em}\hspace*{0.333em}\hspace*{0.333em}\emph{inspect-case}\\
-\hspace*{0.333em}\hspace*{0.333em}\hspace*{0.333em}\hspace*{0.333em}\emph{inspect-case-seq}
-\emph{inspect-case}
+\strut ~~~~\emph{inspect-case}\\
+\strut ~~~~\emph{inspect-case-seq} \emph{inspect-case}
 
 \emph{inspect-case:}\\
-\hspace*{0.333em}\hspace*{0.333em}\hspace*{0.333em}\hspace*{0.333em}\emph{attribute-specifier-seq\textsubscript{opt}}
+\strut ~~~~\emph{attribute-specifier-seq\textsubscript{opt}}
 \emph{inspect-pattern} \emph{inspect-guard\textsubscript{opt}}
 \VERB|\NormalTok{:}| \emph{statement}
 
 \emph{inspect-pattern:}\\
-\hspace*{0.333em}\hspace*{0.333em}\hspace*{0.333em}\hspace*{0.333em}\emph{wildcard-pattern}\\
-\hspace*{0.333em}\hspace*{0.333em}\hspace*{0.333em}\hspace*{0.333em}\emph{identifier-pattern}\\
-\hspace*{0.333em}\hspace*{0.333em}\hspace*{0.333em}\hspace*{0.333em}\emph{constant-pattern}\\
-\hspace*{0.333em}\hspace*{0.333em}\hspace*{0.333em}\hspace*{0.333em}\emph{structured-binding-pattern}\\
-\hspace*{0.333em}\hspace*{0.333em}\hspace*{0.333em}\hspace*{0.333em}\emph{alternative-pattern}\\
-\hspace*{0.333em}\hspace*{0.333em}\hspace*{0.333em}\hspace*{0.333em}\emph{binding-pattern}\\
-\hspace*{0.333em}\hspace*{0.333em}\hspace*{0.333em}\hspace*{0.333em}\emph{extractor-pattern}
+\strut ~~~~\emph{wildcard-pattern}\\
+\strut ~~~~\emph{identifier-pattern}\\
+\strut ~~~~\emph{constant-pattern}\\
+\strut ~~~~\emph{structured-binding-pattern}\\
+\strut ~~~~\emph{alternative-pattern}\\
+\strut ~~~~\emph{binding-pattern}\\
+\strut ~~~~\emph{extractor-pattern}
 
 \emph{inspect-guard:}\\
-\hspace*{0.333em}\hspace*{0.333em}\hspace*{0.333em}\hspace*{0.333em}\VERB|\NormalTok{if (}|
-\emph{expression} \VERB|\NormalTok{)}|
+\strut ~~~~\VERB|\NormalTok{if (}| \emph{expression}
+\VERB|\NormalTok{)}|
 
 }
 \end{quote}
 
-\hypertarget{stable-names}{%
 \section{\texorpdfstring{Stable
-Names\protect\hyperlink{stable-names}{}}{Stable Names}}\label{stable-names}}
+Names\hyperref[stable-names]{}}{Stable Names}}\label{stable-names}
 
 Stable names are written as
 \VERB|\OperatorTok{[}\NormalTok{basic}\OperatorTok{.}\NormalTok{life}\OperatorTok{]\{.}\NormalTok{sref}\OperatorTok{\}}|,
@@ -799,17 +820,20 @@ underlying database.
 
 Examples:
 
+{\def\LTcaptype{none} % do not increment counter
 \begin{longtable}[]{@{}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5811}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.4189}}@{}}
-\toprule()
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5811}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.4189}}@{}}
+\toprule\noalign{}
 \begin{minipage}[b]{\linewidth}\raggedright
 \centering\arraybackslash\textbf{Source Text}
 \end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
 \centering\arraybackslash\textbf{Rendered}
 \end{minipage} \\
-\midrule()
+\midrule\noalign{}
 \endhead
+\bottomrule\noalign{}
+\endlastfoot
 \VERB|\NormalTok{[basic.life]\{.sref\}}| & {6.8.4
 \href{https://wg21.link/basic.life}{{[}basic.life{]}}} \\
 \VERB|\NormalTok{[basic.life\#1]\{.sref\}}| & {6.8.4
@@ -818,11 +842,10 @@ Examples:
 {\href{https://wg21.link/basic.life}{{[}basic.life{]}}} \\
 \VERB|\NormalTok{[basic.life]\{.unnumbered .sref\}}| &
 {\href{https://wg21.link/basic.life}{{[}basic.life{]}}} \\
-\bottomrule()
 \end{longtable}
+}
 
-\hypertarget{notes}{%
-\section{\texorpdfstring{Notes\protect\hyperlink{notes}{}}{Notes}}\label{notes}}
+\section{\texorpdfstring{Notes\hyperref[notes]{}}{Notes}}\label{notes}
 
 There are three supported styles of note:
 
@@ -849,8 +872,8 @@ There are three supported styles of note:
   \end{Highlighting}
   \end{Shaded}
 
-  {{\color[HTML]{0000ff}{[} Editor's note: Editorial notes are
-  important {]}}}
+  {{\color[HTML]{0000ff}{[} Editor\textquotesingle s note: Editorial
+  notes are important {]}}}
 \item
   Use \VERB|\NormalTok{draftnote}| to include text that is intended as
   questions or information for reviews and working groups.
@@ -874,8 +897,7 @@ There are three supported styles of note:
   \VERB|\NormalTok{audience}| via this optional attribute. {]}}}
 \end{itemize}
 
-\hypertarget{citation}{%
-\section{\texorpdfstring{Citation\protect\hyperlink{citation}{}}{Citation}}\label{citation}}
+\section{\texorpdfstring{Citation\hyperref[citation]{}}{Citation}}\label{citation}
 
 Automatic references are written as
 \VERB|\OperatorTok{[@}\NormalTok{N4762}\OperatorTok{]}| and renders as
@@ -915,51 +937,50 @@ the title of the paper, and renders as:
 {\href{https://wg21.link/p2996r8}{{[}P2996R8{]} (Reflection for
 C++26)}}.
 
-\hypertarget{bibliography}{%
-\section{\texorpdfstring{References\protect\hyperlink{bibliography}{}}{References}}\label{bibliography}}
+\section{\texorpdfstring{References\hyperref[bibliography]{}}{References}}\label{bibliography}
 
-\hypertarget{refs}{}
-\begin{CSLReferences}{1}{1}
-\leavevmode\vadjust pre{\hypertarget{ref-CWG1234}{}}%
+\protect\phantomsection\label{refs}
+\begin{CSLReferences}{0}{0}
+\bibitem[\citeproctext]{ref-CWG1234}
 {[}CWG1234{]} Johannes Schaub. 2011-01-18. abstract-declarator does not
 permit ... after ptr-operator. \href{https://wg21.link/cwg1234}{
-\CSLBlock{https://wg21.link/cwg1234}}
+\CSLIndent{https://wg21.link/cwg1234}}
 
-\leavevmode\vadjust pre{\hypertarget{ref-EDIT1234}{}}%
+\bibitem[\citeproctext]{ref-EDIT1234}
 {[}EDIT1234{]} {[}intro.races{]} Remove duplicated index entry for
 {``data race.''} \href{https://wg21.link/edit1234}{
-\CSLBlock{https://wg21.link/edit1234}}
+\CSLIndent{https://wg21.link/edit1234}}
 
-\leavevmode\vadjust pre{\hypertarget{ref-LWG1234}{}}%
+\bibitem[\citeproctext]{ref-LWG1234}
 {[}LWG1234{]} Matt Austern. {``Do the right thing''} and NULL.
 \href{https://wg21.link/lwg1234}{
-\CSLBlock{https://wg21.link/lwg1234}}
+\CSLIndent{https://wg21.link/lwg1234}}
 
-\leavevmode\vadjust pre{\hypertarget{ref-N3887}{}}%
+\bibitem[\citeproctext]{ref-N3887}
 {[}N3887{]} Michael Park. 2013-12-26. Consistent Metafunction Aliases.
 \href{https://wg21.link/n3887}{
-\CSLBlock{https://wg21.link/n3887}}
+\CSLIndent{https://wg21.link/n3887}}
 
-\leavevmode\vadjust pre{\hypertarget{ref-N4762}{}}%
+\bibitem[\citeproctext]{ref-N4762}
 {[}N4762{]} Richard Smith. 2018-07-07. Working Draft, Standard for
 Programming Language C++. \href{https://wg21.link/n4762}{
-\CSLBlock{https://wg21.link/n4762}}
+\CSLIndent{https://wg21.link/n4762}}
 
-\leavevmode\vadjust pre{\hypertarget{ref-P1371R1}{}}%
+\bibitem[\citeproctext]{ref-P1371R1}
 {[}P1371R1{]} Sergei Murzin, Michael Park, David Sankel, Dan Sarginson.
 2019-06-17. Pattern Matching. \href{https://wg21.link/p1371r1}{
-\CSLBlock{https://wg21.link/p1371r1}}
+\CSLIndent{https://wg21.link/p1371r1}}
 
-\leavevmode\vadjust pre{\hypertarget{ref-P2996R8}{}}%
+\bibitem[\citeproctext]{ref-P2996R8}
 {[}P2996R8{]} Barry Revzin, Wyatt Childers, Peter Dimov, Andrew Sutton,
 Faisal Vali, Daveed Vandevoorde, Dan Katz. 2024-12-17. Reflection for
 C++26. \href{https://wg21.link/p2996r8}{
-\CSLBlock{https://wg21.link/p2996r8}}
+\CSLIndent{https://wg21.link/p2996r8}}
 
-\leavevmode\vadjust pre{\hypertarget{ref-SD6}{}}%
+\bibitem[\citeproctext]{ref-SD6}
 {[}SD6{]} SG10 Feature Test Recommendations.
 \href{https://wg21.link/sd6}{
-\CSLBlock{https://wg21.link/sd6}}
+\CSLIndent{https://wg21.link/sd6}}
 
 \end{CSLReferences}
 

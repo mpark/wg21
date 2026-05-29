@@ -1,9 +1,8 @@
 # https://github.com/cplusplus/draft/blob/97b615a5a6ab0598b624ee05402c531d0421cff6/source/std.tex#L6
-papersize: a4paper
+papersize: a4
 fontsize: 10pt
 classoption:
   - oneside
-  - openany
   - final
 
 # https://github.com/cplusplus/draft/blob/97b615a5a6ab0598b624ee05402c531d0421cff6/source/layout.tex#L4-L8
@@ -31,10 +30,12 @@ rmcolor: 'bf0303'
 header-includes:
   - |
     ```{=latex}
+    \usepackage[normalem]{ulem}
+    \providecommand{\CSLIndent}{}
+    \renewcommand{\CSLIndent}[1]{\hfill\break\hspace*{\cslhangindent}\ignorespaces#1}
+
     % adjust quote indent
     \renewenvironment{quote}{\list{}{\leftmargin=0.2in}\item[]}{\endlist}
-    \providecommand{\CSLBlock}{}
-    \renewcommand{\CSLBlock}[1]{\hfill\break\parbox[t]{\linewidth}{\strut\ignorespaces#1\strut}}
 
     % https://github.com/cplusplus/draft/blob/97b615a5a6ab0598b624ee05402c531d0421cff6/source/styles.tex#L127-L133
     \renewcommand{\labelitemi}{---}

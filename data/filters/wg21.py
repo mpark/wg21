@@ -30,6 +30,12 @@ def wrap_elem(opening, elem, closing):
         elem.content.insert(0, opening)
         elem.content.append(closing)
 
+def protect_code(elem, doc):
+    if isinstance(elem, pf.Code):
+        return pf.Span(pf.RawInline(r'\mbox{', 'latex'),
+                       elem,
+                       pf.RawInline('}', 'latex'))
+
 def convert_fragments(fragments, input_format):
     """
     Converts a list of fragment texts into panflute elements
@@ -116,7 +122,7 @@ def prepare(doc):
             input_format='markdown',
             output_format=output_format,
             extra_args=[
-              '--highlight-style', os.path.join(datadir, 'syntax', 'wg21.theme'),
+              '--syntax-highlighting', os.path.join(datadir, 'syntax', 'wg21.theme'),
               '--template', os.path.join(datadir, 'templates', 'highlighting'),
               '--metadata', 'title="-"',
             ])
@@ -127,6 +133,14 @@ def prepare(doc):
         pf.RawBlock(highlighting('html'), 'html'))
 
     process_subs(doc, 'markdown')
+
+def strikeout(elem, doc):
+    # In Pandoc 3.x, strikeouts use the \st from soul package.
+    # This requires that code elements within has to be protected via mbox.
+    # Pandoc handles this manually, but since we handle the code elements
+    # rendering manually, we need to inject the protection manually as well.
+    if isinstance(elem, pf.Strikeout):
+        elem.walk(protect_code)
 
 def divspan(elem, doc):
     """
@@ -169,11 +183,6 @@ def divspan(elem, doc):
 
     def _diff(color, latex_tag, html_tag):
         if isinstance(elem, pf.Span):
-            def protect_code(elem, doc):
-                if isinstance(elem, pf.Code):
-                    return pf.Span(pf.RawInline('\\mbox{', 'latex'),
-                                   elem,
-                                   pf.RawInline('}', 'latex'))
             elem.walk(protect_code)
             wrap_elem(
                 pf.RawInline(f'\\{latex_tag}{{', 'latex'),
@@ -211,6 +220,11 @@ def divspan(elem, doc):
         wrap_elem(pf.Str(f'[ {text}: '), elem, pf.Str(' ]'))
         _color('0000ff')
 
+    # We need to stick to using 'uline' and 'sout' from the ulem package rather
+    # than migrating to the soul package like Pandoc 3.x specifically for cases
+    # where we want to strikeout/underline **within** a highlighted code block.
+    # We could use the soul package for other cases, but keeping it consistent
+    # seems simpler at least for now.
     def add(): _diff('addcolor', 'uline', 'ins')
     def rm():  _diff('rmcolor', 'sout', 'del')
 
@@ -736,6 +750,7 @@ def finalize(doc):
 
 if __name__ == '__main__':
   pf.run_filters([
+      strikeout,
       divspan,
       cmptable,
       # after `cmptable` because...

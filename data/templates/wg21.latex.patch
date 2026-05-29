@@ -1,14 +1,19 @@
 diff --git a/data/templates/default.latex b/data/templates/wg21.latex
-index 7d539fe..723e93e 100644
+index e993af1..0487f68 100644
 --- a/data/templates/default.latex
 +++ b/data/templates/wg21.latex
-@@ -406,8 +406,27 @@ $if(colorlinks)$
- $else$
-   hidelinks,
+@@ -44,6 +44,7 @@ $header-includes$
+ $endfor$
+ $after-header-includes.latex()$
+ $hypersetup.latex()$
++\hypersetup{pdfcreator={mpark/wg21}}
+ $if(pdf-trailer-id)$
+
+ \ifXeTeX
+@@ -58,6 +59,26 @@ $if(pdf-trailer-id)$
+ \fi
  $endif$
--  pdfcreator={LaTeX via pandoc}}
-+  pdfcreator={mpark/wg21}}
- 
+
 +\makeatletter
 +\def\@maketitle{
 +  \newpage \null \vskip 2em
@@ -28,15 +33,16 @@ index 7d539fe..723e93e 100644
 +  \end{flushright}
 +}
 +\makeatother
++
  $if(title)$
  \title{$title$$if(thanks)$\thanks{$thanks$}$endif$}
  $endif$
-@@ -423,7 +442,7 @@ $else$
- $endif$
+@@ -70,7 +91,7 @@ $if(subtitle)$
+ \makeatother
  \subtitle{$subtitle$}
  $endif$
 -\author{$for(author)$$author$$sep$ \and $endfor$}
 +\author{$for(author)$&$author.name$\\$for(author.email)$&<$author.email$>\\$endfor$$endfor$}
  \date{$date$}
- $if(beamer)$
- $if(institute)$
+
+ \begin{document}

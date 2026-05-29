@@ -15,10 +15,11 @@ override ROOTDIR := $(dir $(lastword $(MAKEFILE_LIST)))
 
 override DEPSDIR := $(ROOTDIR)deps
 
-override PANDOC_VER := 2.18
+override PANDOC_VER := 3.9.0.2
 override PANDOC_DIR := $(DEPSDIR)/pandoc/$(PANDOC_VER)
 override PYTHON_DIR := $(DEPSDIR)/python
 override PYTHON_BIN := $(PYTHON_DIR)/bin/python3
+override PYTHON_STAMP := $(PYTHON_DIR)/.stamp
 
 export SHELL := bash
 export PATH := $(PANDOC_DIR):$(PYTHON_DIR)/bin:$(PATH)
@@ -40,7 +41,7 @@ override SRCDEPS := $(shell find $(DATADIR) -type f)
 $(eval $(and $(DEFAULTS), override SRCDEPS += $(DEFAULTS)))
 $(eval $(and $(METADATA), override SRCDEPS += $(METADATA)))
 
-override GENDEPS := $(PANDOC_DIR) $(PYTHON_DIR) $(addprefix $(DATADIR)/, defaults.yaml csl.json annex-f)
+override GENDEPS := $(PANDOC_DIR) $(PYTHON_STAMP) $(addprefix $(DATADIR)/, defaults.yaml csl.json annex-f)
 
 .PHONY: all
 all: $(PDF)
@@ -57,7 +58,7 @@ pdf: $(PDF)
 ifneq ($(SRCDIR), $(OUTDIR))
 .PHONY: clean
 clean:
-	rm -rf $(DEPSDIR)/pandoc $(GENDEPS) $(OUTDIR)
+	rm -rf $(DEPSDIR)/pandoc $(DEPSDIR)/python $(GENDEPS) $(OUTDIR)
 
 .PHONY: $(HTML) $(LATEX) $(PDF)
 $(HTML) $(LATEX) $(PDF): $(SRCDIR)/%: $(OUTDIR)/%
@@ -73,20 +74,26 @@ $(OUTDIR):
 $(PANDOC_DIR):
 	PANDOC_VER=$(PANDOC_VER) PANDOC_DIR=$@ $(DEPSDIR)/install-pandoc.sh
 
-$(PYTHON_DIR): $(DEPSDIR)/requirements.txt $(REQUIREMENTS)
+$(PYTHON_STAMP): $(DEPSDIR)/requirements.txt $(REQUIREMENTS) $(ROOTDIR)Makefile
 	python3 -m venv $(PYTHON_DIR)
-	$@/bin/pip3 install --upgrade pip -r $(DEPSDIR)/requirements.txt
-	if [ -n "$(REQUIREMENTS)" ]; then $@/bin/pip3 install --upgrade pip -r $(REQUIREMENTS); fi
-	touch $(PYTHON_DIR)
+	$(PYTHON_DIR)/bin/pip3 install --upgrade pip -r $(DEPSDIR)/requirements.txt
+	if [ -n "$(REQUIREMENTS)" ]; then $(PYTHON_DIR)/bin/pip3 install --upgrade pip -r $(REQUIREMENTS); fi
+	touch $@
 
 $(DATADIR)/defaults.yaml: $(DATADIR)/defaults.sh
 	DATADIR=$(abspath $(DATADIR)) $< > $@
 
-$(DATADIR)/csl.json: $(DATADIR)/refs.py $(PYTHON_DIR)
+$(DATADIR)/csl.json: $(DATADIR)/refs.py $(PYTHON_STAMP)
 	$(PYTHON_BIN) $< > $@
 
 $(DATADIR)/annex-f:
 	curl -sSL https://timsong-cpp.github.io/cppwp/annex-f -o $@
 
-$(OUTDIR)/%.html $(OUTDIR)/%.latex $(OUTDIR)/%.pdf: $(SRCDIR)/%.md $(SRCDEPS) $(GENDEPS) | $(OUTDIR)
+$(OUTDIR)/%.html: $(SRCDIR)/%.md $(SRCDEPS) $(GENDEPS) | $(OUTDIR)
+	$(PANDOC) --bibliography $(DATADIR)/csl.json
+
+$(OUTDIR)/%.latex: $(SRCDIR)/%.md $(SRCDEPS) $(GENDEPS) | $(OUTDIR)
+	$(PANDOC) --bibliography $(DATADIR)/csl.json
+
+$(OUTDIR)/%.pdf: $(SRCDIR)/%.md $(SRCDEPS) $(GENDEPS) | $(OUTDIR)
 	$(PANDOC) --bibliography $(DATADIR)/csl.json

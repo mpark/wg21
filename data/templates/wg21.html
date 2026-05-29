@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="$lang$" xml:lang="$lang$"$if(dir)$ dir="$dir$"$endif$>
+<html xmlns="http://www.w3.org/1999/xhtml"$if(lang)$ lang="$lang$" xml:lang="$lang$"$endif$$if(dir)$ dir="$dir$"$endif$>
 <head>
   <meta charset="utf-8" />
   <meta name="generator" content="mpark/wg21" />
@@ -18,67 +18,56 @@ $if(description-meta)$
 $endif$
   <title>$if(title-prefix)$$title-prefix$ – $endif$$pagetitle$</title>
   <style>
-      code.sourceCode{white-space: pre;}
-      span.smallcaps{font-variant: small-caps;}
-      span.underline{text-decoration: underline;}
-      /* Make the thickness of strikeout and underline consistent in different contexts */
-      ins, del { text-decoration-thickness: 1px; }
-      /* Move underline down slightly as to not overlap with underscore */
-      ins { text-underline-offset: 3.5px; }
-      div.column{display: inline-block; vertical-align: top; width: 50%;}
-      div.csl-block{margin-left: 1.5em;}
-      ul.task-list{list-style: none;}
-$if(quotes)$
-      q { quotes: "“" "”" "‘" "’"; }
-$endif$
-$if(highlighting-css)$
-      $highlighting-css$
-      code.diff {color: #$uccolor$}
-      code.diff span.va {color: #$addcolor$}
-      code.diff span.st {color: #$rmcolor$}
-$endif$
-      .view-controls {
-        position: sticky;
-        top: 0.75rem;
-        z-index: 1000;
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 0.35rem;
-        width: fit-content;
-        margin-left: auto;
-        margin-bottom: 1rem;
-        padding: 0.45rem 0.8rem;
-        border: 1px solid #b7c0c8;
-        border-radius: 999px;
-        background: rgba(255, 255, 255, 0.96);
-        color: #22303c;
-        font: 600 0.9rem/1.1 sans-serif;
-        box-shadow: 0 0.2rem 0.8rem rgba(34, 48, 60, 0.12);
-      }
-      .view-controls:hover {
-        background: #f3f6f8;
-      }
-      .view-controls label {
-        display: flex;
-        align-items: center;
-        gap: 0.45rem;
-      }
-      .view-controls input {
-        margin: 0;
-      }
-      .view-controls span {
-        white-space: nowrap;
-      }
-      body[data-syntax-highlighting="off"] code.sourceCode:not(.diff) span:not(.add, .rm, .co, .cv, .do, .in) {
-        color: inherit !important;
-        font-style: inherit !important;
-        font-weight: inherit !important;
-        text-decoration: inherit !important;
-      }
-      body[data-deleted-text="hide"] .rm del {
-        display: none !important;
-      }
+    $styles.html()$
+    /* Make the thickness of strikeout and underline consistent in different contexts */
+    ins, del { text-decoration-thickness: 1px; }
+    /* Move underline down slightly as to not overlap with underscore */
+    ins { text-underline-offset: 3.5px; }
+    code.diff {color: #$uccolor$}
+    code.diff span.va {color: #$addcolor$}
+    code.diff span.st {color: #$rmcolor$}
+    .view-controls {
+      position: sticky;
+      top: 0.75rem;
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.35rem;
+      width: fit-content;
+      margin-left: auto;
+      margin-bottom: 1rem;
+      padding: 0.45rem 0.8rem;
+      border: 1px solid #b7c0c8;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.96);
+      color: #22303c;
+      font: 600 0.9rem/1.1 sans-serif;
+      box-shadow: 0 0.2rem 0.8rem rgba(34, 48, 60, 0.12);
+    }
+    .view-controls:hover {
+      background: #f3f6f8;
+    }
+    .view-controls label {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+    }
+    .view-controls input {
+      margin: 0;
+    }
+    .view-controls span {
+      white-space: nowrap;
+    }
+    body[data-syntax-highlighting="off"] code.sourceCode:not(.diff) span:not(.add, .rm, .co, .cv, .do, .in) {
+      color: inherit !important;
+      font-style: inherit !important;
+      font-weight: inherit !important;
+      text-decoration: inherit !important;
+    }
+    body[data-deleted-text="hide"] .rm del {
+      display: none !important;
+    }
   </style>
 $for(css)$
   <link rel="stylesheet" href="$css$" />
@@ -90,9 +79,6 @@ $endfor$
 $if(math)$
   $math$
 $endif$
-  <!--[if lt IE 9]>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
-  <![endif]-->
 </head>
 <body data-syntax-highlighting="on" data-deleted-text="show">
 <form class="view-controls">

@@ -4,130 +4,159 @@
   <meta charset="utf-8" />
   <meta name="generator" content="mpark/wg21" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-  <meta name="dcterms.date" content="2026-05-25" />
+  <meta name="dcterms.date" content="2026-05-29" />
   <title>Test document for mpark/wg21</title>
   <style>
-      code.sourceCode{white-space: pre;}
-      span.smallcaps{font-variant: small-caps;}
-      span.underline{text-decoration: underline;}
-      /* Make the thickness of strikeout and underline consistent in different contexts */
-      ins, del { text-decoration-thickness: 1px; }
-      /* Move underline down slightly as to not overlap with underscore */
-      ins { text-underline-offset: 3.5px; }
-      div.column{display: inline-block; vertical-align: top; width: 50%;}
-      div.csl-block{margin-left: 1.5em;}
-      ul.task-list{list-style: none;}
-      pre > code.sourceCode { white-space: pre; position: relative; }
-      pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-      pre > code.sourceCode > span:empty { height: 1.2em; }
-      .sourceCode { overflow: visible; }
-      code.sourceCode > span { color: inherit; text-decoration: inherit; }
-      div.sourceCode { margin: 1em 0; }
-      pre.sourceCode { margin: 0; }
-      @media screen {
-      div.sourceCode { overflow: auto; }
-      }
-      @media print {
-      pre > code.sourceCode { white-space: pre-wrap; }
-      pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-      }
-      pre.numberSource code
-        { counter-reset: source-line 0; }
-      pre.numberSource code > span
-        { position: relative; left: -4em; counter-increment: source-line; }
-      pre.numberSource code > span > a:first-child::before
-        { content: counter(source-line);
-          position: relative; left: -1em; text-align: right; vertical-align: baseline;
-          border: none; display: inline-block;
-          -webkit-touch-callout: none; -webkit-user-select: none;
-          -khtml-user-select: none; -moz-user-select: none;
-          -ms-user-select: none; user-select: none;
-          padding: 0 4px; width: 4em;
-          color: #aaaaaa;
-        }
-      pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
-      div.sourceCode
-        {  background-color: #f6f8fa; }
-      @media screen {
-      pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-      }
-      code span { } /* Normal */
-      code span.al { color: #ff0000; } /* Alert */
-      code span.an { } /* Annotation */
-      code span.at { } /* Attribute */
-      code span.bn { color: #9f6807; } /* BaseN */
-      code span.bu { color: #9f6807; } /* BuiltIn */
-      code span.cf { color: #00607c; } /* ControlFlow */
-      code span.ch { color: #9f6807; } /* Char */
-      code span.cn { } /* Constant */
-      code span.co { color: #6a737d; font-style: italic; } /* Comment */
-      code span.cv { color: #6a737d; font-style: italic; } /* CommentVar */
-      code span.do { color: #6a737d; } /* Documentation */
-      code span.dt { color: #00607c; } /* DataType */
-      code span.dv { color: #9f6807; } /* DecVal */
-      code span.er { color: #ff0000; font-weight: bold; } /* Error */
-      code span.ex { } /* Extension */
-      code span.fl { color: #9f6807; } /* Float */
-      code span.fu { } /* Function */
-      code span.im { } /* Import */
-      code span.in { color: #6a737d; } /* Information */
-      code span.kw { color: #00607c; } /* Keyword */
-      code span.op { color: #7b3e91; } /* Operator */
-      code span.ot { } /* Other */
-      code span.pp { color: #6f4e37; } /* Preprocessor */
-      code span.re { } /* RegionMarker */
-      code span.sc { color: #9f6807; } /* SpecialChar */
-      code span.ss { color: #9f6807; } /* SpecialString */
-      code span.st { color: #9f6807; } /* String */
-      code span.va { } /* Variable */
-      code span.vs { color: #9f6807; } /* VerbatimString */
-      code span.wa { color: #6a737d; font-weight: bold; } /* Warning */
-      code.diff {color: #898887}
-      code.diff span.va {color: #006e28}
-      code.diff span.st {color: #bf0303}
-      .view-controls {
-        position: sticky;
-        top: 0.75rem;
-        z-index: 1000;
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 0.35rem;
-        width: fit-content;
-        margin-left: auto;
-        margin-bottom: 1rem;
-        padding: 0.45rem 0.8rem;
-        border: 1px solid #b7c0c8;
-        border-radius: 999px;
-        background: rgba(255, 255, 255, 0.96);
-        color: #22303c;
-        font: 600 0.9rem/1.1 sans-serif;
-        box-shadow: 0 0.2rem 0.8rem rgba(34, 48, 60, 0.12);
-      }
-      .view-controls:hover {
-        background: #f3f6f8;
-      }
-      .view-controls label {
-        display: flex;
-        align-items: center;
-        gap: 0.45rem;
-      }
-      .view-controls input {
-        margin: 0;
-      }
-      .view-controls span {
-        white-space: nowrap;
-      }
-      body[data-syntax-highlighting="off"] code.sourceCode:not(.diff) span:not(.add, .rm, .co, .cv, .do, .in) {
-        color: inherit !important;
-        font-style: inherit !important;
-        font-weight: inherit !important;
-        text-decoration: inherit !important;
-      }
-      body[data-deleted-text="hide"] .rm del {
-        display: none !important;
-      }
-  </style>
+
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+ul.task-list[class]{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+font-size: inherit;
+width: 0.8em;
+margin: 0 0.8em 0.2em -1.6em;
+vertical-align: middle;
+}
+
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
+div.sourceCode
+{ background-color: #f6f8fa; }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span { } 
+code span.al { color: #ff0000; } 
+code span.an { } 
+code span.at { } 
+code span.bn { color: #9f6807; } 
+code span.bu { color: #9f6807; } 
+code span.cf { color: #00607c; } 
+code span.ch { color: #9f6807; } 
+code span.cn { } 
+code span.co { color: #6a737d; font-style: italic; } 
+code span.cv { color: #6a737d; font-style: italic; } 
+code span.do { color: #6a737d; } 
+code span.dt { color: #00607c; } 
+code span.dv { color: #9f6807; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #9f6807; } 
+code span.fu { } 
+code span.im { } 
+code span.in { color: #6a737d; } 
+code span.kw { color: #00607c; } 
+code span.op { color: #7b3e91; } 
+code span.ot { } 
+code span.pp { color: #6f4e37; } 
+code span.re { } 
+code span.sc { color: #9f6807; } 
+code span.ss { color: #9f6807; } 
+code span.st { color: #9f6807; } 
+code span.va { } 
+code span.vs { color: #9f6807; } 
+code span.wa { color: #6a737d; font-weight: bold; } 
+
+div.csl-bib-body { }
+div.csl-entry {
+clear: both;
+margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+margin-left:2em;
+text-indent:-2em;
+}
+div.csl-left-margin {
+min-width:2em;
+float:left;
+}
+div.csl-right-inline {
+margin-left:2em;
+padding-left:1em;
+}
+div.csl-indent {
+margin-left: 2em;
+} 
+ins, del { text-decoration-thickness: 1px; }
+
+ins { text-underline-offset: 3.5px; }
+code.diff {color: #898887}
+code.diff span.va {color: #006e28}
+code.diff span.st {color: #bf0303}
+.view-controls {
+position: sticky;
+top: 0.75rem;
+z-index: 1000;
+display: flex;
+flex-direction: column;
+align-items: flex-start;
+gap: 0.35rem;
+width: fit-content;
+margin-left: auto;
+margin-bottom: 1rem;
+padding: 0.45rem 0.8rem;
+border: 1px solid #b7c0c8;
+border-radius: 999px;
+background: rgba(255, 255, 255, 0.96);
+color: #22303c;
+font: 600 0.9rem/1.1 sans-serif;
+box-shadow: 0 0.2rem 0.8rem rgba(34, 48, 60, 0.12);
+}
+.view-controls:hover {
+background: #f3f6f8;
+}
+.view-controls label {
+display: flex;
+align-items: center;
+gap: 0.45rem;
+}
+.view-controls input {
+margin: 0;
+}
+.view-controls span {
+white-space: nowrap;
+}
+body[data-syntax-highlighting="off"] code.sourceCode:not(.diff) span:not(.add, .rm, .co, .cv, .do, .in) {
+color: inherit !important;
+font-style: inherit !important;
+font-weight: inherit !important;
+text-decoration: inherit !important;
+}
+body[data-deleted-text="hide"] .rm del {
+display: none !important;
+}
+</style>
   <style type="text/css">
 body {
 margin: 5em;
@@ -458,11 +487,8 @@ margin-top: 1em;
 ol.enumeratea { list-style-type: none; background: inherit; }
 ol.enumerate { list-style-type: none; background: inherit; }
 </style>
-  <link href="data:image/x-icon;base64,AAABAAIAEBAAAAEAIABoBAAAJgAAACAgAAABACAAqBAAAI4EAAAoAAAAEAAAACAAAAABACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA////AIJEAACCRAAAgkQAAIJEAACCRAAAgkQAVoJEAN6CRADegkQAWIJEAACCRAAAgkQAAIJEAACCRAAA////AP///wCCRAAAgkQAAIJEAACCRAAsgkQAvoJEAP+CRAD/gkQA/4JEAP+CRADAgkQALoJEAACCRAAAgkQAAP///wD///8AgkQAAIJEABSCRACSgkQA/IJEAP99PQD/dzMA/3czAP99PQD/gkQA/4JEAPyCRACUgkQAFIJEAAD///8A////AHw+AFiBQwDqgkQA/4BBAP9/PxP/uZd6/9rJtf/bybX/upd7/39AFP+AQQD/gkQA/4FDAOqAQgBc////AP///wDKklv4jlEa/3o7AP+PWC//8+3o///////////////////////z7un/kFox/35AAP+GRwD/mVYA+v///wD///8A0Zpk+NmibP+0d0T/8evj///////+/fv/1sKz/9bCs//9/fr//////+/m2/+NRwL/nloA/5xYAPj///8A////ANKaZPjRmGH/5cKh////////////k149/3UwAP91MQD/lmQ//86rhv+USg3/m1YA/5hSAP+bVgD4////AP///wDSmmT4zpJY/+/bx///////8+TV/8mLT/+TVx//gkIA/5lVAP+VTAD/x6B//7aEVv/JpH7/s39J+P///wD///8A0ppk+M6SWP/u2sf///////Pj1f/Nj1T/2KFs/8mOUv+eWhD/lEsA/8aee/+0glT/x6F7/7J8Rvj///8A////ANKaZPjRmGH/48Cf///////+/v7/2qt//82PVP/OkFX/37KJ/86siv+USg7/mVQA/5hRAP+bVgD4////AP///wDSmmT40ppk/9CVXP/69O////////7+/v/x4M//8d/P//7+/f//////9u7n/6tnJf+XUgD/nFgA+P///wD///8A0ppk+NKaZP/RmWL/1qNy//r07///////////////////////+vXw/9akdP/Wnmn/y5FY/6JfFvj///8A////ANKaZFTSmmTo0ppk/9GYYv/Ql1//5cWm//Hg0P/x4ND/5cWm/9GXYP/RmGH/0ppk/9KaZOjVnmpY////AP///wDSmmQA0ppkEtKaZI7SmmT60ppk/9CWX//OkVb/zpFW/9CWX//SmmT/0ppk/NKaZJDSmmQS0ppkAP///wD///8A0ppkANKaZADSmmQA0ppkKtKaZLrSmmT/0ppk/9KaZP/SmmT/0ppkvNKaZCrSmmQA0ppkANKaZAD///8A////ANKaZADSmmQA0ppkANKaZADSmmQA0ppkUtKaZNzSmmTc0ppkVNKaZADSmmQA0ppkANKaZADSmmQA////AP5/AAD4HwAA4AcAAMADAACAAQAAgAEAAIABAACAAQAAgAEAAIABAACAAQAAgAEAAMADAADgBwAA+B8AAP5/AAAoAAAAIAAAAEAAAAABACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA////AP///wCCRAAAgkQAAIJEAACCRAAAgkQAAIJEAACCRAAAgkQAAIJEAACCRAAAgkQAAIJEAAyCRACMgkQA6oJEAOqCRACQgkQAEIJEAACCRAAAgkQAAIJEAACCRAAAgkQAAIJEAACCRAAAgkQAAIJEAACCRAAA////AP///wD///8A////AIJEAACCRAAAgkQAAIJEAACCRAAAgkQAAIJEAACCRAAAgkQAAIJEAACCRABigkQA5oJEAP+CRAD/gkQA/4JEAP+CRADqgkQAZoJEAACCRAAAgkQAAIJEAACCRAAAgkQAAIJEAACCRAAAgkQAAIJEAAD///8A////AP///wD///8AgkQAAIJEAACCRAAAgkQAAIJEAACCRAAAgkQAAIJEAACCRAA4gkQAwoJEAP+CRAD/gkQA/4JEAP+CRAD/gkQA/4JEAP+CRAD/gkQAxIJEADyCRAAAgkQAAIJEAACCRAAAgkQAAIJEAACCRAAAgkQAAP///wD///8A////AP///wCCRAAAgkQAAIJEAACCRAAAgkQAAIJEAACCRAAWgkQAmIJEAP+CRAD/gkQA/4JEAP+CRAD/gkQA/4JEAP+CRAD/gkQA/4JEAP+CRAD/gkQA/4JEAJyCRAAYgkQAAIJEAACCRAAAgkQAAIJEAACCRAAA////AP///wD///8A////AIJEAACCRAAAgkQAAIJEAACCRAAAgkQAdIJEAPCCRAD/gkQA/4JEAP+CRAD/gkQA/4JEAP+CRAD/gkQA/4JEAP+CRAD/gkQA/4JEAP+CRAD/gkQA/4JEAPSCRAB4gkQAAIJEAACCRAAAgkQAAIJEAAD///8A////AP///wD///8AgkQAAIJEAACCRAAAgkQASoJEANKCRAD/gkQA/4JEAP+CRAD/g0YA/39AAP9zLgD/bSQA/2shAP9rIQD/bSQA/3MuAP9/PwD/g0YA/4JEAP+CRAD/gkQA/4JEAP+CRADUgkQAToJEAACCRAAAgkQAAP///wD///8A////AP///wB+PwAAgkUAIoJEAKiCRAD/gkQA/4JEAP+CRAD/hEcA/4BBAP9sIwD/dTAA/5RfKv+viF7/vp56/76ee/+wiF7/lWAr/3YxAP9sIwD/f0AA/4RHAP+CRAD/gkQA/4JEAP+CRAD/gkQArIJEACaBQwAA////AP///wD///8A////AIBCAEBzNAD6f0EA/4NFAP+CRAD/gkQA/4VIAP92MwD/bSUA/6N1Tv/ezsL/////////////////////////////////38/D/6V3Uv9uJgD/dTEA/4VJAP+CRAD/gkQA/4JEAP+BQwD/fUAA/4FDAEj///8A////AP///wD///8AzJRd5qBlKf91NgD/dDUA/4JEAP+FSQD/cy4A/3YyAP/PuKP//////////////////////////////////////////////////////9K7qP94NQD/ciwA/4VJAP+CRAD/fkEA/35BAP+LSwD/mlYA6v///wD///8A////AP///wDdpnL/4qx3/8KJUv+PUhf/cTMA/3AsAP90LgD/4dK+/////////////////////////////////////////////////////////////////+TYxf91MAD/dTIA/31CAP+GRwD/llQA/6FcAP+gWwD8////AP///wD///8A////ANGZY/LSm2X/4ap3/92mcP+wdT3/byQA/8mwj////////////////////////////////////////////////////////////////////////////+LYxv9zLgP/jUoA/59bAP+hXAD/nFgA/5xYAPL///8A////AP///wD///8A0ppk8tKaZP/RmWL/1p9q/9ubXv/XqXj////////////////////////////7+fD/vZyG/6BxS/+gcUr/vJuE//r37f//////////////////////3MOr/5dQBf+dVQD/nVkA/5xYAP+cWAD/nFgA8v///wD///8A////AP///wDSmmTy0ppk/9KaZP/SmWP/yohJ//jo2P//////////////////////4NTG/4JDFf9lGAD/bSQA/20kAP9kGAD/fz8S/+Xb0f//////5NG9/6txN/+LOgD/m1QA/51aAP+cWAD/m1cA/5xYAP+cWADy////AP///wD///8A////ANKaZPLSmmT/0ppk/8+TWf/Unmv//v37//////////////////////+TWRr/VwsA/35AAP+ERgD/g0UA/4JGAP9lHgD/kFga/8KXX/+TRwD/jT4A/49CAP+VTQD/n10A/5xYAP+OQQD/lk4A/55cAPL///8A////AP///wD///8A0ppk8tKaZP/SmmT/y4tO/92yiP//////////////////////8NnE/8eCQP+rcTT/ez0A/3IyAP98PgD/gEMA/5FSAP+USwD/jj8A/5lUAP+JNwD/yqV2/694Mf+HNQD/jkAA/82rf/+laBj/jT4A8v///wD///8A////AP///wDSmmTy0ppk/9KaZP/LiUr/4byY///////////////////////gupX/0I5P/+Wuev/Lklz/l1sj/308AP+QSwD/ol0A/59aAP+aVQD/k0oA/8yoh///////+fXv/6pwO//Lp3v///////Pr4f+oay7y////AP///wD///8A////ANKaZPLSmmT/0ppk/8uJSv/hvJj//////////////////////+G7l//Jhkb/0ppk/96nc//fqXX/x4xO/6dkFP+QSQD/llEA/5xXAP+USgD/yaOA///////38uv/qG05/8ijdv//////8efb/6ZpLPL///8A////AP///wD///8A0ppk8tKaZP/SmmT/zIxO/9yxh///////////////////////7dbA/8iEQf/Sm2X/0Zlj/9ScZv/eqHf/2KJv/7yAQf+XTgD/iToA/5lSAP+JNgD/yKFv/611LP+HNQD/jT8A/8qmeP+kZRT/jT4A8v///wD///8A////AP///wDSmmTy0ppk/9KaZP/Pk1n/1J5q//78+//////////////////+/fv/1aFv/8iEQv/Tm2b/0ppl/9GZY//Wn2z/1pZc/9eldf/Bl2b/kUcA/4w9AP+OQAD/lUwA/59eAP+cWQD/jT8A/5ZOAP+eXADy////AP///wD///8A////ANKaZPLSmmT/0ppk/9KZY//KiEn/8d/P///////////////////////47+f/05tm/8iCP//KiEj/yohJ/8eCP//RmGH//vfy///////n1sP/rXQ7/4k4AP+TTAD/nVoA/5xYAP+cVwD/nFgA/5xYAPL///8A////AP///wD///8A0ppk8tKaZP/SmmT/0ptl/8uLTf/aq37////////////////////////////+/fz/6c2y/961jv/etY7/6Myx//78+v//////////////////////3MWv/5xXD/+ORAD/mFQA/51ZAP+cWAD/nFgA8v///wD///8A////AP///wDSmmTy0ppk/9KaZP/SmmT/0ppk/8mFRP/s1b//////////////////////////////////////////////////////////////////////////////+PD/0JFU/7NzMv+WUQD/kUsA/5tXAP+dWQDy////AP///wD///8A////ANKaZP/SmmT/0ppk/9KaZP/Sm2X/z5NZ/8yMT//z5NX/////////////////////////////////////////////////////////////////9Ofa/8yNUP/UmGH/36p5/8yTWv+qaSD/kksA/5ROAPz///8A////AP///wD///8A0ppk5NKaZP/SmmT/0ppk/9KaZP/TnGf/zY9T/82OUv/t1sD//////////////////////////////////////////////////////+7Yw//OkFX/zI5R/9OcZ//SmmP/26V0/9ymdf/BhUf/ol8R6P///wD///8A////AP///wDSmmQ80ppk9tKaZP/SmmT/0ppk/9KaZP/TnGj/zpFW/8qJSv/dson/8uHS//////////////////////////////////Lj0//etIv/y4lL/86QVf/TnGj/0ppk/9KaZP/RmWP/05xn/9ymdfjUnWdC////AP///wD///8A////ANKaZADSmmQc0ppkotKaZP/SmmT/0ppk/9KaZP/Tm2b/0Zli/8qJSf/NjlH/16Z3/+G8mP/myKr/5siq/+G8mP/Xp3f/zY5S/8qISf/RmGH/05tm/9KaZP/SmmT/0ppk/9KaZP/SmmSm0pljINWdaQD///8A////AP///wD///8A0ppkANKaZADSmmQA0ppkQtKaZMrSmmT/0ppk/9KaZP/SmmT/0ptl/9GYYf/Nj1P/y4lL/8qISP/KiEj/y4lK/82PU//RmGH/0ptl/9KaZP/SmmT/0ppk/9KaZP/SmmTO0ppkRtKaZADSmmQA0ppkAP///wD///8A////AP///wDSmmQA0ppkANKaZADSmmQA0ppkANKaZGzSmmTu0ppk/9KaZP/SmmT/0ppk/9KaZP/SmmT/0ppk/9KaZP/SmmT/0ppk/9KaZP/SmmT/0ppk/9KaZP/SmmTw0ppkcNKaZADSmmQA0ppkANKaZADSmmQA////AP///wD///8A////ANKaZADSmmQA0ppkANKaZADSmmQA0ppkANKaZBLSmmSQ0ppk/9KaZP/SmmT/0ppk/9KaZP/SmmT/0ppk/9KaZP/SmmT/0ppk/9KaZP/SmmT/0ppklNKaZBTSmmQA0ppkANKaZADSmmQA0ppkANKaZAD///8A////AP///wD///8A0ppkANKaZADSmmQA0ppkANKaZADSmmQA0ppkANKaZADSmmQy0ppkutKaZP/SmmT/0ppk/9KaZP/SmmT/0ppk/9KaZP/SmmT/0ppkvtKaZDbSmmQA0ppkANKaZADSmmQA0ppkANKaZADSmmQA0ppkAP///wD///8A////AP///wDSmmQA0ppkANKaZADSmmQA0ppkANKaZADSmmQA0ppkANKaZADSmmQA0ppkXNKaZODSmmT/0ppk/9KaZP/SmmT/0ppk5NKaZGDSmmQA0ppkANKaZADSmmQA0ppkANKaZADSmmQA0ppkANKaZADSmmQA////AP///wD///8A////ANKaZADSmmQA0ppkANKaZADSmmQA0ppkANKaZADSmmQA0ppkANKaZADSmmQA0ppkBtKaZIbSmmTo0ppk6tKaZIrSmmQK0ppkANKaZADSmmQA0ppkANKaZADSmmQA0ppkANKaZADSmmQA0ppkANKaZAD///8A////AP/8P///+B///+AH//+AAf//AAD//AAAP/AAAA/gAAAHwAAAA8AAAAPAAAADwAAAA8AAAAPAAAADwAAAA8AAAAPAAAADwAAAA8AAAAPAAAADwAAAA8AAAAPAAAADwAAAA+AAAAfwAAAP/AAAP/8AAP//gAH//+AH///4H////D//" rel="icon" />
+  <link href="data:image/vnd.microsoft.icon;base64,AAABAAIAEBAAAAEAIABoBAAAJgAAACAgAAABACAAqBAAAI4EAAAoAAAAEAAAACAAAAABACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA////AIJEAACCRAAAgkQAAIJEAACCRAAAgkQAVoJEAN6CRADegkQAWIJEAACCRAAAgkQAAIJEAACCRAAA////AP///wCCRAAAgkQAAIJEAACCRAAsgkQAvoJEAP+CRAD/gkQA/4JEAP+CRADAgkQALoJEAACCRAAAgkQAAP///wD///8AgkQAAIJEABSCRACSgkQA/IJEAP99PQD/dzMA/3czAP99PQD/gkQA/4JEAPyCRACUgkQAFIJEAAD///8A////AHw+AFiBQwDqgkQA/4BBAP9/PxP/uZd6/9rJtf/bybX/upd7/39AFP+AQQD/gkQA/4FDAOqAQgBc////AP///wDKklv4jlEa/3o7AP+PWC//8+3o///////////////////////z7un/kFox/35AAP+GRwD/mVYA+v///wD///8A0Zpk+NmibP+0d0T/8evj///////+/fv/1sKz/9bCs//9/fr//////+/m2/+NRwL/nloA/5xYAPj///8A////ANKaZPjRmGH/5cKh////////////k149/3UwAP91MQD/lmQ//86rhv+USg3/m1YA/5hSAP+bVgD4////AP///wDSmmT4zpJY/+/bx///////8+TV/8mLT/+TVx//gkIA/5lVAP+VTAD/x6B//7aEVv/JpH7/s39J+P///wD///8A0ppk+M6SWP/u2sf///////Pj1f/Nj1T/2KFs/8mOUv+eWhD/lEsA/8aee/+0glT/x6F7/7J8Rvj///8A////ANKaZPjRmGH/48Cf///////+/v7/2qt//82PVP/OkFX/37KJ/86siv+USg7/mVQA/5hRAP+bVgD4////AP///wDSmmT40ppk/9CVXP/69O////////7+/v/x4M//8d/P//7+/f//////9u7n/6tnJf+XUgD/nFgA+P///wD///8A0ppk+NKaZP/RmWL/1qNy//r07///////////////////////+vXw/9akdP/Wnmn/y5FY/6JfFvj///8A////ANKaZFTSmmTo0ppk/9GYYv/Ql1//5cWm//Hg0P/x4ND/5cWm/9GXYP/RmGH/0ppk/9KaZOjVnmpY////AP///wDSmmQA0ppkEtKaZI7SmmT60ppk/9CWX//OkVb/zpFW/9CWX//SmmT/0ppk/NKaZJDSmmQS0ppkAP///wD///8A0ppkANKaZADSmmQA0ppkKtKaZLrSmmT/0ppk/9KaZP/SmmT/0ppkvNKaZCrSmmQA0ppkANKaZAD///8A////ANKaZADSmmQA0ppkANKaZADSmmQA0ppkUtKaZNzSmmTc0ppkVNKaZADSmmQA0ppkANKaZADSmmQA////AP5/AAD4HwAA4AcAAMADAACAAQAAgAEAAIABAACAAQAAgAEAAIABAACAAQAAgAEAAMADAADgBwAA+B8AAP5/AAAoAAAAIAAAAEAAAAABACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA////AP///wCCRAAAgkQAAIJEAACCRAAAgkQAAIJEAACCRAAAgkQAAIJEAACCRAAAgkQAAIJEAAyCRACMgkQA6oJEAOqCRACQgkQAEIJEAACCRAAAgkQAAIJEAACCRAAAgkQAAIJEAACCRAAAgkQAAIJEAACCRAAA////AP///wD///8A////AIJEAACCRAAAgkQAAIJEAACCRAAAgkQAAIJEAACCRAAAgkQAAIJEAACCRABigkQA5oJEAP+CRAD/gkQA/4JEAP+CRADqgkQAZoJEAACCRAAAgkQAAIJEAACCRAAAgkQAAIJEAACCRAAAgkQAAIJEAAD///8A////AP///wD///8AgkQAAIJEAACCRAAAgkQAAIJEAACCRAAAgkQAAIJEAACCRAA4gkQAwoJEAP+CRAD/gkQA/4JEAP+CRAD/gkQA/4JEAP+CRAD/gkQAxIJEADyCRAAAgkQAAIJEAACCRAAAgkQAAIJEAACCRAAAgkQAAP///wD///8A////AP///wCCRAAAgkQAAIJEAACCRAAAgkQAAIJEAACCRAAWgkQAmIJEAP+CRAD/gkQA/4JEAP+CRAD/gkQA/4JEAP+CRAD/gkQA/4JEAP+CRAD/gkQA/4JEAJyCRAAYgkQAAIJEAACCRAAAgkQAAIJEAACCRAAA////AP///wD///8A////AIJEAACCRAAAgkQAAIJEAACCRAAAgkQAdIJEAPCCRAD/gkQA/4JEAP+CRAD/gkQA/4JEAP+CRAD/gkQA/4JEAP+CRAD/gkQA/4JEAP+CRAD/gkQA/4JEAPSCRAB4gkQAAIJEAACCRAAAgkQAAIJEAAD///8A////AP///wD///8AgkQAAIJEAACCRAAAgkQASoJEANKCRAD/gkQA/4JEAP+CRAD/g0YA/39AAP9zLgD/bSQA/2shAP9rIQD/bSQA/3MuAP9/PwD/g0YA/4JEAP+CRAD/gkQA/4JEAP+CRADUgkQAToJEAACCRAAAgkQAAP///wD///8A////AP///wB+PwAAgkUAIoJEAKiCRAD/gkQA/4JEAP+CRAD/hEcA/4BBAP9sIwD/dTAA/5RfKv+viF7/vp56/76ee/+wiF7/lWAr/3YxAP9sIwD/f0AA/4RHAP+CRAD/gkQA/4JEAP+CRAD/gkQArIJEACaBQwAA////AP///wD///8A////AIBCAEBzNAD6f0EA/4NFAP+CRAD/gkQA/4VIAP92MwD/bSUA/6N1Tv/ezsL/////////////////////////////////38/D/6V3Uv9uJgD/dTEA/4VJAP+CRAD/gkQA/4JEAP+BQwD/fUAA/4FDAEj///8A////AP///wD///8AzJRd5qBlKf91NgD/dDUA/4JEAP+FSQD/cy4A/3YyAP/PuKP//////////////////////////////////////////////////////9K7qP94NQD/ciwA/4VJAP+CRAD/fkEA/35BAP+LSwD/mlYA6v///wD///8A////AP///wDdpnL/4qx3/8KJUv+PUhf/cTMA/3AsAP90LgD/4dK+/////////////////////////////////////////////////////////////////+TYxf91MAD/dTIA/31CAP+GRwD/llQA/6FcAP+gWwD8////AP///wD///8A////ANGZY/LSm2X/4ap3/92mcP+wdT3/byQA/8mwj////////////////////////////////////////////////////////////////////////////+LYxv9zLgP/jUoA/59bAP+hXAD/nFgA/5xYAPL///8A////AP///wD///8A0ppk8tKaZP/RmWL/1p9q/9ubXv/XqXj////////////////////////////7+fD/vZyG/6BxS/+gcUr/vJuE//r37f//////////////////////3MOr/5dQBf+dVQD/nVkA/5xYAP+cWAD/nFgA8v///wD///8A////AP///wDSmmTy0ppk/9KaZP/SmWP/yohJ//jo2P//////////////////////4NTG/4JDFf9lGAD/bSQA/20kAP9kGAD/fz8S/+Xb0f//////5NG9/6txN/+LOgD/m1QA/51aAP+cWAD/m1cA/5xYAP+cWADy////AP///wD///8A////ANKaZPLSmmT/0ppk/8+TWf/Unmv//v37//////////////////////+TWRr/VwsA/35AAP+ERgD/g0UA/4JGAP9lHgD/kFga/8KXX/+TRwD/jT4A/49CAP+VTQD/n10A/5xYAP+OQQD/lk4A/55cAPL///8A////AP///wD///8A0ppk8tKaZP/SmmT/y4tO/92yiP//////////////////////8NnE/8eCQP+rcTT/ez0A/3IyAP98PgD/gEMA/5FSAP+USwD/jj8A/5lUAP+JNwD/yqV2/694Mf+HNQD/jkAA/82rf/+laBj/jT4A8v///wD///8A////AP///wDSmmTy0ppk/9KaZP/LiUr/4byY///////////////////////gupX/0I5P/+Wuev/Lklz/l1sj/308AP+QSwD/ol0A/59aAP+aVQD/k0oA/8yoh///////+fXv/6pwO//Lp3v///////Pr4f+oay7y////AP///wD///8A////ANKaZPLSmmT/0ppk/8uJSv/hvJj//////////////////////+G7l//Jhkb/0ppk/96nc//fqXX/x4xO/6dkFP+QSQD/llEA/5xXAP+USgD/yaOA///////38uv/qG05/8ijdv//////8efb/6ZpLPL///8A////AP///wD///8A0ppk8tKaZP/SmmT/zIxO/9yxh///////////////////////7dbA/8iEQf/Sm2X/0Zlj/9ScZv/eqHf/2KJv/7yAQf+XTgD/iToA/5lSAP+JNgD/yKFv/611LP+HNQD/jT8A/8qmeP+kZRT/jT4A8v///wD///8A////AP///wDSmmTy0ppk/9KaZP/Pk1n/1J5q//78+//////////////////+/fv/1aFv/8iEQv/Tm2b/0ppl/9GZY//Wn2z/1pZc/9eldf/Bl2b/kUcA/4w9AP+OQAD/lUwA/59eAP+cWQD/jT8A/5ZOAP+eXADy////AP///wD///8A////ANKaZPLSmmT/0ppk/9KZY//KiEn/8d/P///////////////////////47+f/05tm/8iCP//KiEj/yohJ/8eCP//RmGH//vfy///////n1sP/rXQ7/4k4AP+TTAD/nVoA/5xYAP+cVwD/nFgA/5xYAPL///8A////AP///wD///8A0ppk8tKaZP/SmmT/0ptl/8uLTf/aq37////////////////////////////+/fz/6c2y/961jv/etY7/6Myx//78+v//////////////////////3MWv/5xXD/+ORAD/mFQA/51ZAP+cWAD/nFgA8v///wD///8A////AP///wDSmmTy0ppk/9KaZP/SmmT/0ppk/8mFRP/s1b//////////////////////////////////////////////////////////////////////////////+PD/0JFU/7NzMv+WUQD/kUsA/5tXAP+dWQDy////AP///wD///8A////ANKaZP/SmmT/0ppk/9KaZP/Sm2X/z5NZ/8yMT//z5NX/////////////////////////////////////////////////////////////////9Ofa/8yNUP/UmGH/36p5/8yTWv+qaSD/kksA/5ROAPz///8A////AP///wD///8A0ppk5NKaZP/SmmT/0ppk/9KaZP/TnGf/zY9T/82OUv/t1sD//////////////////////////////////////////////////////+7Yw//OkFX/zI5R/9OcZ//SmmP/26V0/9ymdf/BhUf/ol8R6P///wD///8A////AP///wDSmmQ80ppk9tKaZP/SmmT/0ppk/9KaZP/TnGj/zpFW/8qJSv/dson/8uHS//////////////////////////////////Lj0//etIv/y4lL/86QVf/TnGj/0ppk/9KaZP/RmWP/05xn/9ymdfjUnWdC////AP///wD///8A////ANKaZADSmmQc0ppkotKaZP/SmmT/0ppk/9KaZP/Tm2b/0Zli/8qJSf/NjlH/16Z3/+G8mP/myKr/5siq/+G8mP/Xp3f/zY5S/8qISf/RmGH/05tm/9KaZP/SmmT/0ppk/9KaZP/SmmSm0pljINWdaQD///8A////AP///wD///8A0ppkANKaZADSmmQA0ppkQtKaZMrSmmT/0ppk/9KaZP/SmmT/0ptl/9GYYf/Nj1P/y4lL/8qISP/KiEj/y4lK/82PU//RmGH/0ptl/9KaZP/SmmT/0ppk/9KaZP/SmmTO0ppkRtKaZADSmmQA0ppkAP///wD///8A////AP///wDSmmQA0ppkANKaZADSmmQA0ppkANKaZGzSmmTu0ppk/9KaZP/SmmT/0ppk/9KaZP/SmmT/0ppk/9KaZP/SmmT/0ppk/9KaZP/SmmT/0ppk/9KaZP/SmmTw0ppkcNKaZADSmmQA0ppkANKaZADSmmQA////AP///wD///8A////ANKaZADSmmQA0ppkANKaZADSmmQA0ppkANKaZBLSmmSQ0ppk/9KaZP/SmmT/0ppk/9KaZP/SmmT/0ppk/9KaZP/SmmT/0ppk/9KaZP/SmmT/0ppklNKaZBTSmmQA0ppkANKaZADSmmQA0ppkANKaZAD///8A////AP///wD///8A0ppkANKaZADSmmQA0ppkANKaZADSmmQA0ppkANKaZADSmmQy0ppkutKaZP/SmmT/0ppk/9KaZP/SmmT/0ppk/9KaZP/SmmT/0ppkvtKaZDbSmmQA0ppkANKaZADSmmQA0ppkANKaZADSmmQA0ppkAP///wD///8A////AP///wDSmmQA0ppkANKaZADSmmQA0ppkANKaZADSmmQA0ppkANKaZADSmmQA0ppkXNKaZODSmmT/0ppk/9KaZP/SmmT/0ppk5NKaZGDSmmQA0ppkANKaZADSmmQA0ppkANKaZADSmmQA0ppkANKaZADSmmQA////AP///wD///8A////ANKaZADSmmQA0ppkANKaZADSmmQA0ppkANKaZADSmmQA0ppkANKaZADSmmQA0ppkBtKaZIbSmmTo0ppk6tKaZIrSmmQK0ppkANKaZADSmmQA0ppkANKaZADSmmQA0ppkANKaZADSmmQA0ppkANKaZAD///8A////AP/8P///+B///+AH//+AAf//AAD//AAAP/AAAA/gAAAHwAAAA8AAAAPAAAADwAAAA8AAAAPAAAADwAAAA8AAAAPAAAADwAAAA8AAAAPAAAADwAAAA8AAAAPAAAADwAAAA+AAAAfwAAAP/AAAP/8AAP//gAH//+AH///4H////D//" rel="icon" />
   
-  <!--[if lt IE 9]>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
-  <![endif]-->
 </head>
 <body data-syntax-highlighting="on" data-deleted-text="show">
 <form class="view-controls">
@@ -492,7 +518,7 @@ various features of the framework</h3>
   </tr>
   <tr>
     <td>Date:</td>
-    <td>2026-05-25</td>
+    <td>2026-05-29</td>
   </tr>
   <tr>
     <td style="vertical-align:top">Project:</td>
@@ -522,34 +548,28 @@ various features of the framework</h3>
 <div id="TOC" role="doc-toc">
 <h1 id="toctitle">Contents</h1>
 <ul>
-<li><a href="#introduction" id="toc-introduction"><span class="toc-section-number">1</span> Introduction<span></span></a></li>
-<li><a href="#title" id="toc-title"><span class="toc-section-number">2</span> Title<span></span></a></li>
-<li><a href="#markdown" id="toc-markdown"><span class="toc-section-number">3</span> Markdown<span></span></a>
+<li><a href="#introduction" id="toc-introduction"><span class="toc-section-number">1</span> Introduction</a></li>
+<li><a href="#title" id="toc-title"><span class="toc-section-number">2</span> Title</a></li>
+<li><a href="#markdown" id="toc-markdown"><span class="toc-section-number">3</span> Markdown</a>
 <ul>
-<li><a href="#inline-formatting" id="toc-inline-formatting"><span class="toc-section-number">3.1</span> Inline
-Formatting<span></span></a></li>
+<li><a href="#inline-formatting" id="toc-inline-formatting"><span class="toc-section-number">3.1</span> Inline Formatting</a></li>
 <li><a href="#inline-code-in-headers-int-x-y" id="toc-inline-code-in-headers-int-x-y"><span class="toc-section-number">3.2</span> Inline Code in Headers:
 <code class="sourceCode cpp"><span class="dt">int</span></code>,
-<code class="sourceCode cpp">x <span class="op">&amp;</span> y</code><span></span></a></li>
-<li><a href="#code-block" id="toc-code-block"><span class="toc-section-number">3.3</span> Code Block<span></span></a></li>
-<li><a href="#auto-header-links" id="toc-auto-header-links"><span class="toc-section-number">3.4</span> Automatic Header
-Links<span></span></a></li>
+<code class="sourceCode cpp">x <span class="op">&amp;</span> y</code></a></li>
+<li><a href="#code-block" id="toc-code-block"><span class="toc-section-number">3.3</span> Code Block</a></li>
+<li><a href="#auto-header-links" id="toc-auto-header-links"><span class="toc-section-number">3.4</span> Automatic Header Links</a></li>
 </ul></li>
-<li><a href="#comparison-tables" id="toc-comparison-tables"><span class="toc-section-number">4</span> Comparison
-Tables<span></span></a></li>
-<li><a href="#proposed-wording" id="toc-proposed-wording"><span class="toc-section-number">5</span> Proposed Wording<span></span></a>
+<li><a href="#comparison-tables" id="toc-comparison-tables"><span class="toc-section-number">4</span> Comparison Tables</a></li>
+<li><a href="#proposed-wording" id="toc-proposed-wording"><span class="toc-section-number">5</span> Proposed Wording</a>
 <ul>
-<li><a href="#paragraph-numbers" id="toc-paragraph-numbers"><span class="toc-section-number">5.1</span> Paragraph
-Numbers<span></span></a></li>
-<li><a href="#wording-changes" id="toc-wording-changes"><span class="toc-section-number">5.2</span> Wording
-Changes<span></span></a></li>
-<li><a href="#grammar-changes" id="toc-grammar-changes"><span class="toc-section-number">5.3</span> Grammar
-Changes<span></span></a></li>
+<li><a href="#paragraph-numbers" id="toc-paragraph-numbers"><span class="toc-section-number">5.1</span> Paragraph Numbers</a></li>
+<li><a href="#wording-changes" id="toc-wording-changes"><span class="toc-section-number">5.2</span> Wording Changes</a></li>
+<li><a href="#grammar-changes" id="toc-grammar-changes"><span class="toc-section-number">5.3</span> Grammar Changes</a></li>
 </ul></li>
-<li><a href="#stable-names" id="toc-stable-names"><span class="toc-section-number">6</span> Stable Names<span></span></a></li>
-<li><a href="#notes" id="toc-notes"><span class="toc-section-number">7</span> Notes<span></span></a></li>
-<li><a href="#citation" id="toc-citation"><span class="toc-section-number">8</span> Citation<span></span></a></li>
-<li><a href="#bibliography" id="toc-bibliography"><span class="toc-section-number">9</span> References<span></span></a></li>
+<li><a href="#stable-names" id="toc-stable-names"><span class="toc-section-number">6</span> Stable Names</a></li>
+<li><a href="#notes" id="toc-notes"><span class="toc-section-number">7</span> Notes</a></li>
+<li><a href="#citation" id="toc-citation"><span class="toc-section-number">8</span> Citation</a></li>
+<li><a href="#bibliography" id="toc-bibliography"><span class="toc-section-number">9</span> References</a></li>
 </ul>
 </div>
 <h1 data-number="1" id="introduction"><span class="header-section-number">1</span> Introduction<a href="#introduction" class="self-link"></a></h1>
@@ -591,14 +611,14 @@ su<sub>b</sub>script, su<sup>per</sup>script, and highlighted code:
 <code class="sourceCode cpp"><span class="kw">constexpr</span></code>.</p>
 <p>Various compositions in compact list:</p>
 <ul>
-<li><del><code class="sourceCode cpp">A<span class="op">&lt;</span>B<span class="op">&lt;</span>T<span class="op">&gt;&gt;</span></code></del></li>
+<li><del><span><code class="sourceCode cpp">A<span class="op">&lt;</span>B<span class="op">&lt;</span>T<span class="op">&gt;&gt;</span></code></span></del></li>
 <li><code class="sourceCode cpp">compare_3way</code></li>
-<li><span class="add" style="color: #006e28"><ins><span><code class="sourceCode default">compare_3way</code></span></ins></span></li>
+<li><span class="add" style="color: #006e28"><ins><span><code class="sourceCode default cpp">compare_3way</code></span></ins></span></li>
 <li><code class="sourceCode default">3WAY</code><code class="sourceCode cpp"><span class="op">&lt;</span>R<span class="op">&gt;</span></code></li>
 <li><code class="sourceCode cpp"><span class="kw">operator</span><span class="op">@</span></code></li>
 <li><code class="sourceCode cpp"><span class="kw">operator</span><span class="op">+</span></code></li>
 <li><code class="sourceCode cpp">x <span class="op">@</span> y</code></li>
-<li><del><code class="sourceCode cpp">x <span class="op">&amp;</span> y</code></del></li>
+<li><del><span><code class="sourceCode cpp">x <span class="op">&amp;</span> y</code></span></del></li>
 <li><strong>foo
 <code class="sourceCode cpp"><span class="kw">constexpr</span></code>
 bar</strong></li>
@@ -606,12 +626,12 @@ bar</strong></li>
 <code class="sourceCode cpp"><span class="kw">constexpr</span></code>
 bar</em></li>
 <li><del>foo
-<code class="sourceCode cpp"><span class="kw">constexpr</span></code>
+<span><code class="sourceCode cpp"><span class="kw">constexpr</span></code></span>
 bar</del></li>
-<li><span class="add" style="color: #006e28"><ins><span><code class="sourceCode default">hello world</code></span></ins></span></li>
+<li><span class="add" style="color: #006e28"><ins><span><code class="sourceCode default cpp">hello world</code></span></ins></span></li>
 <li><code class="sourceCode cpp"><span class="add" style="color: #006e28"><ins>hello&lt;T&gt;</ins></span></code></li>
-<li><del><em><code class="sourceCode cpp">hello world</code></em></del></li>
-<li><del><code class="sourceCode cpp">hello world</code></del></li>
+<li><del><em><span><code class="sourceCode cpp">hello world</code></span></em></del></li>
+<li><del><span><code class="sourceCode cpp">hello world</code></span></del></li>
 <li><code class="sourceCode cpp"><span class="kw">namespace</span> <em>unspecified</em> <span class="op">{</span> <span class="kw">struct</span> sender_base <span class="op">{}</span>; <span class="op">}</span></code></li>
 <li><code class="sourceCode cpp"><span class="kw">namespace</span> <em>unspecified</em> <span class="op">{</span> <span class="kw">struct</span> sender_base <span class="op">{}</span>; <span class="op">}</span></code></li>
 <li><code class="sourceCode cpp"><span class="kw">constexpr</span><em><sub>opt</sub></em></code></li>
@@ -621,7 +641,7 @@ bar</del></li>
 <ul>
 <li><p><code class="sourceCode cpp">x<em><sub>i</sub></em> <span class="op">&lt;=&gt;</span> y<em><sub>i</sub></em></code></p></li>
 <li><p><span class="rm" style="color: #bf0303"><del>foo
-<span><code class="sourceCode default">hello world</code></span>
+<span><code class="sourceCode default cpp">hello world</code></span>
 bar</del></span></p></li>
 </ul>
 <h2 data-number="3.2" id="inline-code-in-headers-int-x-y"><span class="header-section-number">3.2</span> Inline Code in Headers:
@@ -650,20 +670,20 @@ bar</del></span></p></li>
 <span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>};</span>
 <span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="add" style="color: #006e28"><ins>namespace <em>unspecified</em> { struct sender_base {}; }</ins></span></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="add" style="color: #006e28"><ins><span><code class="sourceCode default">namespace <em>unspecified</em> { struct sender_base {}; }</code></span></ins></span></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="add" style="color: #006e28"><ins><span><code class="sourceCode default">namespace <em>unspecified</em> { struct sender_base {}; }</code></span></ins></span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="add" style="color: #006e28"><ins><span><code class="sourceCode default cpp">namespace <em>unspecified</em> { struct sender_base {}; }</code></span></ins></span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="add" style="color: #006e28"><ins><span><code class="sourceCode default cpp">namespace <em>unspecified</em> { struct sender_base {}; }</code></span></ins></span></span>
 <span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="add" style="color: #006e28"><ins>using <em>unspecified</em>::sender_base;</ins></span></span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="add" style="color: #006e28"><ins><span><code class="sourceCode default">using <em>unspecified</em>::sender_base;</code></span></ins></span></span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="add" style="color: #006e28"><ins><span><code class="sourceCode default">using <em>unspecified</em>::sender_base;</code></span></ins></span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="add" style="color: #006e28"><ins><span><code class="sourceCode default cpp">using <em>unspecified</em>::sender_base;</code></span></ins></span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="add" style="color: #006e28"><ins><span><code class="sourceCode default cpp">using <em>unspecified</em>::sender_base;</code></span></ins></span></span>
 <span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="add" style="color: #006e28"><ins>template&lt;class, class&gt; struct <em>as-receiver</em>; <em>// exposition only</em></ins></span></span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="add" style="color: #006e28"><ins><span><code class="sourceCode default">template&lt;class, class&gt; struct <em>as-receiver</em>; <em>// exposition only</em></code></span></ins></span></span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a><span class="add" style="color: #006e28"><ins><span><code class="sourceCode default">template&lt;class, class&gt; struct <em>as-receiver</em>; <em>// exposition only</em></code></span></ins></span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="add" style="color: #006e28"><ins><span><code class="sourceCode default cpp">template&lt;class, class&gt; struct <em>as-receiver</em>; <em>// exposition only</em></code></span></ins></span></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a><span class="add" style="color: #006e28"><ins><span><code class="sourceCode default cpp">template&lt;class, class&gt; struct <em>as-receiver</em>; <em>// exposition only</em></code></span></ins></span></span>
 <span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a><span class="add" style="color: #006e28"><ins>template&lt;class, class&gt; struct <em>as-invocable</em>; <em>// exposition only</em></ins></span></span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a><span class="add" style="color: #006e28"><ins><span><code class="sourceCode default">template&lt;class, class&gt; struct <em>as-invocable</em>; <em>// exposition only</em></code></span></ins></span></span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a><span class="add" style="color: #006e28"><ins><span><code class="sourceCode default">template&lt;class, class&gt; struct <em>as-invocable</em>; <em>// exposition only</em></code></span></ins></span></span></code></pre></div>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a><span class="add" style="color: #006e28"><ins><span><code class="sourceCode default cpp">template&lt;class, class&gt; struct <em>as-invocable</em>; <em>// exposition only</em></code></span></ins></span></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a><span class="add" style="color: #006e28"><ins><span><code class="sourceCode default cpp">template&lt;class, class&gt; struct <em>as-invocable</em>; <em>// exposition only</em></code></span></ins></span></span></code></pre></div>
 <h3 data-number="3.3.2" id="c-syntax-highlighting"><span class="header-section-number">3.3.2</span> C++ Syntax Highlighting<a href="#c-syntax-highlighting" class="self-link"></a></h3>
 <div class="sourceCode" id="cb2"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;iostream&gt;</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&quot;foo.h&quot;</span></span>
@@ -707,8 +727,8 @@ bar</del></span></p></li>
 <span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a><span class="co">// visiting a `variant` for the side-effects, discarding results:</span></span>
 <span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>std<span class="op">::</span>visit<span class="op">&lt;</span><span class="dt">void</span><span class="op">&gt;(</span>process<span class="op">{}</span>, input<span class="op">)</span>;</span>
 <span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a><span class="add" style="color: #006e28"><ins><span><code class="sourceCode default">namespace <em>unspecified</em> { struct sender_base {}; }</code></span></ins></span></span>
-<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a><span class="add" style="color: #006e28"><ins><span><code class="sourceCode default">using <em>unspecified</em>::sender_base;</code></span></ins></span></span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a><span class="add" style="color: #006e28"><ins><span><code class="sourceCode default cpp">namespace <em>unspecified</em> { struct sender_base {}; }</code></span></ins></span></span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a><span class="add" style="color: #006e28"><ins><span><code class="sourceCode default cpp">using <em>unspecified</em>::sender_base;</code></span></ins></span></span>
 <span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a><span class="kw">template</span> <span class="op">&lt;</span><span><span class="rm" style="color: #bf0303"><del>invocable</del></span><span class="add" style="color: #006e28"><ins>class</ins></span></span> F<span class="add" style="color: #006e28"><ins>, class</ins></span><span class="op">&gt;</span></span>
 <span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> <em>as-receiver</em> <span class="op">{</span></span>
@@ -727,18 +747,18 @@ bar</del></span></p></li>
 <span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a>  <span class="dt">void</span> set_done<span class="op">()</span> <span class="kw">noexcept</span> <span class="op">{}</span></span>
 <span id="cb2-61"><a href="#cb2-61" aria-hidden="true" tabindex="-1"></a><span class="op">}</span>;</span>
 <span id="cb2-62"><a href="#cb2-62" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a><span class="kw">template</span> <span class="op">&lt;</span><span><span class="rm" style="color: #bf0303"><del><span><code class="sourceCode default">invocable</code></span></del></span><span class="add" style="color: #006e28"><ins><span><code class="sourceCode default">class</code></span></ins></span></span> F<span class="add" style="color: #006e28"><ins><span><code class="sourceCode default">, class</code></span></ins></span><span class="op">&gt;</span></span>
+<span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a><span class="kw">template</span> <span class="op">&lt;</span><span><span class="rm" style="color: #bf0303"><del><span><code class="sourceCode default cpp">invocable</code></span></del></span><span class="add" style="color: #006e28"><ins><span><code class="sourceCode default cpp">class</code></span></ins></span></span> F<span class="add" style="color: #006e28"><ins><span><code class="sourceCode default cpp">, class</code></span></ins></span><span class="op">&gt;</span></span>
 <span id="cb2-64"><a href="#cb2-64" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> <em>as-receiver</em> <span class="op">{</span></span>
-<span id="cb2-65"><a href="#cb2-65" aria-hidden="true" tabindex="-1"></a><span class="rm" style="color: #bf0303"><del><span><code class="sourceCode default">private:</code></span></del></span></span>
-<span id="cb2-66"><a href="#cb2-66" aria-hidden="true" tabindex="-1"></a>  <span class="rm" style="color: #bf0303"><del><span><code class="sourceCode default">using invocable_type = std::remove_cvref_t&lt;F&gt;;</code></span></del></span></span>
-<span id="cb2-67"><a href="#cb2-67" aria-hidden="true" tabindex="-1"></a>  <span><span class="rm" style="color: #bf0303"><del><span><code class="sourceCode default">invocable_type</code></span></del></span><span class="add" style="color: #006e28"><ins><span><code class="sourceCode default">F</code></span></ins></span></span> f_;</span>
-<span id="cb2-68"><a href="#cb2-68" aria-hidden="true" tabindex="-1"></a><span class="rm" style="color: #bf0303"><del><span><code class="sourceCode default">public:</code></span></del></span></span>
-<span id="cb2-69"><a href="#cb2-69" aria-hidden="true" tabindex="-1"></a>  <span class="rm" style="color: #bf0303"><del><span><code class="sourceCode default">explicit <em>as-receiver</em>(invocable_type&amp;&amp; f)</code></span></del></span></span>
-<span id="cb2-70"><a href="#cb2-70" aria-hidden="true" tabindex="-1"></a>  <span class="rm" style="color: #bf0303"><del><span><code class="sourceCode default"><em>as-receiver</em>(<em>as-receiver</em>&amp;&amp; other) = default;</code></span></del></span></span>
-<span id="cb2-71"><a href="#cb2-71" aria-hidden="true" tabindex="-1"></a>  <span class="dt">void</span> set_value<span class="op">()</span> <span class="add" style="color: #006e28"><ins><span><code class="sourceCode default">noexcept(is_nothrow_invocable_v&lt;F&amp;&gt;)</code></span></ins></span> <span class="op">{</span></span>
+<span id="cb2-65"><a href="#cb2-65" aria-hidden="true" tabindex="-1"></a><span class="rm" style="color: #bf0303"><del><span><code class="sourceCode default cpp">private:</code></span></del></span></span>
+<span id="cb2-66"><a href="#cb2-66" aria-hidden="true" tabindex="-1"></a>  <span class="rm" style="color: #bf0303"><del><span><code class="sourceCode default cpp">using invocable_type = std::remove_cvref_t&lt;F&gt;;</code></span></del></span></span>
+<span id="cb2-67"><a href="#cb2-67" aria-hidden="true" tabindex="-1"></a>  <span><span class="rm" style="color: #bf0303"><del><span><code class="sourceCode default cpp">invocable_type</code></span></del></span><span class="add" style="color: #006e28"><ins><span><code class="sourceCode default cpp">F</code></span></ins></span></span> f_;</span>
+<span id="cb2-68"><a href="#cb2-68" aria-hidden="true" tabindex="-1"></a><span class="rm" style="color: #bf0303"><del><span><code class="sourceCode default cpp">public:</code></span></del></span></span>
+<span id="cb2-69"><a href="#cb2-69" aria-hidden="true" tabindex="-1"></a>  <span class="rm" style="color: #bf0303"><del><span><code class="sourceCode default cpp">explicit <em>as-receiver</em>(invocable_type&amp;&amp; f)</code></span></del></span></span>
+<span id="cb2-70"><a href="#cb2-70" aria-hidden="true" tabindex="-1"></a>  <span class="rm" style="color: #bf0303"><del><span><code class="sourceCode default cpp"><em>as-receiver</em>(<em>as-receiver</em>&amp;&amp; other) = default;</code></span></del></span></span>
+<span id="cb2-71"><a href="#cb2-71" aria-hidden="true" tabindex="-1"></a>  <span class="dt">void</span> set_value<span class="op">()</span> <span class="add" style="color: #006e28"><ins><span><code class="sourceCode default cpp">noexcept(is_nothrow_invocable_v&lt;F&amp;&gt;)</code></span></ins></span> <span class="op">{</span></span>
 <span id="cb2-72"><a href="#cb2-72" aria-hidden="true" tabindex="-1"></a>    invoke<span class="op">(</span>f_<span class="op">)</span>;</span>
 <span id="cb2-73"><a href="#cb2-73" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
-<span id="cb2-74"><a href="#cb2-74" aria-hidden="true" tabindex="-1"></a>  <span class="add" style="color: #006e28"><ins><span><code class="sourceCode default">[[noreturn]]</code></span></ins></span> <span class="dt">void</span> set_error<span class="op">(</span>std<span class="op">::</span>exception_ptr<span class="op">)</span> <span class="add" style="color: #006e28"><ins><span><code class="sourceCode default">noexcept</code></span></ins></span> <span class="op">{</span></span>
+<span id="cb2-74"><a href="#cb2-74" aria-hidden="true" tabindex="-1"></a>  <span class="add" style="color: #006e28"><ins><span><code class="sourceCode default cpp">[[noreturn]]</code></span></ins></span> <span class="dt">void</span> set_error<span class="op">(</span>std<span class="op">::</span>exception_ptr<span class="op">)</span> <span class="add" style="color: #006e28"><ins><span><code class="sourceCode default cpp">noexcept</code></span></ins></span> <span class="op">{</span></span>
 <span id="cb2-75"><a href="#cb2-75" aria-hidden="true" tabindex="-1"></a>    terminate<span class="op">()</span>;</span>
 <span id="cb2-76"><a href="#cb2-76" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
 <span id="cb2-77"><a href="#cb2-77" aria-hidden="true" tabindex="-1"></a>  <span class="dt">void</span> set_done<span class="op">()</span> <span class="kw">noexcept</span> <span class="op">{}</span></span>
@@ -778,7 +798,7 @@ as <a href="#auto-header-links">Automatic Header Links</a>.</p>
 <p>Put your caption here</p>
 </blockquote></caption>
 <thead>
-<tr class="header">
+<tr>
 <th><div style="text-align:center">
 <strong>Before</strong>
 </div></th>
@@ -788,7 +808,7 @@ as <a href="#auto-header-links">Automatic Header Links</a>.</p>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
+<tr>
 <td><div>
 
 <div class="sourceCode" id="cb5"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="cf">switch</span> <span class="op">(</span>x<span class="op">)</span> <span class="op">{</span></span>
@@ -816,7 +836,7 @@ as <a href="#auto-header-links">Automatic Header Links</a>.</p>
 <col style="width: 40%" />
 </colgroup>
 <thead>
-<tr class="header">
+<tr>
 <th><div style="text-align:center">
 <strong>Before</strong>
 </div></th>
@@ -826,7 +846,7 @@ as <a href="#auto-header-links">Automatic Header Links</a>.</p>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
+<tr>
 <td><div>
 
 <div class="sourceCode" id="cb7"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="cf">switch</span> <span class="op">(</span>x<span class="op">)</span> <span class="op">{</span></span>
@@ -846,7 +866,7 @@ as <a href="#auto-header-links">Automatic Header Links</a>.</p>
 
 </div></td>
 </tr>
-<tr class="even">
+<tr>
 <td><div>
 
 <div class="sourceCode" id="cb9"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="op">(</span>s <span class="op">==</span> <span class="st">&quot;foo&quot;</span><span class="op">)</span> <span class="op">{</span></span>
@@ -901,7 +921,7 @@ removals.</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode default default"><code class="sourceCode default"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>template&lt;class... Args&gt;</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  string format(const locale&amp; loc, string_view fmt, const Args&amp;... args);</span></code></pre></div>
 <p><em>Returns:</em>
-<code class="sourceCode default">vformat(loc, fmt, make_format_args(args...))</code>.</p>
+<code class="sourceCode default cpp">vformat(loc, fmt, make_format_args(args...))</code>.</p>
 </div>
 </blockquote>
 <p>Small, inline changes are done with
@@ -916,13 +936,13 @@ is essentially just a short-form for
 The only use of a <span><span class="rm" style="color: #bf0303"><del>label with an
 <em>identifier</em></del></span><span class="add" style="color: #006e28"><ins><em>label</em></ins></span></span> is as the
 target of a
-<code class="sourceCode cpp"><span class="cf">goto</span></code>, <span class="add" style="color: #006e28"><ins><span><code class="sourceCode default">break</code></span>,
+<code class="sourceCode cpp"><span class="cf">goto</span></code>, <span class="add" style="color: #006e28"><ins><span><code class="sourceCode default cpp">break</code></span>,
 or
-<span><code class="sourceCode default">continue</code></span></ins></span>.
+<span><code class="sourceCode default cpp">continue</code></span></ins></span>.
 No two <span><span class="rm" style="color: #bf0303"><del>label</del></span><span class="add" style="color: #006e28"><ins><em>label</em></ins></span></span>s in a
 function shall have the same <em>identifier</em>. A <span><span class="rm" style="color: #bf0303"><del>label</del></span><span class="add" style="color: #006e28"><ins><em>general-label</em></ins></span></span>
 can be used <span class="rm" style="color: #bf0303"><del>in a
-<span><code class="sourceCode default">goto</code></span>
+<span><code class="sourceCode default cpp">goto</code></span>
 statement</del></span> before its introduction by a
 <em>labeled-statement</em>.</p>
 <table>
@@ -931,7 +951,7 @@ statement</del></span> before its introduction by a
 <col style="width: 85%" />
 </colgroup>
 <thead>
-<tr class="header">
+<tr>
 <th><div style="text-align:center">
 <strong>Specifier</strong>
 </div></th>
@@ -941,18 +961,18 @@ statement</del></span> before its introduction by a
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
+<tr>
 <td><code class="sourceCode cpp"><span class="op">%</span>a</code></td>
 <td>The locale’s abbreviated weekday name. If the value does not contain
-a valid weekday, <span class="rm" style="color: #bf0303"><del><span><code class="sourceCode default">setstate(ios::failbit)</code></span>
-is called</del></span> <span class="add" style="color: #006e28"><ins><span><code class="sourceCode default">format_error</code></span>
+a valid weekday, <span class="rm" style="color: #bf0303"><del><span><code class="sourceCode default cpp">setstate(ios::failbit)</code></span>
+is called</del></span> <span class="add" style="color: #006e28"><ins><span><code class="sourceCode default cpp">format_error</code></span>
 is thrown</ins></span>.</td>
 </tr>
-<tr class="even">
+<tr>
 <td><code class="sourceCode cpp"><span class="op">%</span>A</code></td>
 <td>The locale’s full weekday name. If the value does not contain a
-valid weekday, <span class="rm" style="color: #bf0303"><del><span><code class="sourceCode default">setstate(ios::failbit)</code></span>
-is called</del></span> <span class="add" style="color: #006e28"><ins><span><code class="sourceCode default">format_error</code></span>
+valid weekday, <span class="rm" style="color: #bf0303"><del><span><code class="sourceCode default cpp">setstate(ios::failbit)</code></span>
+is called</del></span> <span class="add" style="color: #006e28"><ins><span><code class="sourceCode default cpp">format_error</code></span>
 is thrown</ins></span>.</td>
 </tr>
 </tbody>
@@ -976,14 +996,14 @@ is thrown</ins></span>.</td>
 <em>init-statement<sub>opt</sub></em> <em>condition</em>
 <code class="sourceCode cpp"><span class="op">)</span></code>
 <em>statement</em><br />
-    <span class="add" style="color: #006e28"><ins><span><code class="sourceCode default">inspect</code></span>
-<span><code class="sourceCode default">constexpr</code></span><sub><em>opt</em></sub>
-<span><code class="sourceCode default">(</code></span>
+    <span class="add" style="color: #006e28"><ins><span><code class="sourceCode default cpp">inspect</code></span>
+<span><code class="sourceCode default cpp">constexpr</code></span><sub><em>opt</em></sub>
+<span><code class="sourceCode default cpp">(</code></span>
 <em>init-statement<sub>opt</sub></em> <em>condition</em>
-<span><code class="sourceCode default">)</code></span>
-<span><code class="sourceCode default">{</code></span>
+<span><code class="sourceCode default cpp">)</code></span>
+<span><code class="sourceCode default cpp">{</code></span>
 <em>inspect-case-seq</em>
-<span><code class="sourceCode default">}</code></span></ins></span></div>
+<span><code class="sourceCode default cpp">}</code></span></ins></span></div>
 <div class="add" style="color: #006e28">
 
 <div class="line-block"><em>inspect-case-seq:</em><br />
@@ -992,7 +1012,7 @@ is thrown</ins></span>.</td>
 <div class="line-block"><em>inspect-case:</em><br />
     <em>attribute-specifier-seq<sub>opt</sub></em>
 <em>inspect-pattern</em> <em>inspect-guard<sub>opt</sub></em>
-<code class="sourceCode default">:</code> <em>statement</em></div>
+<code class="sourceCode default cpp">:</code> <em>statement</em></div>
 <div class="line-block"><em>inspect-pattern:</em><br />
     <em>wildcard-pattern</em><br />
     <em>identifier-pattern</em><br />
@@ -1002,8 +1022,8 @@ is thrown</ins></span>.</td>
     <em>binding-pattern</em><br />
     <em>extractor-pattern</em></div>
 <div class="line-block"><em>inspect-guard:</em><br />
-    <code class="sourceCode default">if (</code> <em>expression</em>
-<code class="sourceCode default">)</code></div>
+    <code class="sourceCode default cpp">if (</code> <em>expression</em>
+<code class="sourceCode default cpp">)</code></div>
 
 </div>
 </blockquote>
@@ -1025,7 +1045,7 @@ underlying database.</p>
 <col style="width: 41%" />
 </colgroup>
 <thead>
-<tr class="header">
+<tr>
 <th><div style="text-align:center">
 <strong>Source Text</strong>
 </div></th>
@@ -1035,21 +1055,21 @@ underlying database.</p>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
+<tr>
 <td><code class="sourceCode default">[basic.life]{.sref}</code></td>
 <td><span>6.8.4
 <a href="https://wg21.link/basic.life">[basic.life]</a></span></td>
 </tr>
-<tr class="even">
+<tr>
 <td><code class="sourceCode default">[basic.life#1]{.sref}</code></td>
 <td><span>6.8.4
 <a href="https://wg21.link/basic.life#1">[basic.life#1]</a></span></td>
 </tr>
-<tr class="odd">
+<tr>
 <td><code class="sourceCode default">[basic.life]{- .sref}</code></td>
 <td><span><a href="https://wg21.link/basic.life">[basic.life]</a></span></td>
 </tr>
-<tr class="even">
+<tr>
 <td><code class="sourceCode default">[basic.life]{.unnumbered .sref}</code></td>
 <td><span><a href="https://wg21.link/basic.life">[basic.life]</a></span></td>
 </tr>
@@ -1081,70 +1101,69 @@ Drafting notes can be used to provide comments for reviewers that are
 explicitly not to be included in the specification. ]</span></p>
 <p><span class="draftnote" data-audience="the reader" style="color: #0000ff">[ Drafting note for the reader: It is also
 possible to indicate the a note is for a specific
-<code class="sourceCode default">audience</code> via this optional
+<code class="sourceCode default cpp">audience</code> via this optional
 attribute. ]</span></p></li>
 </ul>
 <h1 data-number="8" id="citation"><span class="header-section-number">8</span> Citation<a href="#citation" class="self-link"></a></h1>
 <p>Automatic references are written as
 <code class="sourceCode cpp"><span class="op">[@</span>N4762<span class="op">]</span></code>
-and renders as <span class="citation" data-cites="N4762"><a href="https://wg21.link/n4762" role="doc-biblioref">[N4762]</a></span>.
-Anything in <a href="https://wg21.link/index.yaml" class="uri">https://wg21.link/index.yaml</a> are linked
+and renders as <span class="citation" data-cites="N4762"><a href="https://wg21.link/n4762">[N4762]</a></span>. Anything in <a href="https://wg21.link/index.yaml" class="uri">https://wg21.link/index.yaml</a> are linked
 automatically.</p>
 <ul>
 <li><code class="sourceCode cpp">N</code> Papers (e.g.,
 <code class="sourceCode cpp"><span class="op">[@</span>N3887<span class="op">]</span></code>
-→ <span class="citation" data-cites="N3887"><a href="https://wg21.link/n3887" role="doc-biblioref">[N3887]</a></span>)</li>
+→ <span class="citation" data-cites="N3887"><a href="https://wg21.link/n3887">[N3887]</a></span>)</li>
 <li><code class="sourceCode cpp">P</code> Papers (e.g.,
 <code class="sourceCode cpp"><span class="op">[@</span>P1371R1<span class="op">]</span></code>
-→ <span class="citation" data-cites="P1371R1"><a href="https://wg21.link/p1371r1" role="doc-biblioref">[P1371R1]</a></span>)</li>
+→ <span class="citation" data-cites="P1371R1"><a href="https://wg21.link/p1371r1">[P1371R1]</a></span>)</li>
 <li>CWG Issues (e.g.,
 <code class="sourceCode cpp"><span class="op">[@</span>CWG1234<span class="op">]</span></code>
-→ <span class="citation" data-cites="CWG1234"><a href="https://wg21.link/cwg1234" role="doc-biblioref">[CWG1234]</a></span>)</li>
+→ <span class="citation" data-cites="CWG1234"><a href="https://wg21.link/cwg1234">[CWG1234]</a></span>)</li>
 <li>LWG Issues (e.g.,
 <code class="sourceCode cpp"><span class="op">[@</span>LWG1234<span class="op">]</span></code>
-→ <span class="citation" data-cites="LWG1234"><a href="https://wg21.link/lwg1234" role="doc-biblioref">[LWG1234]</a></span>)</li>
+→ <span class="citation" data-cites="LWG1234"><a href="https://wg21.link/lwg1234">[LWG1234]</a></span>)</li>
 <li>Github Edits (e.g,
 <code class="sourceCode cpp"><span class="op">[@</span>EDIT1234<span class="op">]</span></code>
-→ <span class="citation" data-cites="EDIT1234"><a href="https://wg21.link/edit1234" role="doc-biblioref">[EDIT1234]</a></span>)</li>
+→ <span class="citation" data-cites="EDIT1234"><a href="https://wg21.link/edit1234">[EDIT1234]</a></span>)</li>
 <li>Standing Documents (e.g.,
 <code class="sourceCode cpp"><span class="op">[@</span>SD6<span class="op">]</span></code>
-→ <span class="citation" data-cites="SD6"><a href="https://wg21.link/sd6" role="doc-biblioref">[SD6]</a></span>)</li>
+→ <span class="citation" data-cites="SD6"><a href="https://wg21.link/sd6">[SD6]</a></span>)</li>
 </ul>
 <p>You may also write
 <code class="sourceCode default">[@P2996R8]{.title}</code> to include
-the title of the paper, and renders as: <span class="title"><span class="citation" data-cites="P2996R8"><a href="https://wg21.link/p2996r8" role="doc-biblioref">[P2996R8]
-(Reflection for C++26)</a></span></span>.</p>
+the title of the paper, and renders as: <span class="title"><span class="citation" data-cites="P2996R8"><a href="https://wg21.link/p2996r8">[P2996R8] (Reflection for
+C++26)</a></span></span>.</p>
 <h1 data-number="9" id="bibliography"><span class="header-section-number">9</span> References<a href="#bibliography" class="self-link"></a></h1>
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="1" role="doc-bibliography">
-<div id="ref-CWG1234" class="csl-entry" role="doc-biblioentry">
+<div id="refs" class="references csl-bib-body" data-entry-spacing="0" role="list">
+<div id="ref-CWG1234" class="csl-entry" role="listitem">
 [CWG1234] Johannes Schaub. 2011-01-18. abstract-declarator does not
-permit ... after ptr-operator. <a href="https://wg21.link/cwg1234"><div class="csl-block">https://wg21.link/cwg1234</div></a>
+permit ... after ptr-operator. <a href="https://wg21.link/cwg1234"><div class="csl-indent">https://wg21.link/cwg1234</div></a>
 </div>
-<div id="ref-EDIT1234" class="csl-entry" role="doc-biblioentry">
+<div id="ref-EDIT1234" class="csl-entry" role="listitem">
 [EDIT1234] [intro.races] Remove duplicated index entry for <span>“data
-race.”</span> <a href="https://wg21.link/edit1234"><div class="csl-block">https://wg21.link/edit1234</div></a>
+race.”</span> <a href="https://wg21.link/edit1234"><div class="csl-indent">https://wg21.link/edit1234</div></a>
 </div>
-<div id="ref-LWG1234" class="csl-entry" role="doc-biblioentry">
-[LWG1234] Matt Austern. <span>“Do the right thing”</span> and NULL. <a href="https://wg21.link/lwg1234"><div class="csl-block">https://wg21.link/lwg1234</div></a>
+<div id="ref-LWG1234" class="csl-entry" role="listitem">
+[LWG1234] Matt Austern. <span>“Do the right thing”</span> and NULL. <a href="https://wg21.link/lwg1234"><div class="csl-indent">https://wg21.link/lwg1234</div></a>
 </div>
-<div id="ref-N3887" class="csl-entry" role="doc-biblioentry">
-[N3887] Michael Park. 2013-12-26. Consistent Metafunction Aliases. <a href="https://wg21.link/n3887"><div class="csl-block">https://wg21.link/n3887</div></a>
+<div id="ref-N3887" class="csl-entry" role="listitem">
+[N3887] Michael Park. 2013-12-26. Consistent Metafunction Aliases. <a href="https://wg21.link/n3887"><div class="csl-indent">https://wg21.link/n3887</div></a>
 </div>
-<div id="ref-N4762" class="csl-entry" role="doc-biblioentry">
+<div id="ref-N4762" class="csl-entry" role="listitem">
 [N4762] Richard Smith. 2018-07-07. Working Draft, Standard for
-Programming Language C++. <a href="https://wg21.link/n4762"><div class="csl-block">https://wg21.link/n4762</div></a>
+Programming Language C++. <a href="https://wg21.link/n4762"><div class="csl-indent">https://wg21.link/n4762</div></a>
 </div>
-<div id="ref-P1371R1" class="csl-entry" role="doc-biblioentry">
+<div id="ref-P1371R1" class="csl-entry" role="listitem">
 [P1371R1] Sergei Murzin, Michael Park, David Sankel, Dan Sarginson.
-2019-06-17. Pattern Matching. <a href="https://wg21.link/p1371r1"><div class="csl-block">https://wg21.link/p1371r1</div></a>
+2019-06-17. Pattern Matching. <a href="https://wg21.link/p1371r1"><div class="csl-indent">https://wg21.link/p1371r1</div></a>
 </div>
-<div id="ref-P2996R8" class="csl-entry" role="doc-biblioentry">
+<div id="ref-P2996R8" class="csl-entry" role="listitem">
 [P2996R8] Barry Revzin, Wyatt Childers, Peter Dimov, Andrew Sutton,
 Faisal Vali, Daveed Vandevoorde, Dan Katz. 2024-12-17. Reflection for
-C++26. <a href="https://wg21.link/p2996r8"><div class="csl-block">https://wg21.link/p2996r8</div></a>
+C++26. <a href="https://wg21.link/p2996r8"><div class="csl-indent">https://wg21.link/p2996r8</div></a>
 </div>
-<div id="ref-SD6" class="csl-entry" role="doc-biblioentry">
-[SD6] SG10 Feature Test Recommendations. <a href="https://wg21.link/sd6"><div class="csl-block">https://wg21.link/sd6</div></a>
+<div id="ref-SD6" class="csl-entry" role="listitem">
+[SD6] SG10 Feature Test Recommendations. <a href="https://wg21.link/sd6"><div class="csl-indent">https://wg21.link/sd6</div></a>
 </div>
 </div>
 </div>

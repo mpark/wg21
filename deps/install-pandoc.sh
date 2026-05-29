@@ -16,11 +16,19 @@ set -o pipefail
 URL="https://github.com/jgm/pandoc/releases/download/${PANDOC_VER}/"
 OS="$(uname -s)"
 case "${OS}" in
-  Linux ) URL+="pandoc-${PANDOC_VER}-linux-amd64.tar.gz"  ;;
-  Darwin) URL+="pandoc-${PANDOC_VER}-macOS.zip"           ;;
-  *     ) echo "Unspported OS: ${OS}."; exit 1 ;;
+  Linux)
+    ARCHIVE_ROOT="pandoc-${PANDOC_VER}"
+    URL+="${ARCHIVE_ROOT}-linux-amd64.tar.gz"
+    TAR_ARGS=xz
+    ;;
+  Darwin)
+    ARCHIVE_ROOT="pandoc-${PANDOC_VER}-$(uname -m)"
+    URL+="${ARCHIVE_ROOT}-macOS.zip"
+    TAR_ARGS=x
+    ;;
+  *) echo "Unsupported OS: ${OS}."; exit 1 ;;
 esac
 
 mkdir -p "${PANDOC_DIR}"
-curl -sSL "${URL}" | tar xz --strip-components 2 -C "${PANDOC_DIR}" -m "pandoc-${PANDOC_VER}/bin"
+curl -sSL "${URL}" | tar "${TAR_ARGS}" --strip-components 2 -C "${PANDOC_DIR}" "${ARCHIVE_ROOT}/bin"
 chmod -R u+x "${PANDOC_DIR}"
