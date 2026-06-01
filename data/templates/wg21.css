@@ -1,0 +1,23 @@
+table thead tr {
+  border-bottom: 3px solid black;
+  border-bottom-style: double;
+}
+
+table tbody tr {
+  border-bottom: 1px solid black;
+}
+
+/* Handle document information table in title header */
+
+#title-block-header > table {
+  border: none;
+  float: right;
+}
+
+#title-block-header > table tbody tr {
+  border-bottom: none;
+}
+
+table:not(.docinfo) tbody tr {
+  border-bottom: 1px solid black;
+}

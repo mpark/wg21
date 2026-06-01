@@ -1,5 +1,5 @@
 diff --git a/data/templates/default.html b/data/templates/wg21.html
-index 7dfa95e..27d2e73 100644
+index 7dfa95e..cd002a7 100644
 --- a/data/templates/default.html
 +++ b/data/templates/wg21.html
 @@ -2,7 +2,7 @@
@@ -105,7 +105,7 @@ index 7dfa95e..27d2e73 100644
 -$endfor$
 -$if(date)$
 -<p class="date">$date$</p>
-+<table style="border:none;float:right">
++<table>
 +  <tr>
 +    <td>Document #:</td>
 +    <td>
