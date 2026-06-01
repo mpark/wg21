@@ -1,5 +1,5 @@
 diff --git a/data/templates/default.html b/data/templates/wg21.html
-index 7dfa95e..cd002a7 100644
+index 7dfa95e..0b55daa 100644
 --- a/data/templates/default.html
 +++ b/data/templates/wg21.html
 @@ -2,7 +2,7 @@
@@ -11,59 +11,13 @@ index 7dfa95e..cd002a7 100644
    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
  $for(author-meta)$
    <meta name="author" content="$author-meta$" />
-@@ -19,10 +19,60 @@ $endif$
+@@ -19,10 +19,14 @@ $endif$
    <title>$if(title-prefix)$$title-prefix$ – $endif$$pagetitle$</title>
    <style>
      $styles.html()$
-+    /* Make the thickness of strikeout and underline consistent in different contexts */
-+    ins, del { text-decoration-thickness: 1px; }
-+    /* Move underline down slightly as to not overlap with underscore */
-+    ins { text-underline-offset: 3.5px; }
 +    code.diff {color: #$uccolor$}
 +    code.diff span.va {color: #$addcolor$}
 +    code.diff span.st {color: #$rmcolor$}
-+    .view-controls {
-+      position: sticky;
-+      top: 0.75rem;
-+      z-index: 1000;
-+      display: flex;
-+      flex-direction: column;
-+      align-items: flex-start;
-+      gap: 0.35rem;
-+      width: fit-content;
-+      margin-left: auto;
-+      margin-bottom: 1rem;
-+      padding: 0.45rem 0.8rem;
-+      border: 1px solid #b7c0c8;
-+      border-radius: 999px;
-+      background: rgba(255, 255, 255, 0.96);
-+      color: #22303c;
-+      font: 600 0.9rem/1.1 sans-serif;
-+      box-shadow: 0 0.2rem 0.8rem rgba(34, 48, 60, 0.12);
-+    }
-+    .view-controls:hover {
-+      background: #f3f6f8;
-+    }
-+    .view-controls label {
-+      display: flex;
-+      align-items: center;
-+      gap: 0.45rem;
-+    }
-+    .view-controls input {
-+      margin: 0;
-+    }
-+    .view-controls span {
-+      white-space: nowrap;
-+    }
-+    body[data-syntax-highlighting="off"] code.sourceCode:not(.diff) span:not(.add, .rm, .co, .cv, .do, .in) {
-+      color: inherit !important;
-+      font-style: inherit !important;
-+      font-weight: inherit !important;
-+      text-decoration: inherit !important;
-+    }
-+    body[data-deleted-text="hide"] .rm del {
-+      display: none !important;
-+    }
    </style>
  $for(css)$
    <link rel="stylesheet" href="$css$" />
@@ -72,7 +26,7 @@ index 7dfa95e..cd002a7 100644
  $for(header-includes)$
    $header-includes$
  $endfor$
-@@ -30,41 +80,97 @@ $if(math)$
+@@ -30,41 +34,97 @@ $if(math)$
    $math$
  $endif$
  </head>
