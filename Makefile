@@ -19,7 +19,6 @@ override PANDOC_VER := 3.9.0.2
 override PANDOC_DIR := $(DEPSDIR)/pandoc/$(PANDOC_VER)
 override PYTHON_DIR := $(DEPSDIR)/python
 override PYTHON_BIN := $(PYTHON_DIR)/bin/python3
-override PYTHON_STAMP := $(PYTHON_DIR)/.stamp
 
 export SHELL := bash
 export PATH := $(PANDOC_DIR):$(PYTHON_DIR)/bin:$(PATH)
@@ -41,7 +40,7 @@ override SRCDEPS := $(shell find $(DATADIR) -type f)
 $(eval $(and $(DEFAULTS), override SRCDEPS += $(DEFAULTS)))
 $(eval $(and $(METADATA), override SRCDEPS += $(METADATA)))
 
-override GENDEPS := $(PANDOC_DIR) $(PYTHON_STAMP) $(addprefix $(DATADIR)/, defaults.yaml csl.json annex-f)
+override GENDEPS := $(PANDOC_DIR) $(PYTHON_DIR) $(addprefix $(DATADIR)/, defaults.yaml csl.json annex-f)
 
 .PHONY: all
 all: $(PDF)
@@ -74,16 +73,13 @@ $(OUTDIR):
 $(PANDOC_DIR): $(DEPSDIR)/install-pandoc.sh
 	PANDOC_VER=$(PANDOC_VER) PANDOC_DIR=$(PANDOC_DIR) $(DEPSDIR)/install-pandoc.sh
 
-$(PYTHON_STAMP): $(DEPSDIR)/requirements.txt $(REQUIREMENTS) $(ROOTDIR)/Makefile
-	python3 -m venv $(PYTHON_DIR)
-	$(PYTHON_BIN) -m pip install --upgrade pip -r $(DEPSDIR)/requirements.txt
-	if [ -n "$(REQUIREMENTS)" ]; then $(PYTHON_BIN) -m pip install --upgrade pip -r $(REQUIREMENTS); fi
-	touch $@
+$(PYTHON_DIR): $(DEPSDIR)/install-venv.sh $(DEPSDIR)/requirements.txt $(REQUIREMENTS)
+	PYTHON_DIR=$(PYTHON_DIR) $(DEPSDIR)/install-venv.sh -r $(DEPSDIR)/requirements.txt $(addprefix -r ,$(REQUIREMENTS))
 
 $(DATADIR)/defaults.yaml: $(DATADIR)/defaults.sh
 	DATADIR=$(abspath $(DATADIR)) $< > $@
 
-$(DATADIR)/csl.json: $(DATADIR)/refs.py $(PYTHON_STAMP)
+$(DATADIR)/csl.json: $(DATADIR)/refs.py $(PYTHON_DIR)
 	tmp="$@.tmp"; trap 'rm -f "$$tmp"' EXIT; $(PYTHON_BIN) $< > "$$tmp"; mv "$$tmp" $@
 
 $(DATADIR)/annex-f:
