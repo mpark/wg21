@@ -76,8 +76,8 @@ $(PANDOC_DIR):
 
 $(PYTHON_STAMP): $(DEPSDIR)/requirements.txt $(REQUIREMENTS) $(ROOTDIR)Makefile
 	python3 -m venv $(PYTHON_DIR)
-	$(PYTHON_DIR)/bin/pip3 install --upgrade pip -r $(DEPSDIR)/requirements.txt
-	if [ -n "$(REQUIREMENTS)" ]; then $(PYTHON_DIR)/bin/pip3 install --upgrade pip -r $(REQUIREMENTS); fi
+	$(PYTHON_BIN) -m pip install --upgrade pip -r $(DEPSDIR)/requirements.txt
+	if [ -n "$(REQUIREMENTS)" ]; then $(PYTHON_BIN) -m pip install --upgrade pip -r $(REQUIREMENTS); fi
 	touch $@
 
 $(DATADIR)/defaults.yaml: $(DATADIR)/defaults.sh
