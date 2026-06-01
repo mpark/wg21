@@ -29,6 +29,12 @@ case "${OS}" in
   *) echo "Unsupported OS: ${OS}."; exit 1 ;;
 esac
 
+trap 'rm -rf "${PANDOC_DIR}"' EXIT
+
+rm -rf "${PANDOC_DIR}"
 mkdir -p "${PANDOC_DIR}"
+
 curl -sSL "${URL}" | tar "${TAR_ARGS}" --strip-components 2 -C "${PANDOC_DIR}" "${ARCHIVE_ROOT}/bin"
 chmod -R u+x "${PANDOC_DIR}"
+
+trap - EXIT

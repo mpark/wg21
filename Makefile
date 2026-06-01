@@ -71,8 +71,8 @@ update:
 $(OUTDIR):
 	mkdir -p $@
 
-$(PANDOC_DIR):
-	PANDOC_VER=$(PANDOC_VER) PANDOC_DIR=$@ $(DEPSDIR)/install-pandoc.sh
+$(PANDOC_DIR): $(DEPSDIR)/install-pandoc.sh
+	PANDOC_VER=$(PANDOC_VER) PANDOC_DIR=$(PANDOC_DIR) $(DEPSDIR)/install-pandoc.sh
 
 $(PYTHON_STAMP): $(DEPSDIR)/requirements.txt $(REQUIREMENTS) $(ROOTDIR)/Makefile
 	python3 -m venv $(PYTHON_DIR)
