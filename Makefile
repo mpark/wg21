@@ -11,9 +11,9 @@ override HTML := $(SRC:.md=.html)
 override LATEX := $(SRC:.md=.latex)
 override PDF := $(SRC:.md=.pdf)
 
-override ROOTDIR := $(dir $(lastword $(MAKEFILE_LIST)))
+override ROOTDIR := $(abspath $(dir $(lastword $(MAKEFILE_LIST))))
 
-override DEPSDIR := $(ROOTDIR)deps
+override DEPSDIR := $(ROOTDIR)/deps
 
 override PANDOC_VER := 3.9.0.2
 override PANDOC_DIR := $(DEPSDIR)/pandoc/$(PANDOC_VER)
@@ -24,7 +24,7 @@ override PYTHON_STAMP := $(PYTHON_DIR)/.stamp
 export SHELL := bash
 export PATH := $(PANDOC_DIR):$(PYTHON_DIR)/bin:$(PATH)
 
-override DATADIR := $(ROOTDIR)data
+override DATADIR := $(ROOTDIR)/data
 
 override define PANDOC
 $(eval override FILE := $(filter %.md, $^))
@@ -74,7 +74,7 @@ $(OUTDIR):
 $(PANDOC_DIR):
 	PANDOC_VER=$(PANDOC_VER) PANDOC_DIR=$@ $(DEPSDIR)/install-pandoc.sh
 
-$(PYTHON_STAMP): $(DEPSDIR)/requirements.txt $(REQUIREMENTS) $(ROOTDIR)Makefile
+$(PYTHON_STAMP): $(DEPSDIR)/requirements.txt $(REQUIREMENTS) $(ROOTDIR)/Makefile
 	python3 -m venv $(PYTHON_DIR)
 	$(PYTHON_BIN) -m pip install --upgrade pip -r $(DEPSDIR)/requirements.txt
 	if [ -n "$(REQUIREMENTS)" ]; then $(PYTHON_BIN) -m pip install --upgrade pip -r $(REQUIREMENTS); fi
