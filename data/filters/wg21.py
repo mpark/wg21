@@ -553,9 +553,6 @@ class CodeElems:
                 '--wrap', 'none'])
 
         if doc.format == 'latex':
-            # Workaround for https://github.com/jgm/skylighting/issues/91.
-            text = text.replace('<', r'\textless{}') \
-                       .replace('>', r'\textgreater{}')
             # The normal text mode such as "template<class" gets translated
             # to "template\textless class" rather than "text\textless{}class".
             text = text.replace(r'\textless ', r'\textless{}') \
