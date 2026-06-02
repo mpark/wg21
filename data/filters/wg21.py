@@ -584,7 +584,7 @@ class CodeElems:
             plain.walk(divspan, doc).walk(CodeElems.init, doc)
             # -raw_html to avoid <T> in foo<T> to be interpreted as an HTML tag.
             # -smart to avoid things like ... to get transformed into \dots
-            for plain in convert_fragments(fragments, 'markdown-raw_html-smart')
+            for plain in convert_fragments(fragments, 'markdown+mark-raw_html-smart')
         ]
         token = cls._compute_unique_placeholder(fragments)
         text, sep = cls._convert_blocks(blocks, token, doc)

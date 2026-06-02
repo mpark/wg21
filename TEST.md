@@ -78,6 +78,8 @@ Various compositions in compact list:
   - `namespace $unspecified$ { struct sender_base {}; }`
   - `namespace $unspecified$ { struct sender_base {}; }`{.cpp}
   - `constexpr$~opt~$`{.cpp}
+  - ==highlighted==
+  - `void @==foo==@();`{.cpp}
 
 ---
 

@@ -333,6 +333,10 @@ Various compositions in compact list:
   \VERB|\KeywordTok{namespace}\NormalTok{ \emph{unspecified} }\OperatorTok{\{} \KeywordTok{struct}\NormalTok{ sender\_base }\OperatorTok{\{\}}\NormalTok{; }\OperatorTok{\}}|
 \item
   \VERB|\KeywordTok{constexpr}\NormalTok{\emph{\textsubscript{opt}}}|
+\item
+  \hl{highlighted}
+\item
+  \VERB|\DataTypeTok{void}\NormalTok{ \hl{foo}}\OperatorTok{()}\NormalTok{;}|
 \end{itemize}
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
