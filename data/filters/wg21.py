@@ -133,7 +133,7 @@ def prepare(doc):
     doc.metadata['highlighting-css'] = pf.MetaBlocks(
         pf.RawBlock(highlighting('html'), 'html'))
 
-    process_subs(doc, 'markdown')
+    process_subs(doc, doc.get_metadata('from'))
 
 def strikeout(elem, doc):
     # In Pandoc 3.x, strikeouts use the \st from soul package.
@@ -582,9 +582,8 @@ class CodeElems:
 
         blocks = [
             plain.walk(divspan, doc).walk(CodeElems.init, doc)
-            # -raw_html to avoid <T> in foo<T> to be interpreted as an HTML tag.
             # -smart to avoid things like ... to get transformed into \dots
-            for plain in convert_fragments(fragments, 'markdown+mark-raw_html-smart')
+            for plain in convert_fragments(fragments, f"{doc.get_metadata('from')}-smart")
         ]
         token = cls._compute_unique_placeholder(fragments)
         text, sep = cls._convert_blocks(blocks, token, doc)

@@ -9,6 +9,10 @@
 
 : "${DATADIR:?Set 'DATADIR' to the absolute path to the data directory.}"
 
+# +mark for == syntax for highlighted text
+# -raw_html to avoid <T> in foo<T> to be interpreted as an HTML tag.
+FROM=markdown+mark-raw_html
+
 cat <<EOF
 number-sections: true
 table-of-contents: true
@@ -16,7 +20,7 @@ self-contained: true
 
 data-dir: ${DATADIR}
 
-from: markdown+mark-raw_html
+from: ${FROM}
 
 filters:
   - citetitle.py
@@ -33,6 +37,7 @@ pdf-engine: xelatex
 
 metadata:
   datadir: ${DATADIR}
+  from: ${FROM}
   csl: ${DATADIR}/csl/wg21.csl
   highlighting:
     inline-code:
