@@ -257,7 +257,7 @@ and renders as [](#auto-header-links).
 
 ::: cmptable
 
-> Put your caption here
+> Put your caption here with some `code`
 
 ### Before
 ```cpp

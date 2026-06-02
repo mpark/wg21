@@ -230,7 +230,7 @@ Reply-to:   \@author
 \author{&Author
 0\\&<\href{mailto:author0@gmail.com}{\nolinkurl{author0@gmail.com}}>\\&Author
 1\\&<\href{mailto:author1@gmail.com}{\nolinkurl{author1@gmail.com}}>\\}
-\date{2026-06-01}
+\date{2026-06-02}
 
 \begin{document}
 \maketitle
@@ -543,7 +543,8 @@ Tables\hyperref[comparison-tables]{}}{Comparison Tables}}\label{comparison-table
 \begin{longtable}[]{@{}
   >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}
   >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}@{}}
-\caption{Put your caption here}\tabularnewline
+\caption{Put your caption here with some
+{\protect\VERB|\NormalTok{code}|}}\tabularnewline
 \toprule\noalign{}
 \centering\arraybackslash\textbf{Before} &
 \centering\arraybackslash\textbf{After} \\
