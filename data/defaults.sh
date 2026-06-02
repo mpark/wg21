@@ -16,6 +16,8 @@ self-contained: true
 
 data-dir: ${DATADIR}
 
+from: markdown-raw_html
+
 filters:
   - citetitle.py
   - citeproc
