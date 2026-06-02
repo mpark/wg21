@@ -6,6 +6,27 @@ features, paper milestones, and large implementation changes.
 
 ## 2026
 
+### June 2026
+
+- Upgraded the framework to Pandoc 3.9.0.2 and Panflute 2.3.1, including
+  refreshed default HTML and LaTeX templates.
+- Updated WG21-specific template patches so they apply cleanly on top of the
+  Pandoc 3.9.0.2 defaults with a smaller set of local changes.
+- Adjusted CSL and citation-title handling for Pandoc 3.x while preserving
+  WG21-style reference rendering.
+- Moved static WG21 HTML overrides into a separate `wg21.css` file, leaving
+  template-driven color rules in `wg21.html`.
+- Fixed generated table styling for Pandoc 3.x HTML output, including the
+  document information table in the title block.
+- Disabled raw HTML parsing for Markdown input so C++-style angle brackets are
+  not silently treated as HTML tags, and changed browser page titles to use
+  plain text rather than Markdown serialization.
+- Fixed LaTeX output for highlighted inline code in comparison-table captions.
+- Removed older local workarounds that are no longer needed with Pandoc 3.x
+  and its bundled syntax-highlighting CSS.
+- Hardened dependency and generated-data setup so failed Pandoc, Python,
+  reference, and annex downloads do not leave partial targets behind.
+
 ### May 2026
 
 - Added interactive HTML controls for generated papers, including toggles for
