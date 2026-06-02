@@ -106,10 +106,11 @@ def prepare(doc):
     else:
         pf.debug(f"""mpark/wg21: {document} is an unrecognized format; expected "{document_pattern}".
             This just means that [Latest] and [Status] links will be missing.""")
+
     doc.metadata['pagetitle'] = pf.convert_text(
         pf.Plain(*doc.metadata['title'].content),
         input_format='panflute',
-        output_format='markdown')
+        output_format='plain')
 
     datadir = doc.get_metadata('datadir')
 
