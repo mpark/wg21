@@ -140,7 +140,7 @@ def strikeout(elem, doc):
     # This requires that code elements within has to be protected via mbox.
     # Pandoc handles this manually, but since we handle the code elements
     # rendering manually, we need to inject the protection manually as well.
-    if isinstance(elem, pf.Strikeout):
+    if doc.format == 'latex' and isinstance(elem, pf.Strikeout):
         elem.walk(protect_code)
 
 def divspan(elem, doc):
