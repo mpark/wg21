@@ -80,10 +80,10 @@ $(DATADIR)/defaults.yaml: $(DATADIR)/defaults.sh
 	DATADIR=$(abspath $(DATADIR)) $< > $@
 
 $(DATADIR)/csl.json: $(DATADIR)/refs.py $(PYTHON_DIR)
-	tmp="$@.tmp"; trap 'rm -f "$$tmp"' EXIT; $(PYTHON_BIN) $< > "$$tmp"; mv "$$tmp" $@
+	set -e; trap 'rm -f "$@"' EXIT; $(PYTHON_BIN) $< > "$@"; trap - EXIT
 
 $(DATADIR)/annex-f:
-	tmp="$@.tmp"; trap 'rm -f "$$tmp"' EXIT; curl -fsSL https://timsong-cpp.github.io/cppwp/annex-f -o "$$tmp"; mv "$$tmp" $@
+	set -e; trap 'rm -f "$@"' EXIT; curl -fsSL https://timsong-cpp.github.io/cppwp/annex-f -o "$@"; trap - EXIT
 
 $(OUTDIR)/%.html: $(SRCDIR)/%.md $(SRCDEPS) $(GENDEPS) | $(OUTDIR)
 	$(PANDOC) --bibliography $(DATADIR)/csl.json
