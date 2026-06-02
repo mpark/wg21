@@ -12,7 +12,8 @@ either in HTML or PDF.
 
 ## Requirements
 
-  - `python3`
+  - `curl`, `make`
+  - `python3`, `python3-venv`
   - `xelatex` (Only for PDF papers)
 
 ### OS X
@@ -24,6 +25,7 @@ brew install mactex # Only for PDF papers
 ### Ubuntu
 
 ```bash
+sudo apt-get install git curl make python3 python3-venv
 sudo apt-get install texlive-xetex # Only for PDF papers
 ```
 
