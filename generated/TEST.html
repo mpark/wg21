@@ -583,9 +583,11 @@ various features of the framework</h3>
 <li><a href="#comparison-tables" id="toc-comparison-tables"><span class="toc-section-number">4</span> Comparison Tables</a></li>
 <li><a href="#proposed-wording" id="toc-proposed-wording"><span class="toc-section-number">5</span> Proposed Wording</a>
 <ul>
-<li><a href="#paragraph-numbers" id="toc-paragraph-numbers"><span class="toc-section-number">5.1</span> Paragraph Numbers</a></li>
-<li><a href="#wording-changes" id="toc-wording-changes"><span class="toc-section-number">5.2</span> Wording Changes</a></li>
-<li><a href="#grammar-changes" id="toc-grammar-changes"><span class="toc-section-number">5.3</span> Grammar Changes</a></li>
+<li><a href="#manual-paragraph-numbers" id="toc-manual-paragraph-numbers"><span class="toc-section-number">5.1</span> Manual Paragraph Numbers</a></li>
+<li><a href="#automatic-paragraph-numbers" id="toc-automatic-paragraph-numbers"><span class="toc-section-number">5.2</span> Automatic Paragraph
+Numbers</a></li>
+<li><a href="#wording-changes" id="toc-wording-changes"><span class="toc-section-number">5.3</span> Wording Changes</a></li>
+<li><a href="#grammar-changes" id="toc-grammar-changes"><span class="toc-section-number">5.4</span> Grammar Changes</a></li>
 </ul></li>
 <li><a href="#stable-names" id="toc-stable-names"><span class="toc-section-number">6</span> Stable Names</a></li>
 <li><a href="#notes" id="toc-notes"><span class="toc-section-number">7</span> Notes</a></li>
@@ -915,23 +917,206 @@ as <a href="#auto-header-links">Automatic Header Links</a>.</p>
 </tbody>
 </table>
 <h1 data-number="5" id="proposed-wording"><span class="header-section-number">5</span> Proposed Wording<a href="#proposed-wording" class="self-link"></a></h1>
-<h2 data-number="5.1" id="paragraph-numbers"><span class="header-section-number">5.1</span> Paragraph Numbers<a href="#paragraph-numbers" class="self-link"></a></h2>
+<h2 data-number="5.1" id="manual-paragraph-numbers"><span class="header-section-number">5.1</span> Manual Paragraph Numbers<a href="#manual-paragraph-numbers" class="self-link"></a></h2>
 <p><span class="marginalizedparent"><a class="marginalized">2</a></span>
 An expression is <em>potentially evaluated</em> unless it is an
 unevaluated operand (7.2) or a subexpression thereof. The set of
 <em>potential results</em> of an expression
 <code class="sourceCode cpp">e</code> is defined as follows:</p>
 <ul>
-<li><p><span class="marginalizedparent"><a class="marginalized">(2.1)</a></span> If
-<code class="sourceCode cpp">e</code> is an <em>id-expression</em>
-(7.5.4), the set contains only
-<code class="sourceCode cpp">e</code>.</p></li>
-<li><p><span class="marginalizedparent"><a class="marginalized">(2.2)</a></span> If
+<li><span class="marginalizedparent"><a class="marginalized">(2.1)</a></span> If
+<code class="sourceCode cpp">e</code> is an
+<code class="sourceCode cpp"><em>id-expression</em></code> (7.5.4), the
+set contains only <code class="sourceCode cpp">e</code>.</li>
+<li><span class="marginalizedparent"><a class="marginalized">(2.2)</a></span> If
 <code class="sourceCode cpp">e</code> is a subscripting operation
 (7.6.1.1) with an array operand, the set contains the potential results
-of that operand.</p></li>
+of that operand.</li>
 </ul>
-<h2 data-number="5.2" id="wording-changes"><span class="header-section-number">5.2</span> Wording Changes<a href="#wording-changes" class="self-link"></a></h2>
+<h2 data-number="5.2" id="automatic-paragraph-numbers"><span class="header-section-number">5.2</span> Automatic Paragraph Numbers<a href="#automatic-paragraph-numbers" class="self-link"></a></h2>
+<div class="wording">
+<p><span class="marginalizedparent"><a class="marginalized">1</a></span>
+<code class="sourceCode default">#.</code> automatically starts at
+<code class="sourceCode cpp"><span class="dv">1</span></code>.</p>
+<p><span class="marginalizedparent"><a class="marginalized">2</a></span>
+Another <code class="sourceCode default">#.</code> automatically
+continues to
+<code class="sourceCode cpp"><span class="dv">2</span></code>.</p>
+<ul>
+<li><p><span class="marginalizedparent"><a class="marginalized">(2.1)</a></span>
+Nested bullet list also get automatic numbering.
+<code class="sourceCode cpp"><span class="op">(</span><span class="fl">2.1</span><span class="op">)</span></code>.</p>
+<p>[…]</p></li>
+</ul>
+<ul>
+<li><p><span class="marginalizedparent"><a class="marginalized">(2.5)</a></span>
+Example of skipping. Pin to <code class="sourceCode default">5.</code>,
+yields
+<code class="sourceCode cpp"><span class="op">(</span><span class="fl">2.5</span><span class="op">)</span></code>.</p></li>
+</ul>
+<ul>
+<li><p><span class="marginalizedparent"><a class="marginalized">(2.6)</a></span>
+Continues to
+<code class="sourceCode cpp"><span class="op">(</span><span class="fl">2.6</span><span class="op">)</span></code>.</p>
+<ul>
+<li><p><span class="marginalizedparent"><a class="marginalized">(2.6.1)</a></span>
+Nested nested bullet list should just work
+<code class="sourceCode default">(2.6.1)</code>.</p>
+<p>[…]</p></li>
+</ul>
+<ul>
+<li><p><span class="marginalizedparent"><a class="marginalized">(2.6.9)</a></span>
+<code class="sourceCode default">9.</code> here will bring us to
+<code class="sourceCode default">(2.6.9)</code>.</p></li>
+</ul>
+<ul>
+<li><p><span class="marginalizedparent"><a class="marginalized">(2.6.x)</a></span>
+<code class="sourceCode default">x)</code> here will be
+<code class="sourceCode default">(2.6.x)</code>.</p></li>
+<li><p><span class="marginalizedparent"><a class="marginalized">(2.6.x)</a></span>
+Another <code class="sourceCode default">x)</code> here will also be
+<code class="sourceCode default">(2.6.x)</code>.</p></li>
+</ul></li>
+</ul>
+<p><span class="marginalizedparent"><a class="marginalized">3</a></span>
+<code class="sourceCode default">#.</code> automatically continues to
+<code class="sourceCode cpp"><span class="dv">3</span></code>.</p>
+<p>Also handle code blocks within a list item:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span>;</span></code></pre></div>
+<p><span class="marginalizedparent"><a class="marginalized">x</a></span>
+Use <code class="sourceCode default">x)</code> to skip a paragraph
+number.</p>
+<p><span class="marginalizedparent"><a class="marginalized">x</a></span>
+Another <code class="sourceCode default">x)</code> assigned
+<code class="sourceCode cpp">x</code>.</p>
+<p><span class="marginalizedparent"><a class="marginalized">4</a></span>
+<code class="sourceCode default">#.</code> automatically continues to
+<code class="sourceCode cpp"><span class="dv">4</span></code>.</p>
+<p>[…]</p>
+<p><span class="marginalizedparent"><a class="marginalized">17</a></span> Pin
+with <code class="sourceCode default">17.</code>.</p>
+<div class="add" style="color: #006e28">
+<p><span class="marginalizedparent"><a class="marginalized">x</a></span>
+<code class="sourceCode default">x)</code> is mainly to skip numbering
+in <code class="sourceCode default cpp">add</code>.</p>
+<ul>
+<li><p><span class="marginalizedparent"><a class="marginalized">(x.1)</a></span>
+Nested bullet within an <code class="sourceCode default cpp">x)</code>.
+This will be (x.1).</p></li>
+</ul>
+<ul>
+<li><p><span class="marginalizedparent"><a class="marginalized">(x.x)</a></span>
+Nested <code class="sourceCode default cpp">x)</code> within an
+<code class="sourceCode default cpp">x)</code>. This will be
+(x.x).</p></li>
+</ul>
+<p><span class="marginalizedparent"><a class="marginalized">x</a></span>
+Second added paragraph.</p>
+</div>
+<div class="rm" style="color: #bf0303">
+<p><span class="marginalizedparent"><a class="marginalized">18</a></span>
+<code class="sourceCode default">#.</code> here will be 18 after the
+skips.</p>
+<p>[…]</p>
+<p><span class="marginalizedparent"><a class="marginalized">24</a></span> Skip
+and pin again, e.g. <code class="sourceCode default">24.</code>.</p>
+</div>
+<p><span class="marginalizedparent"><a class="marginalized">25</a></span>
+Automatically continue to 25.</p>
+</div>
+<hr />
+<div class="wording">
+<h3 class="unnumbered" id="general-intro.compliance.general">General
+<span>4.1.1
+<a href="https://wg21.link/intro.compliance.general">[intro.compliance.general]</a></span><a href="#general-intro.compliance.general" class="self-link"></a></h3>
+<p><span class="marginalizedparent"><a class="marginalized">1</a></span>
+The set of <em>diagnosable rules</em> consists of all syntactic and
+semantic rules in this document except for those rules containing an
+explicit notation that “no diagnostic is required” or which are
+described as resulting in “undefined behavior”.</p>
+<p><span class="marginalizedparent"><a class="marginalized">2</a></span>
+Although this document states only requirements on C++ implementations,
+those requirements are often easier to understand if they are phrased as
+requirements on programs, parts of programs, or execution of programs.
+Such requirements have the following meaning:</p>
+<ul>
+<li><p><span class="marginalizedparent"><a class="marginalized">(2.1)</a></span> If a
+program contains no violations of the rules in <span><a href="https://wg21.link/lex">[lex]</a></span> through <span><a href="https://wg21.link/exec">[exec]</a></span> as well as those
+specified in <span><a href="https://wg21.link/depr">[depr]</a></span>, a
+conforming implementation shall accept and correctly execute that
+program, except when the implementation’s limitations (see below) are
+exceeded.</p></li>
+<li><p><span class="marginalizedparent"><a class="marginalized">(2.2)</a></span> If a
+program contains a violation of a rule for which no diagnostic is
+required, this document places no requirement on implementations with
+respect to that program.</p></li>
+<li><p><span class="marginalizedparent"><a class="marginalized">(2.3)</a></span>
+Otherwise, if a program contains</p>
+<ul>
+<li><p><span class="marginalizedparent"><a class="marginalized">(2.3.1)</a></span> a
+violation of any diagnosable rule,</p></li>
+<li><p><span class="marginalizedparent"><a class="marginalized">(2.3.2)</a></span> a
+preprocessing translation unit with a
+<code class="sourceCode cpp"><span class="pp">#warning</span></code>
+preprocessing directive (<span><a href="https://wg21.link/cpp.error">[cpp.error]</a></span>),</p></li>
+<li><p><span class="marginalizedparent"><a class="marginalized">(2.3.3)</a></span> an
+occurrence of a construct described in this document as
+“conditionally-supported” when the implementation does not support that
+construct, or</p></li>
+<li><p><span class="marginalizedparent"><a class="marginalized">(2.3.4)</a></span> a
+contract assertion (<span><a href="https://wg21.link/basic.contract.eval">[basic.contract.eval]</a></span>)
+evaluated with a checking semantic in a manifestly constant-evaluated
+context (<span><a href="https://wg21.link/expr.const.defns">[expr.const.defns]</a></span>)
+resulting in a contract violation,</p></li>
+</ul>
+a conforming implementation shall issue at least one diagnostic
+message.</li>
+</ul>
+<p><span class="note"><span>[ <em>Note:</em> </span>During template
+argument deduction and substitution, certain constructs that in other
+contexts require a diagnostic are treated differently; see <span><a href="https://wg21.link/temp.deduct">[temp.deduct]</a></span>.<span> —
+<em>end note</em> ]</span></span></p>
+<p>Furthermore, a conforming implementation shall not accept</p>
+<ul>
+<li><p><span class="marginalizedparent"><a class="marginalized">(2.4)</a></span> a
+preprocessing translation unit containing a
+<code class="sourceCode cpp"><span class="pp">#error</span></code>
+preprocessing directive (<span><a href="https://wg21.link/cpp.error">[cpp.error]</a></span>),</p></li>
+<li><p><span class="marginalizedparent"><a class="marginalized">(2.5)</a></span> a
+translation unit with a
+<code class="sourceCode cpp"><em>static_assert-declaration</em></code>
+that fails (<span><a href="https://wg21.link/dcl.pre">[dcl.pre]</a></span>), or</p></li>
+<li><p><span class="marginalizedparent"><a class="marginalized">(2.6)</a></span> a
+contract assertion evaluated with a terminating semantic (<span><a href="https://wg21.link/basic.contract.eval">[basic.contract.eval]</a></span>)
+in a manifestly constant-evaluated context (<span><a href="https://wg21.link/expr.const.defns">[expr.const.defns]</a></span>)
+resulting in a contract violation.</p></li>
+</ul>
+<p><span class="marginalizedparent"><a class="marginalized">3</a></span>
+For classes and class templates, the library Clauses specify partial
+definitions. Private members are not specified, but each implementation
+shall supply them to complete the definitions according to the
+description in the library Clauses.</p>
+<h3 class="unnumbered" id="diagnostic-directives-cpp.error">Diagnostic
+directives <span>15.9
+<a href="https://wg21.link/cpp.error">[cpp.error]</a></span><a href="#diagnostic-directives-cpp.error" class="self-link"></a></h3>
+<p><span class="marginalizedparent"><a class="marginalized">1</a></span>
+A preprocessing directive of the form</p>
+<blockquote>
+<div class="sourceCode" id="cb12"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="pp"># error <em>pp-tokens<sub>opt</sub></em> <em>new-line</em></span></span></code></pre></div>
+</blockquote>
+<p>renders the program ill-formed. A preprocessing directive of the
+form</p>
+<blockquote>
+<div class="sourceCode" id="cb13"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="pp"># warning <em>pp-tokens<sub>opt</sub></em> <em>new-line</em></span></span></code></pre></div>
+</blockquote>
+<p>requires the implementation to produce at least one diagnostic
+message for the preprocessing translation unit (<span><a href="https://wg21.link/intro.compliance.general">[intro.compliance.general]</a></span>).</p>
+<p><span class="marginalizedparent"><a class="marginalized">2</a></span>
+<em>Recommended practice</em>: Any diagnostic message caused by either
+of these directives should include the specified sequence of
+preprocessing tokens.</p>
+</div>
+<h2 data-number="5.3" id="wording-changes"><span class="header-section-number">5.3</span> Wording Changes<a href="#wording-changes" class="self-link"></a></h2>
 <p>Large changes are
 <code class="sourceCode cpp"><span class="op">:::</span> add</code> for
 additions,
@@ -942,8 +1127,8 @@ removals.</p>
 <a href="https://wg21.link/format.functions">[format.functions]</a></span>:</p>
 <div class="add" style="color: #006e28">
 
-<div class="sourceCode" id="cb11"><pre class="sourceCode default default"><code class="sourceCode default"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>template&lt;class... Args&gt;</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  string format(const locale&amp; loc, string_view fmt, const Args&amp;... args);</span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode default default"><code class="sourceCode default"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>template&lt;class... Args&gt;</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  string format(const locale&amp; loc, string_view fmt, const Args&amp;... args);</span></code></pre></div>
 <p><em>Returns:</em>
 <code class="sourceCode default cpp">vformat(loc, fmt, make_format_args(args...))</code>.</p>
 </div>
@@ -1001,7 +1186,7 @@ is thrown</ins></span>.</td>
 </tr>
 </tbody>
 </table>
-<h2 data-number="5.3" id="grammar-changes"><span class="header-section-number">5.3</span> Grammar Changes<a href="#grammar-changes" class="self-link"></a></h2>
+<h2 data-number="5.4" id="grammar-changes"><span class="header-section-number">5.4</span> Grammar Changes<a href="#grammar-changes" class="self-link"></a></h2>
 <blockquote>
 <div class="line-block"><em>selection-statement:</em><br />
     <code class="sourceCode cpp"><span class="cf">if</span> <span class="kw">constexpr</span></code><em><sub>opt</sub></em>
@@ -1104,22 +1289,22 @@ underlying database.</p>
 <ul>
 <li><p>Use the <code class="sourceCode cpp">note</code> class for notes
 that are expected to appear in the specification wording</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>[Notes will look like this]{.note}</span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>[Notes will look like this]{.note}</span></code></pre></div>
 <p><span class="note"><span>[ <em>Note:</em> </span>Notes will look like
 this<span> — <em>end note</em> ]</span></span></p></li>
 <li><p>Use the <code class="sourceCode cpp">ednote</code> for editorial
 notes, these will be formatted as</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>[Editorial notes are important]{.ednote}</span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>[Editorial notes are important]{.ednote}</span></code></pre></div>
 <p><span class="ednote" style="color: #0000ff">[ Editor&#39;s note:
 Editorial notes are important ]</span></p></li>
 <li><p>Use <code class="sourceCode cpp">draftnote</code> to include text
 that is intended as questions or information for reviews and working
 groups.</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>[Drafting notes can be used to provide comments for reviewers that are explicitly not to be</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a> included in the specification.]{.draftnote}</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a> [It is also possible to indicate the a note is for</span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a> a specific `audience` via this optional attribute.]{.draftnote audience=&quot;the reader&quot;}</span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>[Drafting notes can be used to provide comments for reviewers that are explicitly not to be</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a> included in the specification.]{.draftnote}</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a> [It is also possible to indicate the a note is for</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a> a specific `audience` via this optional attribute.]{.draftnote audience=&quot;the reader&quot;}</span></code></pre></div>
 <p><span class="draftnote" style="color: #0000ff">[ Drafting note:
 Drafting notes can be used to provide comments for reviewers that are
 explicitly not to be included in the specification. ]</span></p>

@@ -668,8 +668,8 @@ Tables\hyperref[comparison-tables]{}}{Comparison Tables}}\label{comparison-table
 \section{\texorpdfstring{Proposed
 Wording\hyperref[proposed-wording]{}}{Proposed Wording}}\label{proposed-wording}
 
-\subsection{\texorpdfstring{Paragraph
-Numbers\hyperref[paragraph-numbers]{}}{Paragraph Numbers}}\label{paragraph-numbers}
+\subsection{\texorpdfstring{Manual Paragraph
+Numbers\hyperref[manual-paragraph-numbers]{}}{Manual Paragraph Numbers}}\label{manual-paragraph-numbers}
 
 \pnum{2} An expression is \emph{potentially evaluated} unless it is an
 unevaluated operand (7.2) or a subexpression thereof. The set of
@@ -677,14 +677,237 @@ unevaluated operand (7.2) or a subexpression thereof. The set of
 defined as follows:
 
 \begin{itemize}
+\tightlist
 \item
-  \pnum{(2.1)} If \VERB|\NormalTok{e}| is an \emph{id-expression}
-  (7.5.4), the set contains only \VERB|\NormalTok{e}|.
+  \pnum{(2.1)} If \VERB|\NormalTok{e}| is an
+  \VERB|\NormalTok{\emph{id-expression}}| (7.5.4), the set contains only
+  \VERB|\NormalTok{e}|.
 \item
   \pnum{(2.2)} If \VERB|\NormalTok{e}| is a subscripting operation
   (7.6.1.1) with an array operand, the set contains the potential
   results of that operand.
 \end{itemize}
+
+\subsection{\texorpdfstring{Automatic Paragraph
+Numbers\hyperref[automatic-paragraph-numbers]{}}{Automatic Paragraph Numbers}}\label{automatic-paragraph-numbers}
+
+\pnum{1} \VERB|\NormalTok{\#.}| automatically starts at
+\VERB|\DecValTok{1}|.
+
+\pnum{2} Another \VERB|\NormalTok{\#.}| automatically continues to
+\VERB|\DecValTok{2}|.
+
+\begin{itemize}
+\item
+  \pnum{(2.1)} Nested bullet list also get automatic numbering.
+  \VERB|\OperatorTok{(}\FloatTok{2.1}\OperatorTok{)}|.
+
+  {[}\ldots{]}
+\end{itemize}
+
+\begin{itemize}
+\item
+  \pnum{(2.5)} Example of skipping. Pin to \VERB|\NormalTok{5.}|, yields
+  \VERB|\OperatorTok{(}\FloatTok{2.5}\OperatorTok{)}|.
+\end{itemize}
+
+\begin{itemize}
+\item
+  \pnum{(2.6)} Continues to
+  \VERB|\OperatorTok{(}\FloatTok{2.6}\OperatorTok{)}|.
+
+  \begin{itemize}
+  \item
+    \pnum{(2.6.1)} Nested nested bullet list should just work
+    \VERB|\NormalTok{(2.6.1)}|.
+
+    {[}\ldots{]}
+  \end{itemize}
+
+  \begin{itemize}
+  \item
+    \pnum{(2.6.9)} \VERB|\NormalTok{9.}| here will bring us to
+    \VERB|\NormalTok{(2.6.9)}|.
+  \end{itemize}
+
+  \begin{itemize}
+  \item
+    \pnum{(2.6.x)} \VERB|\NormalTok{x)}| here will be
+    \VERB|\NormalTok{(2.6.x)}|.
+  \item
+    \pnum{(2.6.x)} Another \VERB|\NormalTok{x)}| here will also be
+    \VERB|\NormalTok{(2.6.x)}|.
+  \end{itemize}
+\end{itemize}
+
+\pnum{3} \VERB|\NormalTok{\#.}| automatically continues to
+\VERB|\DecValTok{3}|.
+
+Also handle code blocks within a list item:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DataTypeTok{int}\NormalTok{ main}\OperatorTok{()}\NormalTok{;}
+\end{Highlighting}
+\end{Shaded}
+
+\pnum{x} Use \VERB|\NormalTok{x)}| to skip a paragraph number.
+
+\pnum{x} Another \VERB|\NormalTok{x)}| assigned \VERB|\NormalTok{x}|.
+
+\pnum{4} \VERB|\NormalTok{\#.}| automatically continues to
+\VERB|\DecValTok{4}|.
+
+{[}\ldots{]}
+
+\pnum{17} Pin with \VERB|\NormalTok{17.}|.
+
+{\color[HTML]{006e28}\pnum{x} \VERB|\NormalTok{x)}| is mainly to skip
+numbering in \VERB|\NormalTok{add}|.
+
+\begin{itemize}
+\item
+  \pnum{(x.1)} Nested bullet within an \VERB|\NormalTok{x)}|. This will
+  be (x.1).
+\end{itemize}
+
+\begin{itemize}
+\item
+  \pnum{(x.x)} Nested \VERB|\NormalTok{x)}| within an
+  \VERB|\NormalTok{x)}|. This will be (x.x).
+\end{itemize}
+
+\pnum{x} Second added paragraph.}
+
+{\color[HTML]{bf0303}\pnum{18} \VERB|\NormalTok{\#.}| here will be 18
+after the skips.
+
+{[}\ldots{]}
+
+\pnum{24} Skip and pin again, e.g.~\VERB|\NormalTok{24.}|.}
+
+\pnum{25} Automatically continue to 25.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsubsection*{\texorpdfstring{General {4.1.1
+\href{https://wg21.link/intro.compliance.general}{{[}intro.compliance.general{]}}}\hyperref[general-intro.compliance.general]{}}{General 4.1.1
+ {[}intro.compliance.general{]}}}\label{general-intro.compliance.general}
+\addcontentsline{toc}{subsubsection}{General {4.1.1
+{{[}intro.compliance.general{]}}}{}}
+
+\pnum{1} The set of \emph{diagnosable rules} consists of all syntactic
+and semantic rules in this document except for those rules containing an
+explicit notation that ``no diagnostic is required'' or which are
+described as resulting in ``undefined behavior''.
+
+\pnum{2} Although this document states only requirements on C++
+implementations, those requirements are often easier to understand if
+they are phrased as requirements on programs, parts of programs, or
+execution of programs. Such requirements have the following meaning:
+
+\begin{itemize}
+\item
+  \pnum{(2.1)} If a program contains no violations of the rules in
+  {\href{https://wg21.link/lex}{{[}lex{]}}} through
+  {\href{https://wg21.link/exec}{{[}exec{]}}} as well as those specified
+  in {\href{https://wg21.link/depr}{{[}depr{]}}}, a conforming
+  implementation shall accept and correctly execute that program, except
+  when the implementation's limitations (see below) are exceeded.
+\item
+  \pnum{(2.2)} If a program contains a violation of a rule for which no
+  diagnostic is required, this document places no requirement on
+  implementations with respect to that program.
+\item
+  \pnum{(2.3)} Otherwise, if a program contains
+
+  \begin{itemize}
+  \item
+    \pnum{(2.3.1)} a violation of any diagnosable rule,
+  \item
+    \pnum{(2.3.2)} a preprocessing translation unit with a
+    \VERB|\PreprocessorTok{\#warning}| preprocessing directive
+    ({\href{https://wg21.link/cpp.error}{{[}cpp.error{]}}}),
+  \item
+    \pnum{(2.3.3)} an occurrence of a construct described in this
+    document as ``conditionally-supported'' when the implementation does
+    not support that construct, or
+  \item
+    \pnum{(2.3.4)} a contract assertion
+    ({\href{https://wg21.link/basic.contract.eval}{{[}basic.contract.eval{]}}})
+    evaluated with a checking semantic in a manifestly
+    constant-evaluated context
+    ({\href{https://wg21.link/expr.const.defns}{{[}expr.const.defns{]}}})
+    resulting in a contract violation,
+  \end{itemize}
+
+  a conforming implementation shall issue at least one diagnostic
+  message.
+\end{itemize}
+
+{{{[} \emph{Note:} }During template argument deduction and substitution,
+certain constructs that in other contexts require a diagnostic are
+treated differently; see
+{\href{https://wg21.link/temp.deduct}{{[}temp.deduct{]}}}.{ --- \emph{end note} {]}}}
+
+Furthermore, a conforming implementation shall not accept
+
+\begin{itemize}
+\item
+  \pnum{(2.4)} a preprocessing translation unit containing a
+  \VERB|\PreprocessorTok{\#error}| preprocessing directive
+  ({\href{https://wg21.link/cpp.error}{{[}cpp.error{]}}}),
+\item
+  \pnum{(2.5)} a translation unit with a
+  \VERB|\NormalTok{\emph{static\_assert-declaration}}| that fails
+  ({\href{https://wg21.link/dcl.pre}{{[}dcl.pre{]}}}), or
+\item
+  \pnum{(2.6)} a contract assertion evaluated with a terminating
+  semantic
+  ({\href{https://wg21.link/basic.contract.eval}{{[}basic.contract.eval{]}}})
+  in a manifestly constant-evaluated context
+  ({\href{https://wg21.link/expr.const.defns}{{[}expr.const.defns{]}}})
+  resulting in a contract violation.
+\end{itemize}
+
+\pnum{3} For classes and class templates, the library Clauses specify
+partial definitions. Private members are not specified, but each
+implementation shall supply them to complete the definitions according
+to the description in the library Clauses.
+
+\subsubsection*{\texorpdfstring{Diagnostic directives {15.9
+\href{https://wg21.link/cpp.error}{{[}cpp.error{]}}}\hyperref[diagnostic-directives-cpp.error]{}}{Diagnostic directives 15.9
+ {[}cpp.error{]}}}\label{diagnostic-directives-cpp.error}
+\addcontentsline{toc}{subsubsection}{Diagnostic directives {15.9
+{{[}cpp.error{]}}}{}}
+
+\pnum{1} A preprocessing directive of the form
+
+\begin{quote}
+\begin{Shaded}
+\begin{Highlighting}[]
+\PreprocessorTok{\# error \emph{pp-tokens\textsubscript{opt}} \emph{new-line}}
+\end{Highlighting}
+\end{Shaded}
+\end{quote}
+
+renders the program ill-formed. A preprocessing directive of the form
+
+\begin{quote}
+\begin{Shaded}
+\begin{Highlighting}[]
+\PreprocessorTok{\# warning \emph{pp-tokens\textsubscript{opt}} \emph{new-line}}
+\end{Highlighting}
+\end{Shaded}
+\end{quote}
+
+requires the implementation to produce at least one diagnostic message
+for the preprocessing translation unit
+({\href{https://wg21.link/intro.compliance.general}{{[}intro.compliance.general{]}}}).
+
+\pnum{2} \emph{Recommended practice}: Any diagnostic message caused by
+either of these directives should include the specified sequence of
+preprocessing tokens.
 
 \subsection{\texorpdfstring{Wording
 Changes\hyperref[wording-changes]{}}{Wording Changes}}\label{wording-changes}

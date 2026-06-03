@@ -16,16 +16,30 @@ refs = {}
 headers = {}
 document_pattern = r"[PD]([0-9]+)R[0-9]+"
 
+def prepend_elem(elem, *prefix):
+    assert(all(isinstance(e, pf.Inline) for e in prefix))
+
+    if elem.content and isinstance(elem.content[0], pf.Para):
+        elem.content[0].content[0:0] = prefix
+    elif elem.content and isinstance(elem.content[0], pf.Plain):
+        elem.content[0] = pf.Para(*prefix, *elem.content[0].content)
+    else:
+        elem.content.insert(0, pf.Plain(*prefix))
+
+def append_elem(elem, *suffix):
+    assert(all(isinstance(e, pf.Inline) for e in suffix))
+
+    if elem.content and isinstance(elem.content[-1], pf.Para):
+        elem.content[-1].content.extend(suffix)
+    elif elem.content and isinstance(elem.content[-1], pf.Plain):
+        elem.content[-1] = pf.Para(*elem.content[-1].content, *suffix)
+    else:
+        elem.content.append(pf.Plain(*suffix))
+
 def wrap_elem(opening, elem, closing):
     if isinstance(elem, pf.Div):
-        if elem.content and isinstance(elem.content[0], pf.Para):
-            elem.content[0].content.insert(0, opening)
-        else:
-            elem.content.insert(0, pf.Plain(opening))
-        if elem.content and isinstance(elem.content[-1], pf.Para):
-            elem.content[-1].content.append(closing)
-        else:
-            elem.content.append(pf.Plain(closing))
+        prepend_elem(elem, opening)
+        append_elem(elem, closing)
     elif isinstance(elem, pf.Span):
         elem.content.insert(0, opening)
         elem.content.append(closing)
@@ -143,6 +157,77 @@ def strikeout(elem, doc):
     if doc.format == 'latex' and isinstance(elem, pf.Strikeout):
         elem.walk(protect_code)
 
+def wording(elem, doc):
+    if not (isinstance(elem, pf.Div) and 'wording' in elem.classes):
+        return None
+
+    def get_list_type(elem):
+        if isinstance(elem, pf.OrderedList):
+            if elem.style == 'DefaultStyle' and elem.delimiter == 'DefaultDelim':
+                return '#.'
+            elif elem.style == 'Decimal' and elem.delimiter == 'Period':
+                return '1.'
+            elif elem.style == 'LowerAlpha' and elem.delimiter == 'OneParen' and elem.start == 24:
+                return 'x)'
+            return None
+        elif isinstance(elem, pf.BulletList):
+            return '-'
+        return None
+
+    def process_list(elem, parents, start):
+        list_type = get_list_type(elem)
+        if list_type is None:
+            return None
+
+        # '#.' is only supported at the top-level, '-' is only supported nested.
+        if list_type == '#.' and parents:
+            return None
+
+        if list_type == '-' and not parents:
+            return None
+
+        if list_type == '1.':
+            start = elem.start - 1
+
+        for item in elem.content:
+            number = parents
+            if list_type == 'x)':
+                number += ('x',)
+            else:
+                start += 1
+                number += (start,)
+
+            process_block(item, number)
+            pnum = pf.Span(pf.Str('.'.join(map(str, number))), classes=['pnum'])
+            prepend_elem(item, pnum, pf.Space())
+
+        result = []
+        if not parents:
+            result.extend(block for item in elem.content for block in item.content)
+        elif isinstance(elem, pf.OrderedList):
+            result.append(pf.BulletList(*elem.content))
+        else:
+            result.append(elem)
+
+        return start, result
+
+    def process_block(elem, parents=(), start=0):
+        content = []
+        for block in elem.content:
+            result = process_list(block, parents, start)
+            if result is not None:
+                start, blocks = result
+                content.extend(blocks)
+                continue
+            if isinstance(block, pf.Div):
+                start = process_block(block, parents, start)
+            content.append(block)
+        elem.content = content
+        return start
+
+    process_block(elem)
+    return elem
+
 def divspan(elem, doc):
     """
     Non-code diffs: `add` and `rm` are classes that can be added to
@@ -178,7 +263,7 @@ def divspan(elem, doc):
 
     def _nonnormative(name):
         wrap_elem(
-            pf.Span(pf.Str('[ '), pf.Emph(pf.Str(f'{name.title()}:')), pf.Space),
+            pf.Span(pf.Str('[ '), pf.Emph(pf.Str(f'{name.title()}:')), pf.Space()),
             elem,
             pf.Span(pf.Str(' — '), pf.Emph(pf.Str(f'end {name.lower()}')), pf.Str(' ]')))
 
@@ -759,6 +844,7 @@ def finalize(doc):
 if __name__ == '__main__':
   pf.run_filters([
       strikeout,
+      wording,
       divspan,
       cmptable,
       # after `cmptable` because...
