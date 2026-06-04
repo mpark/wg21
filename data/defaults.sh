@@ -10,8 +10,7 @@
 : "${DATADIR:?Set 'DATADIR' to the absolute path to the data directory.}"
 
 # +mark for == syntax for highlighted text
-# -raw_html to avoid <T> in foo<T> to be interpreted as an HTML tag.
-FROM=markdown+mark-raw_html
+FROM=markdown+mark
 
 cat <<EOF
 number-sections: true

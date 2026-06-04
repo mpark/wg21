@@ -110,7 +110,7 @@ def prepare(doc):
     doc.metadata['pagetitle'] = pf.convert_text(
         pf.Plain(*doc.metadata['title'].content),
         input_format='panflute',
-        output_format='plain')
+        output_format='markdown')
 
     datadir = doc.get_metadata('datadir')
 
@@ -582,8 +582,10 @@ class CodeElems:
 
         blocks = [
             plain.walk(divspan, doc).walk(CodeElems.init, doc)
+            # -raw_html to avoid <T> in foo<T> to be interpreted as an HTML tag.
             # -smart to avoid things like ... to get transformed into \dots
-            for plain in convert_fragments(fragments, f"{doc.get_metadata('from')}-smart")
+            for plain in convert_fragments(
+                fragments, f"{doc.get_metadata('from')}-raw_html-smart")
         ]
         token = cls._compute_unique_placeholder(fragments)
         text, sep = cls._convert_blocks(blocks, token, doc)
