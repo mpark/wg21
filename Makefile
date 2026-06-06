@@ -65,7 +65,7 @@ endif
 
 .PHONY: update
 update:
-	@$(MAKE) --always-make $(DATADIR)/csl.json $(DATADIR)/annex-f
+	@$(MAKE) -W $(DATADIR)/refs.py -W $(DATADIR)/srefs.py $(DATADIR)/csl.json $(DATADIR)/annex-f
 
 $(OUTDIR):
 	mkdir -p $@
