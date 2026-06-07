@@ -80,7 +80,7 @@ $(DATADIR)/defaults.yaml: $(DATADIR)/defaults.sh
 	DATADIR=$(abspath $(DATADIR)) $< > $@
 
 $(DATADIR)/csl.json: $(DATADIR)/refs.py $(PYTHON_DIR)
-	set -e; trap 'rm -f "$@"' EXIT; $(PYTHON_BIN) $< > "$@"; trap - EXIT
+	set -e; trap 'rm -f "$@.tmp"' EXIT; $(PYTHON_BIN) $< > "$@.tmp"; mv "$@.tmp" "$@"; trap - EXIT
 
 $(DATADIR)/annex-f:
 	set -e; trap 'rm -f "$@"' EXIT; curl -fsSL https://timsong-cpp.github.io/cppwp/annex-f -o "$@"; trap - EXIT
