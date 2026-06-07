@@ -8,11 +8,12 @@
 # (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
 
 import os.path
+import json
 import panflute as pf
 import re
 
-stable_names = {}
 refs = {}
+srefs = {}
 headers = {}
 document_pattern = r"[PD]([0-9]+)R[0-9]+"
 
@@ -118,8 +119,8 @@ def prepare(doc):
     if number is not None:
         doc.metadata['number'] = number.group(1)
     else:
-        pf.debug(f"""mpark/wg21: {document} is an unrecognized format; expected "{document_pattern}".
-            This just means that [Latest] and [Status] links will be missing.""")
+        pf.debug(f"""[WARNING] mpark/wg21: {document} is an unrecognized format; expected "{document_pattern}".
+            This means that [Latest] and [Status] links will be missing.""")
 
     doc.metadata['pagetitle'] = pf.convert_text(
         pf.Plain(*doc.metadata['title'].content),
@@ -127,9 +128,8 @@ def prepare(doc):
         output_format='markdown')
 
     datadir = doc.get_metadata('datadir')
-
-    with open(os.path.join(datadir, 'annex-f'), 'r') as f:
-        stable_names.update(line.split(maxsplit=1) for line in f)
+    with open(os.path.join(datadir, 'srefs.json'), 'r') as f:
+        srefs.update(json.load(f))
 
     def highlighting(output_format):
         return pf.convert_text(
@@ -156,6 +156,49 @@ def strikeout(elem, doc):
     # rendering manually, we need to inject the protection manually as well.
     if doc.format == 'latex' and isinstance(elem, pf.Strikeout):
         elem.walk(protect_code)
+
+def sref(elem, doc):
+    if not (isinstance(elem, (pf.Link, pf.Span)) and 'sref' in elem.classes):
+        return None
+
+    target = pf.stringify(elem)
+    # Support paragraph numbers: e.g. [basic.scope.scope#2.1]{.sref}
+    name, _, pnum = target.partition('#')
+    # Also support paragraph numbers as a suffix: e.g. [basic.scope.scope]/2.1
+    # If the explicit paragraph number is specified, it takes precedence over
+    # the suffix. e.g. [basic.life#1]{.sref}/2, the /2 is left as plain text.
+    if (
+        not pnum and
+        isinstance(elem.next, pf.Str) and
+        (match := re.match(r'/([0-9]+(?:\.[0-9]+)*)(.*)',
+                           elem.next.text))
+    ):
+        pnum, elem.next.text = match.groups()
+        target = f'{name}#{pnum}'
+
+    link = pf.Link(
+        pf.Str(f'[{name}]' + (f'/{pnum}' if pnum else '')),
+        url=f'https://eel.is/c++draft/{target}')
+    info = srefs.get(name)
+    if info is None:
+        pf.debug(f"""[WARNING] mpark/wg21: stable name {name} not found.
+            Tip: run `make update` to refresh the local databases, including stable names""")
+        return link
+
+    number, title = info
+    link.title = f'{number} {title}'
+    result = pf.Span()
+    if 'unnumbered' not in elem.classes:
+        result.content.append(pf.Str(number))
+        result.content.append(pf.Space())
+    if 'title' in elem.classes:
+        result.content.append(pf.Str(title))
+        result.content.append(pf.Space())
+    if result.content:
+        result.content.append(link)
+        return result
+
+    return link
 
 def wording(elem, doc):
     if not (isinstance(elem, pf.Div) and 'wording' in elem.classes):
@@ -320,19 +363,6 @@ def divspan(elem, doc):
     if 'pnum' in elem.classes and isinstance(elem, pf.Span):
         return pnum()
 
-    if 'sref' in elem.classes and isinstance(elem, pf.Span):
-        target = pf.stringify(elem)
-        name = target.split('#')[0]
-        number = stable_names.get(name)
-        link = pf.Link(
-            pf.Str(f'[{target}]'),
-            url=f'https://wg21.link/{target}')
-        if number is not None:
-            return pf.Span(link) if 'unnumbered' in elem.classes else pf.Span(pf.Str(number), pf.Space(), link)
-        else:
-            pf.debug('mpark/wg21: stable name', name, 'not found')
-            return link
-
     note_cls = next(iter(cls for cls in elem.classes if cls in {'example', 'note', 'ednote', 'draftnote'}), None)
     if note_cls == 'example':  example()
     elif note_cls == 'note':   note()
@@ -441,7 +471,7 @@ def cmptable(table, doc):
     table.content.append(pf.HorizontalRule())
 
     def warn(elem):
-        pf.debug('mpark/wg21:', type(elem), pf.stringify(elem, newlines=False),
+        pf.debug('[WARNING] mpark/wg21:', type(elem), pf.stringify(elem, newlines=False),
                  'in a comparison table is ignored')
 
     for elem in table.content:
@@ -561,7 +591,7 @@ def automatic_header_link(elem, doc):
         return None
 
     if (header_text := headers.get(elem.url)) is None:
-        pf.debug('mpark/wg21: cannot find automatic text for link to:', elem.url)
+        pf.debug('[WARNING] mpark/wg21: cannot find automatic text for link to:', elem.url)
         return None
 
     return pf.Link(pf.Str(header_text), url=elem.url)
@@ -845,6 +875,7 @@ if __name__ == '__main__':
   pf.run_filters([
       strikeout,
       wording,
+      sref,
       divspan,
       cmptable,
       # after `cmptable` because...

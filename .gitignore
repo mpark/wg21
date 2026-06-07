@@ -1,5 +1,7 @@
 data/defaults.yaml
 data/csl.json
+data/srefs.json
+data/srefs.md
 data/annex-f
 deps/pandoc
 deps/python

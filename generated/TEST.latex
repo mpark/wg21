@@ -230,14 +230,16 @@ Reply-to:   \@author
 \author{&Author
 0\\&<\href{mailto:author0@gmail.com}{\nolinkurl{author0@gmail.com}}>\\&Author
 1\\&<\href{mailto:author1@gmail.com}{\nolinkurl{author1@gmail.com}}>\\}
-\date{2026-06-04}
+\date{2026-06-08}
 
 \begin{document}
+\hypertarget{title-block-header}{\label{title-block-header}}
 \maketitle
 
 {
 \hypersetup{linkcolor=black}
 \setcounter{tocdepth}{2}
+\hypertarget{toctitle}{\label{toctitle}}
 \tableofcontents
 }
 \section{\texorpdfstring{Introduction\hyperref[introduction]{}}{Introduction}}\label{introduction}
@@ -791,8 +793,7 @@ after the skips.
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
 \subsubsection*{\texorpdfstring{General {4.1.1
-\href{https://wg21.link/intro.compliance.general}{{[}intro.compliance.general{]}}}\hyperref[general-intro.compliance.general]{}}{General 4.1.1
- {[}intro.compliance.general{]}}}\label{general-intro.compliance.general}
+\href{https://eel.is/c++draft/intro.compliance.general}{{[}intro.compliance.general{]}}}\hyperref[general-intro.compliance.general]{}}{General 4.1.1 {[}intro.compliance.general{]}}}\label{general-intro.compliance.general}
 \addcontentsline{toc}{subsubsection}{General {4.1.1
 {{[}intro.compliance.general{]}}}{}}
 
@@ -809,11 +810,12 @@ execution of programs. Such requirements have the following meaning:
 \begin{itemize}
 \item
   \pnum{(2.1)} If a program contains no violations of the rules in
-  {\href{https://wg21.link/lex}{{[}lex{]}}} through
-  {\href{https://wg21.link/exec}{{[}exec{]}}} as well as those specified
-  in {\href{https://wg21.link/depr}{{[}depr{]}}}, a conforming
-  implementation shall accept and correctly execute that program, except
-  when the implementation's limitations (see below) are exceeded.
+  \href{https://eel.is/c++draft/lex}{{[}lex{]}} through
+  \href{https://eel.is/c++draft/exec}{{[}exec{]}} as well as those
+  specified in \href{https://eel.is/c++draft/depr}{{[}depr{]}}, a
+  conforming implementation shall accept and correctly execute that
+  program, except when the implementation's limitations (see below) are
+  exceeded.
 \item
   \pnum{(2.2)} If a program contains a violation of a rule for which no
   diagnostic is required, this document places no requirement on
@@ -827,17 +829,17 @@ execution of programs. Such requirements have the following meaning:
   \item
     \pnum{(2.3.2)} a preprocessing translation unit with a
     \VERB|\PreprocessorTok{\#warning}| preprocessing directive
-    ({\href{https://wg21.link/cpp.error}{{[}cpp.error{]}}}),
+    (\href{https://eel.is/c++draft/cpp.error}{{[}cpp.error{]}}),
   \item
     \pnum{(2.3.3)} an occurrence of a construct described in this
     document as ``conditionally-supported'' when the implementation does
     not support that construct, or
   \item
     \pnum{(2.3.4)} a contract assertion
-    ({\href{https://wg21.link/basic.contract.eval}{{[}basic.contract.eval{]}}})
+    (\href{https://eel.is/c++draft/basic.contract.eval}{{[}basic.contract.eval{]}})
     evaluated with a checking semantic in a manifestly
     constant-evaluated context
-    ({\href{https://wg21.link/expr.const.defns}{{[}expr.const.defns{]}}})
+    (\href{https://eel.is/c++draft/expr.const.defns}{{[}expr.const.defns{]}})
     resulting in a contract violation,
   \end{itemize}
 
@@ -848,7 +850,7 @@ execution of programs. Such requirements have the following meaning:
 {{{[} \emph{Note:} }During template argument deduction and substitution,
 certain constructs that in other contexts require a diagnostic are
 treated differently; see
-{\href{https://wg21.link/temp.deduct}{{[}temp.deduct{]}}}.{ --- \emph{end note} {]}}}
+\href{https://eel.is/c++draft/temp.deduct}{{[}temp.deduct{]}}.{ --- \emph{end note} {]}}}
 
 Furthermore, a conforming implementation shall not accept
 
@@ -856,17 +858,17 @@ Furthermore, a conforming implementation shall not accept
 \item
   \pnum{(2.4)} a preprocessing translation unit containing a
   \VERB|\PreprocessorTok{\#error}| preprocessing directive
-  ({\href{https://wg21.link/cpp.error}{{[}cpp.error{]}}}),
+  (\href{https://eel.is/c++draft/cpp.error}{{[}cpp.error{]}}),
 \item
   \pnum{(2.5)} a translation unit with a
   \VERB|\NormalTok{\emph{static\_assert-declaration}}| that fails
-  ({\href{https://wg21.link/dcl.pre}{{[}dcl.pre{]}}}), or
+  (\href{https://eel.is/c++draft/dcl.pre}{{[}dcl.pre{]}}), or
 \item
   \pnum{(2.6)} a contract assertion evaluated with a terminating
   semantic
-  ({\href{https://wg21.link/basic.contract.eval}{{[}basic.contract.eval{]}}})
+  (\href{https://eel.is/c++draft/basic.contract.eval}{{[}basic.contract.eval{]}})
   in a manifestly constant-evaluated context
-  ({\href{https://wg21.link/expr.const.defns}{{[}expr.const.defns{]}}})
+  (\href{https://eel.is/c++draft/expr.const.defns}{{[}expr.const.defns{]}})
   resulting in a contract violation.
 \end{itemize}
 
@@ -876,8 +878,7 @@ implementation shall supply them to complete the definitions according
 to the description in the library Clauses.
 
 \subsubsection*{\texorpdfstring{Diagnostic directives {15.9
-\href{https://wg21.link/cpp.error}{{[}cpp.error{]}}}\hyperref[diagnostic-directives-cpp.error]{}}{Diagnostic directives 15.9
- {[}cpp.error{]}}}\label{diagnostic-directives-cpp.error}
+\href{https://eel.is/c++draft/cpp.error}{{[}cpp.error{]}}}\hyperref[diagnostic-directives-cpp.error]{}}{Diagnostic directives 15.9 {[}cpp.error{]}}}\label{diagnostic-directives-cpp.error}
 \addcontentsline{toc}{subsubsection}{Diagnostic directives {15.9
 {{[}cpp.error{]}}}{}}
 
@@ -903,7 +904,7 @@ renders the program ill-formed. A preprocessing directive of the form
 
 requires the implementation to produce at least one diagnostic message
 for the preprocessing translation unit
-({\href{https://wg21.link/intro.compliance.general}{{[}intro.compliance.general{]}}}).
+(\href{https://eel.is/c++draft/intro.compliance.general}{{[}intro.compliance.general{]}}).
 
 \pnum{2} \emph{Recommended practice}: Any diagnostic message caused by
 either of these directives should include the specified sequence of
@@ -917,7 +918,7 @@ additions, \VERB|\OperatorTok{:::}\NormalTok{ rm}| for removals.
 
 \begin{quote}
 Modify section {28.5.5
-\href{https://wg21.link/format.functions}{{[}format.functions{]}}}:
+\href{https://eel.is/c++draft/format.functions}{{[}format.functions{]}}}:
 
 {\color[HTML]{006e28}
 
@@ -1039,12 +1040,18 @@ Names\hyperref[stable-names]{}}{Stable Names}}\label{stable-names}
 Stable names are written as
 \VERB|\OperatorTok{[}\NormalTok{basic}\OperatorTok{.}\NormalTok{life}\OperatorTok{]\{.}\NormalTok{sref}\OperatorTok{\}}|,
 and renders as {6.8.4
-\href{https://wg21.link/basic.life}{{[}basic.life{]}}}. You can also add
-a class \VERB|\OperatorTok{{-}}| or
-\VERB|\OperatorTok{.}\NormalTok{unnumbered}| to omit the section number.
+\href{https://eel.is/c++draft/basic.life}{{[}basic.life{]}}}.
 
-It uses \url{https://timsong-cpp.github.io/cppwp/annex-f} as the
-underlying database.
+\begin{itemize}
+\tightlist
+\item
+  Add the \VERB|\OperatorTok{{-}}| or
+  \VERB|\OperatorTok{.}\NormalTok{unnumbered}| class to omit the section
+  number.
+\item
+  Add the \VERB|\OperatorTok{.}\NormalTok{title}| class to add the
+  section title.
+\end{itemize}
 
 Examples:
 
@@ -1054,22 +1061,51 @@ Examples:
   >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.4189}}@{}}
 \toprule\noalign{}
 \begin{minipage}[b]{\linewidth}\raggedright
-\centering\arraybackslash\textbf{Source Text}
+\centering\arraybackslash\textbf{Markdown Source}
 \end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-\centering\arraybackslash\textbf{Rendered}
+\centering\arraybackslash\textbf{Rendered Output}
 \end{minipage} \\
 \midrule\noalign{}
 \endhead
 \bottomrule\noalign{}
 \endlastfoot
+\VERB|\NormalTok{[basic.life]}| &
+\href{https://eel.is/c++draft/basic.life}{{[}basic.life{]}} \\
+\VERB|\NormalTok{[basic.life]/1}| &
+\href{https://eel.is/c++draft/basic.life\#1}{{[}basic.life{]}/1} \\
+\VERB|\NormalTok{[basic.life]/2.1}| &
+\href{https://eel.is/c++draft/basic.life\#2.1}{{[}basic.life{]}/2.1} \\
 \VERB|\NormalTok{[basic.life]\{.sref\}}| & {6.8.4
-\href{https://wg21.link/basic.life}{{[}basic.life{]}}} \\
+\href{https://eel.is/c++draft/basic.life}{{[}basic.life{]}}} \\
+\VERB|\NormalTok{[basic.life]\{.sref\}/1}| & {6.8.4
+\href{https://eel.is/c++draft/basic.life\#1}{{[}basic.life{]}/1}} \\
+\VERB|\NormalTok{[basic.life]\{.sref .title\}}| & {6.8.4 Lifetime
+\href{https://eel.is/c++draft/basic.life}{{[}basic.life{]}}} \\
+\VERB|\NormalTok{[basic.life]\{.sref .title\}/1}| & {6.8.4 Lifetime
+\href{https://eel.is/c++draft/basic.life\#1}{{[}basic.life{]}/1}} \\
+\end{longtable}
+}
+
+Also supported:
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5811}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.4189}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\centering\arraybackslash\textbf{Markdown Source}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\centering\arraybackslash\textbf{Rendered Output}
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
 \VERB|\NormalTok{[basic.life\#1]\{.sref\}}| & {6.8.4
-\href{https://wg21.link/basic.life\#1}{{[}basic.life\#1{]}}} \\
-\VERB|\NormalTok{[basic.life]\{{-} .sref\}}| &
-{\href{https://wg21.link/basic.life}{{[}basic.life{]}}} \\
-\VERB|\NormalTok{[basic.life]\{.unnumbered .sref\}}| &
-{\href{https://wg21.link/basic.life}{{[}basic.life{]}}} \\
+\href{https://eel.is/c++draft/basic.life\#1}{{[}basic.life{]}/1}} \\
+\VERB|\NormalTok{[basic.life]\{{-} .sref .title\}}| & {Lifetime
+\href{https://eel.is/c++draft/basic.life}{{[}basic.life{]}}} \\
 \end{longtable}
 }
 

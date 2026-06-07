@@ -40,7 +40,7 @@ override SRCDEPS := $(shell find $(DATADIR) -type f)
 $(eval $(and $(DEFAULTS), override SRCDEPS += $(DEFAULTS)))
 $(eval $(and $(METADATA), override SRCDEPS += $(METADATA)))
 
-override GENDEPS := $(PANDOC_DIR) $(PYTHON_DIR) $(addprefix $(DATADIR)/, defaults.yaml csl.json annex-f)
+override GENDEPS := $(PANDOC_DIR) $(PYTHON_DIR) $(addprefix $(DATADIR)/, defaults.yaml csl.json srefs.json srefs.md)
 
 .PHONY: all
 all: $(PDF)
@@ -65,7 +65,7 @@ endif
 
 .PHONY: update
 update:
-	@$(MAKE) -W $(DATADIR)/refs.py -W $(DATADIR)/srefs.py $(DATADIR)/csl.json $(DATADIR)/annex-f
+	@$(MAKE) -W $(DATADIR)/refs.py -W $(DATADIR)/srefs.py $(DATADIR)/csl.json $(DATADIR)/srefs.json $(DATADIR)/srefs.md
 
 $(OUTDIR):
 	mkdir -p $@
@@ -82,8 +82,11 @@ $(DATADIR)/defaults.yaml: $(DATADIR)/defaults.sh
 $(DATADIR)/csl.json: $(DATADIR)/refs.py $(PYTHON_DIR)
 	set -e; trap 'rm -f "$@.tmp"' EXIT; $(PYTHON_BIN) $< > "$@.tmp"; mv "$@.tmp" "$@"; trap - EXIT
 
-$(DATADIR)/annex-f:
-	set -e; trap 'rm -f "$@"' EXIT; curl -fsSL https://timsong-cpp.github.io/cppwp/annex-f -o "$@"; trap - EXIT
+$(DATADIR)/srefs.json: $(DATADIR)/srefs.py $(PYTHON_DIR)
+	set -e; trap 'rm -f "$@.tmp"' EXIT; $(PYTHON_BIN) $< > "$@.tmp"; mv "$@.tmp" "$@"; trap - EXIT
+
+$(DATADIR)/srefs.md: $(DATADIR)/srefs-md.py $(DATADIR)/srefs.json $(PYTHON_DIR)
+	set -e; trap 'rm -f "$@.tmp"' EXIT; $(PYTHON_BIN) $< < $(DATADIR)/srefs.json > "$@.tmp"; mv "$@.tmp" "$@"; trap - EXIT
 
 $(OUTDIR)/%.html: $(SRCDIR)/%.md $(SRCDEPS) $(GENDEPS) | $(OUTDIR)
 	$(PANDOC) --bibliography $(DATADIR)/csl.json
