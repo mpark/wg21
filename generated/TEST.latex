@@ -304,7 +304,7 @@ Various compositions in compact list:
 \item
   \VERB|\NormalTok{compare\_3way}|
 \item
-  {{\color[HTML]{006e28}\uline{{\mbox{\VERB|\NormalTok{compare\_3way}|}}}}}
+  {{\color[HTML]{006e28}\uline{\VERB|\NormalTok{compare\_3way}|}}}
 \item
   \VERB|\NormalTok{3WAY}|\VERB|\OperatorTok{\textless{}}\NormalTok{R}\OperatorTok{\textgreater{}}|
 \item
@@ -322,7 +322,7 @@ Various compositions in compact list:
 \item
   \st{foo {\mbox{\VERB|\KeywordTok{constexpr}|}} bar}
 \item
-  {{\color[HTML]{006e28}\uline{{\mbox{\VERB|\NormalTok{hello world}|}}}}}
+  {{\color[HTML]{006e28}\uline{\VERB|\NormalTok{hello world}|}}}
 \item
   \VERB|\NormalTok{{{\color[HTML]{006e28}\uline{hello\textless{}T\textgreater{}}}}}|
 \item
@@ -349,8 +349,7 @@ Loose list:
 \item
   \VERB|\NormalTok{x\emph{\textsubscript{i}} }\OperatorTok{\textless{}=\textgreater{}}\NormalTok{ y\emph{\textsubscript{i}}}|
 \item
-  {{\color[HTML]{bf0303}\sout{foo
-  {\mbox{\VERB|\NormalTok{hello world}|}} bar}}}
+  {{\color[HTML]{bf0303}\sout{foo \VERB|\NormalTok{hello world}| bar}}}
 \end{itemize}
 
 \subsection{\texorpdfstring{Inline Code in Headers: \texttt{int},
@@ -385,20 +384,20 @@ Highlighting\hyperref[no-syntax-highlighting]{}}{No Syntax Highlighting}}\label{
 \NormalTok{\};}
 
 \NormalTok{{{\color[HTML]{006e28}\uline{namespace \emph{unspecified} \{ struct sender\_base \{\}; \}}}}}
-\NormalTok{{{\color[HTML]{006e28}\uline{{\mbox{\VERB|\NormalTok{namespace \emph{unspecified} \{ struct sender\_base \{\}; \}}|}}}}}}
-\NormalTok{{{\color[HTML]{006e28}\uline{{\mbox{\VERB|\NormalTok{namespace \emph{unspecified} \{ struct sender\_base \{\}; \}}|}}}}}}
+\NormalTok{{{\color[HTML]{006e28}\uline{\VERB|\NormalTok{namespace \emph{unspecified} \{ struct sender\_base \{\}; \}}|}}}}
+\NormalTok{{{\color[HTML]{006e28}\uline{\VERB|\NormalTok{namespace \emph{unspecified} \{ struct sender\_base \{\}; \}}|}}}}
 
 \NormalTok{{{\color[HTML]{006e28}\uline{using \emph{unspecified}::sender\_base;}}}}
-\NormalTok{{{\color[HTML]{006e28}\uline{{\mbox{\VERB|\NormalTok{using \emph{unspecified}::sender\_base;}|}}}}}}
-\NormalTok{{{\color[HTML]{006e28}\uline{{\mbox{\VERB|\NormalTok{using \emph{unspecified}::sender\_base;}|}}}}}}
+\NormalTok{{{\color[HTML]{006e28}\uline{\VERB|\NormalTok{using \emph{unspecified}::sender\_base;}|}}}}
+\NormalTok{{{\color[HTML]{006e28}\uline{\VERB|\NormalTok{using \emph{unspecified}::sender\_base;}|}}}}
 
 \NormalTok{{{\color[HTML]{006e28}\uline{template\textless{}class, class\textgreater{} struct \emph{as-receiver}; \emph{// exposition only}}}}}
-\NormalTok{{{\color[HTML]{006e28}\uline{{\mbox{\VERB|\NormalTok{template\textless{}class, class\textgreater{} struct \emph{as-receiver}; \emph{// exposition only}}|}}}}}}
-\NormalTok{{{\color[HTML]{006e28}\uline{{\mbox{\VERB|\NormalTok{template\textless{}class, class\textgreater{} struct \emph{as-receiver}; \emph{// exposition only}}|}}}}}}
+\NormalTok{{{\color[HTML]{006e28}\uline{\VERB|\NormalTok{template\textless{}class, class\textgreater{} struct \emph{as-receiver}; \emph{// exposition only}}|}}}}
+\NormalTok{{{\color[HTML]{006e28}\uline{\VERB|\NormalTok{template\textless{}class, class\textgreater{} struct \emph{as-receiver}; \emph{// exposition only}}|}}}}
 
 \NormalTok{{{\color[HTML]{006e28}\uline{template\textless{}class, class\textgreater{} struct \emph{as-invocable}; \emph{// exposition only}}}}}
-\NormalTok{{{\color[HTML]{006e28}\uline{{\mbox{\VERB|\NormalTok{template\textless{}class, class\textgreater{} struct \emph{as-invocable}; \emph{// exposition only}}|}}}}}}
-\NormalTok{{{\color[HTML]{006e28}\uline{{\mbox{\VERB|\NormalTok{template\textless{}class, class\textgreater{} struct \emph{as-invocable}; \emph{// exposition only}}|}}}}}}
+\NormalTok{{{\color[HTML]{006e28}\uline{\VERB|\NormalTok{template\textless{}class, class\textgreater{} struct \emph{as-invocable}; \emph{// exposition only}}|}}}}
+\NormalTok{{{\color[HTML]{006e28}\uline{\VERB|\NormalTok{template\textless{}class, class\textgreater{} struct \emph{as-invocable}; \emph{// exposition only}}|}}}}
 \end{Highlighting}
 \end{Shaded}
 
@@ -449,8 +448,8 @@ Highlighting\hyperref[c-syntax-highlighting]{}}{C++ Syntax Highlighting}}\label{
 \CommentTok{// visiting a \textasciigrave{}variant\textasciigrave{} for the side{-}effects, discarding results:}
 \NormalTok{std}\OperatorTok{::}\NormalTok{visit}\OperatorTok{\textless{}}\DataTypeTok{void}\OperatorTok{\textgreater{}(}\NormalTok{process}\OperatorTok{\{\}}\NormalTok{, input}\OperatorTok{)}\NormalTok{;}
 
-\NormalTok{{{\color[HTML]{006e28}\uline{{\mbox{\VERB|\NormalTok{namespace \emph{unspecified} \{ struct sender\_base \{\}; \}}|}}}}}}
-\NormalTok{{{\color[HTML]{006e28}\uline{{\mbox{\VERB|\NormalTok{using \emph{unspecified}::sender\_base;}|}}}}}}
+\NormalTok{{{\color[HTML]{006e28}\uline{\VERB|\NormalTok{namespace \emph{unspecified} \{ struct sender\_base \{\}; \}}|}}}}
+\NormalTok{{{\color[HTML]{006e28}\uline{\VERB|\NormalTok{using \emph{unspecified}::sender\_base;}|}}}}
 
 \KeywordTok{template} \OperatorTok{\textless{}}\NormalTok{{{{\color[HTML]{bf0303}\sout{invocable}}}{{\color[HTML]{006e28}\uline{class}}}} F{{\color[HTML]{006e28}\uline{, class}}}}\OperatorTok{\textgreater{}}
 \KeywordTok{struct}\NormalTok{ \emph{as-receiver} }\OperatorTok{\{}
@@ -469,18 +468,18 @@ Highlighting\hyperref[c-syntax-highlighting]{}}{C++ Syntax Highlighting}}\label{
   \DataTypeTok{void}\NormalTok{ set\_done}\OperatorTok{()} \KeywordTok{noexcept} \OperatorTok{\{\}}
 \OperatorTok{\}}\NormalTok{;}
 
-\KeywordTok{template} \OperatorTok{\textless{}}\NormalTok{{{{\color[HTML]{bf0303}\sout{{\mbox{\VERB|\NormalTok{invocable}|}}}}}{{\color[HTML]{006e28}\uline{{\mbox{\VERB|\NormalTok{class}|}}}}}} F{{\color[HTML]{006e28}\uline{{\mbox{\VERB|\NormalTok{, class}|}}}}}}\OperatorTok{\textgreater{}}
+\KeywordTok{template} \OperatorTok{\textless{}}\NormalTok{{{{\color[HTML]{bf0303}\sout{\VERB|\NormalTok{invocable}|}}}{{\color[HTML]{006e28}\uline{\VERB|\NormalTok{class}|}}}} F{{\color[HTML]{006e28}\uline{\VERB|\NormalTok{, class}|}}}}\OperatorTok{\textgreater{}}
 \KeywordTok{struct}\NormalTok{ \emph{as-receiver} }\OperatorTok{\{}
-\NormalTok{{{\color[HTML]{bf0303}\sout{{\mbox{\VERB|\NormalTok{private:}|}}}}}}
-\NormalTok{  {{\color[HTML]{bf0303}\sout{{\mbox{\VERB|\NormalTok{using invocable\_type = std::remove\_cvref\_t\textless{}F\textgreater{};}|}}}}}}
-\NormalTok{  {{{\color[HTML]{bf0303}\sout{{\mbox{\VERB|\NormalTok{invocable\_type}|}}}}}{{\color[HTML]{006e28}\uline{{\mbox{\VERB|\NormalTok{F}|}}}}}} f\_;}
-\NormalTok{{{\color[HTML]{bf0303}\sout{{\mbox{\VERB|\NormalTok{public:}|}}}}}}
-\NormalTok{  {{\color[HTML]{bf0303}\sout{{\mbox{\VERB|\NormalTok{explicit \emph{as-receiver}(invocable\_type\&\& f)}|}}}}}}
-\NormalTok{  {{\color[HTML]{bf0303}\sout{{\mbox{\VERB|\NormalTok{\emph{as-receiver}(\emph{as-receiver}\&\& other) = default;}|}}}}}}
-  \DataTypeTok{void}\NormalTok{ set\_value}\OperatorTok{()}\NormalTok{ {{\color[HTML]{006e28}\uline{{\mbox{\VERB|\NormalTok{noexcept(is\_nothrow\_invocable\_v\textless{}F\&\textgreater{})}|}}}}} }\OperatorTok{\{}
+\NormalTok{{{\color[HTML]{bf0303}\sout{\VERB|\NormalTok{private:}|}}}}
+\NormalTok{  {{\color[HTML]{bf0303}\sout{\VERB|\NormalTok{using invocable\_type = std::remove\_cvref\_t\textless{}F\textgreater{};}|}}}}
+\NormalTok{  {{{\color[HTML]{bf0303}\sout{\VERB|\NormalTok{invocable\_type}|}}}{{\color[HTML]{006e28}\uline{\VERB|\NormalTok{F}|}}}} f\_;}
+\NormalTok{{{\color[HTML]{bf0303}\sout{\VERB|\NormalTok{public:}|}}}}
+\NormalTok{  {{\color[HTML]{bf0303}\sout{\VERB|\NormalTok{explicit \emph{as-receiver}(invocable\_type\&\& f)}|}}}}
+\NormalTok{  {{\color[HTML]{bf0303}\sout{\VERB|\NormalTok{\emph{as-receiver}(\emph{as-receiver}\&\& other) = default;}|}}}}
+  \DataTypeTok{void}\NormalTok{ set\_value}\OperatorTok{()}\NormalTok{ {{\color[HTML]{006e28}\uline{\VERB|\NormalTok{noexcept(is\_nothrow\_invocable\_v\textless{}F\&\textgreater{})}|}}} }\OperatorTok{\{}
 \NormalTok{    invoke}\OperatorTok{(}\NormalTok{f\_}\OperatorTok{)}\NormalTok{;}
   \OperatorTok{\}}
-\NormalTok{  {{\color[HTML]{006e28}\uline{{\mbox{\VERB|\NormalTok{[[noreturn]]}|}}}}} }\DataTypeTok{void}\NormalTok{ set\_error}\OperatorTok{(}\NormalTok{std}\OperatorTok{::}\NormalTok{exception\_ptr}\OperatorTok{)}\NormalTok{ {{\color[HTML]{006e28}\uline{{\mbox{\VERB|\NormalTok{noexcept}|}}}}} }\OperatorTok{\{}
+\NormalTok{  {{\color[HTML]{006e28}\uline{\VERB|\NormalTok{[[noreturn]]}|}}} }\DataTypeTok{void}\NormalTok{ set\_error}\OperatorTok{(}\NormalTok{std}\OperatorTok{::}\NormalTok{exception\_ptr}\OperatorTok{)}\NormalTok{ {{\color[HTML]{006e28}\uline{\VERB|\NormalTok{noexcept}|}}} }\OperatorTok{\{}
 \NormalTok{    terminate}\OperatorTok{()}\NormalTok{;}
   \OperatorTok{\}}
   \DataTypeTok{void}\NormalTok{ set\_done}\OperatorTok{()} \KeywordTok{noexcept} \OperatorTok{\{\}}
@@ -947,14 +946,13 @@ The optional \emph{attribute-specifier-seq} appertains to the
 The only use of a {{{\color[HTML]{bf0303}\sout{label with an
 \emph{identifier}}}}{{\color[HTML]{006e28}\uline{\emph{label}}}}} is as
 the target of a \VERB|\ControlFlowTok{goto}|,
-{{\color[HTML]{006e28}\uline{{\mbox{\VERB|\NormalTok{break}|}}, or
-{\mbox{\VERB|\NormalTok{continue}|}}}}}. No two
+{{\color[HTML]{006e28}\uline{\VERB|\NormalTok{break}|, or
+\VERB|\NormalTok{continue}|}}}. No two
 {{{\color[HTML]{bf0303}\sout{label}}}{{\color[HTML]{006e28}\uline{\emph{label}}}}}s
 in a function shall have the same \emph{identifier}. A
 {{{\color[HTML]{bf0303}\sout{label}}}{{\color[HTML]{006e28}\uline{\emph{general-label}}}}}
-can be used {{\color[HTML]{bf0303}\sout{in a
-{\mbox{\VERB|\NormalTok{goto}|}} statement}}} before its introduction by
-a \emph{labeled-statement}.
+can be used {{\color[HTML]{bf0303}\sout{in a \VERB|\NormalTok{goto}|
+statement}}} before its introduction by a \emph{labeled-statement}.
 
 {\def\LTcaptype{none} % do not increment counter
 \begin{longtable}[]{@{}
@@ -972,15 +970,13 @@ a \emph{labeled-statement}.
 \endlastfoot
 \VERB|\OperatorTok{\%}\NormalTok{a}| & The locale's abbreviated weekday
 name. If the value does not contain a valid weekday,
-{{\color[HTML]{bf0303}\sout{{\mbox{\VERB|\NormalTok{setstate(ios::failbit)}|}}
-is called}}}
-{{\color[HTML]{006e28}\uline{{\mbox{\VERB|\NormalTok{format\_error}|}}
+{{\color[HTML]{bf0303}\sout{\VERB|\NormalTok{setstate(ios::failbit)}| is
+called}}} {{\color[HTML]{006e28}\uline{\VERB|\NormalTok{format\_error}|
 is thrown}}}. \\
 \VERB|\OperatorTok{\%}\NormalTok{A}| & The locale's full weekday name.
 If the value does not contain a valid weekday,
-{{\color[HTML]{bf0303}\sout{{\mbox{\VERB|\NormalTok{setstate(ios::failbit)}|}}
-is called}}}
-{{\color[HTML]{006e28}\uline{{\mbox{\VERB|\NormalTok{format\_error}|}}
+{{\color[HTML]{bf0303}\sout{\VERB|\NormalTok{setstate(ios::failbit)}| is
+called}}} {{\color[HTML]{006e28}\uline{\VERB|\NormalTok{format\_error}|
 is thrown}}}. \\
 \end{longtable}
 }
@@ -1000,12 +996,11 @@ Changes\hyperref[grammar-changes]{}}{Grammar Changes}}\label{grammar-changes}
 \strut ~~~~\VERB|\ControlFlowTok{switch} \OperatorTok{(}|
 \emph{init-statement\textsubscript{opt}} \emph{condition}
 \VERB|\OperatorTok{)}| \emph{statement}\\
-\strut ~~~~{{\color[HTML]{006e28}\uline{{\mbox{\VERB|\NormalTok{inspect}|}}
-{\mbox{\VERB|\NormalTok{constexpr}|}}\textsubscript{\emph{opt}}
-{\mbox{\VERB|\NormalTok{(}|}} \emph{init-statement\textsubscript{opt}}
-\emph{condition} {\mbox{\VERB|\NormalTok{)}|}}
-{\mbox{\VERB|\NormalTok{\{}|}} \emph{inspect-case-seq}
-{\mbox{\VERB|\NormalTok{\}}|}}}}}
+\strut ~~~~{{\color[HTML]{006e28}\uline{\VERB|\NormalTok{inspect}|
+\VERB|\NormalTok{constexpr}|\textsubscript{\emph{opt}}
+\VERB|\NormalTok{(}| \emph{init-statement\textsubscript{opt}}
+\emph{condition} \VERB|\NormalTok{)}| \VERB|\NormalTok{\{}|
+\emph{inspect-case-seq} \VERB|\NormalTok{\}}|}}}
 
 {\color[HTML]{006e28}
 

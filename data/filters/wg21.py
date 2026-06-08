@@ -314,7 +314,6 @@ def divspan(elem, doc):
 
     def _diff(color, latex_tag, html_tag):
         if isinstance(elem, pf.Span):
-            elem.walk(protect_code)
             wrap_elem(
                 pf.RawInline(f'\\{latex_tag}{{', 'latex'),
                 elem,
