@@ -336,9 +336,11 @@ Various compositions in compact list:
 \item
   \VERB|\KeywordTok{constexpr}\NormalTok{\emph{\textsubscript{opt}}}|
 \item
-  \hl{highlighted}
+  {{\setlength{\fboxsep}{1pt}\colorbox{yellow}{highlighted}}}
 \item
-  \VERB|\DataTypeTok{void}\NormalTok{ \hl{foo}}\OperatorTok{()}\NormalTok{;}|
+  \VERB|\DataTypeTok{void}\NormalTok{ {{\setlength{\fboxsep}{1pt}\colorbox{yellow}{foo}}}}\OperatorTok{()}\NormalTok{;}|
+\item
+  {{\setlength{\fboxsep}{1pt}\colorbox{yellow}{{\mbox{\VERB|\DataTypeTok{void}\NormalTok{ foo}\OperatorTok{()}\NormalTok{;}|}}}}}
 \end{itemize}
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}

@@ -45,12 +45,6 @@ def wrap_elem(opening, elem, closing):
         elem.content.insert(0, opening)
         elem.content.append(closing)
 
-def protect_code(elem, doc):
-    if isinstance(elem, pf.Code):
-        return pf.Span(pf.RawInline(r'\mbox{', 'latex'),
-                       elem,
-                       pf.RawInline('}', 'latex'))
-
 def convert_fragments(fragments, input_format):
     """
     Converts a list of fragment texts into panflute elements
@@ -151,13 +145,26 @@ def prepare(doc):
 
     process_subs(doc, doc.get_metadata('from'))
 
-def strikeout(elem, doc):
-    # In Pandoc 3.x, strikeouts use the \st from soul package.
-    # This requires that code elements within has to be protected via mbox.
-    # Pandoc handles this manually, but since we handle the code elements
-    # rendering manually, we need to inject the protection manually as well.
-    if doc.format == 'latex' and isinstance(elem, pf.Strikeout):
-        elem.walk(protect_code)
+def soul(elem, doc):
+    # Pandoc 3.x uses the soul package to do strikeouts with \st, underlines
+    # with \ul, and highlighting with \hl. This requires code elements within
+    # them to be protected via mbox. Pandoc handles this explicitly, but
+    # since we handle the code elements rendering manually, we need to inject
+    # the protection manually.
+    if not (doc.format == 'latex' and (
+            isinstance(elem, (pf.Strikeout, pf.Underline)) or
+            (isinstance(elem, pf.Span) and 'mark' in elem.classes))):
+        return None
+
+    # On any strikeout, underline, or highlight, this traverses the subtree and
+    # protects the inline code elements. We keep it simple here and don't do any
+    # kind of early termination, because it turns out `soul` elements don't nest
+    # at all: <https://github.com/jgm/pandoc/issues/11692>, so the cases that
+    # would be inefficient end up being ill-formed anyway.
+    elem.walk(lambda e, _:
+        pf.Span(pf.RawInline(r'\mbox{', 'latex'), e, pf.RawInline('}', 'latex'))
+        if isinstance(e, pf.Code)
+        else None)
 
 def sref(elem, doc):
     if not (isinstance(elem, (pf.Link, pf.Span)) and 'sref' in elem.classes):
@@ -358,6 +365,14 @@ def divspan(elem, doc):
     def add(): _diff('addcolor', 'uline', 'ins')
     def rm():  _diff('rmcolor', 'sout', 'del')
 
+    def mark():
+        if doc.format == 'latex' and isinstance(elem, pf.Span):
+            elem.classes.remove('mark')
+            wrap_elem(
+                pf.RawInline(r'{\setlength{\fboxsep}{1pt}\colorbox{yellow}{', 'latex'),
+                elem,
+                pf.RawInline('}}', 'latex'))
+
     if not isinstance(elem, (pf.Div, pf.Span)):
         return None
 
@@ -370,9 +385,10 @@ def divspan(elem, doc):
     elif note_cls == 'ednote': ednote(); return
     elif note_cls == 'draftnote': draftnote(); return
 
-    diff_cls = next(iter(cls for cls in elem.classes if cls in {'add', 'rm'}), None)
-    if diff_cls == 'add':  add()
-    elif diff_cls == 'rm': rm()
+    color_cls = next(iter(cls for cls in elem.classes if cls in {'add', 'rm', 'mark'}), None)
+    if color_cls == 'add':  add()
+    elif color_cls == 'rm': rm()
+    elif color_cls == 'mark': mark()
 
 def cmptable(table, doc):
     """
@@ -874,7 +890,7 @@ def finalize(doc):
 
 if __name__ == '__main__':
   pf.run_filters([
-      strikeout,
+      soul,
       wording,
       sref,
       divspan,

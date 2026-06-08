@@ -80,6 +80,7 @@ Various compositions in compact list:
   - `constexpr$~opt~$`{.cpp}
   - ==highlighted==
   - `void @==foo==@();`{.cpp}
+  - ==`void foo();`{.cpp}==
 
 ---
 
