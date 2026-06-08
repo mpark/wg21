@@ -38,9 +38,6 @@ metadata:
   datadir: ${DATADIR}
   from: ${FROM}
   csl: ${DATADIR}/csl/wg21.csl
-  highlighting:
-    inline-code:
-      cpp
 
 metadata-file: ${DATADIR}/metadata.yaml
 EOF

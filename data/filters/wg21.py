@@ -648,7 +648,7 @@ class CodeElems:
         # guaranteed to run before the 'raw' code path.
         if not elem.classes:
             if isinstance(elem, pf.Code):
-                c = doc.get_metadata('highlighting.inline-code', 'default')
+                c = doc.get_metadata('highlighting.inline-code', 'cpp')
             elif isinstance(elem, pf.CodeBlock):
                 c = doc.get_metadata('highlighting.code-block', 'default')
             elem.classes.append(c)
