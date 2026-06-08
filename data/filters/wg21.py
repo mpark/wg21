@@ -122,10 +122,12 @@ def prepare(doc):
         pf.debug(f"""[WARNING] mpark/wg21: {document} is an unrecognized format; expected "{document_pattern}".
             This means that [Latest] and [Status] links will be missing.""")
 
-    doc.metadata['pagetitle'] = pf.convert_text(
+    title = pf.convert_text(
         pf.Plain(*doc.metadata['title'].content),
         input_format='panflute',
         output_format='markdown')
+    doc.metadata['pagetitle'] = title   # HTML
+    doc.metadata['title-meta'] = title  # PDF
 
     datadir = doc.get_metadata('datadir')
     with open(os.path.join(datadir, 'srefs.json'), 'r') as f:
