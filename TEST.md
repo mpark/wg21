@@ -124,6 +124,12 @@ struct process {
 @[`namespace $unspecified$ { struct sender_base {}; }`]{.add}@
 @@[`namespace @_unspecified_@ { struct sender_base {}; }`]{.add}@@
 
+@$\frac{a+b}{2}$@  // math
+@[`$bar$`]{.add}@  // italicized code
+@[``$baz$``]{.add}@  // italicized code
+@[`$bar$`{.raw}]{.add}@  // raw $bar$
+@==$==@text@==$==@  highlighted $
+
 @[using _unspecified_::sender_base;]{.add}@
 @[`using $unspecified$::sender_base;`]{.add}@
 @@[`using @_unspecified_@::sender_base;`]{.add}@@

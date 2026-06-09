@@ -51,8 +51,8 @@ def convert_fragments(fragments, input_format):
     in a single invocation of `pf.convert_text`.
 
     A fragment is essentially a piece of raw Markdown text that we need to parse
-    ourselves. Examples are the "new text" portion of [old text](new text){.sub}
-    syntax, and embedded Markdown in Code elements within @.
+    ourselves. Examples are embedded Markdown in code elements within @, and
+    the "new text" portion of [old text](new text){.sub} syntax.
     """
     # This separates the fragments structurally in a list, and
     # injects an empty span []{} in front of the fragment such that a fragment
@@ -135,8 +135,7 @@ def prepare(doc):
             extra_args=[
               '--syntax-highlighting', os.path.join(datadir, 'syntax', 'wg21.theme'),
               '--template', os.path.join(datadir, 'templates', 'highlighting'),
-              '--metadata', 'title="-"',
-            ])
+              '--metadata', 'title="-"'])
 
     doc.metadata['highlighting-macros'] = pf.MetaBlocks(
         pf.RawBlock(highlighting('latex'), 'latex'))
@@ -713,18 +712,31 @@ class CodeElems:
         if not fragments:
             return []
 
-        blocks = [
-            plain.walk(divspan, doc).walk(CodeElems.init, doc)
-            # -raw_html to avoid <T> in foo<T> to be interpreted as an HTML tag.
-            # -smart to avoid things like ... to get transformed into \dots
-            for plain in convert_fragments(
-                fragments, f"{doc.get_metadata('from')}-raw_html-smart")
-        ]
-        token = cls._compute_unique_placeholder(fragments)
-        text, sep = cls._convert_blocks(blocks, token, doc)
-        result = text.split(sep)
-        assert(len(result) == len(fragments))
-        return result
+        converted = []
+        while len(converted) < len(fragments):
+            batch = fragments[len(converted):]
+            # Handle nested inline code such as: @[`$foo$`]{.add}@ while leaving
+            # @$foo$@ be interpreted as inline math.
+            #
+            # `_replace_fragments_with_placeholders` can add to fragments,
+            # which is why we loop while converted is fewer than fragments.
+            def code(elem, doc):
+                if isinstance(elem, pf.Code) and 'raw' not in elem.classes:
+                    elem.text = cls._replace_fragments_with_placeholders(elem.text)
+            blocks = [
+                plain.walk(divspan, doc).walk(CodeElems.init, doc).walk(code, doc)
+                # -raw_html to avoid <T> in foo<T> to be interpreted as an HTML tag.
+                # -smart to avoid things like ... to get transformed into \dots
+                for plain in convert_fragments(
+                    batch, f"{doc.get_metadata('from')}-raw_html-smart")
+            ]
+            token = cls._compute_unique_placeholder(fragments)
+            text, sep = cls._convert_blocks(blocks, token, doc)
+            result = text.split(sep)
+            assert(len(result) == len(batch))
+            converted.extend(result)
+
+        return converted
 
     @classmethod
     def _store_fragment(cls, fragment):
@@ -744,42 +756,20 @@ class CodeElems:
         Returns the placeholder for the parsed embedded Markdown region and
         the index where parsing should continue.
 
-        For @@FOO @BAR@ BAZ@@, store:
-          PH1 -> BAR
-          PH2 -> FOO PH1 BAZ
-        The outer @@...@@ parse returns PH2, and the inner @...@ parse
-        returns PH1.
+        For @@[`FOO @BAR@ BAZ`]{.add}@@, store the whole Markdown fragment:
+          PH -> [`FOO @BAR@ BAZ`]{.add}
+
+        Nested embedded Markdown inside code elements is handled after Pandoc
+        parses the outer fragment.
         """
-        pieces = []
-        start = i
+        end = text.find(closing, i)
+        newline = text.find('\n', i)
 
-        while i < len(text):
-            if text[i] == '\n':
-                return None
+        if end < 0 or 0 <= newline < end:
+            return None
 
-            if text.startswith(closing, i):
-                pieces.append(text[start:i])
-                placeholder = cls._store_fragment(wrap(''.join(pieces)))
-                return placeholder, i + len(closing)
-
-            result = None
-
-            if closing == '@@' and text.startswith('@', i):
-                result = cls._process_fragment(text, i + 1, '@')
-            elif text.startswith('$', i):
-                result = cls._process_fragment(
-                    text, i + 1, '$', lambda fragment: f'*{fragment}*')
-
-            if result is not None:
-                pieces.append(text[start:i])
-                placeholder, i = result
-                pieces.append(placeholder)
-                start = i
-                continue
-
-            i += 1
-
-        return None
+        placeholder = cls._store_fragment(wrap(text[i:end]))
+        return placeholder, end + len(closing)
 
     @classmethod
     def _replace_fragments_with_placeholders(cls, text):

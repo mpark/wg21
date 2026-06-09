@@ -391,6 +391,12 @@ Highlighting\hyperref[no-syntax-highlighting]{}}{No Syntax Highlighting}}\label{
 \NormalTok{{{\color[HTML]{006e28}\uline{\VERB|\NormalTok{namespace \emph{unspecified} \{ struct sender\_base \{\}; \}}|}}}}
 \NormalTok{{{\color[HTML]{006e28}\uline{\VERB|\NormalTok{namespace \emph{unspecified} \{ struct sender\_base \{\}; \}}|}}}}
 
+\NormalTok{\(\frac{a+b}{2}\)  // math}
+\NormalTok{{{\color[HTML]{006e28}\uline{\VERB|\NormalTok{\emph{bar}}|}}}  // italicized code}
+\NormalTok{{{\color[HTML]{006e28}\uline{\VERB|\NormalTok{\emph{baz}}|}}}  // italicized code}
+\NormalTok{{{\color[HTML]{006e28}\uline{\VERB|\NormalTok{$bar$}|}}}  // raw \emph{bar}}
+\NormalTok{{{\setlength{\fboxsep}{1pt}\colorbox{yellow}{\$}}}text{{\setlength{\fboxsep}{1pt}\colorbox{yellow}{\$}}}  highlighted $}
+
 \NormalTok{{{\color[HTML]{006e28}\uline{using \emph{unspecified}::sender\_base;}}}}
 \NormalTok{{{\color[HTML]{006e28}\uline{\VERB|\NormalTok{using \emph{unspecified}::sender\_base;}|}}}}
 \NormalTok{{{\color[HTML]{006e28}\uline{\VERB|\NormalTok{using \emph{unspecified}::sender\_base;}|}}}}
