@@ -271,7 +271,7 @@ def wording(elem, doc):
                 start, blocks = result
                 content.extend(blocks)
                 continue
-            if isinstance(block, pf.Div):
+            if isinstance(block, (pf.BlockQuote, pf.Div)):
                 start = process_block(block, parents, start)
             content.append(block)
         elem.content = content
