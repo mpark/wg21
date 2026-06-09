@@ -692,6 +692,7 @@ class CodeElems:
             extra_args=[
                 '--syntax-definition',
                 os.path.join(doc.get_metadata('datadir'), 'syntax', 'isocpp.xml'),
+                '--mathml',
                 '--wrap', 'none'])
 
         if doc.format == 'latex':

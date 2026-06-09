@@ -81,6 +81,7 @@ Various compositions in compact list:
   - ==highlighted==
   - `void @==foo==@();`{.cpp}
   - ==`void foo();`{.cpp}==
+  - $\frac{a+b}{2}$
 
 ---
 

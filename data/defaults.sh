@@ -34,6 +34,9 @@ css:
 
 pdf-engine: xelatex
 
+html-math-method:
+  method: mathml
+
 metadata:
   datadir: ${DATADIR}
   from: ${FROM}
