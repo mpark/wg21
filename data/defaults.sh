@@ -17,8 +17,6 @@ number-sections: true
 table-of-contents: true
 self-contained: true
 
-data-dir: ${DATADIR}
-
 from: ${FROM}
 
 filters:
