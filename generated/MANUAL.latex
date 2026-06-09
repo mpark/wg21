@@ -1,0 +1,3199 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+\documentclass[
+  english,
+  10pt,
+  a4paper,
+  oneside,
+  final]{article}
+\usepackage{xcolor}
+\usepackage[left=2.245cm,right=2.245cm,top=2.5cm,bottom=2.5cm]{geometry}
+\usepackage{amsmath,amssymb}
+\setcounter{secnumdepth}{5}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+% Make \paragraph and \subparagraph free-standing
+\makeatletter
+\ifx\paragraph\undefined\else
+  \let\oldparagraph\paragraph
+  \renewcommand{\paragraph}{
+    \@ifstar
+      \xxxParagraphStar
+      \xxxParagraphNoStar
+  }
+  \newcommand{\xxxParagraphStar}[1]{\oldparagraph*{#1}\mbox{}}
+  \newcommand{\xxxParagraphNoStar}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+  \let\oldsubparagraph\subparagraph
+  \renewcommand{\subparagraph}{
+    \@ifstar
+      \xxxSubParagraphStar
+      \xxxSubParagraphNoStar
+  }
+  \newcommand{\xxxSubParagraphStar}[1]{\oldsubparagraph*{#1}\mbox{}}
+  \newcommand{\xxxSubParagraphNoStar}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+\makeatother
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{246,248,250}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{#1}}
+\newcommand{\AnnotationTok}[1]{#1}
+\newcommand{\AttributeTok}[1]{#1}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.62,0.41,0.03}{#1}}
+\newcommand{\BuiltInTok}[1]{\textcolor[rgb]{0.62,0.41,0.03}{#1}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.62,0.41,0.03}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.42,0.45,0.49}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.42,0.45,0.49}{\textit{#1}}}
+\newcommand{\ConstantTok}[1]{#1}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.38,0.49}{#1}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.00,0.38,0.49}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.62,0.41,0.03}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.42,0.45,0.49}{#1}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.62,0.41,0.03}{#1}}
+\newcommand{\FunctionTok}[1]{#1}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.42,0.45,0.49}{#1}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.38,0.49}{#1}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.48,0.24,0.57}{#1}}
+\newcommand{\OtherTok}[1]{#1}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.44,0.31,0.22}{#1}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.62,0.41,0.03}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.62,0.41,0.03}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.62,0.41,0.03}{#1}}
+\newcommand{\VariableTok}[1]{#1}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.62,0.41,0.03}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.42,0.45,0.49}{\textbf{#1}}}
+\usepackage{longtable,booktabs,array}
+\newcounter{none} % for unnumbered tables
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\ifLuaTeX
+  \usepackage{luacolor}
+  \usepackage[soul]{lua-ul}
+\else
+  \usepackage{soul}
+\fi
+% definitions for citeproc citations
+\NewDocumentCommand\citeproctext{}{}
+\NewDocumentCommand\citeproc{mm}{%
+  \begingroup\def\citeproctext{#2}\cite{#1}\endgroup}
+\makeatletter
+ % allow citations to break across lines
+ \let\@cite@ofmt\@firstofone
+ % avoid brackets around text for \cite:
+ \def\@biblabel#1{}
+ \def\@cite#1#2{{#1\if@tempswa , #2\fi}}
+\makeatother
+\newlength{\cslhangindent}
+\setlength{\cslhangindent}{1.5em}
+\newlength{\csllabelwidth}
+\setlength{\csllabelwidth}{3em}
+\newenvironment{CSLReferences}[2] % #1 hanging-indent, #2 entry-spacing
+ {\begin{list}{}{%
+  \setlength{\itemindent}{0pt}
+  \setlength{\leftmargin}{0pt}
+  \setlength{\parsep}{0pt}
+  % turn on hanging indent if param 1 is 1
+  \ifodd #1
+   \setlength{\leftmargin}{\cslhangindent}
+   \setlength{\itemindent}{-1\cslhangindent}
+  \fi
+  % set entry spacing
+  \setlength{\itemsep}{#2\baselineskip}}}
+ {\end{list}}
+\usepackage{calc}
+\newcommand{\CSLBlock}[1]{\hfill\break\parbox[t]{\linewidth}{\strut\ignorespaces#1\strut}}
+\newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{\strut#1\strut}}
+\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{\strut#1\strut}}
+\newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
+\ifLuaTeX
+\usepackage[bidi=basic,shorthands=off]{babel}
+\else
+\usepackage[bidi=default,shorthands=off]{babel}
+\fi
+\ifLuaTeX
+  \usepackage{selnolig} % disable illegal ligatures
+\fi
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\usepackage[normalem]{ulem}
+\providecommand{\CSLIndent}{}
+\renewcommand{\CSLIndent}[1]{\hfill\break\hspace*{\cslhangindent}\ignorespaces#1}
+
+% adjust quote indent
+\renewenvironment{quote}{\list{}{\leftmargin=0.2in}\item[]}{\endlist}
+
+% https://github.com/cplusplus/draft/blob/97b615a5a6ab0598b624ee05402c531d0421cff6/source/styles.tex#L127-L133
+\renewcommand{\labelitemi}{---}
+\renewcommand{\labelitemii}{---}
+\renewcommand{\labelitemiii}{---}
+\renewcommand{\labelitemiv}{---}
+
+% https://github.com/cplusplus/draft/blob/97b615a5a6ab0598b624ee05402c531d0421cff6/source/layout.tex#L32-L68
+\makeatletter
+\newcommand{\pnum}[1]{%
+\noindent\makebox[0pt][l]{\makebox[0pt][r]{%
+\scriptsize\raisebox{.7ex}{#1}%
+\hspace{\@totalleftmargin}\quad%
+}}\ignorespaces}
+\makeatother
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={`MPark/WG21` User\textquotesingle s Guide},
+  pdflang={en},
+  colorlinks=true,
+  linkcolor={blue},
+  filecolor={Maroon},
+  citecolor={blue},
+  urlcolor={blue},
+  pdfcreator={LaTeX via pandoc}}
+\hypersetup{pdfcreator={mpark/wg21}}
+
+\makeatletter
+\def\@maketitle{
+  \newpage \null \vskip 2em
+  {\center \LARGE \@title \par}
+  \vskip 1.5em
+  \begin{flushright}
+    \begin{tabular}{ll}
+Document \#:&D0000R0\\
+Date:       &\@date\\
+Project:    &Programming Language C++\\
+Audience:   &WG21\\
+Reply-to:   \@author
+    \end{tabular}
+  \end{flushright}
+}
+\makeatother
+
+\title{\VERB|\NormalTok{MPark}\OperatorTok{/}\NormalTok{WG21}| User's
+Guide}
+\usepackage{etoolbox}
+\makeatletter
+\providecommand{\subtitle}[1]{% add subtitle to \maketitle
+  \apptocmd{\@title}{\par {\large #1 \par}}{}{}
+}
+\makeatother
+\subtitle{Framework for Writing C++ Committee Proposals}
+\author{&Michael
+Park\\&<\href{mailto:mcypark@gmail.com}{\nolinkurl{mcypark@gmail.com}}>\\}
+\date{2026-06-16}
+
+\begin{document}
+\hypertarget{title-block-header}{\label{title-block-header}}
+\maketitle
+
+{
+\hypersetup{linkcolor=black}
+\setcounter{tocdepth}{4}
+\hypertarget{toctitle}{\label{toctitle}}
+\tableofcontents
+}
+\section{\texorpdfstring{Introduction\hyperref[introduction]{}}{Introduction}}\label{introduction}
+
+\href{https://github.com/mpark/wg21}{\VERB|\NormalTok{MPark}\OperatorTok{/}\NormalTok{WG21}|}
+is a framework for writing proposals for the C++ Standards Committee,
+built on top of \href{https://pandoc.org}{Pandoc}.
+
+In short, you write \textbf{Markdown} and the framework produces the
+paper either in \textbf{HTML} or \textbf{PDF} (via LaTeX).
+
+The framework provides Markdown extensions that are specifically useful
+for C++ proposals. Including, but not limited to:
+
+\begin{itemize}
+\tightlist
+\item
+  \hyperref[modifying-text]{Modifying Wording Text}
+\item
+  \hyperref[embedded-markdown]{Embedded Markdown in Code}
+\end{itemize}
+
+\section{\texorpdfstring{Goals\hyperref[goals]{}}{Goals}}\label{goals}
+
+There are two goals for this framework, not necessarily in order:
+
+\begin{itemize}
+\tightlist
+\item
+  Ease of \textbf{authoring} papers
+\item
+  Ease of \textbf{reviewing} papers
+\end{itemize}
+
+\section{\texorpdfstring{Usage\hyperref[usage]{}}{Usage}}\label{usage}
+
+\subsection{\texorpdfstring{Requirements\hyperref[requirements]{}}{Requirements}}\label{requirements}
+
+The framework downloads and maintains a pinned version of Pandoc.
+
+For HTML output, only the following dependencies are required:
+
+\begin{itemize}
+\tightlist
+\item
+  \VERB|\NormalTok{git}|
+\item
+  \VERB|\NormalTok{curl}|
+\item
+  \VERB|\NormalTok{make}|
+\item
+  \VERB|\NormalTok{python3}|
+\item
+  \VERB|\NormalTok{python3}\OperatorTok{{-}}\NormalTok{venv}|
+\end{itemize}
+
+For PDF output, the framework also depends on
+\VERB|\NormalTok{xelatex}|.
+
+\subsubsection{\texorpdfstring{macOS\hyperref[macos]{}}{macOS}}\label{macos}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{brew}\NormalTok{ install python make}
+
+\CommentTok{\# For PDF output}
+\ExtensionTok{brew}\NormalTok{ install }\AttributeTok{{-}{-}cask}\NormalTok{ mactex}
+\end{Highlighting}
+\end{Shaded}
+
+\subsubsection{\texorpdfstring{Ubuntu\hyperref[ubuntu]{}}{Ubuntu}}\label{ubuntu}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{sudo}\NormalTok{ apt{-}get install git curl make python3 python3{-}venv}
+
+\CommentTok{\# For PDF output}
+\FunctionTok{sudo}\NormalTok{ apt{-}get install texlive{-}xetex}
+\end{Highlighting}
+\end{Shaded}
+
+\subsubsection{\texorpdfstring{Debian\hyperref[debian]{}}{Debian}}\label{debian}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{sudo}\NormalTok{ apt{-}get install git curl make python3 python3{-}venv}
+
+\CommentTok{\# For PDF output}
+\FunctionTok{sudo}\NormalTok{ apt{-}get install texlive{-}xetex }\DataTypeTok{\textbackslash{}}
+\NormalTok{                     texlive{-}fonts{-}recommended }\DataTypeTok{\textbackslash{}}
+\NormalTok{                     texlive{-}latex{-}recommended }\DataTypeTok{\textbackslash{}}
+\NormalTok{                     texlive{-}latex{-}extra}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{\texorpdfstring{Integration\hyperref[integration]{}}{Integration}}\label{integration}
+
+Add this repository to your paper repository as a git submodule:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{git}\NormalTok{ submodule add https://github.com/mpark/wg21.git}
+\end{Highlighting}
+\end{Shaded}
+
+Then include the framework \VERB|\NormalTok{Makefile}| from your
+repository's top-level \VERB|\NormalTok{Makefile}|:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{include wg21/Makefile}
+\end{Highlighting}
+\end{Shaded}
+
+Markdown files in the repository root become build targets. For example,
+\VERB|\NormalTok{P0000R0}\OperatorTok{.}\NormalTok{md}| can be built as
+\VERB|\NormalTok{generated}\OperatorTok{/}\NormalTok{P0000R0}\OperatorTok{.}\NormalTok{html}|
+or
+\VERB|\NormalTok{generated}\OperatorTok{/}\NormalTok{P0000R0}\OperatorTok{.}\NormalTok{pdf}|.
+
+See \href{https://github.com/mpark/wg21-papers}{mpark/wg21-papers} for
+an example use of this project.
+
+\subsection{\texorpdfstring{Generation\hyperref[generation]{}}{Generation}}\label{generation}
+
+Given a \VERB|\NormalTok{P0000R0}\OperatorTok{.}\NormalTok{md}| at the
+top-level of your repository:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{make}\NormalTok{ generated/P0000R0.html  }\CommentTok{\# HTML Output}
+\FunctionTok{make}\NormalTok{ generated/P0000R0.pdf   }\CommentTok{\# PDF Output}
+\end{Highlighting}
+\end{Shaded}
+
+For convenience, the \VERB|\NormalTok{Makefile}| also accepts:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{make}\NormalTok{ P0000R0.html  }\CommentTok{\# HTML Output}
+\FunctionTok{make}\NormalTok{ P0000R0.pdf   }\CommentTok{\# PDF Output}
+\end{Highlighting}
+\end{Shaded}
+
+In both cases, the output is written under
+\VERB|\NormalTok{generated}\OperatorTok{/}|.
+
+\section{\texorpdfstring{Formatting\hyperref[formatting]{}}{Formatting}}\label{formatting}
+
+This framework provides support for various common elements for C++
+proposals.
+
+\subsection{\texorpdfstring{Title\hyperref[title]{}}{Title}}\label{title}
+
+The title is specified in a
+\href{https://pandoc.org/MANUAL.html\#extension-yaml_metadata_block}{YAML
+metadata block}.
+
+For example, the \hyperref[title-block-header]{title} of this document
+is generated from:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\PreprocessorTok{{-}{-}{-}}
+\FunctionTok{title}\KeywordTok{:}\AttributeTok{ Framework for Writing C++ Committee Proposals}
+\FunctionTok{document}\KeywordTok{:}\AttributeTok{ D0000R0}
+\FunctionTok{date}\KeywordTok{:}\AttributeTok{ today}
+\FunctionTok{audience}\KeywordTok{:}\AttributeTok{ WG21}
+\FunctionTok{author}\KeywordTok{:}
+\AttributeTok{  }\KeywordTok{{-}}\AttributeTok{ }\FunctionTok{name}\KeywordTok{:}\AttributeTok{ Michael Park}
+\AttributeTok{    }\FunctionTok{email}\KeywordTok{:}\AttributeTok{ \textless{}mcypark@gmail.com\textgreater{}}
+\PreprocessorTok{{-}{-}{-}}
+\end{Highlighting}
+\end{Shaded}
+
+{{{[} \emph{Note:}
+}\VERB|\NormalTok{date}\OperatorTok{:}\NormalTok{ today}| generates
+today's date in
+\VERB|\NormalTok{YYYY}\OperatorTok{{-}}\NormalTok{MM}\OperatorTok{{-}}\NormalTok{DD}|
+(ISO 8601) format.{ --- \emph{end note} {]}}}
+
+YAML lists can be used to specify multiple audiences and authors:
+
+{
+
+\renewcommand{\NormalTok}[1]{\textcolor[HTML]{898887}{#1}}
+
+\renewcommand{\VariableTok}[1]{\textcolor[HTML]{006e28}{#1}}
+
+\renewcommand{\StringTok}[1]{\textcolor[HTML]{bf0303}{#1}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{  {-}{-}{-}}
+\NormalTok{  title: Framework for Writing C++ Committee Proposals}
+\NormalTok{  document: D0000R0}
+\NormalTok{  date: today}
+\StringTok{{-} audience: WG21}
+\VariableTok{+ audience:}
+\VariableTok{+   {-} Library Evolution Working Group}
+\VariableTok{+   {-} Library Working Group}
+\NormalTok{  author:}
+\NormalTok{    {-} name: Michael Park}
+\NormalTok{      email: \textless{}mcypark@gmail.com\textgreater{}}
+\VariableTok{+   {-} name: Barry Revzin}
+\VariableTok{+     email: \textless{}barry.revzin@gmail.com\textgreater{}}
+\KeywordTok{{-}{-}{-}}
+\end{Highlighting}
+\end{Shaded}
+
+}
+
+\subsection{\texorpdfstring{Table of
+Contents\hyperref[table-of-contents]{}}{Table of Contents}}\label{table-of-contents}
+
+By default, a table of contents is generated. For an example, see the
+\hyperref[toctitle]{table of contents} of this document.
+
+\subsubsection{\texorpdfstring{Metadata:
+\texttt{toc}\hyperref[metadata-toc]{}}{Metadata: toc}}\label{metadata-toc}
+
+To disable the table of contents entirely, set the
+\VERB|\NormalTok{toc}| metadata to \VERB|\KeywordTok{false}|.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\PreprocessorTok{{-}{-}{-}}
+\FunctionTok{title}\KeywordTok{:}\AttributeTok{ Framework for Writing C++ Committee Proposals}
+\FunctionTok{document}\KeywordTok{:}\AttributeTok{ D0000R0}
+\FunctionTok{date}\KeywordTok{:}\AttributeTok{ today}
+\FunctionTok{audience}\KeywordTok{:}\AttributeTok{ WG21}
+\FunctionTok{author}\KeywordTok{:}
+\AttributeTok{  }\KeywordTok{{-}}\AttributeTok{ }\FunctionTok{name}\KeywordTok{:}\AttributeTok{ Michael Park}
+\AttributeTok{    }\FunctionTok{email}\KeywordTok{:}\AttributeTok{ \textless{}mcypark@gmail.com\textgreater{}}
+\AttributeTok{{{\setlength{\fboxsep}{1pt}\colorbox{yellow}{toc: false}}}}
+\PreprocessorTok{{-}{-}{-}}
+\end{Highlighting}
+\end{Shaded}
+
+\subsubsection{\texorpdfstring{Metadata:
+\texttt{toc-depth}\hyperref[metadata-toc-depth]{}}{Metadata: toc-depth}}\label{metadata-toc-depth}
+
+The default depth of table of contents is \VERB|\DecValTok{3}|. That is,
+given headers like
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{\# Design Overview}
+
+\NormalTok{\#\# Types of Patterns}
+
+\NormalTok{\#\#\# Primary Patterns}
+
+\NormalTok{\#\#\#\# Wildcard Pattern}
+\end{Highlighting}
+\end{Shaded}
+
+The table of contents will not show
+\VERB|\NormalTok{\#\#\#\# Wildcard Pattern}| since it's 4 levels deep.
+
+To set the depth manually, set
+\VERB|\NormalTok{toc}\OperatorTok{{-}}\NormalTok{depth}| to the desired
+number.\\
+For example, to make \VERB|\NormalTok{\#\#\#\# Wildcard Pattern}| show
+up:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\PreprocessorTok{{-}{-}{-}}
+\FunctionTok{title}\KeywordTok{:}\AttributeTok{ Framework for Writing C++ Committee Proposals}
+\FunctionTok{document}\KeywordTok{:}\AttributeTok{ D0000R0}
+\FunctionTok{date}\KeywordTok{:}\AttributeTok{ today}
+\FunctionTok{audience}\KeywordTok{:}\AttributeTok{ WG21}
+\FunctionTok{author}\KeywordTok{:}
+\AttributeTok{  }\KeywordTok{{-}}\AttributeTok{ }\FunctionTok{name}\KeywordTok{:}\AttributeTok{ Michael Park}
+\AttributeTok{    }\FunctionTok{email}\KeywordTok{:}\AttributeTok{ \textless{}mcypark@gmail.com\textgreater{}}
+\AttributeTok{{{\setlength{\fboxsep}{1pt}\colorbox{yellow}{toc-depth: 4}}}}
+\PreprocessorTok{{-}{-}{-}}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{\texorpdfstring{Headings\hyperref[headings]{}}{Headings}}\label{headings}
+
+Both Setext and ATX styles are available:
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.2778}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.6944}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\centering\arraybackslash\textbf{Markdown Source}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\centering\arraybackslash\textbf{Rendered Output}
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Header 1}
+\NormalTok{========}
+\end{Highlighting}
+\end{Shaded}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\section*{\texorpdfstring{Header
+1\hyperref[header-1]{}}{Header 1}}\label{header-1}
+\end{minipage} \\
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Header 2}
+\NormalTok{{-}{-}{-}{-}{-}{-}{-}{-}}
+\end{Highlighting}
+\end{Shaded}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\subsection*{\texorpdfstring{Header
+2\hyperref[header-2]{}}{Header 2}}\label{header-2}
+\end{minipage} \\
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{\#\#\# Header 3}
+\end{Highlighting}
+\end{Shaded}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\subsubsection*{\texorpdfstring{Header
+3\hyperref[header-3]{}}{Header 3}}\label{header-3}
+\end{minipage} \\
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{\#\#\#\# Header 4}
+\end{Highlighting}
+\end{Shaded}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\paragraph*{\texorpdfstring{Header
+4\hyperref[header-4]{}}{Header 4}}\label{header-4}
+\end{minipage} \\
+\end{longtable}
+}
+
+\subsubsection{\texorpdfstring{Disable from Section Numbering:
+\texttt{-} or
+\texttt{.unnumbered}\hyperref[disable-section-number]{}}{Disable from Section Numbering: - or .unnumbered}}\label{disable-section-number}
+
+Add the \VERB|\OperatorTok{{-}}| or
+\VERB|\OperatorTok{.}\NormalTok{unnumbered}| class to a header to
+exclude it from section numbering, using the Pandoc extension
+\href{https://pandoc.org/MANUAL.html\#extension-header_attributes}{\VERB|\NormalTok{header\_attributes}|}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{\# Miscelleneous \{{{\setlength{\fboxsep}{1pt}\colorbox{yellow}{-}}}\}}
+\end{Highlighting}
+\end{Shaded}
+
+\subsubsection{\texorpdfstring{Exclude from Table of Contents:
+\texttt{.unlisted}\hyperref[exclude-from-toc]{}}{Exclude from Table of Contents: .unlisted}}\label{exclude-from-toc}
+
+Add the \VERB|\OperatorTok{.}\NormalTok{unlisted}| class \textbf{in
+addition to} \VERB|\OperatorTok{{-}}| or
+\VERB|\OperatorTok{.}\NormalTok{unnumbered}| to a header to exclude it
+from the table of contents, using the Pandoc extension:
+\href{https://pandoc.org/MANUAL.html\#extension-header_attributes}{\VERB|\NormalTok{header\_attributes}|}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{\# Miscelleneous \{{-} {{\setlength{\fboxsep}{1pt}\colorbox{yellow}{.unlisted}}}\}}
+\end{Highlighting}
+\end{Shaded}
+
+\subsubsection{\texorpdfstring{Implicit Header
+References\hyperref[implicit-header-references]{}}{Implicit Header References}}\label{implicit-header-references}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\centering\arraybackslash\textbf{Markdown Source}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\centering\arraybackslash\textbf{Rendered Output}
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Given a heading like:}
+
+\NormalTok{\#\# Algorithm Return Type \{{-} .unlisted\}}
+
+\NormalTok{Reference with any of the following ways:}
+
+\NormalTok{  {-} [Algorithm Return Type]}
+\NormalTok{  {-} [Algorithm Return Type][]}
+\NormalTok{  {-} [Custom Text 1][Algorithm Return Type]}
+\NormalTok{  {-} [Custom Text 2](\#algorithm{-}return{-}type)}
+\end{Highlighting}
+\end{Shaded}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+Given a heading like:
+
+\subsection*{\texorpdfstring{Algorithm Return
+Type\hyperref[algorithm-return-type]{}}{Algorithm Return Type}}\label{algorithm-return-type}
+
+Reference with any of the following ways:
+
+\begin{itemize}
+\tightlist
+\item
+  \hyperref[algorithm-return-type]{Algorithm Return Type}
+\item
+  \hyperref[algorithm-return-type]{Algorithm Return Type}
+\item
+  \hyperref[algorithm-return-type]{Custom Text 1}
+\item
+  \hyperref[algorithm-return-type]{Custom Text 2}
+\end{itemize}
+\end{minipage} \\
+\end{longtable}
+}
+
+The \VERB|\NormalTok{\#algorithm{-}return{-}type}| identifier is
+automatically generated by the Pandoc extension:
+\href{https://pandoc.org/MANUAL.html\#extension-auto_identifiers}{\VERB|\NormalTok{auto\_identifiers}|}.
+
+Relevant Pandoc extensions:
+\href{https://pandoc.org/MANUAL.html\#extension-implicit_header_references}{\VERB|\NormalTok{implicit\_header\_references}|},
+\href{https://pandoc.org/MANUAL.html\#extension-shortcut_reference_links}{\VERB|\NormalTok{shortcut\_reference\_links}|}
+
+\subsubsection{\texorpdfstring{Header References by ID with Automatic
+Text\hyperref[header-references-by-id-with-automatic-text]{}}{Header References by ID with Automatic Text}}\label{header-references-by-id-with-automatic-text}
+
+This extension interprets \VERB|\NormalTok{[](\#header{-}identifier)}|
+as a reference to a header where the heading text is automatically used.
+
+The main usage is to first specify an explicit identifier on a header,
+like:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{\#\# Algorithm Return Type {{\setlength{\fboxsep}{1pt}\colorbox{yellow}{\{\#return-type\}}}}}
+\end{Highlighting}
+\end{Shaded}
+
+then refer to it like \VERB|\NormalTok{[](\#return{-}type)}|, which will
+be rendered as: Algorithm Return Type.
+
+The main advantage is that when the header text changes, the reference
+remains stable and the new heading text is automatically rendered.
+
+\subsection{\texorpdfstring{Inline
+Formatting\hyperref[inline-formatting]{}}{Inline Formatting}}\label{inline-formatting}
+
+\subsubsection{\texorpdfstring{Emphasis\hyperref[emphasis]{}}{Emphasis}}\label{emphasis}
+
+Use asterisks (\VERB|\OperatorTok{*}|) and underscores
+(\VERB|\NormalTok{\_}|) to emphasize inline text.
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5361}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.4639}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\centering\arraybackslash\textbf{Markdown Source}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\centering\arraybackslash\textbf{Rendered Output}
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\VERB|\NormalTok{Some of these words *are emphasized*.}| & Some of these
+words \emph{are emphasized}. \\
+\VERB|\NormalTok{Some of these words \_are emphasized also\_.}| & Some
+of these words \emph{are emphasized also}. \\
+\VERB|\NormalTok{Use two asterisks for **strong emphasis**.}| & Use two
+asterisks for \textbf{strong emphasis}. \\
+\VERB|\NormalTok{Or, \_\_use two underscores instead\_\_.}| & Or,
+\textbf{use two underscores instead}. \\
+\end{longtable}
+}
+
+For emphasizing \textbf{part} of a word, asterisks are
+\textbf{required}.
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5479}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.4521}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\centering\arraybackslash\textbf{Markdown Source}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\centering\arraybackslash\textbf{Rendered Output}
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\VERB|\NormalTok{feas**ible**, not feas\_\_able\_\_}| &
+feas\textbf{ible}, not feas\_\_able\_\_ \\
+\end{longtable}
+}
+
+This is the Pandoc extension:
+\href{https://pandoc.org/MANUAL.html\#extension-intraword_underscores}{\VERB|\NormalTok{intraword\_underscores}|}.
+
+\subsubsection{\texorpdfstring{Superscript,
+Subscript\hyperref[superscript-subscript]{}}{Superscript, Subscript}}\label{superscript-subscript}
+
+Wrap caret (\VERB|\OperatorTok{\^{}}|) for superscripts and tilde
+(\VERB|\OperatorTok{\textasciitilde{}}|) for subscripts.
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5696}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.4304}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\centering\arraybackslash\textbf{Markdown Source}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\centering\arraybackslash\textbf{Rendered Output}
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\VERB|\NormalTok{2\^{}10\^{} is 1024}| & 2\textsuperscript{10} is
+1024 \\
+\VERB|\NormalTok{\textasciigrave{}constexpr\textasciigrave{}\textasciitilde{}opt\textasciitilde{} means optional}|
+& \VERB|\KeywordTok{constexpr}|\textsubscript{opt} means optional \\
+\end{longtable}
+}
+
+This is the Pandoc extension:
+\href{https://pandoc.org/MANUAL.html\#extension-superscript-subscript}{\VERB|\NormalTok{superscript\_subscript}|}.
+
+\subsubsection{\texorpdfstring{Highlighting\hyperref[highlighting]{}}{Highlighting}}\label{highlighting}
+
+Wrap \VERB|\OperatorTok{==}|, or use
+\VERB|\NormalTok{[highlighted text]\{.mark\}}| to highlight some text.
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5422}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.4578}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\centering\arraybackslash\textbf{Markdown Source}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\centering\arraybackslash\textbf{Rendered Output}
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\VERB|\NormalTok{This is a ==highlighted **text**==.}| & This is a
+{{\setlength{\fboxsep}{1pt}\colorbox{yellow}{highlighted
+\textbf{text}}}}. \\
+\VERB|\NormalTok{Also, [highlight *text*]\{.mark\}}| & Also,
+{{\setlength{\fboxsep}{1pt}\colorbox{yellow}{highlight \emph{text}}}} \\
+\end{longtable}
+}
+
+\subsection{\texorpdfstring{Wording\hyperref[wording]{}}{Wording}}\label{wording}
+
+\subsubsection{\texorpdfstring{Modifying
+Text\hyperref[modifying-text]{}}{Modifying Text}}\label{modifying-text}
+
+Small, inline changes are
+\href{https://pandoc.org/MANUAL.html\#divs-and-spans}{bracketed
+\VERB|\NormalTok{Span}| elements} that look like the following:
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5347}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.4653}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\centering\arraybackslash\textbf{Markdown Source}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\centering\arraybackslash\textbf{Rendered Output}
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\VERB|\NormalTok{Let\textquotesingle{}s add some [new **text**]\{.add\}.}|
+& Let's add some {{\color[HTML]{006e28}\uline{new \textbf{text}}}}. \\
+\VERB|\NormalTok{Remove some [old *text*]\{.rm\} now.}| & Remove some
+{{\color[HTML]{bf0303}\sout{old \emph{text}}}} now. \\
+\VERB|\NormalTok{Substitute: [old *text*](new **text**)\{.sub\}}| &
+Substitute: {{{\color[HTML]{bf0303}\sout{old
+\emph{text}}}}{{\color[HTML]{006e28}\uline{new \textbf{text}}}}} \\
+\end{longtable}
+}
+
+{{{[} \emph{Note:} }Substitutions are essentially just shorthand for
+\VERB|\NormalTok{[old text]\{.rm\}[new text]\{.add\}}|.{ --- \emph{end note} {]}}}
+
+\begin{quote}
+\textbf{Markdown Source}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{The optional *attribute{-}specifier{-}seq* appertains to the [label](*general{-}label*)\{.sub\}.}
+\NormalTok{The only use of a [label with an *identifier*](*label*)\{.sub\} is as the target of}
+\NormalTok{a \textasciigrave{}goto\textasciigrave{}, [\textasciigrave{}break\textasciigrave{}, or \textasciigrave{}continue\textasciigrave{}]\{.add\}. No two [label](*label*)\{.sub\}s in a function}
+\NormalTok{shall have the same *identifier*. A [label](*general{-}label*)\{.sub\} can be used}
+\NormalTok{[in a \textasciigrave{}goto\textasciigrave{} statement]\{.rm\} before its introduction by a *labeled{-}statement*.}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{Rendered Output}
+
+The optional \emph{attribute-specifier-seq} appertains to the
+{{{\color[HTML]{bf0303}\sout{label}}}{{\color[HTML]{006e28}\uline{\emph{general-label}}}}}.
+The only use of a {{{\color[HTML]{bf0303}\sout{label with an
+\emph{identifier}}}}{{\color[HTML]{006e28}\uline{\emph{label}}}}} is as
+the target of a \VERB|\ControlFlowTok{goto}|,
+{{\color[HTML]{006e28}\uline{\VERB|\NormalTok{break}|, or
+\VERB|\NormalTok{continue}|}}}. No two
+{{{\color[HTML]{bf0303}\sout{label}}}{{\color[HTML]{006e28}\uline{\emph{label}}}}}s
+in a function shall have the same \emph{identifier}. A
+{{{\color[HTML]{bf0303}\sout{label}}}{{\color[HTML]{006e28}\uline{\emph{general-label}}}}}
+can be used {{\color[HTML]{bf0303}\sout{in a \VERB|\NormalTok{goto}|
+statement}}} before its introduction by a \emph{labeled-statement}.
+\end{quote}
+
+Large changes are
+\href{https://pandoc.org/MANUAL.html\#divs-and-spans}{fenced
+\VERB|\NormalTok{Div}| blocks} with \VERB|\NormalTok{::: add}| for
+additions, \VERB|\NormalTok{::: rm}| for removals, and close with
+\VERB|\NormalTok{:::}|.
+
+\begin{quote}
+\textbf{Markdown Source}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Modify section [format.functions]\{.sref\}}
+
+\NormalTok{::: add}
+\NormalTok{\textgreater{} \textasciigrave{}\textasciigrave{}\textasciigrave{}}
+\NormalTok{\textgreater{} template\textless{}class... Args\textgreater{}}
+\NormalTok{\textgreater{}   string format(const locale\& loc, string\_view fmt, const Args\&... args);}
+\NormalTok{\textgreater{} \textasciigrave{}\textasciigrave{}\textasciigrave{}}
+\NormalTok{\textgreater{}}
+\NormalTok{\textgreater{} *Returns*: \textasciigrave{}vformat(loc, fmt, make\_format\_args(args...))\textasciigrave{}.}
+\NormalTok{:::}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{Rendered Output}
+
+Modify section {28.5.5
+\href{https://eel.is/c++draft/format.functions}{{[}format.functions{]}}}
+
+{\color[HTML]{006e28}
+
+\begin{quote}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{template\textless{}class... Args\textgreater{}}
+\NormalTok{  string format(const locale\& loc, string\_view fmt, const Args\&... args);}
+\end{Highlighting}
+\end{Shaded}
+
+\emph{Returns}:
+\VERB|\NormalTok{vformat(loc, fmt, make\_format\_args(args...))}|.
+\end{quote}
+
+}
+\end{quote}
+
+\begin{quote}
+\textbf{Markdown Source}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Remove [expr.post.incr]\{.sref\}/2:}
+
+\NormalTok{::: rm}
+\NormalTok{\textgreater{} The operand of postfix \textasciigrave{}{-}{-}\textasciigrave{} is decremented analogously to the postfix \textasciigrave{}++\textasciigrave{} operator.}
+\NormalTok{\textgreater{}}
+\NormalTok{\textgreater{} [For prefix increment and decrement, see [expr.pre.incr].]\{.note\} }
+\NormalTok{:::}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{Rendered Output}
+
+Remove {7.6.1.6
+\href{https://eel.is/c++draft/expr.post.incr\#2}{{[}expr.post.incr{]}/2}}:
+
+{\color[HTML]{bf0303}
+
+\begin{quote}
+The operand of postfix \VERB|\NormalTok{{-}{-}}| is decremented
+analogously to the postfix \VERB|\NormalTok{++}| operator.
+
+{{{[} \emph{Note:} }For prefix increment and decrement, see
+\href{https://eel.is/c++draft/expr.pre.incr}{{[}expr.pre.incr{]}}.{ --- \emph{end note} {]}}}
+\end{quote}
+
+}
+\end{quote}
+
+\subsubsection{\texorpdfstring{Paragraph
+Numbers\hyperref[paragraph-numbers]{}}{Paragraph Numbers}}\label{paragraph-numbers}
+
+\paragraph{\texorpdfstring{Paragraph Number Element:
+\texttt{.pnum}\hyperref[paragraph-number-element-.pnum]{}}{Paragraph Number Element: .pnum}}\label{paragraph-number-element-.pnum}
+
+Paragraph number elements are
+\href{https://pandoc.org/MANUAL.html\#divs-and-spans}{bracketed
+\VERB|\NormalTok{Span}| elements} that look like:
+\VERB|\OperatorTok{[}\DecValTok{2}\OperatorTok{]\{.}\NormalTok{pnum}\OperatorTok{\}}|
+and
+\VERB|\OperatorTok{[}\FloatTok{2.1}\OperatorTok{]\{.}\NormalTok{pnum}\OperatorTok{\}}|.
+
+\begin{quote}
+\textbf{Markdown Source}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{[1]\{.pnum\} In this subclause, "before" and "after" refer to the "happens before"}
+\NormalTok{relation ([intro.multithread]).}
+
+\NormalTok{[2]\{.pnum\} The *lifetime* of an object or reference is a runtime property of}
+\NormalTok{the object or reference. [...]}
+
+\NormalTok{  {-} [2.1]\{.pnum\} storage with the proper alignment and size for type \textasciigrave{}T\textasciigrave{} is obtained, and}
+
+\NormalTok{    [...]}
+
+\NormalTok{  {-} [2.4]\{.pnum\} if \textasciigrave{}T\textasciigrave{} is a class type, the destructor call starts, or}
+\NormalTok{  {-} [2.5]\{.pnum\} the storage which the object occupies is released, or is reused by}
+\NormalTok{    an object that is not nested within \_o\_ ([intro.object]).}
+
+\NormalTok{[...]}
+
+\NormalTok{::: add}
+\NormalTok{[x]\{.pnum\} Some new paragraph here}
+\NormalTok{:::}
+
+\NormalTok{[6]\{.pnum\} A program may end the lifetime of an object of class type without}
+\NormalTok{invoking the destructor, by reusing or releasing the storage as described above.}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{Rendered Output}
+
+\pnum{1} In this subclause, ``before'' and ``after'' refer to the
+``happens before'' relation
+(\href{https://eel.is/c++draft/intro.multithread}{{[}intro.multithread{]}}).
+
+\pnum{2} The \emph{lifetime} of an object or reference is a runtime
+property of the object or reference. {[}\ldots{]}
+
+\begin{itemize}
+\item
+  \pnum{(2.1)} storage with the proper alignment and size for type
+  \VERB|\NormalTok{T}| is obtained, and
+
+  {[}\ldots{]}
+\item
+  \pnum{(2.4)} if \VERB|\NormalTok{T}| is a class type, the destructor
+  call starts, or
+\item
+  \pnum{(2.5)} the storage which the object occupies is released, or is
+  reused by an object that is not nested within \emph{o}
+  (\href{https://eel.is/c++draft/intro.object}{{[}intro.object{]}}).
+\end{itemize}
+
+{[}\ldots{]}
+
+{\color[HTML]{006e28}\pnum{x} Some new paragraph here}
+
+\pnum{6} A program may end the lifetime of an object of class type
+without invoking the destructor, by reusing or releasing the storage as
+described above.
+\end{quote}
+
+\paragraph{\texorpdfstring{List-based Paragraphs
+(Experimental)\hyperref[list-based-paragraphs-experimental]{}}{List-based Paragraphs (Experimental)}}\label{list-based-paragraphs-experimental}
+
+List-based paragraphs are list elements (
+\href{https://pandoc.org/MANUAL.html\#ordered-lists}{\VERB|\NormalTok{ordered\_lists}|}
+and
+\href{https://pandoc.org/MANUAL.html\#bullet-lists}{\VERB|\NormalTok{bullet\_lists}|}),
+within a \href{https://pandoc.org/MANUAL.html\#divs-and-spans}{bracketed
+\VERB|\NormalTok{Div}| element}, \VERB|\NormalTok{::: wording}|.
+
+At the top-level, use \VERB|\NormalTok{\#.}| for automatic numbering,
+and \VERB|\FloatTok{1.}| for pinned numbering. For example:
+
+\begin{quote}
+\textbf{Markdown Source}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{::: wording}
+\NormalTok{\#. In this subclause, "before" and "after" refer to the "happens before" relation}
+\NormalTok{   ([intro.multithread]).}
+\NormalTok{\#. The *lifetime* of an object or reference is a runtime property of the object}
+\NormalTok{   or reference. [...]}
+
+\NormalTok{[...]}
+
+\NormalTok{6. A program may end the lifetime of an object of class type without invoking}
+\NormalTok{   the destructor, by reusing or releasing the storage as described above.}
+\NormalTok{:::}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{Rendered Output}
+
+\pnum{1} In this subclause, ``before'' and ``after'' refer to the
+``happens before'' relation
+(\href{https://eel.is/c++draft/intro.multithread}{{[}intro.multithread{]}}).
+
+\pnum{2} The \emph{lifetime} of an object or reference is a runtime
+property of the object or reference. {[}\ldots{]}
+
+{[}\ldots{]}
+
+\pnum{6} A program may end the lifetime of an object of class type
+without invoking the destructor, by reusing or releasing the storage as
+described above.
+\end{quote}
+
+Use nested bullet lists for sublists which are also automatically
+numbered, and \VERB|\FloatTok{1.}| for partial pinning. For example, if
+we pin \VERB|\FloatTok{3.}| within paragraph \VERB|\DecValTok{2}|,
+partial pinning will work out to
+\VERB|\OperatorTok{(}\FloatTok{2.3}\OperatorTok{)}|.
+
+\begin{quote}
+\textbf{Markdown Source}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{::: wording}
+\NormalTok{\#. In this subclause, "before" and "after" refer to the "happens before" relation}
+\NormalTok{   ([intro.multithread]).}
+\NormalTok{\#. The *lifetime* of an object or reference is a runtime property of the object}
+\NormalTok{   or reference. [...]}
+
+\NormalTok{   {-} storage with the proper alignment and size for type \textasciigrave{}T\textasciigrave{} is obtained, and}
+
+\NormalTok{     [...]}
+
+\NormalTok{   4. if \textasciigrave{}T\textasciigrave{} is a class type, the destructor call starts, or}
+\NormalTok{   {-} the storage which the object occupies is released, or is reused by}
+\NormalTok{     an object that is not nested within \_o\_ ([intro.object]).}
+
+\NormalTok{[...]}
+
+\NormalTok{6. A program may end the lifetime of an object of class type without invoking}
+\NormalTok{   the destructor, by reusing or releasing the storage as described above.}
+\NormalTok{:::}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{Rendered Output}
+
+\pnum{1} In this subclause, ``before'' and ``after'' refer to the
+``happens before'' relation
+(\href{https://eel.is/c++draft/intro.multithread}{{[}intro.multithread{]}}).
+
+\pnum{2} The \emph{lifetime} of an object or reference is a runtime
+property of the object or reference. {[}\ldots{]}
+
+\begin{itemize}
+\item
+  \pnum{(2.1)} storage with the proper alignment and size for type
+  \VERB|\NormalTok{T}| is obtained, and
+
+  {[}\ldots{]}
+\end{itemize}
+
+\begin{itemize}
+\item
+  \pnum{(2.4)} if \VERB|\NormalTok{T}| is a class type, the destructor
+  call starts, or
+\end{itemize}
+
+\begin{itemize}
+\item
+  \pnum{(2.5)} the storage which the object occupies is released, or is
+  reused by an object that is not nested within \emph{o}
+  (\href{https://eel.is/c++draft/intro.object}{{[}intro.object{]}}).
+\end{itemize}
+
+{[}\ldots{]}
+
+\pnum{6} A program may end the lifetime of an object of class type
+without invoking the destructor, by reusing or releasing the storage as
+described above.
+\end{quote}
+
+Lastly, use \VERB|\NormalTok{x}\OperatorTok{.}| to mark a paragraph
+number \VERB|\NormalTok{x}|. This is most useful within an
+\VERB|\OperatorTok{:::}\NormalTok{ add}| block where you want to insert
+new paragraphs without having to manually shift the numbers.
+
+\begin{quote}
+\textbf{Markdown Source}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{::: wording}
+\NormalTok{\#. In this subclause, "before" and "after" refer to the "happens before" relation}
+\NormalTok{   ([intro.multithread]).}
+\NormalTok{\#. The *lifetime* of an object or reference is a runtime property of the object}
+\NormalTok{   or reference. [...]}
+
+\NormalTok{   {-} storage with the proper alignment and size for type \textasciigrave{}T\textasciigrave{} is obtained, and}
+
+\NormalTok{     [...]}
+
+\NormalTok{   4. if \textasciigrave{}T\textasciigrave{} is a class type, the destructor call starts, or}
+\NormalTok{   {-} the storage which the object occupies is released, or is reused by}
+\NormalTok{     an object that is not nested within \_o\_ ([intro.object]).}
+
+\NormalTok{[...]}
+
+\NormalTok{::: add}
+\NormalTok{x. Some new paragraph here}
+\NormalTok{:::}
+
+\NormalTok{6. A program may end the lifetime of an object of class type without invoking}
+\NormalTok{   the destructor, by reusing or releasing the storage as described above.}
+\NormalTok{:::}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{Rendered Output}
+
+\pnum{1} In this subclause, ``before'' and ``after'' refer to the
+``happens before'' relation
+(\href{https://eel.is/c++draft/intro.multithread}{{[}intro.multithread{]}}).
+
+\pnum{2} The \emph{lifetime} of an object or reference is a runtime
+property of the object or reference. {[}\ldots{]}
+
+\begin{itemize}
+\item
+  \pnum{(2.1)} storage with the proper alignment and size for type
+  \VERB|\NormalTok{T}| is obtained, and
+
+  {[}\ldots{]}
+\end{itemize}
+
+\begin{itemize}
+\item
+  \pnum{(2.4)} if \VERB|\NormalTok{T}| is a class type, the destructor
+  call starts, or
+\end{itemize}
+
+\begin{itemize}
+\item
+  \pnum{(2.5)} the storage which the object occupies is released, or is
+  reused by an object that is not nested within \emph{o}
+  (\href{https://eel.is/c++draft/intro.object}{{[}intro.object{]}}).
+\end{itemize}
+
+{[}\ldots{]}
+
+{\color[HTML]{006e28}\pnum{x} Some new paragraph here}
+
+\pnum{6} A program may end the lifetime of an object of class type
+without invoking the destructor, by reusing or releasing the storage as
+described above.
+\end{quote}
+
+{{[} \emph{Note:} }In order to nest content (code blocks, nested list,
+etc) properly within another list, be sure to add a blank line and
+indent to line up with the first non-space character after the list
+marker. See Pandoc extension:
+\href{https://pandoc.org/MANUAL.html\#block-content-in-list-items}{\VERB|\NormalTok{block\_content\_in\_list\_items}|}.
+
+{{[} \emph{Example:} }
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5955}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.4045}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\centering\arraybackslash\textbf{Preceding blank line}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\centering\arraybackslash\textbf{Indent to line up}
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{\#. Some paragraph}
+\NormalTok{{{\setlength{\fboxsep}{1pt}\colorbox{yellow}{~~~~~~~~~~~~~~~~~~~~}}}}
+\NormalTok{   \textasciigrave{}\textasciigrave{}\textasciigrave{}}
+\NormalTok{   code}
+\NormalTok{   \textasciigrave{}\textasciigrave{}\textasciigrave{}}
+\end{Highlighting}
+\end{Shaded}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{\#. {{\setlength{\fboxsep}{1pt}\colorbox{yellow}{S}}}ome paragraph}
+\NormalTok{   {{\setlength{\fboxsep}{1pt}\colorbox{yellow}{~}}}}
+\NormalTok{   {{\setlength{\fboxsep}{1pt}\colorbox{yellow}{`}}}\textasciigrave{}\textasciigrave{}}
+\NormalTok{   {{\setlength{\fboxsep}{1pt}\colorbox{yellow}{c}}}ode}
+\NormalTok{   {{\setlength{\fboxsep}{1pt}\colorbox{yellow}{`}}}\textasciigrave{}\textasciigrave{}}
+\end{Highlighting}
+\end{Shaded}
+\end{minipage} \\
+\end{longtable}
+}
+
+{ --- \emph{end example} {]}}
+
+For nested lists, the blank line may be omitted:
+
+{{[} \emph{Example:} }
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{\#. {{\setlength{\fboxsep}{1pt}\colorbox{yellow}{S}}}ome paragraph}
+\NormalTok{   {{\setlength{\fboxsep}{1pt}\colorbox{yellow}{-}}} Nested bullet list}
+\end{Highlighting}
+\end{Shaded}
+
+{ --- \emph{end example} {]}}
+
+{ --- \emph{end note} {]}}
+
+\subsubsection{\texorpdfstring{Code
+Changes\hyperref[code-changes]{}}{Code Changes}}\label{code-changes}
+
+Code changes can be either shown in a \VERB|\NormalTok{diff}| code block
+like so:
+
+\begin{quote}
+\textbf{Markdown Source}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}diff}
+\NormalTok{  template \textless{}size\_t I, class T1, class T2\textgreater{}}
+\NormalTok{{-}   constexpr typename tuple\_element\textless{}I, pair\textless{}T1, T2\textgreater{}\textgreater{}::type\&}
+\NormalTok{+   constexpr tuple\_element\_t\textless{}I, pair\textless{}T1, T2\textgreater{}\textgreater{}\&}
+\NormalTok{      get(pair\textless{}T1, T2\textgreater{}\&) noexcept;}
+\NormalTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{Rendered Output}
+
+{
+
+\renewcommand{\NormalTok}[1]{\textcolor[HTML]{898887}{#1}}
+
+\renewcommand{\VariableTok}[1]{\textcolor[HTML]{006e28}{#1}}
+
+\renewcommand{\StringTok}[1]{\textcolor[HTML]{bf0303}{#1}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{  template \textless{}size\_t I, class T1, class T2\textgreater{}}
+\StringTok{{-}   constexpr typename tuple\_element\textless{}I, pair\textless{}T1, T2\textgreater{}\textgreater{}::type\&}
+\VariableTok{+   constexpr tuple\_element\_t\textless{}I, pair\textless{}T1, T2\textgreater{}\textgreater{}\&}
+\NormalTok{      get(pair\textless{}T1, T2\textgreater{}\&) noexcept;}
+\end{Highlighting}
+\end{Shaded}
+
+}
+\end{quote}
+
+Alternatively, \hyperref[embedded-markdown]{Embedded Markdown} can be
+used to show the changes inline:
+
+\begin{quote}
+\textbf{Markdown Source}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}}
+\NormalTok{template \textless{}size\_t I, class T1, class T2\textgreater{}}
+\NormalTok{  constexpr @[typename]\{.rm\}@ tuple\_element@[\_t]\{.add\}@\textless{}I, pair\textless{}T1, T2\textgreater{}\textgreater{}@[::type]\{.rm\}@\&}
+\NormalTok{    get(pair\textless{}T1, T2\textgreater{}\&) noexcept;}
+\NormalTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{Rendered Output}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{template \textless{}size\_t I, class T1, class T2\textgreater{}}
+\NormalTok{  constexpr {{\color[HTML]{bf0303}\sout{typename}}} tuple\_element{{\color[HTML]{006e28}\uline{\_t}}}\textless{}I, pair\textless{}T1, T2\textgreater{}\textgreater{}{{\color[HTML]{bf0303}\sout{::type}}}\&}
+\NormalTok{    get(pair\textless{}T1, T2\textgreater{}\&) noexcept;}
+\end{Highlighting}
+\end{Shaded}
+\end{quote}
+
+{{{[} \emph{Note:} }For inline changes like this, prefer
+no-syntax-highlighting by using
+\VERB|\NormalTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}}|
+to avoid too many colors.{ --- \emph{end note} {]}}}
+
+\subsubsection{\texorpdfstring{Examples\hyperref[examples]{}}{Examples}}\label{examples}
+
+Smaller, inline examples are
+\href{https://pandoc.org/MANUAL.html\#divs-and-spans}{bracketed
+\VERB|\NormalTok{Span}| elements} that looks like
+\VERB|\OperatorTok{[}\NormalTok{example text}\OperatorTok{]\{.}\NormalTok{example}\OperatorTok{\}}|.
+
+\begin{quote}
+\textbf{Markdown Source}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{[\textasciigrave{}T x = T(T(T()));\textasciigrave{} value{-}initializes \textasciigrave{}x\textasciigrave{}.]\{.example\}}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{Rendered Output}
+
+{{{[} \emph{Example:}
+}\VERB|\NormalTok{T x }\OperatorTok{=}\NormalTok{ T}\OperatorTok{(}\NormalTok{T}\OperatorTok{(}\NormalTok{T}\OperatorTok{()));}|
+value-initializes \VERB|\NormalTok{x}|.{ --- \emph{end example} {]}}}
+\end{quote}
+
+Large examples are
+\href{https://pandoc.org/MANUAL.html\#divs-and-spans}{fenced
+\VERB|\NormalTok{Div}| blocks} with
+\VERB|\OperatorTok{:::}\NormalTok{ example}|.
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\centering\arraybackslash\textbf{Markdown Source}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\centering\arraybackslash\textbf{Rendered Output}
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{::: example}
+\NormalTok{A simple example of a class definition is}
+
+\NormalTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}cpp}
+\NormalTok{struct tnode \{}
+\NormalTok{  char tword[20];}
+\NormalTok{  int count;}
+\NormalTok{  tnode* left;}
+\NormalTok{  tnode* right;}
+\NormalTok{\};}
+\NormalTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}}
+\NormalTok{:::}
+\end{Highlighting}
+\end{Shaded}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+{{[} \emph{Example:} }A simple example of a class definition is
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{struct}\NormalTok{ tnode }\OperatorTok{\{}
+  \DataTypeTok{char}\NormalTok{ tword}\OperatorTok{[}\DecValTok{20}\OperatorTok{];}
+  \DataTypeTok{int}\NormalTok{ count}\OperatorTok{;}
+\NormalTok{  tnode}\OperatorTok{*}\NormalTok{ left}\OperatorTok{;}
+\NormalTok{  tnode}\OperatorTok{*}\NormalTok{ right}\OperatorTok{;}
+\OperatorTok{\};}
+\end{Highlighting}
+\end{Shaded}
+
+{ --- \emph{end example} {]}}
+\end{minipage} \\
+\end{longtable}
+}
+
+\subsubsection{\texorpdfstring{Notes\hyperref[notes]{}}{Notes}}\label{notes}
+
+Smaller, inline notes are
+\href{https://pandoc.org/MANUAL.html\#divs-and-spans}{bracketed
+\VERB|\NormalTok{Span}| elements} that looks like
+\VERB|\OperatorTok{[}\NormalTok{note text}\OperatorTok{]\{.}\NormalTok{note}\OperatorTok{\}}|.
+
+\begin{quote}
+\textbf{Markdown Source}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{[Padding bits have unspecified value, but cannot cause traps.]\{.note\}}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{Rendered Output}
+
+{{{[} \emph{Note:} }Padding bits have unspecified value, but cannot
+cause traps.{ --- \emph{end note} {]}}}
+\end{quote}
+
+Large notes are
+\href{https://pandoc.org/MANUAL.html\#divs-and-spans}{fenced
+\VERB|\NormalTok{Div}| blocks} with
+\VERB|\OperatorTok{:::}\NormalTok{ note}|.
+
+\begin{quote}
+\textbf{Markdown Source}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{::: note}
+\NormalTok{An expression of type "*cv1* \textasciigrave{}T\textasciigrave{}" can initialize an object of type "*cv2* \textasciigrave{}T\textasciigrave{}"}
+\NormalTok{independently of the cv{-}qualifiers *cv1* and *cv2*.}
+
+\NormalTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}cpp}
+\NormalTok{int a;}
+\NormalTok{const int b = a;}
+\NormalTok{int c = b;}
+\NormalTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}}
+\NormalTok{:::}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{Rendered Output}
+
+{{[} \emph{Note:} }An expression of type ``\emph{cv1}
+\VERB|\NormalTok{T}|'' can initialize an object of type ``\emph{cv2}
+\VERB|\NormalTok{T}|'' independently of the cv-qualifiers \emph{cv1} and
+\emph{cv2}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DataTypeTok{int}\NormalTok{ a}\OperatorTok{;}
+\KeywordTok{const} \DataTypeTok{int}\NormalTok{ b }\OperatorTok{=}\NormalTok{ a}\OperatorTok{;}
+\DataTypeTok{int}\NormalTok{ c }\OperatorTok{=}\NormalTok{ b}\OperatorTok{;}
+\end{Highlighting}
+\end{Shaded}
+
+{ --- \emph{end note} {]}}
+\end{quote}
+
+Use \VERB|\NormalTok{ednote}| for editorial notes:
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\centering\arraybackslash\textbf{Markdown Source}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\centering\arraybackslash\textbf{Rendered Output}
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{[This is a drive{-}by fix.]\{.ednote\}}
+\end{Highlighting}
+\end{Shaded}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+{{\color[HTML]{0000ff}{[} Editor\textquotesingle s note: This is a
+drive-by fix. {]}}}
+\end{minipage} \\
+\end{longtable}
+}
+
+\begin{quote}
+\textbf{Markdown Source}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{::: ednote}
+\NormalTok{Throughout the wording, we say that a reflection (an object of type \textasciigrave{}std::meta::info\textasciigrave{})}
+\NormalTok{represents some source construct, while splicing that reflection designates that source}
+\NormalTok{construct. For instance, \textasciigrave{}\^{}\^{}int\textasciigrave{} represents the type \textasciigrave{}int\textasciigrave{} and \textasciigrave{}[: \^{}\^{}int :]\textasciigrave{} designates}
+\NormalTok{the type \textasciigrave{}int\textasciigrave{}.}
+\NormalTok{:::}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{Rendered Output}
+
+{\color[HTML]{0000ff}{[} Editor\textquotesingle s note: Throughout the
+wording, we say that a reflection (an object of type
+\VERB|\NormalTok{std::meta::info}|) represents some source construct,
+while splicing that reflection designates that source construct. For
+instance, \VERB|\NormalTok{\^{}\^{}int}| represents the type
+\VERB|\NormalTok{int}| and \VERB|\NormalTok{[: \^{}\^{}int :]}|
+designates the type \VERB|\NormalTok{int}|. {]}}
+\end{quote}
+
+Use \VERB|\NormalTok{draftnote}| for drafting notes:
+
+\begin{quote}
+\textbf{Markdown Source}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{[An \textasciigrave{}audience\textasciigrave{} attribute addresses a specific audience]\{.draftnote audience="the reader"\}}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{Rendered Output}
+
+{{\color[HTML]{0000ff}{[} Drafting note for the reader: An
+\VERB|\NormalTok{audience}| attribute addresses a specific
+audience {]}}}
+\end{quote}
+
+\begin{quote}
+\textbf{Markdown Source}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{::: draftnote}
+\NormalTok{We don’t think we have to change anything here, since if \textasciigrave{}E\textasciigrave{} is a *splice{-}specifier*}
+\NormalTok{that can be interpreted as a *splice{-}expression*, the requirements already fall out}
+\NormalTok{based on how paragraphs 1 and 3 are already worded}
+\NormalTok{:::}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{Rendered Output}
+
+{\color[HTML]{0000ff}{[} Drafting note: We don't think we have to change
+anything here, since if \VERB|\NormalTok{E}| is a
+\emph{splice-specifier} that can be interpreted as a
+\emph{splice-expression}, the requirements already fall out based on how
+paragraphs 1 and 3 are already worded {]}}
+\end{quote}
+
+To specify an audience for the
+\href{https://pandoc.org/MANUAL.html\#divs-and-spans}{fenced
+\VERB|\NormalTok{Div}| block}, you'll need
+\VERB|\OperatorTok{:::} \OperatorTok{\{.}\NormalTok{draftnote audience}\OperatorTok{=}\StringTok{"the reader"}\OperatorTok{\}}|.
+
+Finally, in the relatively common situation where an example appears
+within a note, you can simply nest them:
+
+\begin{quote}
+\textbf{Markdown Source}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{::: note}
+\NormalTok{The declaration of a class name takes effect immediately after the *identifier*}
+\NormalTok{is seen in the class definition or *elaborated{-}type{-}specifier*.}
+
+\NormalTok{::: example}
+\NormalTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}cpp}
+\NormalTok{class A * A;}
+\NormalTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}}
+\NormalTok{first specifies \textasciigrave{}A\textasciigrave{} to be the name of a class and then redefines it as the name of}
+\NormalTok{a pointer to an object of that class. This means that the elaborated form \textasciigrave{}class A\textasciigrave{}}
+\NormalTok{must be used to refer to the class. Such artistry with names can be confusing and}
+\NormalTok{is best avoided.}
+\NormalTok{:::}
+\NormalTok{:::}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{Rendered Output}
+
+{{[} \emph{Note:} }The declaration of a class name takes effect
+immediately after the \emph{identifier} is seen in the class definition
+or \emph{elaborated-type-specifier}.
+
+{{[} \emph{Example:} }
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{class}\NormalTok{ A }\OperatorTok{*}\NormalTok{ A}\OperatorTok{;}
+\end{Highlighting}
+\end{Shaded}
+
+first specifies \VERB|\NormalTok{A}| to be the name of a class and then
+redefines it as the name of a pointer to an object of that class. This
+means that the elaborated form \VERB|\KeywordTok{class}\NormalTok{ A}|
+must be used to refer to the class. Such artistry with names can be
+confusing and is best avoided.{ --- \emph{end example} {]}}
+
+{ --- \emph{end note} {]}}
+\end{quote}
+
+\subsubsection{\texorpdfstring{Grammar\hyperref[grammar]{}}{Grammar}}\label{grammar}
+
+Use \href{https://pandoc.org/MANUAL.html\#line-blocks}{line blocks}
+(\VERB|\OperatorTok{\VerbBar{}}|) in order to preserve the leading
+spaces.
+
+\begin{quote}
+\textbf{Markdown Source}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{\textgreater{} | \_selection{-}statement:\_}
+\NormalTok{\textgreater{} |     \textasciigrave{}if constexpr\textasciigrave{}\_\textasciitilde{}opt\textasciitilde{}\_ \textasciigrave{}(\textasciigrave{} \_init{-}statement\textasciitilde{}opt\textasciitilde{}\_ \_condition\_ \textasciigrave{})\textasciigrave{} \_statement\_}
+\NormalTok{\textgreater{} |     \textasciigrave{}if constexpr\textasciigrave{}\_\textasciitilde{}opt\textasciitilde{}\_ \textasciigrave{}(\textasciigrave{} \_init{-}statement\textasciitilde{}opt\textasciitilde{}\_ \_condition\_ \textasciigrave{})\textasciigrave{} \_statement\_ \textasciigrave{}else\textasciigrave{} \_statement\_}
+\NormalTok{\textgreater{} |     \textasciigrave{}switch (\textasciigrave{} \_init{-}statement\textasciitilde{}opt\textasciitilde{}\_ \_condition\_ \textasciigrave{})\textasciigrave{} \_statement\_}
+\NormalTok{\textgreater{} |     [\textasciigrave{}inspect\textasciigrave{} \textasciigrave{}constexpr\textasciigrave{}\textasciitilde{}\_opt\_\textasciitilde{} \textasciigrave{}(\textasciigrave{} \_init{-}statement\textasciitilde{}opt\textasciitilde{}\_ \_condition\_ \textasciigrave{})\textasciigrave{} \textasciigrave{}\{\textasciigrave{}}
+\NormalTok{\textgreater{}            \_inspect{-}case{-}seq\_}
+\NormalTok{\textgreater{}        \textasciigrave{}\}\textasciigrave{}]\{.add\}}
+\NormalTok{\textgreater{}}
+\NormalTok{\textgreater{} ::: add}
+\NormalTok{\textgreater{} | \_inspect{-}case{-}seq:\_}
+\NormalTok{\textgreater{} |     \_inspect{-}case\_}
+\NormalTok{\textgreater{} |     \_inspect{-}case{-}seq\_ \_inspect{-}case\_}
+\NormalTok{\textgreater{}}
+\NormalTok{\textgreater{} | \_inspect{-}case:\_}
+\NormalTok{\textgreater{} |     \_attribute{-}specifier{-}seq\textasciitilde{}opt\textasciitilde{}\_ \_inspect{-}pattern\_ \_inspect{-}guard\textasciitilde{}opt\textasciitilde{}\_ \textasciigrave{}:\textasciigrave{} \_statement\_}
+\NormalTok{\textgreater{}}
+\NormalTok{\textgreater{} | \_inspect{-}pattern:\_}
+\NormalTok{\textgreater{} |     \_wildcard{-}pattern\_}
+\NormalTok{\textgreater{} |     \_identifier{-}pattern\_}
+\NormalTok{\textgreater{} |     \_constant{-}pattern\_}
+\NormalTok{\textgreater{} |     \_structured{-}binding{-}pattern\_}
+\NormalTok{\textgreater{} |     \_alternative{-}pattern\_}
+\NormalTok{\textgreater{} |     \_binding{-}pattern\_}
+\NormalTok{\textgreater{} |     \_extractor{-}pattern\_}
+\NormalTok{\textgreater{}}
+\NormalTok{\textgreater{} | \_inspect{-}guard:\_}
+\NormalTok{\textgreater{} |     \textasciigrave{}if (\textasciigrave{} \_expression\_ \textasciigrave{})\textasciigrave{}}
+\NormalTok{\textgreater{} :::}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{Rendered Output}
+
+\begin{quote}
+\emph{selection-statement:}\\
+\strut ~~~~\VERB|\ControlFlowTok{if} \KeywordTok{constexpr}|\emph{\textsubscript{opt}}
+\VERB|\OperatorTok{(}| \emph{init-statement\textsubscript{opt}}
+\emph{condition} \VERB|\OperatorTok{)}| \emph{statement}\\
+\strut ~~~~\VERB|\ControlFlowTok{if} \KeywordTok{constexpr}|\emph{\textsubscript{opt}}
+\VERB|\OperatorTok{(}| \emph{init-statement\textsubscript{opt}}
+\emph{condition} \VERB|\OperatorTok{)}| \emph{statement}
+\VERB|\ControlFlowTok{else}| \emph{statement}\\
+\strut ~~~~\VERB|\ControlFlowTok{switch} \OperatorTok{(}|
+\emph{init-statement\textsubscript{opt}} \emph{condition}
+\VERB|\OperatorTok{)}| \emph{statement}\\
+\strut ~~~~{{\color[HTML]{006e28}\uline{\VERB|\NormalTok{inspect}|
+\VERB|\NormalTok{constexpr}|\textsubscript{\emph{opt}}
+\VERB|\NormalTok{(}| \emph{init-statement\textsubscript{opt}}
+\emph{condition} \VERB|\NormalTok{)}| \VERB|\NormalTok{\{}|
+\emph{inspect-case-seq} \VERB|\NormalTok{\}}|}}}
+
+{\color[HTML]{006e28}
+
+\emph{inspect-case-seq:}\\
+\strut ~~~~\emph{inspect-case}\\
+\strut ~~~~\emph{inspect-case-seq} \emph{inspect-case}
+
+\emph{inspect-case:}\\
+\strut ~~~~\emph{attribute-specifier-seq\textsubscript{opt}}
+\emph{inspect-pattern} \emph{inspect-guard\textsubscript{opt}}
+\VERB|\NormalTok{:}| \emph{statement}
+
+\emph{inspect-pattern:}\\
+\strut ~~~~\emph{wildcard-pattern}\\
+\strut ~~~~\emph{identifier-pattern}\\
+\strut ~~~~\emph{constant-pattern}\\
+\strut ~~~~\emph{structured-binding-pattern}\\
+\strut ~~~~\emph{alternative-pattern}\\
+\strut ~~~~\emph{binding-pattern}\\
+\strut ~~~~\emph{extractor-pattern}
+
+\emph{inspect-guard:}\\
+\strut ~~~~\VERB|\NormalTok{if (}| \emph{expression}
+\VERB|\NormalTok{)}|
+
+}
+\end{quote}
+\end{quote}
+
+\subsection{\texorpdfstring{Code\hyperref[code]{}}{Code}}\label{code}
+
+\subsubsection{\texorpdfstring{Inline
+Code\hyperref[inline-code]{}}{Inline Code}}\label{inline-code}
+
+Use backticks like
+\VERB|\NormalTok{\textasciigrave{}int x = 0;\textasciigrave{}}| for
+inline code.
+
+We can use the Pandoc extension
+\href{https://pandoc.org/MANUAL.html\#extension-inline_code_attributes}{\VERB|\NormalTok{inline\_code\_attributes}|}
+to specify which language should be used for syntax highlighting:
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5524}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.4476}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\centering\arraybackslash\textbf{Markdown Source}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\centering\arraybackslash\textbf{Rendered Output}
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\VERB|\NormalTok{\textasciigrave{}auto value = std::format("\{\}", bar);\textasciigrave{}\{.cpp\}}|
+&
+\VERB|\KeywordTok{auto}\NormalTok{ value }\OperatorTok{=}\NormalTok{ std}\OperatorTok{::}\NormalTok{format}\OperatorTok{(}\StringTok{"}\SpecialCharTok{\{\}}\StringTok{"}\OperatorTok{,}\NormalTok{ bar}\OperatorTok{);}| \\
+\VERB|\NormalTok{\textasciigrave{}let value = format!("\{bar\}");\textasciigrave{}\{.rust\}}|
+&
+\VERB|\KeywordTok{let}\NormalTok{ value }\OperatorTok{=} \PreprocessorTok{format!}\NormalTok{(}\StringTok{"\{bar\}"}\NormalTok{)}\OperatorTok{;}| \\
+\VERB|\NormalTok{\textasciigrave{}value = f"\{bar\}"\textasciigrave{}\{.python\}}|
+&
+\VERB|\NormalTok{value }\OperatorTok{=} \SpecialStringTok{f"}\SpecialCharTok{\{}\NormalTok{bar}\SpecialCharTok{\}}\SpecialStringTok{"}| \\
+\end{longtable}
+}
+
+{{{[} \emph{Note:} }\textbf{Inline Code gets C++ syntax highlighting by
+default.}{ --- \emph{end note} {]}}}
+
+Since we're writing a C++ proposal, many, if not most of the inline code
+will be C++. Adding the \VERB|\NormalTok{\{.cpp\}}| attribute everywhere
+can become very verbose, very fast. Thus, inline code is implicitly
+interpreted as \VERB|\NormalTok{\{.cpp\}}|. For example,
+\VERB|\NormalTok{\textasciigrave{}int x = 0;\textasciigrave{}}| is
+implicitly
+\VERB|\NormalTok{\textasciigrave{}int x = 0;\textasciigrave{}\{.cpp\}}|.
+
+For no-syntax-highlighting, use \VERB|\NormalTok{\{.default\}}| like
+\VERB|\NormalTok{\textasciigrave{}int x = 0;\textasciigrave{}\{.default\}}|.
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5679}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.4321}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\centering\arraybackslash\textbf{Markdown Source}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\centering\arraybackslash\textbf{Rendered Output}
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\VERB|\NormalTok{\textasciigrave{}constexpr int x = 0;\textasciigrave{}}|
+&
+\VERB|\KeywordTok{constexpr} \DataTypeTok{int}\NormalTok{ x }\OperatorTok{=} \DecValTok{0}\OperatorTok{;}| \\
+\VERB|\NormalTok{\textasciigrave{}constexpr int x = 0;\textasciigrave{}\{.default\}}|
+& \VERB|\NormalTok{constexpr int x = 0;}| \\
+\end{longtable}
+}
+
+\subsubsection{\texorpdfstring{Code
+Block\hyperref[code-block]{}}{Code Block}}\label{code-block}
+
+Use three or more backticks to start a code block.
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.3194}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.2500}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\centering\arraybackslash\textbf{Markdown Source}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\centering\arraybackslash\textbf{Rendered Output}
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}}
+\NormalTok{int main() \{}
+\NormalTok{  return 0;}
+\NormalTok{\}}
+\NormalTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}}
+\end{Highlighting}
+\end{Shaded}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{int main() \{}
+\NormalTok{  return 0;}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+\end{minipage} \\
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}cpp}
+\NormalTok{int main() \{}
+\NormalTok{  return 0;}
+\NormalTok{\}}
+\NormalTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}}
+\end{Highlighting}
+\end{Shaded}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{Shaded}
+\begin{Highlighting}[]
+\DataTypeTok{int}\NormalTok{ main}\OperatorTok{()} \OperatorTok{\{}
+  \ControlFlowTok{return} \DecValTok{0}\OperatorTok{;}
+\OperatorTok{\}}
+\end{Highlighting}
+\end{Shaded}
+\end{minipage} \\
+\end{longtable}
+}
+
+{{{[} \emph{Note:} }Unlike \hyperref[inline-code]{Inline Code}, code
+blocks are not implicitly C++.{ --- \emph{end note} {]}}}
+
+Add the \VERB|\OperatorTok{.}\NormalTok{numberLines}| class to a code
+block to number the lines, and the
+\VERB|\NormalTok{startFrom}\OperatorTok{=}\NormalTok{N}| attribute to
+specify the starting number, using the Pandoc extension:
+\href{https://pandoc.org/MANUAL.html\#extension-fenced_code_attributes}{\VERB|\NormalTok{fenced\_code\_attributes}|}.
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\centering\arraybackslash\textbf{Markdown Source}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\centering\arraybackslash\textbf{Rendered Output}
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}cpp \{.numberLines\}}
+\NormalTok{int main() \{}
+\NormalTok{  return 0;}
+\NormalTok{\}}
+\NormalTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}}
+\end{Highlighting}
+\end{Shaded}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{Shaded}
+\begin{Highlighting}[numbers=left,,]
+\DataTypeTok{int}\NormalTok{ main}\OperatorTok{()} \OperatorTok{\{}
+  \ControlFlowTok{return} \DecValTok{0}\OperatorTok{;}
+\OperatorTok{\}}
+\end{Highlighting}
+\end{Shaded}
+\end{minipage} \\
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}cpp \{.numberLines startFrom=8\}}
+\NormalTok{int main() \{}
+\NormalTok{  return 0;}
+\NormalTok{\}}
+\NormalTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}}
+\end{Highlighting}
+\end{Shaded}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{Shaded}
+\begin{Highlighting}[numbers=left,,firstnumber=8,]
+\DataTypeTok{int}\NormalTok{ main}\OperatorTok{()} \OperatorTok{\{}
+  \ControlFlowTok{return} \DecValTok{0}\OperatorTok{;}
+\OperatorTok{\}}
+\end{Highlighting}
+\end{Shaded}
+\end{minipage} \\
+\end{longtable}
+}
+
+\subsubsection{\texorpdfstring{Embedded
+Markdown\hyperref[embedded-markdown]{}}{Embedded Markdown}}\label{embedded-markdown}
+
+Code in C++ proposals often needs small pieces of wording markup inside
+it. With embedded Markdown enabled, text surrounded by
+\VERB|\NormalTok{@}| is parsed as Markdown and then placed back into the
+code element. This is useful for italicized terms, exposition-only
+names, \hyperref[modifying-text]{modifying text}, and
+\hyperref[stable-names]{stable names}.
+
+Embedded Markdown is \textbf{enabled by default} for C++ and
+no-syntax-highlighting code. This is essentially:
+
+\begin{itemize}
+\tightlist
+\item
+  Inline code such as
+  \VERB|\NormalTok{\textasciigrave{}code\textasciigrave{}}|,
+  \VERB|\NormalTok{\textasciigrave{}code\textasciigrave{}\{.cpp\}}|,
+  \VERB|\NormalTok{\textasciigrave{}code\textasciigrave{}\{.default\}}|,
+  and
+\item
+  Code blocks that start with either
+  \VERB|\NormalTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}}|,
+  \VERB|\NormalTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}cpp}|,
+  or
+  \VERB|\NormalTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}default}|
+\end{itemize}
+
+\begin{quote}
+\textbf{Markdown Source}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Recall the \textasciigrave{}static\_cast\textasciigrave{} syntax: \textasciigrave{}static\_cast \textless{} @*type{-}id*@ \textgreater{} ( @*expression*@ )\textasciigrave{}.}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{Rendered Output}
+
+Recall the \VERB|\KeywordTok{static\_cast}| syntax:
+\VERB|\KeywordTok{static\_cast} \OperatorTok{\textless{}}\NormalTok{ \emph{type-id} }\OperatorTok{\textgreater{}} \OperatorTok{(}\NormalTok{ \emph{expression} }\OperatorTok{)}|.
+\end{quote}
+
+Because italicized wording terms are so common,
+\VERB|\NormalTok{{{\setlength{\fboxsep}{1pt}\colorbox{yellow}{\$}}}text{{\setlength{\fboxsep}{1pt}\colorbox{yellow}{\$}}}}|
+is provided as a shorthand for
+\VERB|\NormalTok{{{\setlength{\fboxsep}{1pt}\colorbox{yellow}{@*}}}text{{\setlength{\fboxsep}{1pt}\colorbox{yellow}{*@}}}}|.
+
+\begin{quote}
+\textbf{Markdown Source}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Recall the \textasciigrave{}static\_cast\textasciigrave{} syntax: \textasciigrave{}static\_cast \textless{} $type{-}id$ \textgreater{} ( $expression$ )\textasciigrave{}.}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{Rendered Output}
+
+Recall the \VERB|\KeywordTok{static\_cast}| syntax:
+\VERB|\KeywordTok{static\_cast} \OperatorTok{\textless{}}\NormalTok{ \emph{type-id} }\OperatorTok{\textgreater{}} \OperatorTok{(}\NormalTok{ \emph{expression} }\OperatorTok{)}|.
+\end{quote}
+
+A more elaborate example with \hyperref[modifying-text]{modifying text}:
+
+\begin{quote}
+\textbf{Markdown Source}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}cpp}
+\NormalTok{template \textless{}@[invocable](class)\{.sub\}@ F@[, class]\{.add\}@\textgreater{}}
+\NormalTok{struct $as{-}receiver$ \{}
+\NormalTok{@[private:]\{.rm\}@}
+\NormalTok{  @[using invocable\_type = std::remove\_cvref\_t\textless{}F\textgreater{};]\{.rm\}@}
+\NormalTok{  @[invocable\_type](F)\{.sub\}@ f\_;}
+\NormalTok{@[public:]\{.rm\}@}
+\NormalTok{  @[explicit *as{-}receiver*(invocable\_type\&\& f)]\{.rm\}@}
+\NormalTok{  @[*as{-}receiver*(*as{-}receiver*\&\& other) = default;]\{.rm\}@}
+\NormalTok{  void set\_value() @[noexcept(is\_nothrow\_invocable\_v\textless{}F\&\textgreater{})]\{.add\}@ \{}
+\NormalTok{    invoke(f\_);}
+\NormalTok{  \}}
+\NormalTok{  @[[[noreturn]]]\{.add\}@ void set\_error(std::exception\_ptr) @[noexcept]\{.add\}@ \{}
+\NormalTok{    terminate();}
+\NormalTok{  \}}
+\NormalTok{  void set\_done() noexcept \{\}}
+\NormalTok{\};}
+\NormalTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{Rendered Output}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{template} \OperatorTok{\textless{}}\NormalTok{{{{\color[HTML]{bf0303}\sout{invocable}}}{{\color[HTML]{006e28}\uline{class}}}} F{{\color[HTML]{006e28}\uline{, class}}}}\OperatorTok{\textgreater{}}
+\KeywordTok{struct}\NormalTok{ \emph{as-receiver} }\OperatorTok{\{}
+\NormalTok{{{\color[HTML]{bf0303}\sout{private:}}}}
+\NormalTok{  {{\color[HTML]{bf0303}\sout{using invocable\_type = std::remove\_cvref\_t\textless{}F\textgreater;}}}}
+\NormalTok{  {{{\color[HTML]{bf0303}\sout{invocable\_type}}}{{\color[HTML]{006e28}\uline{F}}}} f\_}\OperatorTok{;}
+\NormalTok{{{\color[HTML]{bf0303}\sout{public:}}}}
+\NormalTok{  {{\color[HTML]{bf0303}\sout{explicit \emph{as-receiver}(invocable\_type\&\& f)}}}}
+\NormalTok{  {{\color[HTML]{bf0303}\sout{\emph{as-receiver}(\emph{as-receiver}\&\& other) = default;}}}}
+  \DataTypeTok{void}\NormalTok{ set\_value}\OperatorTok{()}\NormalTok{ {{\color[HTML]{006e28}\uline{noexcept(is\_nothrow\_invocable\_v\textless{}F\&\textgreater)}}} }\OperatorTok{\{}
+\NormalTok{    invoke}\OperatorTok{(}\NormalTok{f\_}\OperatorTok{);}
+  \OperatorTok{\}}
+\NormalTok{  {{\color[HTML]{006e28}\uline{{[}{[}noreturn{]}{]}}}} }\DataTypeTok{void}\NormalTok{ set\_error}\OperatorTok{(}\NormalTok{std}\OperatorTok{::}\NormalTok{exception\_ptr}\OperatorTok{)}\NormalTok{ {{\color[HTML]{006e28}\uline{noexcept}}} }\OperatorTok{\{}
+\NormalTok{    terminate}\OperatorTok{();}
+  \OperatorTok{\}}
+  \DataTypeTok{void}\NormalTok{ set\_done}\OperatorTok{()} \KeywordTok{noexcept} \OperatorTok{\{\}}
+\OperatorTok{\};}
+\end{Highlighting}
+\end{Shaded}
+\end{quote}
+
+\paragraph{\texorpdfstring{Code within Embedded
+Markdown\hyperref[code-within-embedded-markdown]{}}{Code within Embedded Markdown}}\label{code-within-embedded-markdown}
+
+Suppose we want to \textbf{add} a parameter
+\VERB|\DataTypeTok{int}\NormalTok{ i}| to a function
+\VERB|\NormalTok{f}|:
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.3750}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.3750}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\centering\arraybackslash\textbf{Markdown Source}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\centering\arraybackslash\textbf{Rendered Output}
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}cpp}
+\NormalTok{void f(@[int i]\{.add\}@);}
+\NormalTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}}
+\end{Highlighting}
+\end{Shaded}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{Shaded}
+\begin{Highlighting}[]
+\DataTypeTok{void}\NormalTok{ f}\OperatorTok{(}\NormalTok{{{\color[HTML]{006e28}\uline{int i}}}}\OperatorTok{);}
+\end{Highlighting}
+\end{Shaded}
+\end{minipage} \\
+\end{longtable}
+}
+
+This is perfectly fine, and quite intuitive. However, consider if the
+parameter is something more complicated, like
+\VERB|\NormalTok{\emph{foo} }\OperatorTok{*}\KeywordTok{const} \OperatorTok{*}\NormalTok{ptr}|:
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\centering\arraybackslash\textbf{Markdown Source}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\centering\arraybackslash\textbf{Rendered Output}
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}cpp}
+\NormalTok{void f(@[*foo* *const *ptr]\{.add\}@);}
+\NormalTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}}
+\end{Highlighting}
+\end{Shaded}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{Shaded}
+\begin{Highlighting}[]
+\DataTypeTok{void}\NormalTok{ f}\OperatorTok{(}\NormalTok{{{\color[HTML]{006e28}\uline{\emph{foo} \emph{const }ptr}}}}\OperatorTok{);}
+\end{Highlighting}
+\end{Shaded}
+\end{minipage} \\
+\end{longtable}
+}
+
+Now, the pointers have disappeared and \VERB|\KeywordTok{const}| is
+italicized. This is because the \textbf{full text} within
+\VERB|\NormalTok{@}| is treated as Markdown, which is exactly what we
+want for \VERB|\OperatorTok{*}\NormalTok{foo}\OperatorTok{*}| for
+example. It's just not want we want for the
+\VERB|\OperatorTok{*}\KeywordTok{const} \OperatorTok{*}| part of it.
+
+There are a couple of ways to resolve this issue:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Introduce an \textbf{inline code within the embedded Markdown}:
+
+  \begin{quote}
+  \textbf{Markdown Source}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}cpp}
+\NormalTok{void f(@[\textasciigrave{}$foo$ *const *ptr\textasciigrave{}]\{.add\}@);}
+\NormalTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}}
+\end{Highlighting}
+\end{Shaded}
+
+  \textbf{Rendered Output}
+
+  \begin{Shaded}
+  \begin{Highlighting}[]
+  \DataTypeTok{void}\NormalTok{ f}\OperatorTok{(}\NormalTok{{{\color[HTML]{006e28}\uline{\VERB|\NormalTok{\emph{foo} *const *ptr}|}}}}\OperatorTok{);}
+  \end{Highlighting}
+  \end{Shaded}
+  \end{quote}
+
+  Given that
+  \VERB|\NormalTok{\textasciigrave{}$foo$ *const *ptr\textasciigrave{}}|
+  is exactly how it would be written if we were writing inline code,
+  this is a decent solution.
+
+  However, this approach can't really handle markup more complicated
+  than italicizing because the parsing of \VERB|\NormalTok{@}| is
+  extremely naive in its current implementation.
+\item
+  \textbf{Escape the special Markdown characters} that you want
+  interpreted literally. Any symbol can be escaped with a backslash like
+  \VERB|\NormalTok{\textbackslash{}}\OperatorTok{*}|, and is interpreted
+  literally by the Pandoc extension:
+  \href{https://pandoc.org/MANUAL.html\#extension-all_symbols_escapable}{\VERB|\NormalTok{all\_symbols\_escapable}|}.
+
+  \begin{quote}
+  \textbf{Markdown Source}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}cpp}
+\NormalTok{void f(@[*foo* \textbackslash{}*const \textbackslash{}*ptr]\{.add\}@);}
+\NormalTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}}
+\end{Highlighting}
+\end{Shaded}
+
+  \textbf{Rendered Output}
+
+  \begin{Shaded}
+  \begin{Highlighting}[]
+  \DataTypeTok{void}\NormalTok{ f}\OperatorTok{(}\NormalTok{{{\color[HTML]{006e28}\uline{\emph{foo} *const *ptr}}}}\OperatorTok{);}
+  \end{Highlighting}
+  \end{Shaded}
+  \end{quote}
+
+  This approach can handle more complicated markup requirements. For
+  example, if \VERB|\NormalTok{foo}| needed to be bolded instead, we can
+  just do:
+
+  \begin{quote}
+  \textbf{Markdown Source}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}cpp}
+\NormalTok{void f(@[**foo** \textbackslash{}*const \textbackslash{}*ptr]\{.add\}@);}
+\NormalTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}}
+\end{Highlighting}
+\end{Shaded}
+
+  \textbf{Rendered Output}
+
+  \begin{Shaded}
+  \begin{Highlighting}[]
+  \DataTypeTok{void}\NormalTok{ f}\OperatorTok{(}\NormalTok{{{\color[HTML]{006e28}\uline{\textbf{foo} *const *ptr}}}}\OperatorTok{);}
+  \end{Highlighting}
+  \end{Shaded}
+  \end{quote}
+\end{enumerate}
+
+\paragraph{\texorpdfstring{Opt-out for Default Languages:
+\texttt{.raw}\hyperref[opt-out-for-default-languages-.raw]{}}{Opt-out for Default Languages: .raw}}\label{opt-out-for-default-languages-.raw}
+
+Add the \VERB|\OperatorTok{.}\NormalTok{raw}| class to opt-out of
+embedded Markdown, using Pandoc extensions
+\href{https://pandoc.org/MANUAL.html\#extension-inline_code_attributes}{\VERB|\NormalTok{inline\_code\_attributes}|}
+or
+\href{https://pandoc.org/MANUAL.html\#extension-fenced_code_attributes}{\VERB|\NormalTok{fenced\_code\_attributes}|}.
+
+One example of a problem involving emails:
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\centering\arraybackslash\textbf{Markdown Source}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\centering\arraybackslash\textbf{Rendered Output}
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}cpp \{.raw\}}
+\NormalTok{auto emails = \{ "a@mail.com", "b@mail.com" \};}
+\NormalTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}}
+\end{Highlighting}
+\end{Shaded}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{auto}\NormalTok{ emails }\OperatorTok{=} \OperatorTok{\{} \StringTok{"a@mail.com"}\OperatorTok{,} \StringTok{"b@mail.com"} \OperatorTok{\};}
+\end{Highlighting}
+\end{Shaded}
+\end{minipage} \\
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}cpp}
+\NormalTok{auto emails = \{ "a@mail.com", "b@mail.com" \};}
+\NormalTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}}
+\end{Highlighting}
+\end{Shaded}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{auto}\NormalTok{ emails }\OperatorTok{=} \OperatorTok{\{} \StringTok{"amail.com", "bmail.com"} \OperatorTok{\};}
+\end{Highlighting}
+\end{Shaded}
+\end{minipage} \\
+\end{longtable}
+}
+
+The \VERB|\NormalTok{@}| characters ``disappear'' without the
+\VERB|\OperatorTok{.}\NormalTok{raw}| class because the text between the
+two \VERB|\NormalTok{@}|,
+\VERB|\NormalTok{domain}\OperatorTok{.}\NormalTok{com}\StringTok{", "}\NormalTok{bar}|
+is parsed as Markdown, and placed back into the full range of
+\VERB|\NormalTok{@domain.com", "bar@}|.
+
+\paragraph{\texorpdfstring{Opt-in for Other Languages:
+\texttt{.embed\_md}\hyperref[embed_md]{}}{Opt-in for Other Languages: .embed\_md}}\label{embed_md}
+
+Add the \VERB|\OperatorTok{.}\NormalTok{embed\_md}| class to opt-in for
+embedded Markdown, using Pandoc extensions
+\href{https://pandoc.org/MANUAL.html\#extension-inline_code_attributes}{\VERB|\NormalTok{inline\_code\_attributes}|}
+or
+\href{https://pandoc.org/MANUAL.html\#extension-fenced_code_attributes}{\VERB|\NormalTok{fenced\_code\_attributes}|}.
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5478}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.4522}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\centering\arraybackslash\textbf{Markdown Source}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\centering\arraybackslash\textbf{Rendered Output}
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}rust}
+\NormalTok{fn main() \{}
+\NormalTok{    @**println**@!("hello!");}
+\NormalTok{\}}
+\NormalTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}}
+\end{Highlighting}
+\end{Shaded}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{fn}\NormalTok{ main() }\OperatorTok{\{}
+    \OperatorTok{@**}\NormalTok{println}\OperatorTok{**@!}\NormalTok{(}\StringTok{"hello!"}\NormalTok{)}\OperatorTok{;}
+\OperatorTok{\}}
+\end{Highlighting}
+\end{Shaded}
+\end{minipage} \\
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}rust \{.embed\_md\}}
+\NormalTok{fn main() \{}
+\NormalTok{    @**println**@!("hello!");}
+\NormalTok{\}}
+\NormalTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}}
+\end{Highlighting}
+\end{Shaded}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{fn}\NormalTok{ main() }\OperatorTok{\{}
+\NormalTok{    \textbf{println}}\OperatorTok{!}\NormalTok{(}\StringTok{"hello!"}\NormalTok{)}\OperatorTok{;}
+\OperatorTok{\}}
+\end{Highlighting}
+\end{Shaded}
+\end{minipage} \\
+\VERB|\NormalTok{\textasciigrave{}s.trim\_@[left](start)\{.sub\}@()\textasciigrave{}\{.rust\}}|
+&
+\VERB|\NormalTok{s}\OperatorTok{.}\NormalTok{trim\_}\OperatorTok{@}\NormalTok{[left](start)}\OperatorTok{\{.}\NormalTok{sub}\OperatorTok{\}@}\NormalTok{()}| \\
+\VERB|\NormalTok{\textasciigrave{}s.trim\_@[left](start)\{.sub\}@()\textasciigrave{}\{.rust .embed\_md\}}|
+&
+\VERB|\NormalTok{s}\OperatorTok{.}\NormalTok{trim\_{{{\color[HTML]{bf0303}\sout{left}}}{{\color[HTML]{006e28}\uline{start}}}}()}| \\
+\end{longtable}
+}
+
+\paragraph{\texorpdfstring{Overriding the Delimiters: \texttt{md},
+\texttt{em}\hyperref[overriding-the-delimiters-md-em]{}}{Overriding the Delimiters: md, em}}\label{overriding-the-delimiters-md-em}
+
+The final escape hatch, is to change the default Markdown and italics
+delimiters from \VERB|\NormalTok{@}| and \VERB|\NormalTok{$}|
+respectively, to something else.
+
+Add the attribute
+\VERB|\NormalTok{md}\OperatorTok{=\textless{}}\NormalTok{symbol}\OperatorTok{\textgreater{}\VerbBar{}}\NormalTok{none}|
+to set the Markdown delimiter or disable, and
+\VERB|\NormalTok{em}\OperatorTok{=\textless{}}\NormalTok{symbol}\OperatorTok{\textgreater{}\VerbBar{}}\NormalTok{none}|
+to set the italics delimiter or disable.
+
+Consider this \VERB|\NormalTok{bash}| example:
+
+\begin{quote}
+\textbf{Markdown Source}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}bash}
+\NormalTok{rsync {-}av "$@" "deploy@$target:/srv/app/"}
+\NormalTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{Rendered Output}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{rsync} \AttributeTok{{-}av} \StringTok{"}\VariableTok{$@}\StringTok{"} \StringTok{"deploy@}\VariableTok{$target}\StringTok{:/srv/app/"}
+\end{Highlighting}
+\end{Shaded}
+\end{quote}
+
+If we want to bold the \VERB|\StringTok{"$@"}| for example, we need to
+enable embedded Markdown. However, the two occurences each of
+\VERB|\NormalTok{@}| and \VERB|\NormalTok{$}| make the default
+delimiters (\VERB|\NormalTok{@}| and \VERB|\NormalTok{$}|) unusable. In
+this example, we set the Markdown delimiter to be \VERB|\NormalTok{\%}|
+instead, and disable the italics delimiter entirely.
+
+\begin{quote}
+\textbf{Markdown Source}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}bash \{md=\% em=none\}}
+\NormalTok{rsync {-}av \%**"$@"**\% "deploy@$target:/srv/app/"}
+\NormalTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{Rendered Output}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{rsync} \AttributeTok{{-}av}\NormalTok{ \textbf{"\$@"} }\StringTok{"deploy@}\VariableTok{$target}\StringTok{:/srv/app/"}
+\end{Highlighting}
+\end{Shaded}
+\end{quote}
+
+{{{[} \emph{Note:} }Effectively,
+\VERB|\OperatorTok{.}\NormalTok{embed\_md}| is
+\VERB|\NormalTok{md=@ em=$}| and \VERB|\OperatorTok{.}\NormalTok{raw}|
+is
+\VERB|\NormalTok{md}\OperatorTok{=}\NormalTok{none em}\OperatorTok{=}\NormalTok{none}|.{ --- \emph{end note} {]}}}
+
+\subsection{\texorpdfstring{Comparison
+Tables\hyperref[comparison-tables]{}}{Comparison Tables}}\label{comparison-tables}
+
+Comparison Tables are
+\href{https://pandoc.org/MANUAL.html\#divs-and-spans}{fenced
+\VERB|\NormalTok{Div}| blocks} that open with
+\VERB|\OperatorTok{:::}\NormalTok{ cmptable}| and close with
+\VERB|\OperatorTok{:::}|.
+\href{https://pandoc.org/MANUAL.html\#fenced-code-blocks}{Fenced code
+blocks} are the only elements that actually get added to Comparison
+Tables, except that the last header (if any) before a
+\href{https://pandoc.org/MANUAL.html\#fenced-code-blocks}{fenced code
+block} is attached to the cell above.
+
+\textbf{Markdown Source}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{::: cmptable}
+\FunctionTok{\#\#\# Before}
+\InformationTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}cpp}
+\ControlFlowTok{switch} \OperatorTok{(}\NormalTok{x}\OperatorTok{)} \OperatorTok{\{}
+  \ControlFlowTok{case} \DecValTok{0}\OperatorTok{:}\NormalTok{ std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"got zero"}\OperatorTok{;} \ControlFlowTok{break}\OperatorTok{;}
+  \ControlFlowTok{case} \DecValTok{1}\OperatorTok{:}\NormalTok{ std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"got one"}\OperatorTok{;} \ControlFlowTok{break}\OperatorTok{;}
+  \ControlFlowTok{default}\OperatorTok{:}\NormalTok{ std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"don\textquotesingle{}t care"}\OperatorTok{;}
+\OperatorTok{\}}
+\InformationTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}}
+
+\FunctionTok{\#\#\# After}
+\InformationTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}cpp}
+\NormalTok{x match }\OperatorTok{\{}
+  \DecValTok{0} \OperatorTok{=\textgreater{}} \ControlFlowTok{do} \OperatorTok{\{}\NormalTok{ std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"got zero"} \OperatorTok{\};}
+  \DecValTok{1} \OperatorTok{=\textgreater{}} \ControlFlowTok{do} \OperatorTok{\{}\NormalTok{ std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"got one"} \OperatorTok{\};}
+\NormalTok{  \_ }\OperatorTok{=\textgreater{}} \ControlFlowTok{do} \OperatorTok{\{}\NormalTok{ std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"don\textquotesingle{}t care"} \OperatorTok{\};}
+\OperatorTok{\};}
+\InformationTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}}
+\NormalTok{:::}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{Rendered Output}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule\noalign{}
+\centering\arraybackslash\textbf{Before} &
+\centering\arraybackslash\textbf{After} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\begin{minipage}[t]{\linewidth}\raggedright
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{switch} \OperatorTok{(}\NormalTok{x}\OperatorTok{)} \OperatorTok{\{}
+  \ControlFlowTok{case} \DecValTok{0}\OperatorTok{:}\NormalTok{ std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"got zero"}\OperatorTok{;} \ControlFlowTok{break}\OperatorTok{;}
+  \ControlFlowTok{case} \DecValTok{1}\OperatorTok{:}\NormalTok{ std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"got one"}\OperatorTok{;} \ControlFlowTok{break}\OperatorTok{;}
+  \ControlFlowTok{default}\OperatorTok{:}\NormalTok{ std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"don\textquotesingle{}t care"}\OperatorTok{;}
+\OperatorTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x match }\OperatorTok{\{}
+  \DecValTok{0} \OperatorTok{=\textgreater{}} \ControlFlowTok{do} \OperatorTok{\{}\NormalTok{ std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"got zero"} \OperatorTok{\};}
+  \DecValTok{1} \OperatorTok{=\textgreater{}} \ControlFlowTok{do} \OperatorTok{\{}\NormalTok{ std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"got one"} \OperatorTok{\};}
+\NormalTok{  \_ }\OperatorTok{=\textgreater{}} \ControlFlowTok{do} \OperatorTok{\{}\NormalTok{ std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"don\textquotesingle{}t care"} \OperatorTok{\};}
+\OperatorTok{\};}
+\end{Highlighting}
+\end{Shaded}
+
+\end{minipage} \\
+\end{longtable}
+}
+
+Each \href{https://pandoc.org/MANUAL.html\#fenced-code-blocks}{fenced
+code block} is pushed onto the current row, and horizontal rules
+(\VERB|\OperatorTok{{-}{-}{-}}|) are used to move to the next row.
+
+\textbf{Markdown Source}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{::: cmptable}
+
+\FunctionTok{\#\#\# Before}
+\InformationTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}cpp}
+\ControlFlowTok{switch} \OperatorTok{(}\NormalTok{x}\OperatorTok{)} \OperatorTok{\{}
+  \ControlFlowTok{case} \DecValTok{0}\OperatorTok{:}\NormalTok{ std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"got zero"}\OperatorTok{;} \ControlFlowTok{break}\OperatorTok{;}
+  \ControlFlowTok{case} \DecValTok{1}\OperatorTok{:}\NormalTok{ std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"got one"}\OperatorTok{;} \ControlFlowTok{break}\OperatorTok{;}
+  \ControlFlowTok{default}\OperatorTok{:}\NormalTok{ std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"don\textquotesingle{}t care"}\OperatorTok{;}
+\OperatorTok{\}}
+\InformationTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}}
+
+\FunctionTok{\#\#\# After}
+\InformationTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}cpp}
+\NormalTok{x match }\OperatorTok{\{}
+  \DecValTok{0} \OperatorTok{=\textgreater{}} \ControlFlowTok{do} \OperatorTok{\{}\NormalTok{ std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"got zero"} \OperatorTok{\};}
+  \DecValTok{1} \OperatorTok{=\textgreater{}} \ControlFlowTok{do} \OperatorTok{\{}\NormalTok{ std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"got one"} \OperatorTok{\};}
+\NormalTok{  \_ }\OperatorTok{=\textgreater{}} \ControlFlowTok{do} \OperatorTok{\{}\NormalTok{ std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"don\textquotesingle{}t care"} \OperatorTok{\};}
+\OperatorTok{\};}
+\InformationTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}}
+
+\NormalTok{{-}{-}{-}}
+
+\InformationTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}cpp}
+\ControlFlowTok{if} \OperatorTok{(}\NormalTok{s }\OperatorTok{==} \StringTok{"foo"}\OperatorTok{)} \OperatorTok{\{}
+\NormalTok{  std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"got foo"}\OperatorTok{;}
+\OperatorTok{\}} \ControlFlowTok{else} \ControlFlowTok{if} \OperatorTok{(}\NormalTok{s }\OperatorTok{==} \StringTok{"bar"}\OperatorTok{)} \OperatorTok{\{}
+\NormalTok{  std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"got bar"}\OperatorTok{;}
+\OperatorTok{\}} \ControlFlowTok{else} \OperatorTok{\{}
+\NormalTok{  std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"don\textquotesingle{}t care"}\OperatorTok{;}
+\OperatorTok{\}}
+\InformationTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}}
+
+\InformationTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}cpp}
+\NormalTok{s match }\OperatorTok{\{}
+  \StringTok{"foo"} \OperatorTok{=\textgreater{}} \ControlFlowTok{do} \OperatorTok{\{}\NormalTok{ std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"got foo"} \OperatorTok{\};}
+  \StringTok{"bar"} \OperatorTok{=\textgreater{}} \ControlFlowTok{do} \OperatorTok{\{}\NormalTok{ std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"got bar"} \OperatorTok{\};}
+\NormalTok{  \_ }\OperatorTok{=\textgreater{}} \ControlFlowTok{do} \OperatorTok{\{}\NormalTok{ std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"don\textquotesingle{}t care"} \OperatorTok{\};}
+\OperatorTok{\};}
+\InformationTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}}
+
+\NormalTok{:::}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{Rendered Output}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule\noalign{}
+\centering\arraybackslash\textbf{Before} &
+\centering\arraybackslash\textbf{After} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\begin{minipage}[t]{\linewidth}\raggedright
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{switch} \OperatorTok{(}\NormalTok{x}\OperatorTok{)} \OperatorTok{\{}
+  \ControlFlowTok{case} \DecValTok{0}\OperatorTok{:}\NormalTok{ std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"got zero"}\OperatorTok{;} \ControlFlowTok{break}\OperatorTok{;}
+  \ControlFlowTok{case} \DecValTok{1}\OperatorTok{:}\NormalTok{ std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"got one"}\OperatorTok{;} \ControlFlowTok{break}\OperatorTok{;}
+  \ControlFlowTok{default}\OperatorTok{:}\NormalTok{ std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"don\textquotesingle{}t care"}\OperatorTok{;}
+\OperatorTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x match }\OperatorTok{\{}
+  \DecValTok{0} \OperatorTok{=\textgreater{}} \ControlFlowTok{do} \OperatorTok{\{}\NormalTok{ std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"got zero"} \OperatorTok{\};}
+  \DecValTok{1} \OperatorTok{=\textgreater{}} \ControlFlowTok{do} \OperatorTok{\{}\NormalTok{ std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"got one"} \OperatorTok{\};}
+\NormalTok{  \_ }\OperatorTok{=\textgreater{}} \ControlFlowTok{do} \OperatorTok{\{}\NormalTok{ std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"don\textquotesingle{}t care"} \OperatorTok{\};}
+\OperatorTok{\};}
+\end{Highlighting}
+\end{Shaded}
+
+\end{minipage} \\
+\begin{minipage}[t]{\linewidth}\raggedright
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{if} \OperatorTok{(}\NormalTok{s }\OperatorTok{==} \StringTok{"foo"}\OperatorTok{)} \OperatorTok{\{}
+\NormalTok{  std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"got foo"}\OperatorTok{;}
+\OperatorTok{\}} \ControlFlowTok{else} \ControlFlowTok{if} \OperatorTok{(}\NormalTok{s }\OperatorTok{==} \StringTok{"bar"}\OperatorTok{)} \OperatorTok{\{}
+\NormalTok{  std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"got bar"}\OperatorTok{;}
+\OperatorTok{\}} \ControlFlowTok{else} \OperatorTok{\{}
+\NormalTok{  std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"don\textquotesingle{}t care"}\OperatorTok{;}
+\OperatorTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{s match }\OperatorTok{\{}
+  \StringTok{"foo"} \OperatorTok{=\textgreater{}} \ControlFlowTok{do} \OperatorTok{\{}\NormalTok{ std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"got foo"} \OperatorTok{\};}
+  \StringTok{"bar"} \OperatorTok{=\textgreater{}} \ControlFlowTok{do} \OperatorTok{\{}\NormalTok{ std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"got bar"} \OperatorTok{\};}
+\NormalTok{  \_ }\OperatorTok{=\textgreater{}} \ControlFlowTok{do} \OperatorTok{\{}\NormalTok{ std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"don\textquotesingle{}t care"} \OperatorTok{\};}
+\OperatorTok{\};}
+\end{Highlighting}
+\end{Shaded}
+
+\end{minipage} \\
+\end{longtable}
+}
+
+The last block quote
+\VERB|\OperatorTok{\textgreater{}}\NormalTok{ caption}| (if any) is used
+as the caption.
+
+\textbf{Markdown Source}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{::: cmptable}
+
+\AttributeTok{\textgreater{} Put your caption here}
+
+\FunctionTok{\#\#\# Before}
+\InformationTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}cpp}
+\ControlFlowTok{switch} \OperatorTok{(}\NormalTok{x}\OperatorTok{)} \OperatorTok{\{}
+  \ControlFlowTok{case} \DecValTok{0}\OperatorTok{:}\NormalTok{ std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"got zero"}\OperatorTok{;} \ControlFlowTok{break}\OperatorTok{;}
+  \ControlFlowTok{case} \DecValTok{1}\OperatorTok{:}\NormalTok{ std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"got one"}\OperatorTok{;} \ControlFlowTok{break}\OperatorTok{;}
+  \ControlFlowTok{default}\OperatorTok{:}\NormalTok{ std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"don\textquotesingle{}t care"}\OperatorTok{;}
+\OperatorTok{\}}
+\InformationTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}}
+
+\FunctionTok{\#\#\# After}
+\InformationTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}cpp}
+\NormalTok{x match }\OperatorTok{\{}
+  \DecValTok{0} \OperatorTok{=\textgreater{}} \ControlFlowTok{do} \OperatorTok{\{}\NormalTok{ std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"got zero"} \OperatorTok{\};}
+  \DecValTok{1} \OperatorTok{=\textgreater{}} \ControlFlowTok{do} \OperatorTok{\{}\NormalTok{ std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"got one"} \OperatorTok{\};}
+\NormalTok{  \_ }\OperatorTok{=\textgreater{}} \ControlFlowTok{do} \OperatorTok{\{}\NormalTok{ std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"don\textquotesingle{}t care"} \OperatorTok{\};}
+\OperatorTok{\};}
+\InformationTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}}
+
+\NormalTok{:::}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{Rendered Output}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\caption{Put your caption here}\tabularnewline
+\toprule\noalign{}
+\centering\arraybackslash\textbf{Before} &
+\centering\arraybackslash\textbf{After} \\
+\midrule\noalign{}
+\endfirsthead
+\toprule\noalign{}
+\centering\arraybackslash\textbf{Before} &
+\centering\arraybackslash\textbf{After} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\begin{minipage}[t]{\linewidth}\raggedright
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{switch} \OperatorTok{(}\NormalTok{x}\OperatorTok{)} \OperatorTok{\{}
+  \ControlFlowTok{case} \DecValTok{0}\OperatorTok{:}\NormalTok{ std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"got zero"}\OperatorTok{;} \ControlFlowTok{break}\OperatorTok{;}
+  \ControlFlowTok{case} \DecValTok{1}\OperatorTok{:}\NormalTok{ std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"got one"}\OperatorTok{;} \ControlFlowTok{break}\OperatorTok{;}
+  \ControlFlowTok{default}\OperatorTok{:}\NormalTok{ std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"don\textquotesingle{}t care"}\OperatorTok{;}
+\OperatorTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x match }\OperatorTok{\{}
+  \DecValTok{0} \OperatorTok{=\textgreater{}} \ControlFlowTok{do} \OperatorTok{\{}\NormalTok{ std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"got zero"} \OperatorTok{\};}
+  \DecValTok{1} \OperatorTok{=\textgreater{}} \ControlFlowTok{do} \OperatorTok{\{}\NormalTok{ std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"got one"} \OperatorTok{\};}
+\NormalTok{  \_ }\OperatorTok{=\textgreater{}} \ControlFlowTok{do} \OperatorTok{\{}\NormalTok{ std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"don\textquotesingle{}t care"} \OperatorTok{\};}
+\OperatorTok{\};}
+\end{Highlighting}
+\end{Shaded}
+
+\end{minipage} \\
+\end{longtable}
+
+\subsection{\texorpdfstring{Stable
+Names\hyperref[stable-names]{}}{Stable Names}}\label{stable-names}
+
+Stable names come in two flavors: \emph{explicit} and \emph{implicit} .
+
+{{{[} \emph{Note:} }Run \VERB|\NormalTok{make update}| to re-fetch and
+update the local databases, including stable
+names.{ --- \emph{end note} {]}}}
+
+\subsubsection{\texorpdfstring{Implicit Stable
+Names\hyperref[implicit-stable-names]{}}{Implicit Stable Names}}\label{implicit-stable-names}
+
+\emph{Implicit} stable names are
+\href{https://pandoc.org/MANUAL.html\#extension-shortcut_reference_links}{\VERB|\NormalTok{shortcut\_reference\_links}|}
+such as
+\VERB|\OperatorTok{[}\NormalTok{basic}\OperatorTok{.}\NormalTok{life}\OperatorTok{]}|,
+and automatically links to \url{https://eel.is/c++draft/basic.life}.
+This is typically used in quoting standard paragraphs like this:
+
+\begin{quote}
+\textbf{Markdown Source}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{\textgreater{} [...] whose lifetime has begun and has not ended ([basic.life]).}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{Rendered Output}
+
+\begin{quote}
+{[}\ldots{]} whose lifetime has begun and has not ended
+(\href{https://eel.is/c++draft/basic.life}{{[}basic.life{]}}).
+\end{quote}
+\end{quote}
+
+{{{[} \emph{Note:} }Under the hood,
+\VERB|\OperatorTok{[}\NormalTok{basic}\OperatorTok{.}\NormalTok{life}\OperatorTok{]}|
+expands to
+\VERB|\OperatorTok{[}\NormalTok{basic}\OperatorTok{.}\NormalTok{life}\OperatorTok{]\{{-}} \OperatorTok{.}\NormalTok{sref}\OperatorTok{\}}|
+(See \hyperref[explicit-stable-names]{Explicit Stable
+Names}).{ --- \emph{end note} {]}}}
+
+\subsubsection{\texorpdfstring{Explicit Stable
+Names\hyperref[explicit-stable-names]{}}{Explicit Stable Names}}\label{explicit-stable-names}
+
+\emph{Explicit} stable names are
+\href{https://pandoc.org/MANUAL.html\#divs-and-spans}{bracketed
+\VERB|\NormalTok{Span}| elements} that look like:
+\VERB|\NormalTok{[stable.name]{{\setlength{\fboxsep}{1pt}\colorbox{yellow}{\{.sref\}}}}}|.
+A leading section number is rendered automatically. This is typically
+used to describe the section to be modified:
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\centering\arraybackslash\textbf{Markdown Source}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\centering\arraybackslash\textbf{Rendered Output}
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Modify section [basic.life]\{.sref\}:}
+\end{Highlighting}
+\end{Shaded}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+Modify section {6.8.4
+\href{https://eel.is/c++draft/basic.life}{{[}basic.life{]}}}:
+\end{minipage} \\
+\end{longtable}
+}
+
+Add the \VERB|\OperatorTok{.}\NormalTok{title}| class in addition to
+\VERB|\OperatorTok{.}\NormalTok{sref}|, to also render the section title
+of the stable name, like:
+\VERB|\NormalTok{[stable.name]\{.sref {{\setlength{\fboxsep}{1pt}\colorbox{yellow}{.title}}}\}}|.
+This is typically used as a header in wording:
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\centering\arraybackslash\textbf{Markdown Source}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\centering\arraybackslash\textbf{Rendered Output}
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{\#\# [basic.life]\{.sref .title\} \{{-} .unlisted\}}
+\end{Highlighting}
+\end{Shaded}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\subsection*{\texorpdfstring{{6.8.4 Lifetime
+\href{https://eel.is/c++draft/basic.life}{{[}basic.life{]}}}\hyperref[basic.life]{}}{6.8.4 Lifetime {[}basic.life{]}}}\label{basic.life}
+\end{minipage} \\
+\end{longtable}
+}
+
+{{{[} \emph{Note:} }The \VERB|\NormalTok{\{{-} .unlisted\}}| is applied
+to the header itself, to \hyperref[disable-section-number]{disable the
+section numbering} and to \hyperref[exclude-from-toc]{exclude it from
+the table of contents}{ --- \emph{end note} {]}}}
+
+Lastly, you may also add the class \VERB|\OperatorTok{{-}}| or
+\VERB|\OperatorTok{.}\NormalTok{unnumbered}| to
+\VERB|\OperatorTok{.}\NormalTok{sref}| to omit the section number. This
+is mostly for completeness, as something like
+\VERB|\OperatorTok{[}\NormalTok{basic}\OperatorTok{.}\NormalTok{life}\OperatorTok{]\{{-}} \OperatorTok{.}\NormalTok{sref}\OperatorTok{\}}|
+can be written simply as
+\VERB|\OperatorTok{[}\NormalTok{basic}\OperatorTok{.}\NormalTok{life}\OperatorTok{]}|.
+You can also use this to render \emph{only} the section title without
+the section number like:
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.4306}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.4306}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\centering\arraybackslash\textbf{Markdown Source}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\centering\arraybackslash\textbf{Rendered Output}
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{[basic.life]\{{-} .sref .title\}}
+\end{Highlighting}
+\end{Shaded}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+{Lifetime \href{https://eel.is/c++draft/basic.life}{{[}basic.life{]}}}
+\end{minipage} \\
+\end{longtable}
+}
+
+\subsubsection{\texorpdfstring{Paragraph
+Link\hyperref[paragraph-link]{}}{Paragraph Link}}\label{paragraph-link}
+
+A suffix \VERB|\NormalTok{/pnum}| can be added to link to a specific
+paragraph number, where \VERB|\NormalTok{pnum}| is a dot-separated
+integers like \VERB|\DecValTok{1}| or \VERB|\FloatTok{2.1}|.
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\centering\arraybackslash\textbf{Markdown Source}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\centering\arraybackslash\textbf{Rendered Output}
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Refer to a specific paragraph [basic.life]/1:}
+\end{Highlighting}
+\end{Shaded}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+Refer to a specific paragraph
+\href{https://eel.is/c++draft/basic.life\#1}{{[}basic.life{]}/1}:
+\end{minipage} \\
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Change [basic.life]\{.sref\}/2.1 as follows:}
+\end{Highlighting}
+\end{Shaded}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+Change {6.8.4
+\href{https://eel.is/c++draft/basic.life\#2.1}{{[}basic.life{]}/2.1}} as
+follows:
+\end{minipage} \\
+\end{longtable}
+}
+
+\subsection{\texorpdfstring{Citations\hyperref[citations]{}}{Citations}}\label{citations}
+
+In-text citations look like this: \VERB|\NormalTok{[@paper]}|
+
+\begin{quote}
+\textbf{Markdown Source}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{This is a proposal for a reduced initial set of features to support static}
+\NormalTok{reflection in C++. Specifically we are mostly proposing a subset of features}
+\NormalTok{suggested in [@P1240R2].}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{Rendered Output}
+
+This is a proposal for a reduced initial set of features to support
+static reflection in C++. Specifically we are mostly proposing a subset
+of features suggested in
+\href{https://wg21.link/p1240r2}{{[}P1240R2{]}}.
+\end{quote}
+
+You may also include the title of the paper by adding the
+\VERB|\OperatorTok{.}\NormalTok{title}| class, like
+\VERB|\NormalTok{[@paper]{{\setlength{\fboxsep}{1pt}\colorbox{yellow}{\{.title\}}}}}|
+which generates:
+
+\begin{quote}
+\textbf{Markdown Source}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{This is a proposal for a reduced initial set of features to support static}
+\NormalTok{reflection in C++. Specifically we are mostly proposing a subset of features}
+\NormalTok{suggested in [@P1240R2]\{.title\}.}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{Rendered Output}
+
+This is a proposal for a reduced initial set of features to support
+static reflection in C++. Specifically we are mostly proposing a subset
+of features suggested in {\href{https://wg21.link/p1240r2}{{[}P1240R2{]}
+(Scalable Reflection)}}.
+\end{quote}
+
+\subsection{\texorpdfstring{References\hyperref[references]{}}{References}}\label{references}
+
+\subsubsection{\texorpdfstring{Automatic
+References\hyperref[automatic-references]{}}{Automatic References}}\label{automatic-references}
+
+The bibliography is automatically generated from
+\url{https://wg21.link/index.yaml} for citations of the following types.
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.1757}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.7973}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\centering\arraybackslash\textbf{Type}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\centering\arraybackslash\textbf{Identifier}
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Paper & \textbf{N}\emph{xxxx} /
+\textbf{P}\emph{xxxx}\textbf{R}\emph{n} \\
+Issue & \textbf{CWG}\emph{xxxx} / \textbf{EWG}\emph{xxxx} /
+\textbf{LWG}\emph{xxxx} / \textbf{LEWG}\emph{xxxx} /
+\textbf{FS}\emph{xxxx} \\
+Editorial & \textbf{EDIT}\emph{xxx} \\
+Standing Document & \textbf{SD}\emph{x} \\
+\end{longtable}
+}
+
+The \VERB|\NormalTok{[@P1240R2]}| example from
+\hyperref[citations]{Citations} produces a bibliography entry:
+\VERB|\OperatorTok{[}\NormalTok{P1240R2}\OperatorTok{]}| in
+\hyperref[bibliography]{References}.
+
+{{{[} \emph{Note:} }Run \VERB|\NormalTok{make update}| to re-fetch and
+update the local databases, including the automatic
+references.{ --- \emph{end note} {]}}}
+
+\subsubsection{\texorpdfstring{Manual
+References\hyperref[manual-references]{}}{Manual References}}\label{manual-references}
+
+Manual references are specified in a YAML metadata block similar to
+\hyperref[title]{Title}, typically at the bottom of the document.
+
+\begin{quote}
+\textbf{Markdown Source}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{The \textasciigrave{}id\textasciigrave{} field is for in{-}text citations (e.g., [@PAT]),}
+\NormalTok{and \textasciigrave{}citation{-}label\textasciigrave{} is the label for the reference.}
+
+\NormalTok{Typically \textasciigrave{}id\textasciigrave{} and \textasciigrave{}citation{-}label\textasciigrave{} are kept the same.}
+
+\NormalTok{{-}{-}{-}}
+\NormalTok{references:}
+\NormalTok{  {-} id: PAT}
+\NormalTok{    citation{-}label: Patterns}
+\NormalTok{    title: "Pattern Matching in C++"}
+\NormalTok{    author:}
+\NormalTok{      {-} family: Park}
+\NormalTok{        given: Michael}
+\NormalTok{    URL: https://github.com/mpark/patterns}
+\NormalTok{{-}{-}{-}}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{Rendered Output}
+
+The \VERB|\NormalTok{id}| field is for in-text citations (e.g.,
+\href{https://github.com/mpark/patterns}{{[}Patterns{]}}), and
+\VERB|\NormalTok{citation}\OperatorTok{{-}}\NormalTok{label}| is the
+label for the reference.
+
+Typically \VERB|\NormalTok{id}| and
+\VERB|\NormalTok{citation}\OperatorTok{{-}}\NormalTok{label}| are kept
+the same.
+\end{quote}
+
+This produces a bibliography entry
+\VERB|\OperatorTok{[}\NormalTok{Patterns}\OperatorTok{]}| in
+\hyperref[bibliography]{References}.
+
+\section{\texorpdfstring{Configurations\hyperref[configurations]{}}{Configurations}}\label{configurations}
+
+\subsection{\texorpdfstring{Default Language for Code
+Elements\hyperref[default-language-for-code-elements]{}}{Default Language for Code Elements}}\label{default-language-for-code-elements}
+
+As mentioned in sections \hyperref[inline-code]{Inline Code} and
+\hyperref[code-block]{Code Block}, inline code elements are C++ syntax
+highlighted by default, while code blocks are not.
+
+The default configuration is:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\PreprocessorTok{{-}{-}{-}}
+\FunctionTok{highlighting}\KeywordTok{:}\AttributeTok{ }
+\AttributeTok{  }\FunctionTok{inline{-}code}\KeywordTok{:}\AttributeTok{ cpp}
+\AttributeTok{  }\FunctionTok{code{-}block}\KeywordTok{:}\AttributeTok{ default}
+\PreprocessorTok{{-}{-}{-}}
+\end{Highlighting}
+\end{Shaded}
+
+You could change this for your document by adding both or either entries
+to the YAML metadata block. For example, if you also want code blocks to
+be C++ by default:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\PreprocessorTok{{-}{-}{-}}
+\FunctionTok{title}\KeywordTok{:}\AttributeTok{ Framework for Writing C++ Committee Proposals}
+\FunctionTok{document}\KeywordTok{:}\AttributeTok{ D0000R0}
+\FunctionTok{date}\KeywordTok{:}\AttributeTok{ today}
+\FunctionTok{audience}\KeywordTok{:}\AttributeTok{ WG21}
+\FunctionTok{author}\KeywordTok{:}
+\AttributeTok{  }\KeywordTok{{-}}\AttributeTok{ }\FunctionTok{name}\KeywordTok{:}\AttributeTok{ Michael Park}
+\AttributeTok{    }\FunctionTok{email}\KeywordTok{:}\AttributeTok{ \textless{}mcypark@gmail.com\textgreater{}}
+\AttributeTok{{{\setlength{\fboxsep}{1pt}\colorbox{yellow}{highlighting:}}}}
+\AttributeTok{  {{\setlength{\fboxsep}{1pt}\colorbox{yellow}{code-block: cpp}}}}
+\PreprocessorTok{{-}{-}{-}}
+\end{Highlighting}
+\end{Shaded}
+
+or if you want inline-code to be treated normally, not as C++:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\PreprocessorTok{{-}{-}{-}}
+\FunctionTok{title}\KeywordTok{:}\AttributeTok{ Framework for Writing C++ Committee Proposals}
+\FunctionTok{document}\KeywordTok{:}\AttributeTok{ D0000R0}
+\FunctionTok{date}\KeywordTok{:}\AttributeTok{ today}
+\FunctionTok{audience}\KeywordTok{:}\AttributeTok{ WG21}
+\FunctionTok{author}\KeywordTok{:}
+\AttributeTok{  }\KeywordTok{{-}}\AttributeTok{ }\FunctionTok{name}\KeywordTok{:}\AttributeTok{ Michael Park}
+\AttributeTok{    }\FunctionTok{email}\KeywordTok{:}\AttributeTok{ \textless{}mcypark@gmail.com\textgreater{}}
+\AttributeTok{{{\setlength{\fboxsep}{1pt}\colorbox{yellow}{highlighting:}}}}
+\AttributeTok{  {{\setlength{\fboxsep}{1pt}\colorbox{yellow}{inline-code: default}}}}
+\PreprocessorTok{{-}{-}{-}}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{\texorpdfstring{Embedded Markdown by Default Code
+Classes\hyperref[embedded-markdown-by-default-code-classes]{}}{Embedded Markdown by Default Code Classes}}\label{embedded-markdown-by-default-code-classes}
+
+\hyperref[embedded-markdown]{Embedded Markdown} is enabled by default
+for \VERB|\NormalTok{cpp}| and \VERB|\NormalTok{default}| code elements.
+
+While the
+\hyperref[embed_md]{\VERB|\OperatorTok{.}\NormalTok{embed\_md}|} class
+should be suffcient for most use cases to enable embedded Markdown as
+needed, if you want to change the default, you can set the
+\VERB|\NormalTok{embedded}\OperatorTok{{-}}\NormalTok{md}\OperatorTok{{-}}\NormalTok{code}\OperatorTok{{-}}\NormalTok{classes}|
+YAML metadata. For example:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\PreprocessorTok{{-}{-}{-}}
+\FunctionTok{title}\KeywordTok{:}\AttributeTok{ Framework for Writing C++ Committee Proposals}
+\FunctionTok{document}\KeywordTok{:}\AttributeTok{ D0000R0}
+\FunctionTok{date}\KeywordTok{:}\AttributeTok{ today}
+\FunctionTok{audience}\KeywordTok{:}\AttributeTok{ WG21}
+\FunctionTok{author}\KeywordTok{:}
+\AttributeTok{  }\KeywordTok{{-}}\AttributeTok{ }\FunctionTok{name}\KeywordTok{:}\AttributeTok{ Michael Park}
+\AttributeTok{    }\FunctionTok{email}\KeywordTok{:}\AttributeTok{ \textless{}mcypark@gmail.com\textgreater{}}
+\AttributeTok{{{\setlength{\fboxsep}{1pt}\colorbox{yellow}{embedded-md-code-classes:}}}}
+\AttributeTok{  {{\setlength{\fboxsep}{1pt}\colorbox{yellow}{- cpp}}}}
+\AttributeTok{  {{\setlength{\fboxsep}{1pt}\colorbox{yellow}{- default}}}}
+\AttributeTok{  {{\setlength{\fboxsep}{1pt}\colorbox{yellow}{- diff}}}}
+\AttributeTok{  {{\setlength{\fboxsep}{1pt}\colorbox{yellow}{- nasm}}}}
+\AttributeTok{  {{\setlength{\fboxsep}{1pt}\colorbox{yellow}{- rust}}}}
+\PreprocessorTok{{-}{-}{-}}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{\texorpdfstring{Unicode
+Fonts\hyperref[unicode-fonts]{}}{Unicode Fonts}}\label{unicode-fonts}
+
+If building for PDF (via LaTeX) output with Unicode characters, you may
+want to select specific
+\href{https://pandoc.org/MANUAL.html\#fonts}{Fonts} for rendering. For
+example, \VERB|\NormalTok{monofont}| can be specified in the YAML
+metadata block to select a font for code elements.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\PreprocessorTok{{-}{-}{-}}
+\FunctionTok{title}\KeywordTok{:}\AttributeTok{ Framework for Writing C++ Committee Proposals}
+\FunctionTok{document}\KeywordTok{:}\AttributeTok{ D0000R0}
+\FunctionTok{date}\KeywordTok{:}\AttributeTok{ today}
+\FunctionTok{audience}\KeywordTok{:}\AttributeTok{ WG21}
+\FunctionTok{author}\KeywordTok{:}
+\AttributeTok{  }\KeywordTok{{-}}\AttributeTok{ }\FunctionTok{name}\KeywordTok{:}\AttributeTok{ Michael Park}
+\AttributeTok{    }\FunctionTok{email}\KeywordTok{:}\AttributeTok{ \textless{}mcypark@gmail.com\textgreater{}}
+\AttributeTok{{{\setlength{\fboxsep}{1pt}\colorbox{yellow}{monofont: "DejaVu Sans Mono"}}}}
+\PreprocessorTok{{-}{-}{-}}
+\end{Highlighting}
+\end{Shaded}
+
+``DejaVu Sans Mono'' provides glyphs for a large amount of the Unicode
+characters. If you want the list of available fonts on your system, most
+supported systems will produce a list via the command-line tool
+\VERB|\NormalTok{fc}\OperatorTok{{-}}\NormalTok{list}|.
+
+\section{\texorpdfstring{License\hyperref[license]{}}{License}}\label{license}
+
+Distributed under the
+\href{https://github.com/mpark/wg21/blob/master/LICENSE.md}{Boost
+Software License, Version 1.0}.
+
+\section{\texorpdfstring{Resources\hyperref[resources]{}}{Resources}}\label{resources}
+
+\begin{itemize}
+\tightlist
+\item
+  Blog Post:
+  \href{https://mpark.github.io/programming/2018/11/16/how-i-format-my-cpp-papers}{How
+  I format my C++ papers}
+\item
+  Lightning Talk @ C++Now 2019:
+  \href{https://www.youtube.com/watch?v=8yReHZOw6QY}{WG21 Paper in
+  Markdown}
+\end{itemize}
+
+\section{\texorpdfstring{References\hyperref[bibliography]{}}{References}}\label{bibliography}
+
+\protect\phantomsection\label{refs}
+\begin{CSLReferences}{0}{0}
+\bibitem[\citeproctext]{ref-P1240R2}
+{[}P1240R2{]} Daveed Vandevoorde, Wyatt Childers, Andrew Sutton, Faisal
+Vali. 2022-01-14. Scalable Reflection. \href{https://wg21.link/p1240r2}{
+\CSLIndent{https://wg21.link/p1240r2}}
+
+\bibitem[\citeproctext]{ref-PAT}
+{[}Patterns{]} Michael Park. Pattern Matching in C++.
+\href{https://github.com/mpark/patterns}{
+\CSLIndent{https://github.com/mpark/patterns}}
+
+\end{CSLReferences}
+
+\end{document}

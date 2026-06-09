@@ -896,7 +896,7 @@ class CodeElems:
 
         # The spaces in the ends are optional because of situations like:
         # `$unspecified$ f();` that ends up like ` PH  f();`, and the markdown
-        # parser ends up eating the leading space. The resulting sinppet becomes
+        # parser ends up eating the leading space. The resulting snippet becomes
         # somerthing ilke <code>PH  f();</code>, so optionally ignore the spaces.
         placeholder_re = re.compile(fr' ?{cls.placeholder_prefix}(\d+) ?')
         def restore_fragments(text):

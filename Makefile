@@ -85,6 +85,12 @@ $(DATADIR)/srefs.json: $(DATADIR)/srefs.py $(PYTHON_DIR)
 $(DATADIR)/srefs.md: $(DATADIR)/srefs-md.py $(DATADIR)/srefs.json $(PYTHON_DIR)
 	set -e; trap 'rm -f "$@.tmp"' EXIT; $(PYTHON_BIN) $< < $(DATADIR)/srefs.json > "$@.tmp"; mv "$@.tmp" "$@"; trap - EXIT
 
+$(OUTDIR)/MANUAL.render.md: $(SRCDIR)/MANUAL.md $(DATADIR)/filters/render.py $(PANDOC_DIR) $(PYTHON_DIR) | $(OUTDIR)
+	pandoc $< -o $@ --standalone --filter $(DATADIR)/filters/render.py
+
+$(OUTDIR)/MANUAL.html $(OUTDIR)/MANUAL.latex $(OUTDIR)/MANUAL.pdf: $(OUTDIR)/MANUAL.render.md $(SRCDEPS) $(GENDEPS) | $(OUTDIR)
+	$(PANDOC)
+
 $(OUTDIR)/%.html: $(SRCDIR)/%.md $(SRCDEPS) $(GENDEPS) | $(OUTDIR)
 	$(PANDOC)
 
