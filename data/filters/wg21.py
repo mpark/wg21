@@ -123,7 +123,12 @@ def prepare(doc):
     doc.metadata['pagetitle'] = title   # HTML
     doc.metadata['title-meta'] = title  # PDF
 
-    datadir = doc.get_metadata('datadir')
+    datadir = doc.get_metadata('data-dir')
+
+    with open(os.path.join(datadir, 'defaults', 'doc.yaml'), 'r') as f:
+        import yaml
+        doc.metadata['from'] = yaml.safe_load(f)['from']
+
     with open(os.path.join(datadir, 'srefs.json'), 'r') as f:
         srefs.update(json.load(f))
 
@@ -690,7 +695,7 @@ class CodeElems:
             output_format=doc.format,
             extra_args=[
                 '--syntax-definition',
-                os.path.join(doc.get_metadata('datadir'), 'syntax', 'wg21.xml'),
+                os.path.join(doc.get_metadata('data-dir'), 'syntax', 'wg21.xml'),
                 '--mathml',
                 '--wrap', 'none'])
 

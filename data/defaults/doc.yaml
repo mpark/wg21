@@ -1,0 +1,26 @@
+number-sections: true
+table-of-contents: true
+self-contained: true
+
+from: markdown+mark  # +mark for == syntax for highlighted text
+
+css:
+  - templates/14882.css
+  - templates/wg21.css
+
+csl: wg21
+
+filters:
+  - citetitle.py
+  - citeproc
+  - wg21.py
+
+pdf-engine: xelatex
+
+template: wg21
+
+metadata-file: ${USERDATA}/metadata.yaml
+
+# Used for various resources, e.g. CSS, `favicon.ico` in `wg21.html`.
+resource-path:
+  - ${USERDATA}

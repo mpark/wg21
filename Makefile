@@ -27,7 +27,7 @@ override DATADIR := $(ROOTDIR)/data
 
 override define PANDOC
 $(eval override FILE := $(filter %.md, $^))
-$(eval override CMD := pandoc $(FILE) -o $@ --data-dir=$(DATADIR) -d $(DATADIR)/defaults.yaml)
+$(eval override CMD := pandoc $(FILE) -o $@ --data-dir=$(DATADIR) -M data-dir=$(DATADIR) -d doc -d formatting)
 $(eval $(and $(DEFAULTS), override CMD += -d $(DEFAULTS)))
 $(eval $(and $(METADATA), override CMD += --metadata-file $(METADATA)))
 $(if $(filter %.html, $@),
@@ -40,7 +40,7 @@ override SRCDEPS := $(shell find $(DATADIR) -type f)
 $(eval $(and $(DEFAULTS), override SRCDEPS += $(DEFAULTS)))
 $(eval $(and $(METADATA), override SRCDEPS += $(METADATA)))
 
-override GENDEPS := $(PANDOC_DIR) $(PYTHON_DIR) $(addprefix $(DATADIR)/, defaults.yaml csl.json srefs.json srefs.md)
+override GENDEPS := $(PANDOC_DIR) $(PYTHON_DIR) $(addprefix $(DATADIR)/, csl.json srefs.json srefs.md)
 
 .PHONY: all
 all: $(PDF)
@@ -75,9 +75,6 @@ $(PANDOC_DIR): $(DEPSDIR)/install-pandoc.sh
 
 $(PYTHON_DIR): $(DEPSDIR)/install-venv.sh $(DEPSDIR)/requirements.txt $(REQUIREMENTS)
 	PYTHON_DIR=$(PYTHON_DIR) $(DEPSDIR)/install-venv.sh -r $(DEPSDIR)/requirements.txt $(addprefix -r ,$(REQUIREMENTS))
-
-$(DATADIR)/defaults.yaml: $(DATADIR)/defaults.sh
-	DATADIR=$(abspath $(DATADIR)) $< > $@
 
 $(DATADIR)/csl.json: $(DATADIR)/refs.py $(PYTHON_DIR)
 	set -e; trap 'rm -f "$@.tmp"' EXIT; $(PYTHON_BIN) $< > "$@.tmp"; mv "$@.tmp" "$@"; trap - EXIT
