@@ -86,10 +86,10 @@ $(DATADIR)/srefs.md: $(DATADIR)/srefs-md.py $(DATADIR)/srefs.json $(PYTHON_DIR)
 	set -e; trap 'rm -f "$@.tmp"' EXIT; $(PYTHON_BIN) $< < $(DATADIR)/srefs.json > "$@.tmp"; mv "$@.tmp" "$@"; trap - EXIT
 
 $(OUTDIR)/%.html: $(SRCDIR)/%.md $(SRCDEPS) $(GENDEPS) | $(OUTDIR)
-	$(PANDOC) --bibliography $(DATADIR)/csl.json
+	$(PANDOC)
 
 $(OUTDIR)/%.latex: $(SRCDIR)/%.md $(SRCDEPS) $(GENDEPS) | $(OUTDIR)
-	$(PANDOC) --bibliography $(DATADIR)/csl.json
+	$(PANDOC)
 
 $(OUTDIR)/%.pdf: $(SRCDIR)/%.md $(SRCDEPS) $(GENDEPS) | $(OUTDIR)
-	$(PANDOC) --bibliography $(DATADIR)/csl.json
+	$(PANDOC)

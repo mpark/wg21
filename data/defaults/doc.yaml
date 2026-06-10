@@ -4,6 +4,8 @@ self-contained: true
 
 from: markdown+mark  # +mark for == syntax for highlighted text
 
+bibliography: csl.json
+
 css:
   - templates/14882.css
   - templates/wg21.css
@@ -21,6 +23,7 @@ template: wg21
 
 metadata-file: ${USERDATA}/metadata.yaml
 
-# Used for various resources, e.g. CSS, `favicon.ico` in `wg21.html`.
+# Used for various resources
+# e.g. bibliography, CSS, `favicon.ico` in `wg21.html`.
 resource-path:
   - ${USERDATA}
