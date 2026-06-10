@@ -41,4 +41,7 @@ metadata:
   csl: ${DATADIR}/csl/wg21.csl
 
 metadata-file: ${DATADIR}/metadata.yaml
+
+resource-path:
+  - ${DATADIR}
 EOF

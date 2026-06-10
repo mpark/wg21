@@ -22,7 +22,7 @@ index 7dfa95e..0b55daa 100644
  $for(css)$
    <link rel="stylesheet" href="$css$" />
  $endfor$
-+  <link rel="icon" href="$datadir$/favicon.ico" />
++  <link rel="icon" href="favicon.ico" />
  $for(header-includes)$
    $header-includes$
  $endfor$
