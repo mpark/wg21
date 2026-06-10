@@ -64,9 +64,9 @@ Various compositions in compact list:
   - `compare_3way`{.cpp}
   - [`compare_3way`]{.add}
   - `3WAY`{.default}`<R>`{.cpp}
-  - `operator@`{.cpp}
+  - `operator@`{.default}
   - `operator+`{.cpp}
-  - `x @ y`{.cpp}
+  - `x @ y`{.default}
   - ~~`x & y`{.cpp}~~
   - __foo `constexpr`{.cpp} bar__
   - _foo `constexpr`{.cpp} bar_
@@ -594,15 +594,15 @@ There are three supported styles of note:
 
 # Citation
 
-Automatic references are written as `[@N4762]` and renders as [@N4762].
+Automatic references are written as `[@N4762]`{.default} and renders as [@N4762].
 Anything in <https://wg21.link/index.yaml> are linked automatically.
 
-  - `N` Papers (e.g., `[@N3887]` → [@N3887])
-  - `P` Papers (e.g., `[@P1371R1]` → [@P1371R1])
-  - CWG Issues (e.g., `[@CWG1234]` → [@CWG1234])
-  - LWG Issues (e.g., `[@LWG1234]` → [@LWG1234])
-  - Github Edits (e.g, `[@EDIT1234]` → [@EDIT1234])
-  - Standing Documents (e.g., `[@SD6]` → [@SD6])
+  - `N` Papers (e.g., `[@N3887]`{.default} → [@N3887])
+  - `P` Papers (e.g., `[@P1371R1]`{.default} → [@P1371R1])
+  - CWG Issues (e.g., `[@CWG1234]`{.default} → [@CWG1234])
+  - LWG Issues (e.g., `[@LWG1234]`{.default} → [@LWG1234])
+  - Github Edits (e.g, `[@EDIT1234]`{.default} → [@EDIT1234])
+  - Standing Documents (e.g., `[@SD6]`{.default} → [@SD6])
 
 You may also write `[@P2996R8]{.title}`{.default} to include the title of the paper,
 and renders as: [@P2996R8]{.title}.

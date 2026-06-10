@@ -21,16 +21,6 @@
     <!ENTITY ppcond0 "\s+(?:0|false)\s*&ppemptypp;">
     <!ENTITY ppcond1 "\s+(?:1|true)\s*(\|\|([^/]|/[^*/])+)?&ppemptypp;">
 
-    <!ENTITY ident_internal1  "_[a-zA-Z0-9_]+">
-    <!ENTITY ident_internal2  "[a-zA-Z][a-zA-Z0-9_]*__\b">
-    <!ENTITY ident_internal   "(?:&ident_internal1;|&ident_internal2;)">
-    <!ENTITY ident_member1    "m_[a-zA-Z0-9_]+">
-    <!ENTITY ident_member2    "[a-z][a-zA-Z0-9_]*_\b">
-    <!ENTITY ident_member     "(?:&ident_member1;|&ident_member2;)">
-    <!ENTITY ident_CONST      "[A-Z][A-Z0-9_]{2,}\b">
-    <!ENTITY ident_type       "[a-zA-Z][a-zA-Z0-9_]*_t(?:ype)?\b">
-    <!ENTITY ident_global     "g_[a-zA-Z0-9_]+">
-    <!ENTITY ident_static_prefix  "s_[a-zA-Z0-9_]">
 ]>
 <language
     name="ISO C++"
@@ -324,8 +314,6 @@
         <AnyChar context="SelectString" String="UuLR&quot;'" lookAhead="1"/>
         <!-- Match GCC extensions -->
         <IncludeRules context="DetectGccExtensions##GCCExtensions" />
-        <!-- Match most used namespaces and styles -->
-        <RegExpr context="DispatchNamespace" String="(std::)|(boost::|BOOST_)|details?::|aux::|internals::" lookAhead="1"/>
         <IncludeRules context="match identifier" />
         <!-- Match invalid symbols -->
         <AnyChar attribute="Error" context="#stay" String="$@`" />
@@ -382,7 +370,6 @@
 
         <!-- match identifier -->
         <keyword attribute="Data Type" context="#pop" String="types"/>
-        <RegExpr context="#pop!DispatchIdentifier" String="(&ident_internal2;)|(&ident_member2;)|(&ident_CONST;)|(&ident_type;)" lookAhead="1"/>
         <DetectIdentifier context="#pop"/>
       </context>
 
@@ -420,30 +407,8 @@
         <keyword attribute="Data Type" context="#stay" String="types" />
         <keyword attribute="Type Modifiers" context="#stay" String="modifiers" />
         <keyword attribute="Standard Macros" context="#stay" String="StdMacros" />
-        <RegExpr context="DispatchIdentifier" String="(&ident_internal;)|(&ident_member;)|(&ident_CONST;)|(&ident_type;)|(&ident_global;)|&ident_static_prefix;" lookAhead="1"/>
         <DetectIdentifier />
       </context>
-      <context name="DispatchIdentifier" attribute="Normal Text" lineEndContext="#pop">
-        <StringDetect context="#pop" String="%2" dynamic="1" attribute="Data Members (m_*)"/>
-        <StringDetect context="#pop" String="%4" dynamic="1" attribute="Types (*_t/*_type)"/>
-        <StringDetect context="#pop" String="%3" dynamic="1" attribute="CONSTS/MACROS"/>
-        <StringDetect context="#pop" String="%1" dynamic="1" attribute="Internals"/>
-        <StringDetect context="#pop" String="%5" dynamic="1" attribute="Globals (g_*)"/>
-        <DetectIdentifier context="#pop" attribute="Statics (s_*)"/>
-      </context>
-
-      <context name="DispatchNamespace" attribute="Normal Text" lineEndContext="#pop">
-        <StringDetect context="#pop!Standard Classes" String="%1" dynamic="1" attribute="Standard Classes"/>
-        <StringDetect context="#pop!Boost Stuff" String="%2" dynamic="1" attribute="Boost Stuff"/>
-        <DetectIdentifier context="#pop!InternalsNS" attribute="Internals"/>
-      </context>
-
-      <context name="DispatchNamespacePP" attribute="Preprocessor" lineEndContext="#pop">
-        <StringDetect context="#pop!Standard Classes In PP" String="%1" dynamic="1" attribute="Standard Classes"/>
-        <StringDetect context="#pop!Boost Stuff In PP" String="%2" dynamic="1" attribute="Boost Stuff"/>
-        <DetectIdentifier context="#pop!InternalsNS In PP" attribute="Internals"/>
-      </context>
-
       <context name="Number" attribute="Normal Text" lineEndContext="#pop" fallthroughContext="#pop">
         <WordDetect attribute="Decimal" context="IntSuffix" String="0" weakDeliminator="."/>
         <RegExpr attribute="Float" context="FloatSuffix" String="\.&int;&exp_float;?|0[xX](?:\.&hex_int;&exp_hexfloat;?|&hex_int;(?:&exp_hexfloat;|\.&hex_int;?&exp_hexfloat;?))|&int;(?:&exp_float;|\.&int;?&exp_float;?)" />
@@ -622,7 +587,6 @@
         -->
         <WordDetect attribute="Keyword" context="AttributeNamespace" String="using" />
         <IncludeRules context="DetectGccAttributes##GCCExtensions" />
-        <RegExpr attribute="CONSTS/MACROS" context="#stay" String="[A-Z][A-Z0-9_]{2,}\b" />
         <DetectIdentifier />
       </context>
 
@@ -653,48 +617,6 @@
       </context>
 
       <context name="Region Marker" attribute="Region Marker" lineEndContext="#pop" />
-
-      <context name="DetectNSEnd" attribute="Normal Text" lineEndContext="#stay">
-        <Detect2Chars char=":" char1=":"/>
-        <IncludeRules context="match comments and region markers" />
-        <AnyChar context="#pop" String="&ns_punctuators;&separators; &#9;#:" lookAhead="1"/>
-        <!-- This keyword may appear in InternalsNS context. For example in code:
-          details::some_class::template some_templated_static();
-          and it should be displayed as keyword, not like part of details namespace...
-          -->
-        <WordDetect attribute="Keyword" context="#pop" String="template" />
-        <DetectIdentifier context="#stay"/>
-      </context>
-
-      <context name="Standard Classes" attribute="Standard Classes" lineEndContext="#stay" fallthroughContext="#pop">
-        <IncludeRules context="DetectNSEnd" />
-      </context>
-
-      <context name="Boost Stuff" attribute="Boost Stuff" lineEndContext="#stay" fallthroughContext="#pop">
-        <IncludeRules context="DetectNSEnd" />
-      </context>
-
-      <context name="InternalsNS" attribute="Internals" lineEndContext="#stay" fallthroughContext="#pop">
-        <IncludeRules context="DetectNSEnd" />
-      </context>
-
-      <context name="Standard Classes In PP" attribute="Standard Classes" lineEndContext="#pop" fallthroughContext="#pop">
-        <IncludeRules context="InPreprocessor" />
-        <Detect2Chars attribute="Symbol" char="#" char1="#"/>
-        <IncludeRules context="DetectNSEnd" />
-      </context>
-
-      <context name="Boost Stuff In PP" attribute="Boost Stuff" lineEndContext="#pop" fallthroughContext="#pop">
-        <IncludeRules context="InPreprocessor" />
-        <Detect2Chars attribute="Symbol" char="#" char1="#"/>
-        <IncludeRules context="DetectNSEnd" />
-      </context>
-
-      <context name="InternalsNS In PP" attribute="Internals" lineEndContext="#pop" fallthroughContext="#pop">
-        <IncludeRules context="InPreprocessor" />
-        <Detect2Chars attribute="Symbol" char="#" char1="#"/>
-        <IncludeRules context="DetectNSEnd" />
-      </context>
 
       <context name="Comment 1" attribute="Comment" lineEndContext="#pop">
         <LineContinue attribute="Error" context="#stay" />
@@ -807,8 +729,6 @@
         <AnyChar context="SelectStringPP" String="UuLR&quot;'" lookAhead="1"/>
         <!-- Match GCC extensions -->
         <IncludeRules context="DetectGccExtensionsInPP##GCCExtensions" />
-        <!-- Match most used namespaces and styles -->
-        <RegExpr context="DispatchNamespacePP" String="(std::)|(boost::|BOOST_)|details?::|aux::|internals::" lookAhead="1"/>
         <keyword attribute="Standard Macros" context="#stay" String="InMacro" />
         <IncludeRules context="match identifier" />
         <!-- Match invalid symbols -->
@@ -882,7 +802,7 @@
       <itemData name="Control Flow"       defStyleNum="dsControlFlow" spellChecking="false" />
       <itemData name="Keyword"            defStyleNum="dsKeyword"   spellChecking="false" />
       <itemData name="Data Type"          defStyleNum="dsDataType"  spellChecking="false" />
-      <itemData name="Type Modifiers"     defStyleNum="dsAttribute" spellChecking="false" />
+      <itemData name="Type Modifiers"     defStyleNum="dsKeyword"   spellChecking="false" />
       <itemData name="Attribute"          defStyleNum="dsAttribute" spellChecking="false" bold="false" italic="true" />
       <itemData name="Standard Attribute" defStyleNum="dsAttribute" spellChecking="false" bold="false" italic="true" />
       <itemData name="Decimal"            defStyleNum="dsDecVal"    spellChecking="false" />
@@ -901,17 +821,10 @@
       <itemData name="Comment"            defStyleNum="dsComment"   spellChecking="true"  />
       <itemData name="Symbol"             defStyleNum="dsOperator"  spellChecking="false" />
       <itemData name="Separator Symbol"   defStyleNum="dsOperator"  spellChecking="false" />
-      <itemData name="Data Members (m_*)" defStyleNum="dsVariable"  spellChecking="false" />
-      <itemData name="Globals (g_*)"      defStyleNum="dsVariable"  spellChecking="false" />
-      <itemData name="Statics (s_*)"      defStyleNum="dsVariable"  spellChecking="false" />
-      <itemData name="Types (*_t/*_type)" defStyleNum="dsDataType"  spellChecking="false" />
-      <itemData name="CONSTS/MACROS"      defStyleNum="dsNormal"    spellChecking="false" />
       <itemData name="Preprocessor"       defStyleNum="dsPreprocessor" spellChecking="false" />
       <itemData name="Prep. Lib"          defStyleNum="dsImport"    spellChecking="false" />
       <itemData name="Standard Macros"    defStyleNum="dsOthers"    spellChecking="false" />
       <itemData name="Standard Classes"   defStyleNum="dsBuiltIn"   spellChecking="false" />
-      <itemData name="Boost Stuff"        defStyleNum="dsExtension" spellChecking="false" />
-      <itemData name="Internals"          defStyleNum="dsNormal"    spellChecking="false" color="#808080" selColor="#808080" />
       <itemData name="Region Marker"      defStyleNum="dsRegionMarker" spellChecking="false" />
       <itemData name="UDL Numeric Suffix" defStyleNum="dsOperator"  spellChecking="false" />
       <itemData name="UDL String Suffix"  defStyleNum="dsOperator"  spellChecking="false" />

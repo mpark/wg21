@@ -230,7 +230,7 @@ Reply-to:   \@author
 \author{&Author
 0\\&<\href{mailto:author0@gmail.com}{\nolinkurl{author0@gmail.com}}>\\&Author
 1\\&<\href{mailto:author1@gmail.com}{\nolinkurl{author1@gmail.com}}>\\}
-\date{2026-06-09}
+\date{2026-06-10}
 
 \begin{document}
 \hypertarget{title-block-header}{\label{title-block-header}}
@@ -308,11 +308,11 @@ Various compositions in compact list:
 \item
   \VERB|\NormalTok{3WAY}|\VERB|\OperatorTok{\textless{}}\NormalTok{R}\OperatorTok{\textgreater{}}|
 \item
-  \VERB|\KeywordTok{operator}\OperatorTok{@}|
+  \VERB|\NormalTok{operator@}|
 \item
   \VERB|\KeywordTok{operator}\OperatorTok{+}|
 \item
-  \VERB|\NormalTok{x }\OperatorTok{@}\NormalTok{ y}|
+  \VERB|\NormalTok{x @ y}|
 \item
   \st{{\mbox{\VERB|\NormalTok{x }\OperatorTok{\&}\NormalTok{ y}|}}}
 \item
@@ -330,17 +330,17 @@ Various compositions in compact list:
 \item
   \st{{\mbox{\VERB|\NormalTok{hello world}|}}}
 \item
-  \VERB|\KeywordTok{namespace}\NormalTok{ \emph{unspecified} }\OperatorTok{\{} \KeywordTok{struct}\NormalTok{ sender\_base }\OperatorTok{\{\}}\NormalTok{; }\OperatorTok{\}}|
+  \VERB|\KeywordTok{namespace}\NormalTok{ \emph{unspecified} }\OperatorTok{\{} \KeywordTok{struct}\NormalTok{ sender\_base }\OperatorTok{\{\};} \OperatorTok{\}}|
 \item
-  \VERB|\KeywordTok{namespace}\NormalTok{ \emph{unspecified} }\OperatorTok{\{} \KeywordTok{struct}\NormalTok{ sender\_base }\OperatorTok{\{\}}\NormalTok{; }\OperatorTok{\}}|
+  \VERB|\KeywordTok{namespace}\NormalTok{ \emph{unspecified} }\OperatorTok{\{} \KeywordTok{struct}\NormalTok{ sender\_base }\OperatorTok{\{\};} \OperatorTok{\}}|
 \item
   \VERB|\KeywordTok{constexpr}\NormalTok{\emph{\textsubscript{opt}}}|
 \item
   {{\setlength{\fboxsep}{1pt}\colorbox{yellow}{highlighted}}}
 \item
-  \VERB|\DataTypeTok{void}\NormalTok{ {{\setlength{\fboxsep}{1pt}\colorbox{yellow}{foo}}}}\OperatorTok{()}\NormalTok{;}|
+  \VERB|\DataTypeTok{void}\NormalTok{ {{\setlength{\fboxsep}{1pt}\colorbox{yellow}{foo}}}}\OperatorTok{();}|
 \item
-  {{\setlength{\fboxsep}{1pt}\colorbox{yellow}{{\mbox{\VERB|\DataTypeTok{void}\NormalTok{ foo}\OperatorTok{()}\NormalTok{;}|}}}}}
+  {{\setlength{\fboxsep}{1pt}\colorbox{yellow}{{\mbox{\VERB|\DataTypeTok{void}\NormalTok{ foo}\OperatorTok{();}|}}}}}
 \item
   \(\frac{a+b}{2}\)
 \end{itemize}
@@ -419,44 +419,44 @@ Highlighting\hyperref[c-syntax-highlighting]{}}{C++ Syntax Highlighting}}\label{
 \PreprocessorTok{\#include }\ImportTok{\textless{}iostream\textgreater{}}
 \PreprocessorTok{\#include }\ImportTok{"foo.h"}
 
-\OtherTok{\_\_FILE\_\_}\NormalTok{;}
+\OtherTok{\_\_FILE\_\_}\OperatorTok{;}
 
-\DataTypeTok{int}\NormalTok{ x }\OperatorTok{=} \DecValTok{42\textquotesingle{}234\textquotesingle{}234}\NormalTok{;}
-\KeywordTok{const} \DataTypeTok{int}\NormalTok{ x }\OperatorTok{=} \DecValTok{42}\BuiltInTok{ul}\NormalTok{;}
-\KeywordTok{const} \DataTypeTok{int}\NormalTok{ x }\OperatorTok{=} \BaseNTok{0B01011}\NormalTok{;}
+\DataTypeTok{int}\NormalTok{ x }\OperatorTok{=} \DecValTok{42\textquotesingle{}234\textquotesingle{}234}\OperatorTok{;}
+\KeywordTok{const} \DataTypeTok{int}\NormalTok{ x }\OperatorTok{=} \DecValTok{42}\BuiltInTok{ul}\OperatorTok{;}
+\KeywordTok{const} \DataTypeTok{int}\NormalTok{ x }\OperatorTok{=} \BaseNTok{0B01011}\OperatorTok{;}
 
-\DataTypeTok{bool}\NormalTok{ b }\OperatorTok{=} \KeywordTok{true}\NormalTok{;}
+\DataTypeTok{bool}\NormalTok{ b }\OperatorTok{=} \KeywordTok{true}\OperatorTok{;}
 
 \KeywordTok{struct}\NormalTok{ process }\OperatorTok{\{}
-\NormalTok{  hello {{\color[HTML]{006e28}\uline{constexpr~}}}detail}\OperatorTok{::}\NormalTok{foo}\OperatorTok{::}\KeywordTok{template}\NormalTok{ foo;}
+\NormalTok{  hello {{\color[HTML]{006e28}\uline{constexpr~}}}detail}\OperatorTok{::}\NormalTok{foo}\OperatorTok{::}\KeywordTok{template}\NormalTok{ foo}\OperatorTok{;}
 
-  \OperatorTok{[[}\KeywordTok{using}\AttributeTok{ CC}\OperatorTok{:}\AttributeTok{ opt}\OperatorTok{(}\DecValTok{1}\OperatorTok{)}\NormalTok{,}\AttributeTok{ debug}\OperatorTok{]]}\NormalTok{ x;}
+  \OperatorTok{[[}\KeywordTok{using}\AttributeTok{ CC}\OperatorTok{:}\AttributeTok{ opt}\OperatorTok{(}\DecValTok{1}\OperatorTok{),}\AttributeTok{ debug}\OperatorTok{]]}\NormalTok{ x}\OperatorTok{;}
 
   \KeywordTok{template} \OperatorTok{\textless{}}\KeywordTok{typename}\NormalTok{ I}\OperatorTok{\textgreater{}}
-  \OperatorTok{[[}\AttributeTok{nodiscard}\OperatorTok{]]} \KeywordTok{auto} \KeywordTok{operator}\OperatorTok{()(}\NormalTok{I i}\OperatorTok{)} \OperatorTok{{-}\textgreater{}}\NormalTok{ O}\OperatorTok{\textless{}}\NormalTok{I}\OperatorTok{\textgreater{}} \OperatorTok{\{} \CommentTok{/* ... */} \OperatorTok{\}}\NormalTok{;}
+  \OperatorTok{[[}\AttributeTok{nodiscard}\OperatorTok{]]} \KeywordTok{auto} \KeywordTok{operator}\OperatorTok{()(}\NormalTok{I i}\OperatorTok{)} \OperatorTok{{-}\textgreater{}}\NormalTok{ O}\OperatorTok{\textless{}}\NormalTok{I}\OperatorTok{\textgreater{}} \OperatorTok{\{} \CommentTok{/* ... */} \OperatorTok{\};}
 
-\NormalTok{  x\emph{\textsubscript{i}} }\OperatorTok{\textless{}=\textgreater{}}\NormalTok{ y\emph{\textsubscript{i}};}
-\OperatorTok{\}}\NormalTok{;}
+\NormalTok{  x\emph{\textsubscript{i}} }\OperatorTok{\textless{}=\textgreater{}}\NormalTok{ y\emph{\textsubscript{i}}}\OperatorTok{;}
+\OperatorTok{\};}
 
 \ControlFlowTok{if} \OperatorTok{(}\NormalTok{x}\OperatorTok{)} \OperatorTok{\{}
-  \ControlFlowTok{return} \StringTok{""}\BuiltInTok{sv}\NormalTok{;}
-  \ControlFlowTok{return} \DecValTok{5}\BuiltInTok{ms}\NormalTok{;}
+  \ControlFlowTok{return} \StringTok{""}\BuiltInTok{sv}\OperatorTok{;}
+  \ControlFlowTok{return} \DecValTok{5}\BuiltInTok{ms}\OperatorTok{;}
 \OperatorTok{\}}
 
-\NormalTok{std}\OperatorTok{::}\NormalTok{printf}\OperatorTok{(}\StringTok{"}\SpecialCharTok{\%d}\StringTok{"}\NormalTok{, x}\OperatorTok{)}\NormalTok{;}
+\NormalTok{std}\OperatorTok{::}\NormalTok{printf}\OperatorTok{(}\StringTok{"}\SpecialCharTok{\%d}\StringTok{"}\OperatorTok{,}\NormalTok{ x}\OperatorTok{);}
 
-\NormalTok{std}\OperatorTok{::}\NormalTok{variant}\OperatorTok{\textless{}}\NormalTok{I1, I2}\OperatorTok{\textgreater{}}\NormalTok{ input }\OperatorTok{=} \CharTok{\textquotesingle{}h\textquotesingle{}}\NormalTok{;}
-\NormalTok{std}\OperatorTok{::}\NormalTok{variant}\OperatorTok{\textless{}}\NormalTok{I1, I2}\OperatorTok{\textgreater{}}\NormalTok{ input }\OperatorTok{=} \StringTok{"h"}\NormalTok{;}
-\NormalTok{std}\OperatorTok{::}\NormalTok{variant}\OperatorTok{\textless{}}\NormalTok{I1, I2}\OperatorTok{\textgreater{}}\NormalTok{ input }\OperatorTok{=} \StringTok{"hello"}\NormalTok{;}
+\NormalTok{std}\OperatorTok{::}\NormalTok{variant}\OperatorTok{\textless{}}\NormalTok{I1}\OperatorTok{,}\NormalTok{ I2}\OperatorTok{\textgreater{}}\NormalTok{ input }\OperatorTok{=} \CharTok{\textquotesingle{}h\textquotesingle{}}\OperatorTok{;}
+\NormalTok{std}\OperatorTok{::}\NormalTok{variant}\OperatorTok{\textless{}}\NormalTok{I1}\OperatorTok{,}\NormalTok{ I2}\OperatorTok{\textgreater{}}\NormalTok{ input }\OperatorTok{=} \StringTok{"h"}\OperatorTok{;}
+\NormalTok{std}\OperatorTok{::}\NormalTok{variant}\OperatorTok{\textless{}}\NormalTok{I1}\OperatorTok{,}\NormalTok{ I2}\OperatorTok{\textgreater{}}\NormalTok{ input }\OperatorTok{=} \StringTok{"hello"}\OperatorTok{;}
 
 \CommentTok{// mapping from a \textasciigrave{}variant\textasciigrave{} of inputs to a \textasciigrave{}variant\textasciigrave{} of results:}
-\KeywordTok{auto}\NormalTok{ output }\OperatorTok{=}\NormalTok{ std}\OperatorTok{::}\NormalTok{visit}\OperatorTok{\textless{}}\NormalTok{std}\OperatorTok{::}\NormalTok{variant}\OperatorTok{\textless{}}\NormalTok{O}\OperatorTok{\textless{}}\NormalTok{I1}\OperatorTok{\textgreater{}}\NormalTok{, O}\OperatorTok{\textless{}}\NormalTok{I2}\OperatorTok{\textgreater{}\textgreater{}\textgreater{}(}\NormalTok{process}\OperatorTok{\{\}}\NormalTok{, input}\OperatorTok{)}\NormalTok{;}
+\KeywordTok{auto}\NormalTok{ output }\OperatorTok{=}\NormalTok{ std}\OperatorTok{::}\NormalTok{visit}\OperatorTok{\textless{}}\NormalTok{std}\OperatorTok{::}\NormalTok{variant}\OperatorTok{\textless{}}\NormalTok{O}\OperatorTok{\textless{}}\NormalTok{I1}\OperatorTok{\textgreater{},}\NormalTok{ O}\OperatorTok{\textless{}}\NormalTok{I2}\OperatorTok{\textgreater{}\textgreater{}\textgreater{}(}\NormalTok{process}\OperatorTok{\{\},}\NormalTok{ input}\OperatorTok{);}
 
 \CommentTok{// coercing different results to a common type:}
-\KeywordTok{auto}\NormalTok{ result }\OperatorTok{=}\NormalTok{ std}\OperatorTok{::}\NormalTok{visit}\OperatorTok{\textless{}}\NormalTok{std}\OperatorTok{::}\NormalTok{common\_type\_t}\OperatorTok{\textless{}}\NormalTok{O}\OperatorTok{\textless{}}\NormalTok{I1}\OperatorTok{\textgreater{}}\NormalTok{, O}\OperatorTok{\textless{}}\NormalTok{I2}\OperatorTok{\textgreater{}\textgreater{}\textgreater{}(}\NormalTok{process}\OperatorTok{\{\}}\NormalTok{, input}\OperatorTok{)}\NormalTok{;}
+\KeywordTok{auto}\NormalTok{ result }\OperatorTok{=}\NormalTok{ std}\OperatorTok{::}\NormalTok{visit}\OperatorTok{\textless{}}\NormalTok{std}\OperatorTok{::}\NormalTok{common\_type\_t}\OperatorTok{\textless{}}\NormalTok{O}\OperatorTok{\textless{}}\NormalTok{I1}\OperatorTok{\textgreater{},}\NormalTok{ O}\OperatorTok{\textless{}}\NormalTok{I2}\OperatorTok{\textgreater{}\textgreater{}\textgreater{}(}\NormalTok{process}\OperatorTok{\{\},}\NormalTok{ input}\OperatorTok{);}
 
 \CommentTok{// visiting a \textasciigrave{}variant\textasciigrave{} for the side{-}effects, discarding results:}
-\NormalTok{std}\OperatorTok{::}\NormalTok{visit}\OperatorTok{\textless{}}\DataTypeTok{void}\OperatorTok{\textgreater{}(}\NormalTok{process}\OperatorTok{\{\}}\NormalTok{, input}\OperatorTok{)}\NormalTok{;}
+\NormalTok{std}\OperatorTok{::}\NormalTok{visit}\OperatorTok{\textless{}}\DataTypeTok{void}\OperatorTok{\textgreater{}(}\NormalTok{process}\OperatorTok{\{\},}\NormalTok{ input}\OperatorTok{);}
 
 \NormalTok{{{\color[HTML]{006e28}\uline{\VERB|\NormalTok{namespace \emph{unspecified} \{ struct sender\_base \{\}; \}}|}}}}
 \NormalTok{{{\color[HTML]{006e28}\uline{\VERB|\NormalTok{using \emph{unspecified}::sender\_base;}|}}}}
@@ -465,37 +465,37 @@ Highlighting\hyperref[c-syntax-highlighting]{}}{C++ Syntax Highlighting}}\label{
 \KeywordTok{struct}\NormalTok{ \emph{as-receiver} }\OperatorTok{\{}
 \NormalTok{{{\color[HTML]{bf0303}\sout{private:}}}}
 \NormalTok{  {{\color[HTML]{bf0303}\sout{using invocable\_type = std::remove\_cvref\_t\textless{}F\textgreater;}}}}
-\NormalTok{  {{{\color[HTML]{bf0303}\sout{invocable\_type}}}{{\color[HTML]{006e28}\uline{F}}}} f\_;}
+\NormalTok{  {{{\color[HTML]{bf0303}\sout{invocable\_type}}}{{\color[HTML]{006e28}\uline{F}}}} f\_}\OperatorTok{;}
 \NormalTok{{{\color[HTML]{bf0303}\sout{public:}}}}
 \NormalTok{  {{\color[HTML]{bf0303}\sout{explicit \emph{as-receiver}(invocable\_type\&\& f)}}}}
 \NormalTok{  {{\color[HTML]{bf0303}\sout{\emph{as-receiver}(\emph{as-receiver}\&\& other) = default;}}}}
   \DataTypeTok{void}\NormalTok{ set\_value}\OperatorTok{()}\NormalTok{ {{\color[HTML]{006e28}\uline{noexcept(is\_nothrow\_invocable\_v\textless{}F\&\textgreater)}}} }\OperatorTok{\{}
-\NormalTok{    invoke}\OperatorTok{(}\NormalTok{f\_}\OperatorTok{)}\NormalTok{;}
+\NormalTok{    invoke}\OperatorTok{(}\NormalTok{f\_}\OperatorTok{);}
   \OperatorTok{\}}
 \NormalTok{  {{\color[HTML]{006e28}\uline{{[}{[}noreturn{]}{]}}}} }\DataTypeTok{void}\NormalTok{ set\_error}\OperatorTok{(}\NormalTok{std}\OperatorTok{::}\NormalTok{exception\_ptr}\OperatorTok{)}\NormalTok{ {{\color[HTML]{006e28}\uline{noexcept}}} }\OperatorTok{\{}
-\NormalTok{    terminate}\OperatorTok{()}\NormalTok{;}
+\NormalTok{    terminate}\OperatorTok{();}
   \OperatorTok{\}}
   \DataTypeTok{void}\NormalTok{ set\_done}\OperatorTok{()} \KeywordTok{noexcept} \OperatorTok{\{\}}
-\OperatorTok{\}}\NormalTok{;}
+\OperatorTok{\};}
 
 \KeywordTok{template} \OperatorTok{\textless{}}\NormalTok{{{{\color[HTML]{bf0303}\sout{\VERB|\NormalTok{invocable}|}}}{{\color[HTML]{006e28}\uline{\VERB|\NormalTok{class}|}}}} F{{\color[HTML]{006e28}\uline{\VERB|\NormalTok{, class}|}}}}\OperatorTok{\textgreater{}}
 \KeywordTok{struct}\NormalTok{ \emph{as-receiver} }\OperatorTok{\{}
 \NormalTok{{{\color[HTML]{bf0303}\sout{\VERB|\NormalTok{private:}|}}}}
 \NormalTok{  {{\color[HTML]{bf0303}\sout{\VERB|\NormalTok{using invocable\_type = std::remove\_cvref\_t\textless{}F\textgreater{};}|}}}}
-\NormalTok{  {{{\color[HTML]{bf0303}\sout{\VERB|\NormalTok{invocable\_type}|}}}{{\color[HTML]{006e28}\uline{\VERB|\NormalTok{F}|}}}} f\_;}
+\NormalTok{  {{{\color[HTML]{bf0303}\sout{\VERB|\NormalTok{invocable\_type}|}}}{{\color[HTML]{006e28}\uline{\VERB|\NormalTok{F}|}}}} f\_}\OperatorTok{;}
 \NormalTok{{{\color[HTML]{bf0303}\sout{\VERB|\NormalTok{public:}|}}}}
 \NormalTok{  {{\color[HTML]{bf0303}\sout{\VERB|\NormalTok{explicit \emph{as-receiver}(invocable\_type\&\& f)}|}}}}
 \NormalTok{  {{\color[HTML]{bf0303}\sout{\VERB|\NormalTok{\emph{as-receiver}(\emph{as-receiver}\&\& other) = default;}|}}}}
   \DataTypeTok{void}\NormalTok{ set\_value}\OperatorTok{()}\NormalTok{ {{\color[HTML]{006e28}\uline{\VERB|\NormalTok{noexcept(is\_nothrow\_invocable\_v\textless{}F\&\textgreater{})}|}}} }\OperatorTok{\{}
-\NormalTok{    invoke}\OperatorTok{(}\NormalTok{f\_}\OperatorTok{)}\NormalTok{;}
+\NormalTok{    invoke}\OperatorTok{(}\NormalTok{f\_}\OperatorTok{);}
   \OperatorTok{\}}
 \NormalTok{  {{\color[HTML]{006e28}\uline{\VERB|\NormalTok{[[noreturn]]}|}}} }\DataTypeTok{void}\NormalTok{ set\_error}\OperatorTok{(}\NormalTok{std}\OperatorTok{::}\NormalTok{exception\_ptr}\OperatorTok{)}\NormalTok{ {{\color[HTML]{006e28}\uline{\VERB|\NormalTok{noexcept}|}}} }\OperatorTok{\{}
-\NormalTok{    terminate}\OperatorTok{()}\NormalTok{;}
+\NormalTok{    terminate}\OperatorTok{();}
   \OperatorTok{\}}
   \DataTypeTok{void}\NormalTok{ set\_done}\OperatorTok{()} \KeywordTok{noexcept} \OperatorTok{\{\}}
-\OperatorTok{\}}\NormalTok{;}
+\OperatorTok{\};}
 
-\DataTypeTok{void}\NormalTok{ f}\OperatorTok{(}\NormalTok{{{\color[HTML]{006e28}\uline{int *const *\emph{p\textsubscript{i}}}}}}\OperatorTok{)}\NormalTok{;}
+\DataTypeTok{void}\NormalTok{ f}\OperatorTok{(}\NormalTok{{{\color[HTML]{006e28}\uline{int *const *\emph{p\textsubscript{i}}}}}}\OperatorTok{);}
 \end{Highlighting}
 \end{Shaded}
 
@@ -577,9 +577,9 @@ Tables\hyperref[comparison-tables]{}}{Comparison Tables}}\label{comparison-table
 \begin{Shaded}
 \begin{Highlighting}[]
 \ControlFlowTok{switch} \OperatorTok{(}\NormalTok{x}\OperatorTok{)} \OperatorTok{\{}
-  \ControlFlowTok{case} \DecValTok{0}\OperatorTok{:}\NormalTok{ std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"got zero"}\NormalTok{; }\ControlFlowTok{break}\NormalTok{;}
-  \ControlFlowTok{case} \DecValTok{1}\OperatorTok{:}\NormalTok{ std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"got one"}\NormalTok{; }\ControlFlowTok{break}\NormalTok{;}
-  \ControlFlowTok{default}\OperatorTok{:}\NormalTok{ std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"don\textquotesingle{}t care"}\NormalTok{;}
+  \ControlFlowTok{case} \DecValTok{0}\OperatorTok{:}\NormalTok{ std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"got zero"}\OperatorTok{;} \ControlFlowTok{break}\OperatorTok{;}
+  \ControlFlowTok{case} \DecValTok{1}\OperatorTok{:}\NormalTok{ std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"got one"}\OperatorTok{;} \ControlFlowTok{break}\OperatorTok{;}
+  \ControlFlowTok{default}\OperatorTok{:}\NormalTok{ std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"don\textquotesingle{}t care"}\OperatorTok{;}
 \OperatorTok{\}}
 \end{Highlighting}
 \end{Shaded}
@@ -589,9 +589,9 @@ Tables\hyperref[comparison-tables]{}}{Comparison Tables}}\label{comparison-table
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{inspect }\OperatorTok{(}\NormalTok{x}\OperatorTok{)} \OperatorTok{\{}
-  \DecValTok{0}\OperatorTok{:}\NormalTok{ std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"got zero"}\NormalTok{;}
-  \DecValTok{1}\OperatorTok{:}\NormalTok{ std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"got one"}\NormalTok{;}
-\NormalTok{  \_}\OperatorTok{:}\NormalTok{ std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"don\textquotesingle{}t care"}\NormalTok{;}
+  \DecValTok{0}\OperatorTok{:}\NormalTok{ std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"got zero"}\OperatorTok{;}
+  \DecValTok{1}\OperatorTok{:}\NormalTok{ std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"got one"}\OperatorTok{;}
+\NormalTok{  \_}\OperatorTok{:}\NormalTok{ std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"don\textquotesingle{}t care"}\OperatorTok{;}
 \OperatorTok{\}}
 \end{Highlighting}
 \end{Shaded}
@@ -619,9 +619,9 @@ Tables\hyperref[comparison-tables]{}}{Comparison Tables}}\label{comparison-table
 \begin{Shaded}
 \begin{Highlighting}[]
 \ControlFlowTok{switch} \OperatorTok{(}\NormalTok{x}\OperatorTok{)} \OperatorTok{\{}
-  \ControlFlowTok{case} \DecValTok{0}\OperatorTok{:}\NormalTok{ std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"got zero"}\NormalTok{; }\ControlFlowTok{break}\NormalTok{;}
-  \ControlFlowTok{case} \DecValTok{1}\OperatorTok{:}\NormalTok{ std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"got one"}\NormalTok{; }\ControlFlowTok{break}\NormalTok{;}
-  \ControlFlowTok{default}\OperatorTok{:}\NormalTok{ std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"don\textquotesingle{}t care"}\NormalTok{;}
+  \ControlFlowTok{case} \DecValTok{0}\OperatorTok{:}\NormalTok{ std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"got zero"}\OperatorTok{;} \ControlFlowTok{break}\OperatorTok{;}
+  \ControlFlowTok{case} \DecValTok{1}\OperatorTok{:}\NormalTok{ std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"got one"}\OperatorTok{;} \ControlFlowTok{break}\OperatorTok{;}
+  \ControlFlowTok{default}\OperatorTok{:}\NormalTok{ std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"don\textquotesingle{}t care"}\OperatorTok{;}
 \OperatorTok{\}}
 \end{Highlighting}
 \end{Shaded}
@@ -633,9 +633,9 @@ Tables\hyperref[comparison-tables]{}}{Comparison Tables}}\label{comparison-table
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{inspect }\OperatorTok{(}\NormalTok{x}\OperatorTok{)} \OperatorTok{\{}
-  \DecValTok{0}\OperatorTok{:}\NormalTok{ std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"got zero"}\NormalTok{;}
-  \DecValTok{1}\OperatorTok{:}\NormalTok{ std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"got one"}\NormalTok{;}
-\NormalTok{  \_}\OperatorTok{:}\NormalTok{ std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"don\textquotesingle{}t care"}\NormalTok{;}
+  \DecValTok{0}\OperatorTok{:}\NormalTok{ std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"got zero"}\OperatorTok{;}
+  \DecValTok{1}\OperatorTok{:}\NormalTok{ std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"got one"}\OperatorTok{;}
+\NormalTok{  \_}\OperatorTok{:}\NormalTok{ std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"don\textquotesingle{}t care"}\OperatorTok{;}
 \OperatorTok{\}}
 \end{Highlighting}
 \end{Shaded}
@@ -648,11 +648,11 @@ Tables\hyperref[comparison-tables]{}}{Comparison Tables}}\label{comparison-table
 \begin{Shaded}
 \begin{Highlighting}[]
 \ControlFlowTok{if} \OperatorTok{(}\NormalTok{s }\OperatorTok{==} \StringTok{"foo"}\OperatorTok{)} \OperatorTok{\{}
-\NormalTok{  std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"got foo"}\NormalTok{;}
+\NormalTok{  std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"got foo"}\OperatorTok{;}
 \OperatorTok{\}} \ControlFlowTok{else} \ControlFlowTok{if} \OperatorTok{(}\NormalTok{s }\OperatorTok{==} \StringTok{"bar"}\OperatorTok{)} \OperatorTok{\{}
-\NormalTok{  std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"got bar"}\NormalTok{;}
+\NormalTok{  std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"got bar"}\OperatorTok{;}
 \OperatorTok{\}} \ControlFlowTok{else} \OperatorTok{\{}
-\NormalTok{  std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"don\textquotesingle{}t care"}\NormalTok{;}
+\NormalTok{  std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"don\textquotesingle{}t care"}\OperatorTok{;}
 \OperatorTok{\}}
 \end{Highlighting}
 \end{Shaded}
@@ -664,9 +664,9 @@ Tables\hyperref[comparison-tables]{}}{Comparison Tables}}\label{comparison-table
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{inspect }\OperatorTok{(}\NormalTok{s}\OperatorTok{)} \OperatorTok{\{}
-  \StringTok{"foo"}\OperatorTok{:}\NormalTok{ std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"got foo"}\NormalTok{;}
-  \StringTok{"bar"}\OperatorTok{:}\NormalTok{ std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"got bar"}\NormalTok{;}
-\NormalTok{  \_}\OperatorTok{:}\NormalTok{ std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"don\textquotesingle{}t care"}\NormalTok{;}
+  \StringTok{"foo"}\OperatorTok{:}\NormalTok{ std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"got foo"}\OperatorTok{;}
+  \StringTok{"bar"}\OperatorTok{:}\NormalTok{ std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"got bar"}\OperatorTok{;}
+\NormalTok{  \_}\OperatorTok{:}\NormalTok{ std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"don\textquotesingle{}t care"}\OperatorTok{;}
 \OperatorTok{\}}
 \end{Highlighting}
 \end{Shaded}
@@ -758,7 +758,7 @@ Also handle code blocks within a list item:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\DataTypeTok{int}\NormalTok{ main}\OperatorTok{()}\NormalTok{;}
+\DataTypeTok{int}\NormalTok{ main}\OperatorTok{();}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1168,36 +1168,29 @@ There are three supported styles of note:
 
 \section{\texorpdfstring{Citation\hyperref[citation]{}}{Citation}}\label{citation}
 
-Automatic references are written as
-\VERB|\OperatorTok{[@}\NormalTok{N4762}\OperatorTok{]}| and renders as
-\href{https://wg21.link/n4762}{{[}N4762{]}}. Anything in
+Automatic references are written as \VERB|\NormalTok{[@N4762]}| and
+renders as \href{https://wg21.link/n4762}{{[}N4762{]}}. Anything in
 \url{https://wg21.link/index.yaml} are linked automatically.
 
 \begin{itemize}
 \tightlist
 \item
-  \VERB|\NormalTok{N}| Papers (e.g.,
-  \VERB|\OperatorTok{[@}\NormalTok{N3887}\OperatorTok{]}| →
+  \VERB|\NormalTok{N}| Papers (e.g., \VERB|\NormalTok{[@N3887]}| →
   \href{https://wg21.link/n3887}{{[}N3887{]}})
 \item
-  \VERB|\NormalTok{P}| Papers (e.g.,
-  \VERB|\OperatorTok{[@}\NormalTok{P1371R1}\OperatorTok{]}| →
+  \VERB|\NormalTok{P}| Papers (e.g., \VERB|\NormalTok{[@P1371R1]}| →
   \href{https://wg21.link/p1371r1}{{[}P1371R1{]}})
 \item
-  CWG Issues (e.g.,
-  \VERB|\OperatorTok{[@}\NormalTok{CWG1234}\OperatorTok{]}| →
+  CWG Issues (e.g., \VERB|\NormalTok{[@CWG1234]}| →
   \href{https://wg21.link/cwg1234}{{[}CWG1234{]}})
 \item
-  LWG Issues (e.g.,
-  \VERB|\OperatorTok{[@}\NormalTok{LWG1234}\OperatorTok{]}| →
+  LWG Issues (e.g., \VERB|\NormalTok{[@LWG1234]}| →
   \href{https://wg21.link/lwg1234}{{[}LWG1234{]}})
 \item
-  Github Edits (e.g,
-  \VERB|\OperatorTok{[@}\NormalTok{EDIT1234}\OperatorTok{]}| →
+  Github Edits (e.g, \VERB|\NormalTok{[@EDIT1234]}| →
   \href{https://wg21.link/edit1234}{{[}EDIT1234{]}})
 \item
-  Standing Documents (e.g.,
-  \VERB|\OperatorTok{[@}\NormalTok{SD6}\OperatorTok{]}| →
+  Standing Documents (e.g., \VERB|\NormalTok{[@SD6]}| →
   \href{https://wg21.link/sd6}{{[}SD6{]}})
 \end{itemize}
 

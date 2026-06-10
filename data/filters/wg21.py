@@ -690,7 +690,7 @@ class CodeElems:
             output_format=doc.format,
             extra_args=[
                 '--syntax-definition',
-                os.path.join(doc.get_metadata('datadir'), 'syntax', 'isocpp.xml'),
+                os.path.join(doc.get_metadata('datadir'), 'syntax', 'wg21.xml'),
                 '--mathml',
                 '--wrap', 'none'])
 
