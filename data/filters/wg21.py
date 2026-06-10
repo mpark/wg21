@@ -694,9 +694,8 @@ class CodeElems:
             input_format='panflute',
             output_format=doc.format,
             extra_args=[
-                '--syntax-definition',
-                os.path.join(doc.get_metadata('data-dir'), 'syntax', 'wg21.xml'),
-                '--mathml',
+                '--data-dir', doc.get_metadata('data-dir'),
+                '-d', 'formatting',
                 '--wrap', 'none'])
 
         if doc.format == 'latex':
