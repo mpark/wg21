@@ -21,7 +21,10 @@ pdf-engine: xelatex
 
 template: wg21
 
-metadata-file: ${USERDATA}/metadata.yaml
+metadata-files:
+  - ${USERDATA}/metadata.yaml
+  - ${USERDATA}/syntax/highlighting-css.yaml
+  - ${USERDATA}/syntax/highlighting-macros.yaml
 
 # Used for various resources
 # e.g. bibliography, CSS, `favicon.ico` in `wg21.html`.

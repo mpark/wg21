@@ -132,21 +132,6 @@ def prepare(doc):
     with open(os.path.join(datadir, 'srefs.json'), 'r') as f:
         srefs.update(json.load(f))
 
-    def highlighting(output_format):
-        return pf.convert_text(
-            '`-`{.default}',
-            input_format='markdown',
-            output_format=output_format,
-            extra_args=[
-              '--syntax-highlighting', os.path.join(datadir, 'syntax', 'wg21.theme'),
-              '--template', os.path.join(datadir, 'templates', 'highlighting'),
-              '--metadata', 'title="-"'])
-
-    doc.metadata['highlighting-macros'] = pf.MetaBlocks(
-        pf.RawBlock(highlighting('latex'), 'latex'))
-    doc.metadata['highlighting-css'] = pf.MetaBlocks(
-        pf.RawBlock(highlighting('html'), 'html'))
-
     process_subs(doc, doc.get_metadata('from'))
 
 def soul(elem, doc):

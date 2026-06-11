@@ -1,0 +1,9 @@
+# Generate by:
+#
+# printf '`-`{.default}' | pandoc -f markdown -t latex \
+#     --data-dir data -d formatting --template highlighting-macros.yaml
+highlighting-macros:
+  - |
+    ```{=latex}
+    $highlighting-macros$
+    ```

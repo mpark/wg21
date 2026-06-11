@@ -1,5 +1,5 @@
 html-math-method:
   method: mathml
 
-syntax-definitions:
-  - ${USERDATA}/syntax/wg21.xml
+syntax-definition: ${USERDATA}/syntax/wg21.xml
+syntax-highlighting: ${USERDATA}/syntax/wg21.theme

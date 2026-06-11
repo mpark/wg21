@@ -1,0 +1,9 @@
+# Generate by:
+#
+# printf '`-`{.default}' | pandoc -f markdown -t html \
+#     --data-dir data -d formatting --template highlighting-css.yaml
+highlighting-css:
+  - |
+    ```{=html}
+    $highlighting-css$
+    ```
