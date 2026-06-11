@@ -230,7 +230,7 @@ Reply-to:   \@author
 \author{&Author
 0\\&<\href{mailto:author0@gmail.com}{\nolinkurl{author0@gmail.com}}>\\&Author
 1\\&<\href{mailto:author1@gmail.com}{\nolinkurl{author1@gmail.com}}>\\}
-\date{2026-06-10}
+\date{2026-06-11}
 
 \begin{document}
 \hypertarget{title-block-header}{\label{title-block-header}}
@@ -343,6 +343,8 @@ Various compositions in compact list:
   {{\setlength{\fboxsep}{1pt}\colorbox{yellow}{{\mbox{\VERB|\DataTypeTok{void}\NormalTok{ foo}\OperatorTok{();}|}}}}}
 \item
   \(\frac{a+b}{2}\)
+\item
+  \VERB|\NormalTok{string format}\OperatorTok{(...);}  \CommentTok{// {28.5.5 \href{https://eel.is/c++draft/format.functions}{{[}format.functions{]}}}}|
 \end{itemize}
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}

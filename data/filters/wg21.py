@@ -602,6 +602,39 @@ def automatic_header_link(elem, doc):
 
     return pf.Link(pf.Str(header_text), url=elem.url)
 
+def code_init(elem, doc):
+    if isinstance(elem, pf.Header) and doc.format == 'latex':
+        elem.walk(lambda elem, _:
+            elem.classes.append('raw')
+            if isinstance(elem, (pf.Code, pf.CodeBlock))
+            else None)
+
+    # Mark code elements within colored divspan as default.
+    if isinstance(elem, (pf.Div, pf.Span)) and \
+       any(c in {'add', 'rm', 'ednote', 'draftnote'} for c in elem.classes):
+        elem.walk(lambda elem, _:
+            elem.classes.insert(0, 'default')
+            if isinstance(elem, (pf.Code, pf.CodeBlock))
+            else None)
+
+    if not isinstance(elem, (pf.Code, pf.CodeBlock)):
+        return None
+
+    # As `walk` performs post-order traversal, this is
+    # guaranteed to run before the 'raw' code path.
+    if not elem.classes:
+        if isinstance(elem, pf.Code):
+            c = doc.get_metadata('highlighting.inline-code', 'cpp')
+        elif isinstance(elem, pf.CodeBlock):
+            c = doc.get_metadata('highlighting.code-block', 'default')
+        elem.classes.append(c)
+
+formatting = [
+    sref,
+    divspan,
+    code_init,
+]
+
 class CodeElems:
     """
     High-level description of embedded markdown handling:
@@ -631,34 +664,6 @@ class CodeElems:
     # Mapping from embedded md fragment to its index within `fragments`
     fragment_idx = {}
     
-    @staticmethod
-    def init(elem, doc):
-        if isinstance(elem, pf.Header) and doc.format == 'latex':
-            elem.walk(lambda elem, _:
-                elem.classes.append('raw')
-                if isinstance(elem, (pf.Code, pf.CodeBlock))
-                else None)
-
-        # Mark code elements within colored divspan as default.
-        if isinstance(elem, (pf.Div, pf.Span)) and \
-           any(c in {'add', 'rm', 'ednote', 'draftnote'} for c in elem.classes):
-            elem.walk(lambda elem, _:
-                elem.classes.insert(0, 'default')
-                if isinstance(elem, (pf.Code, pf.CodeBlock))
-                else None)
-
-        if not isinstance(elem, (pf.Code, pf.CodeBlock)):
-            return None
-
-        # As `walk` performs post-order traversal, this is
-        # guaranteed to run before the 'raw' code path.
-        if not elem.classes:
-            if isinstance(elem, pf.Code):
-                c = doc.get_metadata('highlighting.inline-code', 'cpp')
-            elif isinstance(elem, pf.CodeBlock):
-                c = doc.get_metadata('highlighting.code-block', 'default')
-            elem.classes.append(c)
-
     @staticmethod
     def _compute_unique_placeholder(texts):
         import uuid
@@ -701,24 +706,27 @@ class CodeElems:
         if not fragments:
             return []
 
+        # Handle nested inline code such as: @[`$foo$`]{.add}@ while leaving
+        # @$foo$@ be interpreted as inline math.
+        #
+        # `_replace_fragments_with_placeholders` can add to fragments,
+        # which is why we loop while converted is fewer than fragments.
+        def nested_code(elem, doc):
+            if isinstance(elem, pf.Code) and 'raw' not in elem.classes:
+                elem.text = cls._replace_fragments_with_placeholders(elem.text)
+
         converted = []
         while len(converted) < len(fragments):
             batch = fragments[len(converted):]
-            # Handle nested inline code such as: @[`$foo$`]{.add}@ while leaving
-            # @$foo$@ be interpreted as inline math.
-            #
-            # `_replace_fragments_with_placeholders` can add to fragments,
-            # which is why we loop while converted is fewer than fragments.
-            def code(elem, doc):
-                if isinstance(elem, pf.Code) and 'raw' not in elem.classes:
-                    elem.text = cls._replace_fragments_with_placeholders(elem.text)
-            blocks = [
-                plain.walk(divspan, doc).walk(CodeElems.init, doc).walk(code, doc)
-                # -raw_html to avoid <T> in foo<T> to be interpreted as an HTML tag.
-                # -smart to avoid things like ... to get transformed into \dots
-                for plain in convert_fragments(
-                    batch, f"{doc.get_metadata('from')}-raw_html-smart")
-            ]
+            blocks = []
+            # -raw_html to avoid <T> in foo<T> to be interpreted as an HTML tag.
+            # -smart to avoid things like ... to get transformed into \dots
+            for plain in convert_fragments(
+                    batch, f"{doc.get_metadata('from')}-raw_html-smart"):
+                for f in formatting:
+                    plain = plain.walk(f, doc)
+                plain.walk(nested_code, doc)
+                blocks.append(plain)
             token = cls._compute_unique_placeholder(fragments)
             text, sep = cls._convert_blocks(blocks, token, doc)
             result = text.split(sep)
@@ -790,8 +798,6 @@ class CodeElems:
 
     @classmethod
     def run(cls, doc):
-        doc.walk(cls.init)
-
         elems = []
         containers = []
         def code(elem, doc):
@@ -872,13 +878,12 @@ if __name__ == '__main__':
   pf.run_filters([
       soul,
       wording,
-      sref,
-      divspan,
       cmptable,
       # after `cmptable` because...
-      header,  # doesn't apply to the "headers" in comparison table.
       table,   # also applies to tables generated by `cmptable`.
       caption, # also applies to captions generated by `cmptable`.
+      *[header, automatic_header_link], # does not apply to `cmptable` "headers"
+      # not necessarily after `cmptable`
       *[collect_refs, citation_link],
-      automatic_header_link, # needs to be after `header`
+      *formatting,
   ], prepare, finalize)

@@ -82,6 +82,7 @@ Various compositions in compact list:
   - `void @==foo==@();`{.cpp}
   - ==`void foo();`{.cpp}==
   - $\frac{a+b}{2}$
+  - `string format(...);  // @[format.functions]{.sref}@`
 
 ---
 
