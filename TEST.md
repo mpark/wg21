@@ -144,6 +144,14 @@ struct process {
 @@[`template<class, class> struct @_as-invocable_@; @_// exposition only_@`]{.add}@@
 ```
 
+```{.default .embed_md md="%" em="!"}
+%[`!custom!`]{.add}%
+```
+
+```yaml {em="!"}
+@[not embedded]{.add}@ and !emphasized!
+```
+
 ### C++ Syntax Highlighting
 
 ```cpp

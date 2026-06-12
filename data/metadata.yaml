@@ -27,6 +27,10 @@ uccolor: '898887'
 addcolor: '006e28'
 rmcolor: 'bf0303'
 
+embedded-md-code-classes:
+  - cpp
+  - default
+
 header-includes:
   - |
     ```{=latex}

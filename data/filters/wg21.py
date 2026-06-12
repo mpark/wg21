@@ -12,10 +12,13 @@ import json
 import panflute as pf
 import re
 
-refs = {}
-srefs = {}
-headers = {}
 document_pattern = r"[PD]([0-9]+)R[0-9]+"
+
+srefs = {}
+highlight_languages = set()
+
+headers = {}
+refs = {}
 
 def prepend_elem(elem, *prefix):
     assert(all(isinstance(e, pf.Inline) for e in prefix))
@@ -131,6 +134,13 @@ def prepare(doc):
 
     with open(os.path.join(datadir, 'srefs.json'), 'r') as f:
         srefs.update(json.load(f))
+
+    highlight_languages.update(
+        pf.run_pandoc(
+            args=['--data-dir', datadir,
+                  '-d', 'formatting',
+                  '--list-highlight-languages'])
+        .splitlines())
 
     process_subs(doc, doc.get_metadata('from'))
 
@@ -621,18 +631,39 @@ def code_init(elem, doc):
         return None
 
     # As `walk` performs post-order traversal, this is
-    # guaranteed to run before the 'raw' code path.
-    if not elem.classes:
+    # guaranteed to run before the header and divspan handling.
+    if not any(c in highlight_languages for c in elem.classes):
         if isinstance(elem, pf.Code):
             c = doc.get_metadata('highlighting.inline-code', 'cpp')
         elif isinstance(elem, pf.CodeBlock):
             c = doc.get_metadata('highlighting.code-block', 'default')
         elem.classes.append(c)
 
+# Process embedded markdown configuration. We turn explicit .embed_md
+# and implicit classes (e.g. `cpp`) into attributes md='@' em='$',
+# and allow explicit md='A' and/or em='B' to override them.
+# After this, the md/em attributes capture the entire config.
+def embed_md_init(elem, doc):
+    if not isinstance(elem, (pf.Code, pf.CodeBlock)):
+        return None
+
+    implicit_classes = doc.get_metadata('embedded-md-code-classes')
+    enabled = (
+        'raw' not in elem.classes and
+        ('embed_md' in elem.classes or
+         any(c in implicit_classes for c in elem.classes)))
+    md, em = ('@', '$') if enabled else ('none', 'none')
+    md = elem.attributes.pop('md', md)
+    if md != 'none':
+        elem.attributes['md'] = md
+    em = elem.attributes.pop('em', em)
+    if em != 'none':
+        elem.attributes['em'] = em
+
 formatting = [
     sref,
     divspan,
-    code_init,
+    *[code_init, embed_md_init]
 ]
 
 class CodeElems:
@@ -653,9 +684,6 @@ class CodeElems:
       7. Split the batch converted code text into individual elements, and
          update the code elements with the fully processed elements.
     """
-    # Code elements for which embedded markdown is allowed
-    embedded_md_classes = {'cpp', 'default', 'diff', 'nasm', 'rust'}
-
     placeholder_prefix = None
 
     # Unique list of fragments, kept track in `fragment_idx`.
@@ -712,8 +740,16 @@ class CodeElems:
         # `_replace_fragments_with_placeholders` can add to fragments,
         # which is why we loop while converted is fewer than fragments.
         def nested_code(elem, doc):
-            if isinstance(elem, pf.Code) and 'raw' not in elem.classes:
-                elem.text = cls._replace_fragments_with_placeholders(elem.text)
+            if not isinstance(elem, pf.Code):
+                return None
+
+            md = elem.attributes.pop('md', None)
+            em = elem.attributes.pop('em', None)
+
+            if md is None and em is None:
+                return None
+
+            elem.text = cls._replace_fragments_with_placeholders(elem.text, md, em)
 
         converted = []
         while len(converted) < len(fragments):
@@ -737,7 +773,8 @@ class CodeElems:
 
     @classmethod
     def _store_fragment(cls, fragment):
-        if (idx := cls.fragment_idx.get(fragment)) is None:
+        idx = cls.fragment_idx.get(fragment)
+        if idx is None:
             idx = len(cls.fragments)
             cls.fragments.append(fragment)
             cls.fragment_idx[fragment] = idx
@@ -748,7 +785,7 @@ class CodeElems:
         return f' {cls.placeholder_prefix}{idx} '
 
     @classmethod
-    def _process_fragment(cls, text, i, closing, wrap=lambda fragment: fragment):
+    def _process_fragment(cls, text, i, closing, md, em, wrap=lambda fragment: fragment):
         """
         Returns the placeholder for the parsed embedded Markdown region and
         the index where parsing should continue.
@@ -769,20 +806,20 @@ class CodeElems:
         return placeholder, end + len(closing)
 
     @classmethod
-    def _replace_fragments_with_placeholders(cls, text):
+    def _replace_fragments_with_placeholders(cls, text, md, em):
         pieces = []
         start = 0
         i = 0
 
         while i < len(text):
             result = None
-            if text.startswith('@@', i):
-                result = cls._process_fragment(text, i + 2, '@@')
-            elif text.startswith('@', i):
-                result = cls._process_fragment(text, i + 1, '@')
-            elif text.startswith('$', i):
+            if md is not None and text.startswith(md * 2, i):
+                result = cls._process_fragment(text, i + len(md) * 2, md * 2, md, em)
+            elif md is not None and text.startswith(md, i):
+                result = cls._process_fragment(text, i + len(md), md, md, em)
+            elif em is not None and text.startswith(em, i):
                 result = cls._process_fragment(
-                    text, i + 1, '$', lambda fragment: f'*{fragment}*')
+                    text, i + len(em), em, md, em, lambda fragment: f'*{fragment}*')
 
             if result is not None:
                 pieces.append(text[start:i])
@@ -801,29 +838,34 @@ class CodeElems:
         elems = []
         containers = []
         def code(elem, doc):
-            if (
+            if not (
                 isinstance(elem, (pf.Code, pf.CodeBlock)) and
-                'raw' not in elem.classes and
-                any(c in cls.embedded_md_classes for c in elem.classes)
+                (elem.attributes.get('md') is not None or
+                 elem.attributes.get('em') is not None)
             ):
-                elems.append(elem)
-                container = (
-                    pf.RawInline('', doc.format)
-                    if isinstance(elem, pf.Code)
-                    else pf.RawBlock('', doc.format))
-                if 'diff' in elem.classes and doc.format == 'latex':
-                    container = pf.Span() if isinstance(elem, pf.Code) else pf.Div()
-                containers.append(container)
-                return container
+                return None
+
+            elems.append(elem)
+            container = (
+                pf.RawInline('', doc.format)
+                if isinstance(elem, pf.Code)
+                else pf.RawBlock('', doc.format))
+            if 'diff' in elem.classes and doc.format == 'latex':
+                container = pf.Span() if isinstance(elem, pf.Code) else pf.Div()
+            containers.append(container)
+            return container
 
         doc.walk(code)
         if not elems:
             return
 
-        cls.placeholder_prefix = cls._compute_unique_placeholder(elem.text for elem in elems)
+        cls.placeholder_prefix = cls._compute_unique_placeholder(
+            elem.text for elem in elems)
 
         for elem in elems:
-           elem.text = cls._replace_fragments_with_placeholders(elem.text)
+            md = elem.attributes.pop('md', None)
+            em = elem.attributes.pop('em', None)
+            elem.text = cls._replace_fragments_with_placeholders(elem.text, md, em)
 
         converted_fragments = cls._convert_fragments(cls.fragments, doc)
 
