@@ -214,12 +214,9 @@ def wording(elem, doc):
 
     def get_list_type(elem):
         if isinstance(elem, pf.OrderedList):
-            if elem.style == 'DefaultStyle' and elem.delimiter == 'DefaultDelim':
-                return '#.'
-            elif elem.style == 'Decimal' and elem.delimiter == 'Period':
-                return '1.'
-            elif elem.style == 'LowerAlpha' and elem.delimiter == 'OneParen' and elem.start == 24:
-                return 'x)'
+            if elem.style == 'DefaultStyle':                      return '#'
+            elif elem.style == 'Decimal':                         return '1'
+            elif elem.style == 'LowerAlpha' and elem.start == 24: return 'x'
             return None
         elif isinstance(elem, pf.BulletList):
             return '-'
@@ -230,19 +227,19 @@ def wording(elem, doc):
         if list_type is None:
             return None
 
-        # '#.' is only supported at the top-level, '-' is only supported nested.
-        if list_type == '#.' and parents:
+        # '#' is only supported at the top-level, '-' is only supported nested.
+        if list_type == '#' and parents:
             return None
 
         if list_type == '-' and not parents:
             return None
 
-        if list_type == '1.':
+        if list_type == '1':
             start = elem.start - 1
 
         for item in elem.content:
             number = parents
-            if list_type == 'x)':
+            if list_type == 'x':
                 number += ('x',)
             else:
                 start += 1
