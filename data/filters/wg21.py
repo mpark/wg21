@@ -19,6 +19,7 @@ highlight_languages = set()
 
 headers = {}
 refs = {}
+pnum_count = 0
 
 def prepend_elem(elem, *prefix):
     assert(all(isinstance(e, pf.Inline) for e in prefix))
@@ -336,8 +337,12 @@ def divspan(elem, doc):
         if doc.format == 'latex':
             return pf.RawInline(f'\\pnum{{{num}}}', 'latex')
         elif doc.format == 'html':
+            global pnum_count
+            pnum_count += 1
+            anchor_id = f'pnum-{pnum_count}'
             return pf.Span(
-                pf.RawInline(f'<a class="marginalized">{num}</a>', 'html'),
+                pf.Link(pf.Str(num), url=f'#{anchor_id}',
+                        identifier=anchor_id, classes=['marginalized']),
                 classes=['marginalizedparent'])
 
         return pf.Superscript(pf.Str(num))
