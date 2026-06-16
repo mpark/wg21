@@ -73,9 +73,16 @@ ul > li:before {
 	margin-left: -1.5em;
 }
 
-:target { background-color: #C9FBC9; }
-:target .codeblock { background-color: #C9FBC9; }
-:target ul { background-color: #C9FBC9; }
+:target { background-color: yellow; }
+:target .codeblock { background-color: yellow; }
+:target ul { background-color: yellow; }
+
+p:has(> span.marginalizedparent > a.marginalized:target),
+li:has(> span.marginalizedparent > a.marginalized:target) {
+	background-color: yellow;
+}
+
+a.marginalized:target { background-color: transparent; }
 
 .abbr_ref { float: right; }
 
