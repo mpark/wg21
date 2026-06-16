@@ -29,6 +29,11 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
+      - name: Install TeX
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y git curl make python3 python3-venv
+          sudo apt-get install -y texlive-xetex
       - name: Checkout
         uses: actions/checkout@v4
       - name: Setup Pages
