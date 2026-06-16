@@ -31,7 +31,7 @@ There are two goals for this framework, not necessarily in order:
   - Ease of **authoring** papers
   - Ease of **reviewing** papers
 
-# Usage
+# Getting Started
 
 ## Requirements
 
