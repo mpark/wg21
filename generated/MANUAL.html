@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="generator" content="mpark/wg21" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-  <meta name="dcterms.date" content="2026-06-16" />
+  <meta name="dcterms.date" content="2026-06-17" />
   <title>`MPark/WG21` User&#39;s Guide</title>
   <style>
 
@@ -539,7 +539,7 @@ Committee Proposals</h3>
   </tr>
   <tr>
     <td>Date:</td>
-    <td>2026-06-16</td>
+    <td>2026-06-17</td>
   </tr>
   <tr>
     <td style="vertical-align:top">Project:</td>
@@ -565,7 +565,7 @@ Committee Proposals</h3>
 <ul>
 <li><a href="#introduction" id="toc-introduction"><span class="toc-section-number">1</span> Introduction</a></li>
 <li><a href="#goals" id="toc-goals"><span class="toc-section-number">2</span> Goals</a></li>
-<li><a href="#usage" id="toc-usage"><span class="toc-section-number">3</span> Usage</a>
+<li><a href="#getting-started" id="toc-getting-started"><span class="toc-section-number">3</span> Getting Started</a>
 <ul>
 <li><a href="#requirements" id="toc-requirements"><span class="toc-section-number">3.1</span> Requirements</a>
 <ul>
@@ -682,7 +682,7 @@ useful for C++ proposals. Including, but not limited to:</p>
 <li>Ease of <strong>authoring</strong> papers</li>
 <li>Ease of <strong>reviewing</strong> papers</li>
 </ul>
-<h1 data-number="3" id="usage"><span class="header-section-number">3</span> Usage<a href="#usage" class="self-link"></a></h1>
+<h1 data-number="3" id="getting-started"><span class="header-section-number">3</span> Getting Started<a href="#getting-started" class="self-link"></a></h1>
 <h2 data-number="3.1" id="requirements"><span class="header-section-number">3.1</span> Requirements<a href="#requirements" class="self-link"></a></h2>
 <p>The framework downloads and maintains a pinned version of Pandoc.</p>
 <p>For HTML output, only the following dependencies are required:</p>
@@ -2942,6 +2942,12 @@ YAML metadata. For example:</p>
 <span id="cb45-13"><a href="#cb45-13" aria-hidden="true" tabindex="-1"></a><span class="at">  <mark>- nasm</mark></span></span>
 <span id="cb45-14"><a href="#cb45-14" aria-hidden="true" tabindex="-1"></a><span class="at">  <mark>- rust</mark></span></span>
 <span id="cb45-15"><a href="#cb45-15" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code></pre></div>
+<p>This is an <strong>override</strong> for the existing list of
+<code class="sourceCode cpp">cpp</code> and
+<code class="sourceCode default">default</code>, so if it’s desired to
+keep <code class="sourceCode cpp">cpp</code> and
+<code class="sourceCode default">default</code> to have embedded
+Markdown enabled by default, they must be listed again.</p>
 <h2 data-number="5.3" id="unicode-fonts"><span class="header-section-number">5.3</span> Unicode Fonts<a href="#unicode-fonts" class="self-link"></a></h2>
 <p>If building for PDF (via LaTeX) output with Unicode characters, you
 may want to select specific <a href="https://pandoc.org/MANUAL.html#fonts">Fonts</a> for rendering. For

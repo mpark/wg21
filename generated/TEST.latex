@@ -230,7 +230,7 @@ Reply-to:   \@author
 \author{&Author
 0\\&<\href{mailto:author0@gmail.com}{\nolinkurl{author0@gmail.com}}>\\&Author
 1\\&<\href{mailto:author1@gmail.com}{\nolinkurl{author1@gmail.com}}>\\}
-\date{2026-06-12}
+\date{2026-06-17}
 
 \begin{document}
 \hypertarget{title-block-header}{\label{title-block-header}}
@@ -516,6 +516,14 @@ Highlighting\hyperref[c-syntax-highlighting]{}}{C++ Syntax Highlighting}}\label{
 \subsubsection{\texorpdfstring{\texttt{diff} Syntax
 Highlighting\hyperref[diff-syntax-highlighting]{}}{diff Syntax Highlighting}}\label{diff-syntax-highlighting}
 
+{
+
+\renewcommand{\NormalTok}[1]{\textcolor[HTML]{898887}{#1}}
+
+\renewcommand{\VariableTok}[1]{\textcolor[HTML]{006e28}{#1}}
+
+\renewcommand{\StringTok}[1]{\textcolor[HTML]{bf0303}{#1}}
+
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{some things just don\textquotesingle{}t change.}
@@ -531,6 +539,8 @@ Highlighting\hyperref[diff-syntax-highlighting]{}}{diff Syntax Highlighting}}\la
 \StringTok{{-} $unspecified$ detail::foo::template foo;}
 \end{Highlighting}
 \end{Shaded}
+
+}
 
 \subsubsection{\texorpdfstring{\texttt{rust} Syntax
 Highlighting\hyperref[rust-syntax-highlighting]{}}{rust Syntax Highlighting}}\label{rust-syntax-highlighting}

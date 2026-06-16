@@ -229,7 +229,7 @@ Guide}
 \subtitle{Framework for Writing C++ Committee Proposals}
 \author{&Michael
 Park\\&<\href{mailto:mcypark@gmail.com}{\nolinkurl{mcypark@gmail.com}}>\\}
-\date{2026-06-16}
+\date{2026-06-17}
 
 \begin{document}
 \hypertarget{title-block-header}{\label{title-block-header}}
@@ -273,7 +273,8 @@ There are two goals for this framework, not necessarily in order:
   Ease of \textbf{reviewing} papers
 \end{itemize}
 
-\section{\texorpdfstring{Usage\hyperref[usage]{}}{Usage}}\label{usage}
+\section{\texorpdfstring{Getting
+Started\hyperref[getting-started]{}}{Getting Started}}\label{getting-started}
 
 \subsection{\texorpdfstring{Requirements\hyperref[requirements]{}}{Requirements}}\label{requirements}
 
@@ -3130,6 +3131,11 @@ YAML metadata. For example:
 \PreprocessorTok{{-}{-}{-}}
 \end{Highlighting}
 \end{Shaded}
+
+This is an \textbf{override} for the existing list of
+\VERB|\NormalTok{cpp}| and \VERB|\NormalTok{default}|, so if it's
+desired to keep \VERB|\NormalTok{cpp}| and \VERB|\NormalTok{default}| to
+have embedded Markdown enabled by default, they must be listed again.
 
 \subsection{\texorpdfstring{Unicode
 Fonts\hyperref[unicode-fonts]{}}{Unicode Fonts}}\label{unicode-fonts}
