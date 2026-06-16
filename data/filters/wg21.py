@@ -609,6 +609,29 @@ def automatic_header_link(elem, doc):
 
     return pf.Link(pf.Str(header_text), url=elem.url)
 
+def diff(elem, doc):
+    if not (doc.format == 'latex' and
+            isinstance(elem, (pf.Code, pf.CodeBlock)) and
+            'diff' in elem.classes):
+        return None
+
+    # For HTML, this is handled via CSS in `data/templates/wg21.html`.
+    command = '\\renewcommand{{\\{}}}[1]{{\\textcolor[HTML]{{{}}}{{#1}}}}'
+    colors = [
+      command.format('NormalTok', doc.get_metadata('uccolor')),
+      command.format('VariableTok', doc.get_metadata('addcolor')),
+      command.format('StringTok', doc.get_metadata('rmcolor')),
+    ]
+
+    if isinstance(elem, pf.Code):
+        return pf.Span(*(pf.RawInline(color, 'latex') for color in colors), elem)
+    elif isinstance(elem, pf.CodeBlock):
+        return pf.Div(
+            pf.RawBlock('{', 'latex'),
+            *(pf.RawBlock(color, 'latex') for color in colors),
+            elem,
+            pf.RawBlock('}', 'latex'))
+
 def code_init(elem, doc):
     if isinstance(elem, pf.Header) and doc.format == 'latex':
         elem.walk(lambda elem, _:
@@ -659,6 +682,7 @@ def embed_md_init(elem, doc):
 
 formatting = [
     sref,
+    diff,
     divspan,
     *[code_init, embed_md_init]
 ]
@@ -847,8 +871,6 @@ class CodeElems:
                 pf.RawInline('', doc.format)
                 if isinstance(elem, pf.Code)
                 else pf.RawBlock('', doc.format))
-            if 'diff' in elem.classes and doc.format == 'latex':
-                container = pf.Span() if isinstance(elem, pf.Code) else pf.Div()
             containers.append(container)
             return container
 
@@ -886,29 +908,8 @@ class CodeElems:
         results = text.split(sep)
         assert(len(results) == len(elems))
 
-        # For HTML, this is handled via CSS in `data/templates/wg21.html`.
-        command = '\\renewcommand{{\\{}}}[1]{{\\textcolor[HTML]{{{}}}{{#1}}}}'
-        colors = [
-          command.format('NormalTok', doc.get_metadata('uccolor')),
-          command.format('VariableTok', doc.get_metadata('addcolor')),
-          command.format('StringTok', doc.get_metadata('rmcolor')),
-        ]
-
-        for elem, container, result in zip(elems, containers, results):
-            if isinstance(container, (pf.RawInline, pf.RawBlock)):
-                container.text = result
-                continue
-
-            if isinstance(container, pf.Span):
-                container.content = [
-                    *(pf.RawInline(color, 'latex') for color in colors),
-                    pf.RawInline(result, 'latex')]
-            elif isinstance(container, pf.Div):
-                container.content = [
-                    pf.RawBlock('{', 'latex'),
-                    *(pf.RawBlock(color, 'latex') for color in colors),
-                    pf.RawBlock(result, 'latex'),
-                    pf.RawBlock('}', 'latex')]
+        for container, result in zip(containers, results):
+            container.text = result
 
 def finalize(doc):
     CodeElems.run(doc)
