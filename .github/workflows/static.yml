@@ -36,7 +36,8 @@ jobs:
       - name: Stage Pages site
         run: |
           mkdir -p _site
-          python3 tools/TEST-side-by-side.py > _site/index.html
+          make MANUAL.html
+          cp generated/MANUAL.html _site/index.html
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
