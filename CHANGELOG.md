@@ -8,6 +8,33 @@ features, paper milestones, and large implementation changes.
 
 ### June 2026
 
+- Added `MANUAL.md` as the source for the up-to-date user's guide, generated
+  `MANUAL.html` and `MANUAL.pdf`, and changed GitHub Pages deployment to
+  publish the manual as the project website.
+- Trimmed `README.md` down to a project overview and links to the generated
+  manual instead of duplicating detailed framework documentation.
+- Added a `render` filter for manual examples that show Markdown source next
+  to the rendered output without relying on the older side-by-side test tool.
+- Added `::: wording` support for automatic paragraph-number handling in
+  proposed wording, including nested bullet and decimal lists, pinned numbers,
+  and suppressed numbering.
+- Added paragraph suffix stable references such as `[stable.name]/1`, and
+  improved stable-name data generation through `srefs.json` and `srefs.md`.
+- Added explicit embedded-Markdown opt-in and delimiter customization for code
+  elements while preserving default embedded-Markdown behavior for configured
+  code languages.
+- Factored formatting filters so generated fragments are processed more
+  consistently with top-level documents.
+- Switched generated HTML math rendering from MathJax to MathML.
+- Refreshed C++ syntax highlighting around an upstream KDE syntax definition,
+  a smaller WG21-specific syntax patch, and YAML-provided highlighting CSS and
+  LaTeX macros.
+- Fixed LaTeX output for PDF metadata, title and table-of-contents link
+  targets, and inline highlighted code inside strikeout, underline, and mark
+  spans.
+- Improved build behavior by avoiding unnecessary virtual-environment rebuilds
+  during `make update` and writing generated reference files through temporary
+  outputs before replacing existing files.
 - Upgraded the framework to Pandoc 3.9.0.2 and Panflute 2.3.1, including
   refreshed default HTML and LaTeX templates.
 - Updated WG21-specific template patches so they apply cleanly on top of the

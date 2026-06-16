@@ -1,9 +1,9 @@
-# MPark/WG21
+# `MPark/WG21`
 
 A [Pandoc](https://pandoc.org)-based framework for improving the **authoring**
 and **reviewing** experience of C++ proposals for WG21.
 
-## Introduction
+## Documentation
 
 In short, you write your papers in Markdown with various C++ proposal-specific
 extensions, and the framework produces the paper either in HTML or PDF.
