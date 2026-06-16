@@ -35,13 +35,12 @@ jobs:
         uses: actions/configure-pages@v5
       - name: Stage Pages site
         run: |
-          mkdir -p _site
-          make MANUAL.html
-          cp generated/MANUAL.html _site/index.html
+          make MANUAL.html MANUAL.pdf
+          cp generated/MANUAL.html generated/index.html
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: _site
+          path: generated
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v5
