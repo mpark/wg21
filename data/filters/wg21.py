@@ -171,10 +171,10 @@ def sref(elem, doc):
         return None
 
     target = pf.stringify(elem)
-    # Support paragraph numbers: e.g. [basic.scope.scope#2.1]{.sref}
+    # Support paragraph numbers (deprecated): e.g. [basic.scope.scope#2.1]{.sref}
     name, _, pnum = target.partition('#')
-    # Also support paragraph numbers as a suffix: e.g. [basic.scope.scope]/2.1
-    # If the explicit paragraph number is specified, it takes precedence over
+    # Support paragraph numbers as a suffix: e.g. [basic.scope.scope]/2.1
+    # If the paragraph number is specified via #, it takes precedence over
     # the suffix. e.g. [basic.life#1]{.sref}/2, the /2 is left as plain text.
     if (
         not pnum and
@@ -197,7 +197,7 @@ def sref(elem, doc):
     number, title = info
     link.title = f'{number} {title}'
     result = pf.Span()
-    if 'unnumbered' not in elem.classes:
+    if doc.get_metadata('number-srefs') and 'unnumbered' not in elem.classes:
         result.content.append(pf.Str(number))
         result.content.append(pf.Space())
     if 'title' in elem.classes:

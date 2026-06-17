@@ -31,6 +31,8 @@ embedded-md-code-classes:
   - cpp
   - default
 
+number-srefs: true
+
 header-includes:
   - |
     ```{=latex}
