@@ -1033,6 +1033,52 @@ without invoking the destructor, by reusing or releasing the storage as
 described above.
 \end{quote}
 
+Within \VERB|\NormalTok{::: wording}|, use \VERB|\NormalTok{\#}| within
+a paragraph number element to automatically fill in that part. For
+example:
+
+\begin{quote}
+\textbf{Markdown Source}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{::: wording}
+\NormalTok{[\#]\{.pnum\} Automatically starts at 1.}
+
+\NormalTok{[5]\{.pnum\} Existing paragraph pinned at 5.}
+
+\NormalTok{[\#]\{.pnum\} Automatically continues to 6.}
+
+\NormalTok{[\#.\#]\{.pnum\} Automatically starts a nested numbering at (6.1).}
+
+\NormalTok{::: add}
+\NormalTok{[x]\{.pnum\} Added paragraph that does not affect the next automatic number.}
+\NormalTok{:::}
+
+\NormalTok{[\#]\{.pnum\} Automatically continues to 7.}
+\NormalTok{:::}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{Rendered Output}
+
+\pnum{1} Automatically starts at 1.
+
+\pnum{5} Existing paragraph pinned at 5.
+
+\pnum{6} Automatically continues to 6.
+
+\pnum{(6.1)} Automatically starts a nested numbering at (6.1).
+
+{\color[HTML]{006e28}\pnum{x} Added paragraph that does not affect the
+next automatic number.}
+
+\pnum{7} Automatically continues to 7.
+\end{quote}
+
+The automatic numbering resets for each \VERB|\NormalTok{::: wording}|
+div.
+
 \paragraph{\texorpdfstring{List-based Paragraphs
 (Experimental)\hyperref[list-based-paragraphs-experimental]{}}{List-based Paragraphs (Experimental)}}\label{list-based-paragraphs-experimental}
 

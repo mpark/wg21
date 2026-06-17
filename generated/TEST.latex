@@ -713,6 +713,77 @@ defined as follows:
   results of that operand.
 \end{itemize}
 
+\pnum{2} Explicitly pins the wording-local paragraph number to
+\VERB|\DecValTok{2}|.
+
+\pnum{(2.1)}
+\VERB|\OperatorTok{[}\FloatTok{2.1}\OperatorTok{]\{.}\NormalTok{pnum}\OperatorTok{\}}|
+explicitly pins the nested count.
+
+\pnum{(2.2)} \VERB|\OperatorTok{[}\ErrorTok{\#.\#]\{.pnum\}}|
+automatically continues to
+\VERB|\OperatorTok{(}\FloatTok{2.2}\OperatorTok{)}|.
+
+\pnum{3} \VERB|\OperatorTok{[}\ErrorTok{\#]\{.pnum\}}| automatically
+continues to \VERB|\DecValTok{3}|.
+
+\pnum{(3.1)} \VERB|\OperatorTok{[}\ErrorTok{\#.\#]\{.pnum\}}|
+automatically starts the nested count at
+\VERB|\OperatorTok{(}\FloatTok{3.1}\OperatorTok{)}|.
+
+\pnum{(2.1)} \VERB|\OperatorTok{[}\FloatTok{2.}\ErrorTok{\#]\{.pnum\}}|
+resets the nested count to
+\VERB|\OperatorTok{(}\FloatTok{2.1}\OperatorTok{)}|.
+
+\pnum{x} \VERB|\NormalTok{x}| doesn't contribute to automatic numbering.
+
+\pnum{(x.1)}
+\VERB|\OperatorTok{[}\NormalTok{x}\OperatorTok{.}\ErrorTok{\#]\{.pnum\}}|
+automatically starts the nested count at
+\VERB|\OperatorTok{(}\NormalTok{x}\FloatTok{.1}\OperatorTok{)}|.
+
+\pnum{(x.2)}
+\VERB|\OperatorTok{[}\NormalTok{x}\OperatorTok{.}\ErrorTok{\#]\{.pnum\}}|
+automatically continues to
+\VERB|\OperatorTok{(}\NormalTok{x}\FloatTok{.2}\OperatorTok{)}|.
+
+\pnum{x} \VERB|\NormalTok{x}| resets its own nested count.
+
+\pnum{(x.1)}
+\VERB|\OperatorTok{[}\NormalTok{x}\OperatorTok{.}\ErrorTok{\#]\{.pnum\}}|
+automatically restarts at
+\VERB|\OperatorTok{(}\NormalTok{x}\FloatTok{.1}\OperatorTok{)}|.
+
+\pnum{(3.1)} \VERB|\OperatorTok{[}\ErrorTok{\#.\#]\{.pnum\}}| returns to
+the numeric path and continues to
+\VERB|\OperatorTok{(}\FloatTok{3.1}\OperatorTok{)}|.
+
+\pnum{(3.x.1)} \VERB|\OperatorTok{[}\ErrorTok{\#.x.\#]\{.pnum\}}| starts
+a literal nested path at
+\VERB|\OperatorTok{(}\FloatTok{3.}\ErrorTok{x.1}\OperatorTok{)}|.
+
+\pnum{(3.x.2)} \VERB|\OperatorTok{[}\ErrorTok{\#.x.\#]\{.pnum\}}|
+continues the literal nested path at
+\VERB|\OperatorTok{(}\FloatTok{3.}\ErrorTok{x.2}\OperatorTok{)}|.
+
+\pnum{(3.2)} \VERB|\OperatorTok{[}\ErrorTok{\#.\#]\{.pnum\}}| returns to
+the numeric nested count at
+\VERB|\OperatorTok{(}\FloatTok{3.2}\OperatorTok{)}|.
+
+\pnum{(4.2.5)} Explicitly pins a deeper numeric path.
+
+\pnum{(4.x.1)} \VERB|\OperatorTok{[}\ErrorTok{\#.x.\#]\{.pnum\}}| starts
+a separate literal nested path at
+\VERB|\OperatorTok{(}\FloatTok{4.}\ErrorTok{x.1}\OperatorTok{)}|.
+
+\pnum{(4.x.2)} \VERB|\OperatorTok{[}\ErrorTok{\#.x.\#]\{.pnum\}}|
+continues the literal nested path at
+\VERB|\OperatorTok{(}\FloatTok{4.}\ErrorTok{x.2}\OperatorTok{)}|.
+
+\pnum{(4.3)} \VERB|\OperatorTok{[}\ErrorTok{\#.\#]\{.pnum\}}| returns to
+the numeric nested count at
+\VERB|\OperatorTok{(}\FloatTok{4.3}\OperatorTok{)}|.
+
 \subsection{\texorpdfstring{Automatic Paragraph
 Numbers\hyperref[automatic-paragraph-numbers]{}}{Automatic Paragraph Numbers}}\label{automatic-paragraph-numbers}
 

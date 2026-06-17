@@ -352,6 +352,48 @@ an expression `e` is defined as follows:
   - [2.2]{.pnum} If `e` is a subscripting operation (7.6.1.1) with an array operand,
     the set contains the potential results of that operand.
 
+::: wording
+[2]{.pnum} Explicitly pins the wording-local paragraph number to `2`.
+
+[2.1]{.pnum} `[2.1]{.pnum}` explicitly pins the nested count.
+
+[#.#]{.pnum} `[#.#]{.pnum}` automatically continues to `(2.2)`.
+
+[#]{.pnum} `[#]{.pnum}` automatically continues to `3`.
+
+[#.#]{.pnum} `[#.#]{.pnum}` automatically starts the nested count at `(3.1)`.
+
+[2.#]{.pnum} `[2.#]{.pnum}` resets the nested count to `(2.1)`.
+
+[x]{.pnum} `x` doesn't contribute to automatic numbering.
+
+[x.#]{.pnum} `[x.#]{.pnum}` automatically starts the nested count at `(x.1)`.
+
+[x.#]{.pnum} `[x.#]{.pnum}` automatically continues to `(x.2)`.
+
+[x]{.pnum} `x` resets its own nested count.
+
+[x.#]{.pnum} `[x.#]{.pnum}` automatically restarts at `(x.1)`.
+
+[#.#]{.pnum} `[#.#]{.pnum}` returns to the numeric path and continues to `(3.1)`.
+
+[#.x.#]{.pnum} `[#.x.#]{.pnum}` starts a literal nested path at `(3.x.1)`.
+
+[#.x.#]{.pnum} `[#.x.#]{.pnum}` continues the literal nested path at `(3.x.2)`.
+
+[#.#]{.pnum} `[#.#]{.pnum}` returns to the numeric nested count at `(3.2)`.
+:::
+
+::: wording
+[4.2.5]{.pnum} Explicitly pins a deeper numeric path.
+
+[#.x.#]{.pnum} `[#.x.#]{.pnum}` starts a separate literal nested path at `(4.x.1)`.
+
+[#.x.#]{.pnum} `[#.x.#]{.pnum}` continues the literal nested path at `(4.x.2)`.
+
+[#.#]{.pnum} `[#.#]{.pnum}` returns to the numeric nested count at `(4.3)`.
+:::
+
 ## Automatic Paragraph Numbers
 
 ::: wording

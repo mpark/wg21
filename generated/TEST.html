@@ -949,128 +949,200 @@ set contains only <code class="sourceCode cpp">e</code>.</li>
 (7.6.1.1) with an array operand, the set contains the potential results
 of that operand.</li>
 </ul>
+<div class="wording">
+<p><span class="marginalizedparent"><a href="#pnum-4" id="pnum-4" class="marginalized">2</a></span> Explicitly pins the wording-local
+paragraph number to
+<code class="sourceCode cpp"><span class="dv">2</span></code>.</p>
+<p><span class="marginalizedparent"><a href="#pnum-5" id="pnum-5" class="marginalized">(2.1)</a></span>
+<code class="sourceCode cpp"><span class="op">[</span><span class="fl">2.1</span><span class="op">]{.</span>pnum<span class="op">}</span></code>
+explicitly pins the nested count.</p>
+<p><span class="marginalizedparent"><a href="#pnum-6" id="pnum-6" class="marginalized">(2.2)</a></span>
+<code class="sourceCode cpp"><span class="op">[</span><span class="er">#.#]{.pnum}</span></code>
+automatically continues to
+<code class="sourceCode cpp"><span class="op">(</span><span class="fl">2.2</span><span class="op">)</span></code>.</p>
+<p><span class="marginalizedparent"><a href="#pnum-7" id="pnum-7" class="marginalized">3</a></span>
+<code class="sourceCode cpp"><span class="op">[</span><span class="er">#]{.pnum}</span></code>
+automatically continues to
+<code class="sourceCode cpp"><span class="dv">3</span></code>.</p>
+<p><span class="marginalizedparent"><a href="#pnum-8" id="pnum-8" class="marginalized">(3.1)</a></span>
+<code class="sourceCode cpp"><span class="op">[</span><span class="er">#.#]{.pnum}</span></code>
+automatically starts the nested count at
+<code class="sourceCode cpp"><span class="op">(</span><span class="fl">3.1</span><span class="op">)</span></code>.</p>
+<p><span class="marginalizedparent"><a href="#pnum-9" id="pnum-9" class="marginalized">(2.1)</a></span>
+<code class="sourceCode cpp"><span class="op">[</span><span class="fl">2.</span><span class="er">#]{.pnum}</span></code>
+resets the nested count to
+<code class="sourceCode cpp"><span class="op">(</span><span class="fl">2.1</span><span class="op">)</span></code>.</p>
+<p><span class="marginalizedparent"><a href="#pnum-10" id="pnum-10" class="marginalized">x</a></span> <code class="sourceCode cpp">x</code>
+doesn’t contribute to automatic numbering.</p>
+<p><span class="marginalizedparent"><a href="#pnum-11" id="pnum-11" class="marginalized">(x.1)</a></span>
+<code class="sourceCode cpp"><span class="op">[</span>x<span class="op">.</span><span class="er">#]{.pnum}</span></code>
+automatically starts the nested count at
+<code class="sourceCode cpp"><span class="op">(</span>x<span class="fl">.1</span><span class="op">)</span></code>.</p>
+<p><span class="marginalizedparent"><a href="#pnum-12" id="pnum-12" class="marginalized">(x.2)</a></span>
+<code class="sourceCode cpp"><span class="op">[</span>x<span class="op">.</span><span class="er">#]{.pnum}</span></code>
+automatically continues to
+<code class="sourceCode cpp"><span class="op">(</span>x<span class="fl">.2</span><span class="op">)</span></code>.</p>
+<p><span class="marginalizedparent"><a href="#pnum-13" id="pnum-13" class="marginalized">x</a></span> <code class="sourceCode cpp">x</code>
+resets its own nested count.</p>
+<p><span class="marginalizedparent"><a href="#pnum-14" id="pnum-14" class="marginalized">(x.1)</a></span>
+<code class="sourceCode cpp"><span class="op">[</span>x<span class="op">.</span><span class="er">#]{.pnum}</span></code>
+automatically restarts at
+<code class="sourceCode cpp"><span class="op">(</span>x<span class="fl">.1</span><span class="op">)</span></code>.</p>
+<p><span class="marginalizedparent"><a href="#pnum-15" id="pnum-15" class="marginalized">(3.1)</a></span>
+<code class="sourceCode cpp"><span class="op">[</span><span class="er">#.#]{.pnum}</span></code>
+returns to the numeric path and continues to
+<code class="sourceCode cpp"><span class="op">(</span><span class="fl">3.1</span><span class="op">)</span></code>.</p>
+<p><span class="marginalizedparent"><a href="#pnum-16" id="pnum-16" class="marginalized">(3.x.1)</a></span>
+<code class="sourceCode cpp"><span class="op">[</span><span class="er">#.x.#]{.pnum}</span></code>
+starts a literal nested path at
+<code class="sourceCode cpp"><span class="op">(</span><span class="fl">3.</span><span class="er">x.1</span><span class="op">)</span></code>.</p>
+<p><span class="marginalizedparent"><a href="#pnum-17" id="pnum-17" class="marginalized">(3.x.2)</a></span>
+<code class="sourceCode cpp"><span class="op">[</span><span class="er">#.x.#]{.pnum}</span></code>
+continues the literal nested path at
+<code class="sourceCode cpp"><span class="op">(</span><span class="fl">3.</span><span class="er">x.2</span><span class="op">)</span></code>.</p>
+<p><span class="marginalizedparent"><a href="#pnum-18" id="pnum-18" class="marginalized">(3.2)</a></span>
+<code class="sourceCode cpp"><span class="op">[</span><span class="er">#.#]{.pnum}</span></code>
+returns to the numeric nested count at
+<code class="sourceCode cpp"><span class="op">(</span><span class="fl">3.2</span><span class="op">)</span></code>.</p>
+</div>
+<div class="wording">
+<p><span class="marginalizedparent"><a href="#pnum-19" id="pnum-19" class="marginalized">(4.2.5)</a></span> Explicitly pins a deeper numeric
+path.</p>
+<p><span class="marginalizedparent"><a href="#pnum-20" id="pnum-20" class="marginalized">(4.x.1)</a></span>
+<code class="sourceCode cpp"><span class="op">[</span><span class="er">#.x.#]{.pnum}</span></code>
+starts a separate literal nested path at
+<code class="sourceCode cpp"><span class="op">(</span><span class="fl">4.</span><span class="er">x.1</span><span class="op">)</span></code>.</p>
+<p><span class="marginalizedparent"><a href="#pnum-21" id="pnum-21" class="marginalized">(4.x.2)</a></span>
+<code class="sourceCode cpp"><span class="op">[</span><span class="er">#.x.#]{.pnum}</span></code>
+continues the literal nested path at
+<code class="sourceCode cpp"><span class="op">(</span><span class="fl">4.</span><span class="er">x.2</span><span class="op">)</span></code>.</p>
+<p><span class="marginalizedparent"><a href="#pnum-22" id="pnum-22" class="marginalized">(4.3)</a></span>
+<code class="sourceCode cpp"><span class="op">[</span><span class="er">#.#]{.pnum}</span></code>
+returns to the numeric nested count at
+<code class="sourceCode cpp"><span class="op">(</span><span class="fl">4.3</span><span class="op">)</span></code>.</p>
+</div>
 <h2 data-number="5.2" id="automatic-paragraph-numbers"><span class="header-section-number">5.2</span> Automatic Paragraph Numbers<a href="#automatic-paragraph-numbers" class="self-link"></a></h2>
 <div class="wording">
-<p><span class="marginalizedparent"><a href="#pnum-4" id="pnum-4" class="marginalized">1</a></span>
+<p><span class="marginalizedparent"><a href="#pnum-23" id="pnum-23" class="marginalized">1</a></span>
 <code class="sourceCode default">#.</code> automatically starts at
 <code class="sourceCode cpp"><span class="dv">1</span></code>.</p>
-<p><span class="marginalizedparent"><a href="#pnum-5" id="pnum-5" class="marginalized">2</a></span> Another
+<p><span class="marginalizedparent"><a href="#pnum-24" id="pnum-24" class="marginalized">2</a></span> Another
 <code class="sourceCode default">#.</code> automatically continues to
 <code class="sourceCode cpp"><span class="dv">2</span></code>.</p>
 <ul>
-<li><p><span class="marginalizedparent"><a href="#pnum-6" id="pnum-6" class="marginalized">(2.1)</a></span> Nested bullet list also get
+<li><p><span class="marginalizedparent"><a href="#pnum-25" id="pnum-25" class="marginalized">(2.1)</a></span> Nested bullet list also get
 automatic numbering.
 <code class="sourceCode cpp"><span class="op">(</span><span class="fl">2.1</span><span class="op">)</span></code>.</p>
 <p>[…]</p></li>
 </ul>
 <ul>
-<li><p><span class="marginalizedparent"><a href="#pnum-7" id="pnum-7" class="marginalized">(2.5)</a></span> Example of skipping. Pin to
+<li><p><span class="marginalizedparent"><a href="#pnum-26" id="pnum-26" class="marginalized">(2.5)</a></span> Example of skipping. Pin to
 <code class="sourceCode default">5.</code>, yields
 <code class="sourceCode cpp"><span class="op">(</span><span class="fl">2.5</span><span class="op">)</span></code>.</p></li>
 </ul>
 <ul>
-<li><p><span class="marginalizedparent"><a href="#pnum-8" id="pnum-8" class="marginalized">(2.6)</a></span> Continues to
+<li><p><span class="marginalizedparent"><a href="#pnum-27" id="pnum-27" class="marginalized">(2.6)</a></span> Continues to
 <code class="sourceCode cpp"><span class="op">(</span><span class="fl">2.6</span><span class="op">)</span></code>.</p>
 <ul>
-<li><p><span class="marginalizedparent"><a href="#pnum-9" id="pnum-9" class="marginalized">(2.6.1)</a></span> Nested nested bullet list should
+<li><p><span class="marginalizedparent"><a href="#pnum-28" id="pnum-28" class="marginalized">(2.6.1)</a></span> Nested nested bullet list should
 just work <code class="sourceCode default">(2.6.1)</code>.</p>
 <p>[…]</p></li>
 </ul>
 <ul>
-<li><p><span class="marginalizedparent"><a href="#pnum-10" id="pnum-10" class="marginalized">(2.6.9)</a></span>
+<li><p><span class="marginalizedparent"><a href="#pnum-29" id="pnum-29" class="marginalized">(2.6.9)</a></span>
 <code class="sourceCode default">9.</code> here will bring us to
 <code class="sourceCode default">(2.6.9)</code>.</p></li>
 </ul>
 <ul>
-<li><p><span class="marginalizedparent"><a href="#pnum-11" id="pnum-11" class="marginalized">(2.6.x)</a></span>
+<li><p><span class="marginalizedparent"><a href="#pnum-30" id="pnum-30" class="marginalized">(2.6.x)</a></span>
 <code class="sourceCode default">x)</code> here will be
 <code class="sourceCode default">(2.6.x)</code>.</p></li>
-<li><p><span class="marginalizedparent"><a href="#pnum-12" id="pnum-12" class="marginalized">(2.6.x)</a></span> Another
+<li><p><span class="marginalizedparent"><a href="#pnum-31" id="pnum-31" class="marginalized">(2.6.x)</a></span> Another
 <code class="sourceCode default">x)</code> here will also be
 <code class="sourceCode default">(2.6.x)</code>.</p></li>
 </ul></li>
 </ul>
-<p><span class="marginalizedparent"><a href="#pnum-13" id="pnum-13" class="marginalized">3</a></span>
+<p><span class="marginalizedparent"><a href="#pnum-32" id="pnum-32" class="marginalized">3</a></span>
 <code class="sourceCode default">#.</code> automatically continues to
 <code class="sourceCode cpp"><span class="dv">3</span></code>.</p>
 <p>Also handle code blocks within a list item:</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">();</span></span></code></pre></div>
-<p><span class="marginalizedparent"><a href="#pnum-14" id="pnum-14" class="marginalized">x</a></span> Use
+<p><span class="marginalizedparent"><a href="#pnum-33" id="pnum-33" class="marginalized">x</a></span> Use
 <code class="sourceCode default">x)</code> to skip a paragraph
 number.</p>
-<p><span class="marginalizedparent"><a href="#pnum-15" id="pnum-15" class="marginalized">x</a></span> Another
+<p><span class="marginalizedparent"><a href="#pnum-34" id="pnum-34" class="marginalized">x</a></span> Another
 <code class="sourceCode default">x)</code> assigned
 <code class="sourceCode cpp">x</code>.</p>
-<p><span class="marginalizedparent"><a href="#pnum-16" id="pnum-16" class="marginalized">4</a></span>
+<p><span class="marginalizedparent"><a href="#pnum-35" id="pnum-35" class="marginalized">4</a></span>
 <code class="sourceCode default">#.</code> automatically continues to
 <code class="sourceCode cpp"><span class="dv">4</span></code>.</p>
 <p>[…]</p>
-<p><span class="marginalizedparent"><a href="#pnum-17" id="pnum-17" class="marginalized">17</a></span> Pin with
+<p><span class="marginalizedparent"><a href="#pnum-36" id="pnum-36" class="marginalized">17</a></span> Pin with
 <code class="sourceCode default">17.</code>.</p>
 <div class="add" style="color: #006e28">
-<p><span class="marginalizedparent"><a href="#pnum-18" id="pnum-18" class="marginalized">x</a></span>
+<p><span class="marginalizedparent"><a href="#pnum-37" id="pnum-37" class="marginalized">x</a></span>
 <code class="sourceCode default">x)</code> is mainly to skip numbering
 in <code class="sourceCode default cpp">add</code>.</p>
 <ul>
-<li><p><span class="marginalizedparent"><a href="#pnum-19" id="pnum-19" class="marginalized">(x.1)</a></span> Nested bullet within an
+<li><p><span class="marginalizedparent"><a href="#pnum-38" id="pnum-38" class="marginalized">(x.1)</a></span> Nested bullet within an
 <code class="sourceCode default cpp">x)</code>. This will be
 (x.1).</p></li>
 </ul>
 <ul>
-<li><p><span class="marginalizedparent"><a href="#pnum-20" id="pnum-20" class="marginalized">(x.x)</a></span> Nested
+<li><p><span class="marginalizedparent"><a href="#pnum-39" id="pnum-39" class="marginalized">(x.x)</a></span> Nested
 <code class="sourceCode default cpp">x)</code> within an
 <code class="sourceCode default cpp">x)</code>. This will be
 (x.x).</p></li>
 </ul>
-<p><span class="marginalizedparent"><a href="#pnum-21" id="pnum-21" class="marginalized">x</a></span> Second added paragraph.</p>
+<p><span class="marginalizedparent"><a href="#pnum-40" id="pnum-40" class="marginalized">x</a></span> Second added paragraph.</p>
 </div>
 <div class="rm" style="color: #bf0303">
-<p><span class="marginalizedparent"><a href="#pnum-22" id="pnum-22" class="marginalized">18</a></span>
+<p><span class="marginalizedparent"><a href="#pnum-41" id="pnum-41" class="marginalized">18</a></span>
 <code class="sourceCode default">#.</code> here will be 18 after the
 skips.</p>
 <p>[…]</p>
-<p><span class="marginalizedparent"><a href="#pnum-23" id="pnum-23" class="marginalized">24</a></span> Skip and pin again,
+<p><span class="marginalizedparent"><a href="#pnum-42" id="pnum-42" class="marginalized">24</a></span> Skip and pin again,
 e.g. <code class="sourceCode default">24.</code>.</p>
 </div>
-<p><span class="marginalizedparent"><a href="#pnum-24" id="pnum-24" class="marginalized">25</a></span> Automatically continue to 25.</p>
+<p><span class="marginalizedparent"><a href="#pnum-43" id="pnum-43" class="marginalized">25</a></span> Automatically continue to 25.</p>
 </div>
 <hr />
 <div class="wording">
 <h3 class="unnumbered" id="general-intro.compliance.general">General
 <span>4.1.1 <a href="https://eel.is/c++draft/intro.compliance.general" title="4.1.1 General">[intro.compliance.general]</a></span><a href="#general-intro.compliance.general" class="self-link"></a></h3>
-<p><span class="marginalizedparent"><a href="#pnum-25" id="pnum-25" class="marginalized">1</a></span> The set of <em>diagnosable rules</em>
+<p><span class="marginalizedparent"><a href="#pnum-44" id="pnum-44" class="marginalized">1</a></span> The set of <em>diagnosable rules</em>
 consists of all syntactic and semantic rules in this document except for
 those rules containing an explicit notation that “no diagnostic is
 required” or which are described as resulting in “undefined
 behavior”.</p>
-<p><span class="marginalizedparent"><a href="#pnum-26" id="pnum-26" class="marginalized">2</a></span> Although this document states only
+<p><span class="marginalizedparent"><a href="#pnum-45" id="pnum-45" class="marginalized">2</a></span> Although this document states only
 requirements on C++ implementations, those requirements are often easier
 to understand if they are phrased as requirements on programs, parts of
 programs, or execution of programs. Such requirements have the following
 meaning:</p>
 <ul>
-<li><p><span class="marginalizedparent"><a href="#pnum-27" id="pnum-27" class="marginalized">(2.1)</a></span> If a program contains no
+<li><p><span class="marginalizedparent"><a href="#pnum-46" id="pnum-46" class="marginalized">(2.1)</a></span> If a program contains no
 violations of the rules in <a href="https://eel.is/c++draft/lex" title="5 Lexical conventions">[lex]</a> through <a href="https://eel.is/c++draft/exec" title="33 Execution control library">[exec]</a> as well as those
 specified in <a href="https://eel.is/c++draft/depr" title="Annex D (normative) Compatibility features">[depr]</a>, a
 conforming implementation shall accept and correctly execute that
 program, except when the implementation’s limitations (see below) are
 exceeded.</p></li>
-<li><p><span class="marginalizedparent"><a href="#pnum-28" id="pnum-28" class="marginalized">(2.2)</a></span> If a program contains a violation
+<li><p><span class="marginalizedparent"><a href="#pnum-47" id="pnum-47" class="marginalized">(2.2)</a></span> If a program contains a violation
 of a rule for which no diagnostic is required, this document places no
 requirement on implementations with respect to that program.</p></li>
-<li><p><span class="marginalizedparent"><a href="#pnum-29" id="pnum-29" class="marginalized">(2.3)</a></span> Otherwise, if a program
+<li><p><span class="marginalizedparent"><a href="#pnum-48" id="pnum-48" class="marginalized">(2.3)</a></span> Otherwise, if a program
 contains</p>
 <ul>
-<li><p><span class="marginalizedparent"><a href="#pnum-30" id="pnum-30" class="marginalized">(2.3.1)</a></span> a violation of any diagnosable
+<li><p><span class="marginalizedparent"><a href="#pnum-49" id="pnum-49" class="marginalized">(2.3.1)</a></span> a violation of any diagnosable
 rule,</p></li>
-<li><p><span class="marginalizedparent"><a href="#pnum-31" id="pnum-31" class="marginalized">(2.3.2)</a></span> a preprocessing translation unit
+<li><p><span class="marginalizedparent"><a href="#pnum-50" id="pnum-50" class="marginalized">(2.3.2)</a></span> a preprocessing translation unit
 with a
 <code class="sourceCode cpp"><span class="pp">#warning</span></code>
 preprocessing directive (<a href="https://eel.is/c++draft/cpp.error" title="15.9 Diagnostic directives">[cpp.error]</a>),</p></li>
-<li><p><span class="marginalizedparent"><a href="#pnum-32" id="pnum-32" class="marginalized">(2.3.3)</a></span> an occurrence of a construct
+<li><p><span class="marginalizedparent"><a href="#pnum-51" id="pnum-51" class="marginalized">(2.3.3)</a></span> an occurrence of a construct
 described in this document as “conditionally-supported” when the
 implementation does not support that construct, or</p></li>
-<li><p><span class="marginalizedparent"><a href="#pnum-33" id="pnum-33" class="marginalized">(2.3.4)</a></span> a contract assertion (<a href="https://eel.is/c++draft/basic.contract.eval" title="6.11.2 Evaluation">[basic.contract.eval]</a>) evaluated with a
+<li><p><span class="marginalizedparent"><a href="#pnum-52" id="pnum-52" class="marginalized">(2.3.4)</a></span> a contract assertion (<a href="https://eel.is/c++draft/basic.contract.eval" title="6.11.2 Evaluation">[basic.contract.eval]</a>) evaluated with a
 checking semantic in a manifestly constant-evaluated context (<a href="https://eel.is/c++draft/expr.const.defns" title="7.7.7 Further definitions">[expr.const.defns]</a>) resulting in a
 contract violation,</p></li>
 </ul>
@@ -1083,25 +1155,25 @@ contexts require a diagnostic are treated differently; see <a href="https://eel.
 <em>end note</em> ]</span></span></p>
 <p>Furthermore, a conforming implementation shall not accept</p>
 <ul>
-<li><p><span class="marginalizedparent"><a href="#pnum-34" id="pnum-34" class="marginalized">(2.4)</a></span> a preprocessing translation unit
+<li><p><span class="marginalizedparent"><a href="#pnum-53" id="pnum-53" class="marginalized">(2.4)</a></span> a preprocessing translation unit
 containing a
 <code class="sourceCode cpp"><span class="pp">#error</span></code>
 preprocessing directive (<a href="https://eel.is/c++draft/cpp.error" title="15.9 Diagnostic directives">[cpp.error]</a>),</p></li>
-<li><p><span class="marginalizedparent"><a href="#pnum-35" id="pnum-35" class="marginalized">(2.5)</a></span> a translation unit with a
+<li><p><span class="marginalizedparent"><a href="#pnum-54" id="pnum-54" class="marginalized">(2.5)</a></span> a translation unit with a
 <code class="sourceCode cpp"><em>static_assert-declaration</em></code>
 that fails (<a href="https://eel.is/c++draft/dcl.pre" title="9.1 Preamble">[dcl.pre]</a>), or</p></li>
-<li><p><span class="marginalizedparent"><a href="#pnum-36" id="pnum-36" class="marginalized">(2.6)</a></span> a contract assertion evaluated
+<li><p><span class="marginalizedparent"><a href="#pnum-55" id="pnum-55" class="marginalized">(2.6)</a></span> a contract assertion evaluated
 with a terminating semantic (<a href="https://eel.is/c++draft/basic.contract.eval" title="6.11.2 Evaluation">[basic.contract.eval]</a>) in a manifestly
 constant-evaluated context (<a href="https://eel.is/c++draft/expr.const.defns" title="7.7.7 Further definitions">[expr.const.defns]</a>) resulting in a
 contract violation.</p></li>
 </ul>
-<p><span class="marginalizedparent"><a href="#pnum-37" id="pnum-37" class="marginalized">3</a></span> For classes and class templates, the
+<p><span class="marginalizedparent"><a href="#pnum-56" id="pnum-56" class="marginalized">3</a></span> For classes and class templates, the
 library Clauses specify partial definitions. Private members are not
 specified, but each implementation shall supply them to complete the
 definitions according to the description in the library Clauses.</p>
 <h3 class="unnumbered" id="diagnostic-directives-cpp.error">Diagnostic
 directives <span>15.9 <a href="https://eel.is/c++draft/cpp.error" title="15.9 Diagnostic directives">[cpp.error]</a></span><a href="#diagnostic-directives-cpp.error" class="self-link"></a></h3>
-<p><span class="marginalizedparent"><a href="#pnum-38" id="pnum-38" class="marginalized">1</a></span> A preprocessing directive of the
+<p><span class="marginalizedparent"><a href="#pnum-57" id="pnum-57" class="marginalized">1</a></span> A preprocessing directive of the
 form</p>
 <blockquote>
 <div class="sourceCode" id="cb12"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="pp"># error <em>pp-tokens<sub>opt</sub></em> <em>new-line</em></span></span></code></pre></div>
@@ -1113,7 +1185,7 @@ form</p>
 </blockquote>
 <p>requires the implementation to produce at least one diagnostic
 message for the preprocessing translation unit (<a href="https://eel.is/c++draft/intro.compliance.general" title="4.1.1 General">[intro.compliance.general]</a>).</p>
-<p><span class="marginalizedparent"><a href="#pnum-39" id="pnum-39" class="marginalized">2</a></span> <em>Recommended practice</em>: Any
+<p><span class="marginalizedparent"><a href="#pnum-58" id="pnum-58" class="marginalized">2</a></span> <em>Recommended practice</em>: Any
 diagnostic message caused by either of these directives should include
 the specified sequence of preprocessing tokens.</p>
 </div>

@@ -213,6 +213,46 @@ def wording(elem, doc):
     if not (isinstance(elem, pf.Div) and 'wording' in elem.classes):
         return None
 
+    # Keeps track of automatic pnum assignment state.
+    pnum_state = []
+
+    def process_pnum(elem, doc):
+        if not (isinstance(elem, pf.Span) and 'pnum' in elem.classes):
+            return None
+
+        parts = pf.stringify(elem).split('.')
+
+        # Normalize to match pnum_state to the parts length.
+        del pnum_state[len(parts):]
+        pnum_state.extend([(0, None)] * (len(parts) - len(pnum_state)))
+        assert(len(pnum_state) == len(parts))
+
+        for i, part in enumerate(parts):
+            prev, prev_literal = pnum_state[i]
+            cur = prev
+            literal = None
+            if part.isdecimal():
+                cur = int(part)
+            elif part == '#':
+                if (
+                    i == len(parts) - 1 or   # bump on last #
+                    cur == 0 or              # missing parent, default to 1
+                    prev_literal is not None # 'x' -> # transition, bump
+                ):
+                    cur += 1
+            else:
+                literal = part
+
+            pnum_state[i] = cur, literal
+            if cur != prev or literal != prev_literal:
+                # clear the deeper slots on num change or 'x' entrance and exit
+                pnum_state[i+1:] = [(0, None)] * (len(parts) - i - 1)
+
+        pnum = '.'.join(
+            literal if literal is not None else str(cur)
+            for cur, literal in pnum_state)
+        elem.content = [pf.Str(pnum)]
+
     def get_list_type(elem):
         if isinstance(elem, pf.OrderedList):
             if elem.style == 'DefaultStyle':                      return '#'
@@ -275,6 +315,7 @@ def wording(elem, doc):
         return start
 
     process_block(elem)
+    elem.walk(process_pnum)
     return elem
 
 def divspan(elem, doc):
@@ -330,6 +371,9 @@ def divspan(elem, doc):
 
     def pnum():
         num = pf.stringify(elem)
+        if '#' in num.split('.'):
+            pf.debug(
+                f'[WARNING] mpark/wg21: automatic paragraph number {num} ignored outside of ::: wording')
 
         if '.' in num:
             num = f'({num})'

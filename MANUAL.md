@@ -426,6 +426,29 @@ the object or reference. [...]
 invoking the destructor, by reusing or releasing the storage as described above.
 ```
 
+Within `::: wording`{.default}, use `#`{.default} within a paragraph number element to
+automatically fill in that part. For example:
+
+```render
+::: wording
+[#]{.pnum} Automatically starts at 1.
+
+[5]{.pnum} Existing paragraph pinned at 5.
+
+[#]{.pnum} Automatically continues to 6.
+
+[#.#]{.pnum} Automatically starts a nested numbering at (6.1).
+
+::: add
+[x]{.pnum} Added paragraph that does not affect the next automatic number.
+:::
+
+[#]{.pnum} Automatically continues to 7.
+:::
+```
+
+The automatic numbering resets for each `::: wording`{.default} div.
+
 #### List-based Paragraphs (Experimental)
 
 List-based paragraphs are list elements (
