@@ -457,8 +457,7 @@ The automatic numbering resets for each `::: wording`{.default} div.
 
 #### List-based Paragraphs (Experimental)
 
-List-based paragraphs are list elements (
-[`ordered_lists`](https://pandoc.org/MANUAL.html#ordered-lists) and
+List-based paragraphs are list elements ([`ordered_lists`](https://pandoc.org/MANUAL.html#ordered-lists) and
 [`bullet_lists`](https://pandoc.org/MANUAL.html#bullet-lists)), within
 a [bracketed `Div` element][divspan], `::: wording`{.default}.
 

@@ -1086,8 +1086,8 @@ div.
 \paragraph{\texorpdfstring{List-based Paragraphs
 (Experimental)\hyperref[list-based-paragraphs-experimental]{}}{List-based Paragraphs (Experimental)}}\label{list-based-paragraphs-experimental}
 
-List-based paragraphs are list elements (
-\href{https://pandoc.org/MANUAL.html\#ordered-lists}{\VERB|\NormalTok{ordered\_lists}|}
+List-based paragraphs are list elements
+(\href{https://pandoc.org/MANUAL.html\#ordered-lists}{\VERB|\NormalTok{ordered\_lists}|}
 and
 \href{https://pandoc.org/MANUAL.html\#bullet-lists}{\VERB|\NormalTok{bullet\_lists}|}),
 within a \href{https://pandoc.org/MANUAL.html\#divs-and-spans}{bracketed
