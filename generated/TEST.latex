@@ -230,7 +230,7 @@ Reply-to:   \@author
 \author{&Author
 0\\&<\href{mailto:author0@gmail.com}{\nolinkurl{author0@gmail.com}}>\\&Author
 1\\&<\href{mailto:author1@gmail.com}{\nolinkurl{author1@gmail.com}}>\\}
-\date{2026-06-17}
+\date{2026-06-18}
 
 \begin{document}
 \hypertarget{title-block-header}{\label{title-block-header}}
@@ -344,7 +344,7 @@ Various compositions in compact list:
 \item
   \(\frac{a+b}{2}\)
 \item
-  \VERB|\NormalTok{string format}\OperatorTok{(...);}  \CommentTok{// {28.5.5 \href{https://eel.is/c++draft/format.functions}{{[}format.functions{]}}}}|
+  \VERB|\NormalTok{string format}\OperatorTok{(...);}  \CommentTok{// {28.5.5 Formatting functions \href{https://eel.is/c++draft/format.functions}{{[}format.functions{]}}}}|
 \end{itemize}
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
@@ -886,9 +886,9 @@ after the skips.
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
-\subsubsection*{\texorpdfstring{General {4.1.1
-\href{https://eel.is/c++draft/intro.compliance.general}{{[}intro.compliance.general{]}}}\hyperref[general-intro.compliance.general]{}}{General 4.1.1 {[}intro.compliance.general{]}}}\label{general-intro.compliance.general}
-\addcontentsline{toc}{subsubsection}{General {4.1.1
+\subsubsection*{\texorpdfstring{General {4.1.1 General
+\href{https://eel.is/c++draft/intro.compliance.general}{{[}intro.compliance.general{]}}}\hyperref[general-intro.compliance.general]{}}{General 4.1.1 General {[}intro.compliance.general{]}}}\label{general-intro.compliance.general}
+\addcontentsline{toc}{subsubsection}{General {4.1.1 General
 {{[}intro.compliance.general{]}}}{}}
 
 \pnum{1} The set of \emph{diagnosable rules} consists of all syntactic
@@ -904,12 +904,13 @@ execution of programs. Such requirements have the following meaning:
 \begin{itemize}
 \item
   \pnum{(2.1)} If a program contains no violations of the rules in
-  \href{https://eel.is/c++draft/lex}{{[}lex{]}} through
-  \href{https://eel.is/c++draft/exec}{{[}exec{]}} as well as those
-  specified in \href{https://eel.is/c++draft/depr}{{[}depr{]}}, a
-  conforming implementation shall accept and correctly execute that
-  program, except when the implementation's limitations (see below) are
-  exceeded.
+  {Lexical conventions \href{https://eel.is/c++draft/lex}{{[}lex{]}}}
+  through {Execution control library
+  \href{https://eel.is/c++draft/exec}{{[}exec{]}}} as well as those
+  specified in {Compatibility features
+  \href{https://eel.is/c++draft/depr}{{[}depr{]}}}, a conforming
+  implementation shall accept and correctly execute that program, except
+  when the implementation's limitations (see below) are exceeded.
 \item
   \pnum{(2.2)} If a program contains a violation of a rule for which no
   diagnostic is required, this document places no requirement on
@@ -923,17 +924,18 @@ execution of programs. Such requirements have the following meaning:
   \item
     \pnum{(2.3.2)} a preprocessing translation unit with a
     \VERB|\PreprocessorTok{\#warning}| preprocessing directive
-    (\href{https://eel.is/c++draft/cpp.error}{{[}cpp.error{]}}),
+    ({Diagnostic directives
+    \href{https://eel.is/c++draft/cpp.error}{{[}cpp.error{]}}}),
   \item
     \pnum{(2.3.3)} an occurrence of a construct described in this
     document as ``conditionally-supported'' when the implementation does
     not support that construct, or
   \item
-    \pnum{(2.3.4)} a contract assertion
-    (\href{https://eel.is/c++draft/basic.contract.eval}{{[}basic.contract.eval{]}})
+    \pnum{(2.3.4)} a contract assertion ({Evaluation
+    \href{https://eel.is/c++draft/basic.contract.eval}{{[}basic.contract.eval{]}}})
     evaluated with a checking semantic in a manifestly
-    constant-evaluated context
-    (\href{https://eel.is/c++draft/expr.const.defns}{{[}expr.const.defns{]}})
+    constant-evaluated context ({Further definitions
+    \href{https://eel.is/c++draft/expr.const.defns}{{[}expr.const.defns{]}}})
     resulting in a contract violation,
   \end{itemize}
 
@@ -943,8 +945,8 @@ execution of programs. Such requirements have the following meaning:
 
 {{{[} \emph{Note:} }During template argument deduction and substitution,
 certain constructs that in other contexts require a diagnostic are
-treated differently; see
-\href{https://eel.is/c++draft/temp.deduct}{{[}temp.deduct{]}}.{ --- \emph{end note} {]}}}
+treated differently; see {Template argument deduction
+\href{https://eel.is/c++draft/temp.deduct}{{[}temp.deduct{]}}}.{ --- \emph{end note} {]}}}
 
 Furthermore, a conforming implementation shall not accept
 
@@ -952,17 +954,18 @@ Furthermore, a conforming implementation shall not accept
 \item
   \pnum{(2.4)} a preprocessing translation unit containing a
   \VERB|\PreprocessorTok{\#error}| preprocessing directive
-  (\href{https://eel.is/c++draft/cpp.error}{{[}cpp.error{]}}),
+  ({Diagnostic directives
+  \href{https://eel.is/c++draft/cpp.error}{{[}cpp.error{]}}}),
 \item
   \pnum{(2.5)} a translation unit with a
   \VERB|\NormalTok{\emph{static\_assert-declaration}}| that fails
-  (\href{https://eel.is/c++draft/dcl.pre}{{[}dcl.pre{]}}), or
+  ({Preamble \href{https://eel.is/c++draft/dcl.pre}{{[}dcl.pre{]}}}), or
 \item
   \pnum{(2.6)} a contract assertion evaluated with a terminating
-  semantic
-  (\href{https://eel.is/c++draft/basic.contract.eval}{{[}basic.contract.eval{]}})
-  in a manifestly constant-evaluated context
-  (\href{https://eel.is/c++draft/expr.const.defns}{{[}expr.const.defns{]}})
+  semantic ({Evaluation
+  \href{https://eel.is/c++draft/basic.contract.eval}{{[}basic.contract.eval{]}}})
+  in a manifestly constant-evaluated context ({Further definitions
+  \href{https://eel.is/c++draft/expr.const.defns}{{[}expr.const.defns{]}}})
   resulting in a contract violation.
 \end{itemize}
 
@@ -972,9 +975,10 @@ implementation shall supply them to complete the definitions according
 to the description in the library Clauses.
 
 \subsubsection*{\texorpdfstring{Diagnostic directives {15.9
-\href{https://eel.is/c++draft/cpp.error}{{[}cpp.error{]}}}\hyperref[diagnostic-directives-cpp.error]{}}{Diagnostic directives 15.9 {[}cpp.error{]}}}\label{diagnostic-directives-cpp.error}
+Diagnostic directives
+\href{https://eel.is/c++draft/cpp.error}{{[}cpp.error{]}}}\hyperref[diagnostic-directives-cpp.error]{}}{Diagnostic directives 15.9 Diagnostic directives {[}cpp.error{]}}}\label{diagnostic-directives-cpp.error}
 \addcontentsline{toc}{subsubsection}{Diagnostic directives {15.9
-{{[}cpp.error{]}}}{}}
+Diagnostic directives {{[}cpp.error{]}}}{}}
 
 \pnum{1} A preprocessing directive of the form
 
@@ -997,8 +1001,8 @@ renders the program ill-formed. A preprocessing directive of the form
 \end{quote}
 
 requires the implementation to produce at least one diagnostic message
-for the preprocessing translation unit
-(\href{https://eel.is/c++draft/intro.compliance.general}{{[}intro.compliance.general{]}}).
+for the preprocessing translation unit ({General
+\href{https://eel.is/c++draft/intro.compliance.general}{{[}intro.compliance.general{]}}}).
 
 \pnum{2} \emph{Recommended practice}: Any diagnostic message caused by
 either of these directives should include the specified sequence of
@@ -1011,7 +1015,7 @@ Large changes are \VERB|\OperatorTok{:::}\NormalTok{ add}| for
 additions, \VERB|\OperatorTok{:::}\NormalTok{ rm}| for removals.
 
 \begin{quote}
-Modify section {28.5.5
+Modify section {28.5.5 Formatting functions
 \href{https://eel.is/c++draft/format.functions}{{[}format.functions{]}}}:
 
 {\color[HTML]{006e28}
@@ -1129,7 +1133,7 @@ Names\hyperref[stable-names]{}}{Stable Names}}\label{stable-names}
 
 Stable names are written as
 \VERB|\OperatorTok{[}\NormalTok{basic}\OperatorTok{.}\NormalTok{life}\OperatorTok{]\{.}\NormalTok{sref}\OperatorTok{\}}|,
-and renders as {6.8.4
+and renders as {6.8.4 Lifetime
 \href{https://eel.is/c++draft/basic.life}{{[}basic.life{]}}}.
 
 \begin{itemize}
@@ -1165,9 +1169,9 @@ Examples:
 \href{https://eel.is/c++draft/basic.life\#1}{{[}basic.life{]}/1} \\
 \VERB|\NormalTok{[basic.life]/2.1}| &
 \href{https://eel.is/c++draft/basic.life\#2.1}{{[}basic.life{]}/2.1} \\
-\VERB|\NormalTok{[basic.life]\{.sref\}}| & {6.8.4
+\VERB|\NormalTok{[basic.life]\{.sref\}}| & {6.8.4 Lifetime
 \href{https://eel.is/c++draft/basic.life}{{[}basic.life{]}}} \\
-\VERB|\NormalTok{[basic.life]\{.sref\}/1}| & {6.8.4
+\VERB|\NormalTok{[basic.life]\{.sref\}/1}| & {6.8.4 Lifetime
 \href{https://eel.is/c++draft/basic.life\#1}{{[}basic.life{]}/1}} \\
 \VERB|\NormalTok{[basic.life]\{.sref .title\}}| & {6.8.4 Lifetime
 \href{https://eel.is/c++draft/basic.life}{{[}basic.life{]}}} \\
@@ -1192,7 +1196,7 @@ Also supported:
 \endhead
 \bottomrule\noalign{}
 \endlastfoot
-\VERB|\NormalTok{[basic.life\#1]\{.sref\}}| & {6.8.4
+\VERB|\NormalTok{[basic.life\#1]\{.sref\}}| & {6.8.4 Lifetime
 \href{https://eel.is/c++draft/basic.life\#1}{{[}basic.life{]}/1}} \\
 \VERB|\NormalTok{[basic.life]\{{-} .sref .title\}}| & {Lifetime
 \href{https://eel.is/c++draft/basic.life}{{[}basic.life{]}}} \\

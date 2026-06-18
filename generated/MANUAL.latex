@@ -908,7 +908,7 @@ additions, \VERB|\NormalTok{::: rm}| for removals, and close with
 
 \textbf{Rendered Output}
 
-Modify section {28.5.5
+Modify section {28.5.5 Formatting functions
 \href{https://eel.is/c++draft/format.functions}{{[}format.functions{]}}}
 
 {\color[HTML]{006e28}
@@ -945,7 +945,7 @@ Modify section {28.5.5
 
 \textbf{Rendered Output}
 
-Remove {7.6.1.6
+Remove {7.6.1.6 Increment and decrement
 \href{https://eel.is/c++draft/expr.post.incr\#2}{{[}expr.post.incr{]}/2}}:
 
 {\color[HTML]{bf0303}
@@ -2773,9 +2773,10 @@ Names\hyperref[implicit-stable-names]{}}{Implicit Stable Names}}\label{implicit-
 \emph{Implicit} stable names are
 \href{https://pandoc.org/MANUAL.html\#extension-shortcut_reference_links}{\VERB|\NormalTok{shortcut\_reference\_links}|}
 such as
-\VERB|\OperatorTok{[}\NormalTok{basic}\OperatorTok{.}\NormalTok{life}\OperatorTok{]}|,
-and automatically links to \url{https://eel.is/c++draft/basic.life}.
-This is typically used in quoting standard paragraphs like this:
+\VERB|\OperatorTok{[}\NormalTok{stable}\OperatorTok{.}\NormalTok{name}\OperatorTok{]}|.
+It automatically links to \url{https://eel.is/c++draft/stable.name}, if
+such a stable name exists. This is typically used in quoting standard
+paragraphs like this:
 
 \begin{quote}
 \textbf{Markdown Source}
@@ -2794,13 +2795,6 @@ This is typically used in quoting standard paragraphs like this:
 \end{quote}
 \end{quote}
 
-{{{[} \emph{Note:} }Under the hood,
-\VERB|\OperatorTok{[}\NormalTok{basic}\OperatorTok{.}\NormalTok{life}\OperatorTok{]}|
-expands to
-\VERB|\OperatorTok{[}\NormalTok{basic}\OperatorTok{.}\NormalTok{life}\OperatorTok{]\{{-}} \OperatorTok{.}\NormalTok{sref}\OperatorTok{\}}|
-(See \hyperref[explicit-stable-names]{Explicit Stable
-Names}).{ --- \emph{end note} {]}}}
-
 \subsubsection{\texorpdfstring{Explicit Stable
 Names\hyperref[explicit-stable-names]{}}{Explicit Stable Names}}\label{explicit-stable-names}
 
@@ -2808,8 +2802,10 @@ Names\hyperref[explicit-stable-names]{}}{Explicit Stable Names}}\label{explicit-
 \href{https://pandoc.org/MANUAL.html\#divs-and-spans}{bracketed
 \VERB|\NormalTok{Span}| elements} that look like:
 \VERB|\NormalTok{[stable.name]{{\setlength{\fboxsep}{1pt}\colorbox{yellow}{\{.sref\}}}}}|.
-A leading section number is rendered automatically. This is typically
-used to describe the section to be modified:
+By default, a leading section number and the section title is
+automatically rendered.
+
+For example:
 
 {\def\LTcaptype{none} % do not increment counter
 \begin{longtable}[]{@{}
@@ -2832,17 +2828,13 @@ used to describe the section to be modified:
 \end{Highlighting}
 \end{Shaded}
 \end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
-Modify section {6.8.4
+Modify section {6.8.4 Lifetime
 \href{https://eel.is/c++draft/basic.life}{{[}basic.life{]}}}:
 \end{minipage} \\
 \end{longtable}
 }
 
-Add the \VERB|\OperatorTok{.}\NormalTok{title}| class in addition to
-\VERB|\OperatorTok{.}\NormalTok{sref}|, to also render the section title
-of the stable name, like:
-\VERB|\NormalTok{[stable.name]\{.sref {{\setlength{\fboxsep}{1pt}\colorbox{yellow}{.title}}}\}}|.
-This is typically used as a header in wording:
+This is also useful in a header when updating large bodies of wording:
 
 {\def\LTcaptype{none} % do not increment counter
 \begin{longtable}[]{@{}
@@ -2861,7 +2853,7 @@ This is typically used as a header in wording:
 \begin{minipage}[t]{\linewidth}\raggedright
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{\#\# [basic.life]\{.sref .title\} \{{-} .unlisted\}}
+\NormalTok{\#\# [basic.life]\{.sref\} \{{-} .unlisted\}}
 \end{Highlighting}
 \end{Shaded}
 \end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
@@ -2877,19 +2869,16 @@ section numbering} and to \hyperref[exclude-from-toc]{exclude it from
 the table of contents}{ --- \emph{end note} {]}}}
 
 Lastly, you may also add the class \VERB|\OperatorTok{{-}}| or
-\VERB|\OperatorTok{.}\NormalTok{unnumbered}| to
-\VERB|\OperatorTok{.}\NormalTok{sref}| to omit the section number. This
-is mostly for completeness, as something like
-\VERB|\OperatorTok{[}\NormalTok{basic}\OperatorTok{.}\NormalTok{life}\OperatorTok{]\{{-}} \OperatorTok{.}\NormalTok{sref}\OperatorTok{\}}|
-can be written simply as
-\VERB|\OperatorTok{[}\NormalTok{basic}\OperatorTok{.}\NormalTok{life}\OperatorTok{]}|.
-You can also use this to render \emph{only} the section title without
-the section number like:
+\VERB|\OperatorTok{.}\NormalTok{unnumbered}| to to omit the section
+number.
+
+This is useful if you prefer to use the regular header numbering
+instead:
 
 {\def\LTcaptype{none} % do not increment counter
 \begin{longtable}[]{@{}
-  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.4306}}
-  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.4306}}@{}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}@{}}
 \toprule\noalign{}
 \begin{minipage}[b]{\linewidth}\raggedright
 \centering\arraybackslash\textbf{Markdown Source}
@@ -2903,14 +2892,19 @@ the section number like:
 \begin{minipage}[t]{\linewidth}\raggedright
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{[basic.life]\{{-} .sref .title\}}
+\NormalTok{\#\# [basic.life]\{{-} .sref\}}
 \end{Highlighting}
 \end{Shaded}
 \end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
-{Lifetime \href{https://eel.is/c++draft/basic.life}{{[}basic.life{]}}}
+\subsection*{\texorpdfstring{4.9 {Lifetime
+\href{https://eel.is/c++draft/basic.life}{{[}basic.life{]}}}\hyperref[basic-life-2]{}}{4.9 Lifetime {[}basic.life{]}}}\label{basic-life-2}
 \end{minipage} \\
 \end{longtable}
 }
+
+See
+\hyperref[control-numbering]{Control the Numbering of Explicit Stable Names}
+for how to disable numbering at the document-level.
 
 \subsubsection{\texorpdfstring{Paragraph
 Link\hyperref[paragraph-link]{}}{Paragraph Link}}\label{paragraph-link}
@@ -2950,7 +2944,7 @@ Refer to a specific paragraph
 \end{Highlighting}
 \end{Shaded}
 \end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
-Change {6.8.4
+Change {6.8.4 Lifetime
 \href{https://eel.is/c++draft/basic.life\#2.1}{{[}basic.life{]}/2.1}} as
 follows:
 \end{minipage} \\
@@ -3189,6 +3183,38 @@ This is an \textbf{override} for the existing list of
 \VERB|\NormalTok{cpp}| and \VERB|\NormalTok{default}|, so if it's
 desired to keep \VERB|\NormalTok{cpp}| and \VERB|\NormalTok{default}| to
 have embedded Markdown enabled by default, they must be listed again.
+
+\subsection{\texorpdfstring{Control the Numbering of Explicit Stable
+Names\hyperref[control-numbering]{}}{Control the Numbering of Explicit Stable Names}}\label{control-numbering}
+
+By default \emph{explicit} stable names such as
+\VERB|\NormalTok{[basic.life]\{.sref\}}| renders with a leading section
+number and the section title.
+
+As mentioned in \hyperref[explicit-stable-names]{Explicit Stable Names},
+you can disable numbering at the element-level via
+\VERB|\OperatorTok{[}\NormalTok{basic}\OperatorTok{.}\NormalTok{life}\OperatorTok{]\{{-}} \OperatorTok{.}\NormalTok{sref}\OperatorTok{\}}|
+or
+\VERB|\OperatorTok{[}\NormalTok{basic}\OperatorTok{.}\NormalTok{life}\OperatorTok{]\{.}\NormalTok{unnumbered }\OperatorTok{.}\NormalTok{sref}\OperatorTok{\}}|.
+To disable at the document-level, you can specify
+\VERB|\NormalTok{number}\OperatorTok{{-}}\NormalTok{srefs}\OperatorTok{:} \KeywordTok{false}|
+in the YAML metadata:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\PreprocessorTok{{-}{-}{-}}
+\FunctionTok{title}\KeywordTok{:}\AttributeTok{ }\StringTok{"\textasciigrave{}MPark/WG21\textasciigrave{} User\textquotesingle{}s Guide"}
+\FunctionTok{subtitle}\KeywordTok{:}\AttributeTok{ }\StringTok{"Framework for Writing C++ Committee Proposals"}
+\FunctionTok{document}\KeywordTok{:}\AttributeTok{ D0000R0}
+\FunctionTok{date}\KeywordTok{:}\AttributeTok{ today}
+\FunctionTok{audience}\KeywordTok{:}\AttributeTok{ WG21}
+\FunctionTok{author}\KeywordTok{:}
+\AttributeTok{  }\KeywordTok{{-}}\AttributeTok{ }\FunctionTok{name}\KeywordTok{:}\AttributeTok{ Michael Park}
+\AttributeTok{    }\FunctionTok{email}\KeywordTok{:}\AttributeTok{ \textless{}mcypark@gmail.com\textgreater{}}
+\AttributeTok{{{\setlength{\fboxsep}{1pt}\colorbox{yellow}{number-srefs: false}}}}
+\PreprocessorTok{{-}{-}{-}}
+\end{Highlighting}
+\end{Shaded}
 
 \subsection{\texorpdfstring{Unicode
 Fonts\hyperref[unicode-fonts]{}}{Unicode Fonts}}\label{unicode-fonts}

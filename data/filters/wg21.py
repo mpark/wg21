@@ -195,19 +195,19 @@ def sref(elem, doc):
         return link
 
     number, title = info
-    link.title = f'{number} {title}'
+    link.title = f'{number} {title}' + (f', paragraph {pnum}' if pnum else '')
+    if isinstance(elem, pf.Link):
+        return link
+
     result = pf.Span()
     if doc.get_metadata('number-srefs') and 'unnumbered' not in elem.classes:
         result.content.append(pf.Str(number))
         result.content.append(pf.Space())
-    if 'title' in elem.classes:
-        result.content.append(pf.Str(title))
-        result.content.append(pf.Space())
-    if result.content:
-        result.content.append(link)
-        return result
 
-    return link
+    result.content.append(pf.Str(title))
+    result.content.append(pf.Space())
+    result.content.append(link)
+    return result
 
 def wording(elem, doc):
     if not (isinstance(elem, pf.Div) and 'wording' in elem.classes):

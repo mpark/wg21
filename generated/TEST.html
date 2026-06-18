@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="generator" content="mpark/wg21" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-  <meta name="dcterms.date" content="2026-06-17" />
+  <meta name="dcterms.date" content="2026-06-18" />
   <title>Test document for mpark/wg21</title>
   <style>
 
@@ -544,7 +544,7 @@ various features of the framework</h3>
   </tr>
   <tr>
     <td>Date:</td>
-    <td>2026-06-17</td>
+    <td>2026-06-18</td>
   </tr>
   <tr>
     <td style="vertical-align:top">Project:</td>
@@ -667,7 +667,7 @@ bar</del></li>
 <li><code class="sourceCode cpp"><span class="dt">void</span> <mark>foo</mark><span class="op">();</span></code></li>
 <li><mark><code class="sourceCode cpp"><span class="dt">void</span> foo<span class="op">();</span></code></mark></li>
 <li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mfrac><mrow><mi>a</mi><mo>+</mo><mi>b</mi></mrow><mn>2</mn></mfrac><annotation encoding="application/x-tex">\frac{a+b}{2}</annotation></semantics></math></li>
-<li><code class="sourceCode cpp">string format<span class="op">(...);</span>  <span class="co">// <span>28.5.5 <a href="https://eel.is/c++draft/format.functions" title="28.5.5 Formatting functions">[format.functions]</a></span></span></code></li>
+<li><code class="sourceCode cpp">string format<span class="op">(...);</span>  <span class="co">// <span>28.5.5 Formatting functions <a href="https://eel.is/c++draft/format.functions" title="28.5.5 Formatting functions">[format.functions]</a></span></span></code></li>
 </ul>
 <hr />
 <p>Loose list:</p>
@@ -1109,7 +1109,7 @@ e.g. <code class="sourceCode default">24.</code>.</p>
 <hr />
 <div class="wording">
 <h3 class="unnumbered" id="general-intro.compliance.general">General
-<span>4.1.1 <a href="https://eel.is/c++draft/intro.compliance.general" title="4.1.1 General">[intro.compliance.general]</a></span><a href="#general-intro.compliance.general" class="self-link"></a></h3>
+<span>4.1.1 General <a href="https://eel.is/c++draft/intro.compliance.general" title="4.1.1 General">[intro.compliance.general]</a></span><a href="#general-intro.compliance.general" class="self-link"></a></h3>
 <p><span class="marginalizedparent"><a href="#pnum-44" id="pnum-44" class="marginalized">1</a></span> The set of <em>diagnosable rules</em>
 consists of all syntactic and semantic rules in this document except for
 those rules containing an explicit notation that “no diagnostic is
@@ -1122,8 +1122,9 @@ programs, or execution of programs. Such requirements have the following
 meaning:</p>
 <ul>
 <li><p><span class="marginalizedparent"><a href="#pnum-46" id="pnum-46" class="marginalized">(2.1)</a></span> If a program contains no
-violations of the rules in <a href="https://eel.is/c++draft/lex" title="5 Lexical conventions">[lex]</a> through <a href="https://eel.is/c++draft/exec" title="33 Execution control library">[exec]</a> as well as those
-specified in <a href="https://eel.is/c++draft/depr" title="Annex D (normative) Compatibility features">[depr]</a>, a
+violations of the rules in <span>Lexical conventions <a href="https://eel.is/c++draft/lex" title="5 Lexical conventions">[lex]</a></span> through <span>Execution
+control library <a href="https://eel.is/c++draft/exec" title="33 Execution control library">[exec]</a></span> as well as those
+specified in <span>Compatibility features <a href="https://eel.is/c++draft/depr" title="Annex D (normative) Compatibility features">[depr]</a></span>, a
 conforming implementation shall accept and correctly execute that
 program, except when the implementation’s limitations (see below) are
 exceeded.</p></li>
@@ -1138,41 +1139,44 @@ rule,</p></li>
 <li><p><span class="marginalizedparent"><a href="#pnum-50" id="pnum-50" class="marginalized">(2.3.2)</a></span> a preprocessing translation unit
 with a
 <code class="sourceCode cpp"><span class="pp">#warning</span></code>
-preprocessing directive (<a href="https://eel.is/c++draft/cpp.error" title="15.9 Diagnostic directives">[cpp.error]</a>),</p></li>
+preprocessing directive (<span>Diagnostic directives <a href="https://eel.is/c++draft/cpp.error" title="15.9 Diagnostic directives">[cpp.error]</a></span>),</p></li>
 <li><p><span class="marginalizedparent"><a href="#pnum-51" id="pnum-51" class="marginalized">(2.3.3)</a></span> an occurrence of a construct
 described in this document as “conditionally-supported” when the
 implementation does not support that construct, or</p></li>
-<li><p><span class="marginalizedparent"><a href="#pnum-52" id="pnum-52" class="marginalized">(2.3.4)</a></span> a contract assertion (<a href="https://eel.is/c++draft/basic.contract.eval" title="6.11.2 Evaluation">[basic.contract.eval]</a>) evaluated with a
-checking semantic in a manifestly constant-evaluated context (<a href="https://eel.is/c++draft/expr.const.defns" title="7.7.7 Further definitions">[expr.const.defns]</a>) resulting in a
-contract violation,</p></li>
+<li><p><span class="marginalizedparent"><a href="#pnum-52" id="pnum-52" class="marginalized">(2.3.4)</a></span> a contract assertion
+(<span>Evaluation <a href="https://eel.is/c++draft/basic.contract.eval" title="6.11.2 Evaluation">[basic.contract.eval]</a></span>) evaluated
+with a checking semantic in a manifestly constant-evaluated context
+(<span>Further definitions <a href="https://eel.is/c++draft/expr.const.defns" title="7.7.7 Further definitions">[expr.const.defns]</a></span>)
+resulting in a contract violation,</p></li>
 </ul>
 a conforming implementation shall issue at least one diagnostic
 message.</li>
 </ul>
 <p><span class="note"><span>[ <em>Note:</em> </span>During template
 argument deduction and substitution, certain constructs that in other
-contexts require a diagnostic are treated differently; see <a href="https://eel.is/c++draft/temp.deduct" title="13.10.3 Template argument deduction">[temp.deduct]</a>.<span> —
-<em>end note</em> ]</span></span></p>
+contexts require a diagnostic are treated differently; see
+<span>Template argument deduction <a href="https://eel.is/c++draft/temp.deduct" title="13.10.3 Template argument deduction">[temp.deduct]</a></span>.<span>
+— <em>end note</em> ]</span></span></p>
 <p>Furthermore, a conforming implementation shall not accept</p>
 <ul>
 <li><p><span class="marginalizedparent"><a href="#pnum-53" id="pnum-53" class="marginalized">(2.4)</a></span> a preprocessing translation unit
 containing a
 <code class="sourceCode cpp"><span class="pp">#error</span></code>
-preprocessing directive (<a href="https://eel.is/c++draft/cpp.error" title="15.9 Diagnostic directives">[cpp.error]</a>),</p></li>
+preprocessing directive (<span>Diagnostic directives <a href="https://eel.is/c++draft/cpp.error" title="15.9 Diagnostic directives">[cpp.error]</a></span>),</p></li>
 <li><p><span class="marginalizedparent"><a href="#pnum-54" id="pnum-54" class="marginalized">(2.5)</a></span> a translation unit with a
 <code class="sourceCode cpp"><em>static_assert-declaration</em></code>
-that fails (<a href="https://eel.is/c++draft/dcl.pre" title="9.1 Preamble">[dcl.pre]</a>), or</p></li>
+that fails (<span>Preamble <a href="https://eel.is/c++draft/dcl.pre" title="9.1 Preamble">[dcl.pre]</a></span>), or</p></li>
 <li><p><span class="marginalizedparent"><a href="#pnum-55" id="pnum-55" class="marginalized">(2.6)</a></span> a contract assertion evaluated
-with a terminating semantic (<a href="https://eel.is/c++draft/basic.contract.eval" title="6.11.2 Evaluation">[basic.contract.eval]</a>) in a manifestly
-constant-evaluated context (<a href="https://eel.is/c++draft/expr.const.defns" title="7.7.7 Further definitions">[expr.const.defns]</a>) resulting in a
-contract violation.</p></li>
+with a terminating semantic (<span>Evaluation <a href="https://eel.is/c++draft/basic.contract.eval" title="6.11.2 Evaluation">[basic.contract.eval]</a></span>) in a
+manifestly constant-evaluated context (<span>Further definitions <a href="https://eel.is/c++draft/expr.const.defns" title="7.7.7 Further definitions">[expr.const.defns]</a></span>)
+resulting in a contract violation.</p></li>
 </ul>
 <p><span class="marginalizedparent"><a href="#pnum-56" id="pnum-56" class="marginalized">3</a></span> For classes and class templates, the
 library Clauses specify partial definitions. Private members are not
 specified, but each implementation shall supply them to complete the
 definitions according to the description in the library Clauses.</p>
 <h3 class="unnumbered" id="diagnostic-directives-cpp.error">Diagnostic
-directives <span>15.9 <a href="https://eel.is/c++draft/cpp.error" title="15.9 Diagnostic directives">[cpp.error]</a></span><a href="#diagnostic-directives-cpp.error" class="self-link"></a></h3>
+directives <span>15.9 Diagnostic directives <a href="https://eel.is/c++draft/cpp.error" title="15.9 Diagnostic directives">[cpp.error]</a></span><a href="#diagnostic-directives-cpp.error" class="self-link"></a></h3>
 <p><span class="marginalizedparent"><a href="#pnum-57" id="pnum-57" class="marginalized">1</a></span> A preprocessing directive of the
 form</p>
 <blockquote>
@@ -1184,7 +1188,7 @@ form</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="pp"># warning <em>pp-tokens<sub>opt</sub></em> <em>new-line</em></span></span></code></pre></div>
 </blockquote>
 <p>requires the implementation to produce at least one diagnostic
-message for the preprocessing translation unit (<a href="https://eel.is/c++draft/intro.compliance.general" title="4.1.1 General">[intro.compliance.general]</a>).</p>
+message for the preprocessing translation unit (<span>General <a href="https://eel.is/c++draft/intro.compliance.general" title="4.1.1 General">[intro.compliance.general]</a></span>).</p>
 <p><span class="marginalizedparent"><a href="#pnum-58" id="pnum-58" class="marginalized">2</a></span> <em>Recommended practice</em>: Any
 diagnostic message caused by either of these directives should include
 the specified sequence of preprocessing tokens.</p>
@@ -1196,7 +1200,7 @@ additions,
 <code class="sourceCode cpp"><span class="op">:::</span> rm</code> for
 removals.</p>
 <blockquote>
-<p>Modify section <span>28.5.5 <a href="https://eel.is/c++draft/format.functions" title="28.5.5 Formatting functions">[format.functions]</a></span>:</p>
+<p>Modify section <span>28.5.5 Formatting functions <a href="https://eel.is/c++draft/format.functions" title="28.5.5 Formatting functions">[format.functions]</a></span>:</p>
 <div class="add" style="color: #006e28">
 
 <div class="sourceCode" id="cb14"><pre class="sourceCode default default"><code class="sourceCode default"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>template&lt;class... Args&gt;</span>
@@ -1308,7 +1312,7 @@ is thrown</ins></span>.</td>
 <h1 data-number="6" id="stable-names"><span class="header-section-number">6</span> Stable Names<a href="#stable-names" class="self-link"></a></h1>
 <p>Stable names are written as
 <code class="sourceCode cpp"><span class="op">[</span>basic<span class="op">.</span>life<span class="op">]{.</span>sref<span class="op">}</span></code>,
-and renders as <span>6.8.4 <a href="https://eel.is/c++draft/basic.life" title="6.8.4 Lifetime">[basic.life]</a></span>.</p>
+and renders as <span>6.8.4 Lifetime <a href="https://eel.is/c++draft/basic.life" title="6.8.4 Lifetime">[basic.life]</a></span>.</p>
 <ul>
 <li>Add the
 <code class="sourceCode cpp"><span class="op">-</span></code> or
@@ -1341,19 +1345,19 @@ to add the section title.</li>
 </tr>
 <tr>
 <td><code class="sourceCode default">[basic.life]/1</code></td>
-<td><a href="https://eel.is/c++draft/basic.life#1" title="6.8.4 Lifetime">[basic.life]/1</a></td>
+<td><a href="https://eel.is/c++draft/basic.life#1" title="6.8.4 Lifetime, paragraph 1">[basic.life]/1</a></td>
 </tr>
 <tr>
 <td><code class="sourceCode default">[basic.life]/2.1</code></td>
-<td><a href="https://eel.is/c++draft/basic.life#2.1" title="6.8.4 Lifetime">[basic.life]/2.1</a></td>
+<td><a href="https://eel.is/c++draft/basic.life#2.1" title="6.8.4 Lifetime, paragraph 2.1">[basic.life]/2.1</a></td>
 </tr>
 <tr>
 <td><code class="sourceCode default">[basic.life]{.sref}</code></td>
-<td><span>6.8.4 <a href="https://eel.is/c++draft/basic.life" title="6.8.4 Lifetime">[basic.life]</a></span></td>
+<td><span>6.8.4 Lifetime <a href="https://eel.is/c++draft/basic.life" title="6.8.4 Lifetime">[basic.life]</a></span></td>
 </tr>
 <tr>
 <td><code class="sourceCode default">[basic.life]{.sref}/1</code></td>
-<td><span>6.8.4 <a href="https://eel.is/c++draft/basic.life#1" title="6.8.4 Lifetime">[basic.life]/1</a></span></td>
+<td><span>6.8.4 Lifetime <a href="https://eel.is/c++draft/basic.life#1" title="6.8.4 Lifetime, paragraph 1">[basic.life]/1</a></span></td>
 </tr>
 <tr>
 <td><code class="sourceCode default">[basic.life]{.sref .title}</code></td>
@@ -1361,7 +1365,7 @@ to add the section title.</li>
 </tr>
 <tr>
 <td><code class="sourceCode default">[basic.life]{.sref .title}/1</code></td>
-<td><span>6.8.4 Lifetime <a href="https://eel.is/c++draft/basic.life#1" title="6.8.4 Lifetime">[basic.life]/1</a></span></td>
+<td><span>6.8.4 Lifetime <a href="https://eel.is/c++draft/basic.life#1" title="6.8.4 Lifetime, paragraph 1">[basic.life]/1</a></span></td>
 </tr>
 </tbody>
 </table>
@@ -1384,7 +1388,7 @@ to add the section title.</li>
 <tbody>
 <tr>
 <td><code class="sourceCode default">[basic.life#1]{.sref}</code></td>
-<td><span>6.8.4 <a href="https://eel.is/c++draft/basic.life#1" title="6.8.4 Lifetime">[basic.life]/1</a></span></td>
+<td><span>6.8.4 Lifetime <a href="https://eel.is/c++draft/basic.life#1" title="6.8.4 Lifetime, paragraph 1">[basic.life]/1</a></span></td>
 </tr>
 <tr>
 <td><code class="sourceCode default">[basic.life]{- .sref .title}</code></td>

@@ -13,4 +13,4 @@ import json
 import sys
 
 for stable_name in json.load(sys.stdin):
-    print(f'[{stable_name}]: {{- .sref}}')
+    print(f'[{stable_name}]: {{.sref}}')

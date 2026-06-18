@@ -661,7 +661,9 @@ Markdown</a></li>
 Elements</a></li>
 <li><a href="#embedded-markdown-by-default-code-classes" id="toc-embedded-markdown-by-default-code-classes"><span class="toc-section-number">5.2</span> Embedded Markdown by Default Code
 Classes</a></li>
-<li><a href="#unicode-fonts" id="toc-unicode-fonts"><span class="toc-section-number">5.3</span> Unicode Fonts</a></li>
+<li><a href="#control-numbering" id="toc-control-numbering"><span class="toc-section-number">5.3</span> Control the Numbering of Explicit
+Stable Names</a></li>
+<li><a href="#unicode-fonts" id="toc-unicode-fonts"><span class="toc-section-number">5.4</span> Unicode Fonts</a></li>
 </ul></li>
 <li><a href="#license" id="toc-license"><span class="toc-section-number">6</span> License</a></li>
 <li><a href="#resources" id="toc-resources"><span class="toc-section-number">7</span> Resources</a></li>
@@ -1170,7 +1172,7 @@ with <code class="sourceCode default">:::</code>.</p>
 <span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>:::</span></code></pre></div>
 <p><strong>Rendered Output</strong></p>
 <div>
-<p>Modify section <span>28.5.5 <a href="https://eel.is/c++draft/format.functions" title="28.5.5 Formatting functions">[format.functions]</a></span></p>
+<p>Modify section <span>28.5.5 Formatting functions <a href="https://eel.is/c++draft/format.functions" title="28.5.5 Formatting functions">[format.functions]</a></span></p>
 <div class="add" style="color: #006e28">
 
 <blockquote>
@@ -1194,7 +1196,7 @@ with <code class="sourceCode default">:::</code>.</p>
 <span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>:::</span></code></pre></div>
 <p><strong>Rendered Output</strong></p>
 <div>
-<p>Remove <span>7.6.1.6 <a href="https://eel.is/c++draft/expr.post.incr#2" title="7.6.1.6 Increment and decrement">[expr.post.incr]/2</a></span>:</p>
+<p>Remove <span>7.6.1.6 Increment and decrement <a href="https://eel.is/c++draft/expr.post.incr#2" title="7.6.1.6 Increment and decrement, paragraph 2">[expr.post.incr]/2</a></span>:</p>
 <div class="rm" style="color: #bf0303">
 
 <blockquote>
@@ -2639,9 +2641,10 @@ the local databases, including stable names.<span> — <em>end note</em>
 <h3 data-number="4.8.1" id="implicit-stable-names"><span class="header-section-number">4.8.1</span> Implicit Stable Names<a href="#implicit-stable-names" class="self-link"></a></h3>
 <p><em>Implicit</em> stable names are <a href="https://pandoc.org/MANUAL.html#extension-shortcut_reference_links"><code class="sourceCode cpp">shortcut_reference_links</code></a>
 such as
-<code class="sourceCode cpp"><span class="op">[</span>basic<span class="op">.</span>life<span class="op">]</span></code>,
-and automatically links to <a href="https://eel.is/c++draft/basic.life" class="uri">https://eel.is/c++draft/basic.life</a>. This is typically
-used in quoting standard paragraphs like this:</p>
+<code class="sourceCode cpp"><span class="op">[</span>stable<span class="op">.</span>name<span class="op">]</span></code>.
+It automatically links to <a href="https://eel.is/c++draft/stable.name" class="uri">https://eel.is/c++draft/stable.name</a>, if such a stable
+name exists. This is typically used in quoting standard paragraphs like
+this:</p>
 <blockquote>
 <p><strong>Markdown Source</strong></p>
 <div class="sourceCode" id="cb53"><pre class="sourceCode raw default"><code class="sourceCode default"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>&gt; [...] whose lifetime has begun and has not ended ([basic.life]).</span></code></pre></div>
@@ -2652,18 +2655,13 @@ used in quoting standard paragraphs like this:</p>
 </blockquote>
 </div>
 </blockquote>
-<p><span class="note"><span>[ <em>Note:</em> </span>Under the hood,
-<code class="sourceCode cpp"><span class="op">[</span>basic<span class="op">.</span>life<span class="op">]</span></code>
-expands to
-<code class="sourceCode cpp"><span class="op">[</span>basic<span class="op">.</span>life<span class="op">]{-</span> <span class="op">.</span>sref<span class="op">}</span></code>
-(See <a href="#explicit-stable-names">Explicit Stable Names</a>).<span>
-— <em>end note</em> ]</span></span></p>
 <h3 data-number="4.8.2" id="explicit-stable-names"><span class="header-section-number">4.8.2</span> Explicit Stable Names<a href="#explicit-stable-names" class="self-link"></a></h3>
 <p><em>Explicit</em> stable names are <a href="https://pandoc.org/MANUAL.html#divs-and-spans">bracketed
 <code class="sourceCode cpp">Span</code> elements</a> that look like:
 <code class="sourceCode default">[stable.name]<mark>{.sref}</mark></code>.
-A leading section number is rendered automatically. This is typically
-used to describe the section to be modified:</p>
+By default, a leading section number and the section title is
+automatically rendered.</p>
+<p>For example:</p>
 <table>
 <colgroup>
 <col style="width: 50%" />
@@ -2683,18 +2681,13 @@ used to describe the section to be modified:</p>
 <tr>
 <td><div class="sourceCode" id="cb54"><pre class="sourceCode raw default"><code class="sourceCode default"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>Modify section [basic.life]{.sref}:</span></code></pre></div></td>
 <td><div>
-<p>Modify section <span>6.8.4 <a href="https://eel.is/c++draft/basic.life" title="6.8.4 Lifetime">[basic.life]</a></span>:</p>
+<p>Modify section <span>6.8.4 Lifetime <a href="https://eel.is/c++draft/basic.life" title="6.8.4 Lifetime">[basic.life]</a></span>:</p>
 </div></td>
 </tr>
 </tbody>
 </table>
-<p>Add the
-<code class="sourceCode cpp"><span class="op">.</span>title</code> class
-in addition to
-<code class="sourceCode cpp"><span class="op">.</span>sref</code>, to
-also render the section title of the stable name, like:
-<code class="sourceCode default">[stable.name]{.sref <mark>.title</mark>}</code>.
-This is typically used as a header in wording:</p>
+<p>This is also useful in a header when updating large bodies of
+wording:</p>
 <table>
 <colgroup>
 <col style="width: 50%" />
@@ -2712,7 +2705,7 @@ This is typically used as a header in wording:</p>
 </thead>
 <tbody>
 <tr>
-<td><div class="sourceCode" id="cb55"><pre class="sourceCode raw default"><code class="sourceCode default"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>## [basic.life]{.sref .title} {- .unlisted}</span></code></pre></div></td>
+<td><div class="sourceCode" id="cb55"><pre class="sourceCode raw default"><code class="sourceCode default"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>## [basic.life]{.sref} {- .unlisted}</span></code></pre></div></td>
 <td><div>
 <h2 id="basic.life" class="unnumbered unlisted"><span>6.8.4 Lifetime <a href="https://eel.is/c++draft/basic.life" title="6.8.4 Lifetime">[basic.life]</a></span><a href="#basic.life" class="self-link"></a></h2>
 </div></td>
@@ -2727,18 +2720,13 @@ table of contents</a><span> — <em>end note</em> ]</span></span></p>
 <p>Lastly, you may also add the class
 <code class="sourceCode cpp"><span class="op">-</span></code> or
 <code class="sourceCode cpp"><span class="op">.</span>unnumbered</code>
-to <code class="sourceCode cpp"><span class="op">.</span>sref</code> to
-omit the section number. This is mostly for completeness, as something
-like
-<code class="sourceCode cpp"><span class="op">[</span>basic<span class="op">.</span>life<span class="op">]{-</span> <span class="op">.</span>sref<span class="op">}</span></code>
-can be written simply as
-<code class="sourceCode cpp"><span class="op">[</span>basic<span class="op">.</span>life<span class="op">]</span></code>.
-You can also use this to render <em>only</em> the section title without
-the section number like:</p>
-<table style="width:86%;">
+to to omit the section number.</p>
+<p>This is useful if you prefer to use the regular header numbering
+instead:</p>
+<table>
 <colgroup>
-<col style="width: 43%" />
-<col style="width: 43%" />
+<col style="width: 50%" />
+<col style="width: 50%" />
 </colgroup>
 <thead>
 <tr>
@@ -2752,13 +2740,14 @@ the section number like:</p>
 </thead>
 <tbody>
 <tr>
-<td><div class="sourceCode" id="cb56"><pre class="sourceCode raw default"><code class="sourceCode default"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>[basic.life]{- .sref .title}</span></code></pre></div></td>
-<td><div>
-<p><span>Lifetime <a href="https://eel.is/c++draft/basic.life" title="6.8.4 Lifetime">[basic.life]</a></span></p>
-</div></td>
+<td><div class="sourceCode" id="cb43"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>## [basic.life]{- .sref}</span></code></pre></div></td>
+<td><h2 id="basic-life-2" class="unnumbered unlisted">4.9 <span>Lifetime
+<a href="https://eel.is/c++draft/basic.life" title="6.8.4 Lifetime">[basic.life]</a></span><a href="#basic-life-2" class="self-link"></a></h2></td>
 </tr>
 </tbody>
 </table>
+<p>See <a href="#control-numbering">Control the Numbering of Explicit
+Stable Names</a> for how to disable numbering at the document-level.</p>
 <h3 data-number="4.8.3" id="paragraph-link"><span class="header-section-number">4.8.3</span> Paragraph Link<a href="#paragraph-link" class="self-link"></a></h3>
 <p>A suffix <code class="sourceCode default">/pnum</code> can be added
 to link to a specific paragraph number, where
@@ -2782,15 +2771,16 @@ like <code class="sourceCode cpp"><span class="dv">1</span></code> or
 </thead>
 <tbody>
 <tr>
-<td><div class="sourceCode" id="cb57"><pre class="sourceCode raw default"><code class="sourceCode default"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>Refer to a specific paragraph [basic.life]/1:</span></code></pre></div></td>
+<td><div class="sourceCode" id="cb56"><pre class="sourceCode raw default"><code class="sourceCode default"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>Refer to a specific paragraph [basic.life]/1:</span></code></pre></div></td>
 <td><div>
-<p>Refer to a specific paragraph <a href="https://eel.is/c++draft/basic.life#1" title="6.8.4 Lifetime">[basic.life]/1</a>:</p>
+<p>Refer to a specific paragraph <a href="https://eel.is/c++draft/basic.life#1" title="6.8.4 Lifetime, paragraph 1">[basic.life]/1</a>:</p>
 </div></td>
 </tr>
 <tr>
-<td><div class="sourceCode" id="cb58"><pre class="sourceCode raw default"><code class="sourceCode default"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>Change [basic.life]{.sref}/2.1 as follows:</span></code></pre></div></td>
+<td><div class="sourceCode" id="cb57"><pre class="sourceCode raw default"><code class="sourceCode default"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>Change [basic.life]{.sref}/2.1 as follows:</span></code></pre></div></td>
 <td><div>
-<p>Change <span>6.8.4 <a href="https://eel.is/c++draft/basic.life#2.1" title="6.8.4 Lifetime">[basic.life]/2.1</a></span> as follows:</p>
+<p>Change <span>6.8.4 Lifetime <a href="https://eel.is/c++draft/basic.life#2.1" title="6.8.4 Lifetime, paragraph 2.1">[basic.life]/2.1</a></span> as
+follows:</p>
 </div></td>
 </tr>
 </tbody>
@@ -2800,9 +2790,9 @@ like <code class="sourceCode cpp"><span class="dv">1</span></code> or
 <code class="sourceCode default">[@paper]</code></p>
 <blockquote>
 <p><strong>Markdown Source</strong></p>
-<div class="sourceCode" id="cb59"><pre class="sourceCode raw default"><code class="sourceCode default"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>This is a proposal for a reduced initial set of features to support static</span>
-<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>reflection in C++. Specifically we are mostly proposing a subset of features</span>
-<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a>suggested in [@P1240R2].</span></code></pre></div>
+<div class="sourceCode" id="cb58"><pre class="sourceCode raw default"><code class="sourceCode default"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>This is a proposal for a reduced initial set of features to support static</span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>reflection in C++. Specifically we are mostly proposing a subset of features</span>
+<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a>suggested in [@P1240R2].</span></code></pre></div>
 <p><strong>Rendered Output</strong></p>
 <div>
 <p>This is a proposal for a reduced initial set of features to support
@@ -2817,9 +2807,9 @@ class, like
 which generates:</p>
 <blockquote>
 <p><strong>Markdown Source</strong></p>
-<div class="sourceCode" id="cb60"><pre class="sourceCode raw default"><code class="sourceCode default"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>This is a proposal for a reduced initial set of features to support static</span>
-<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>reflection in C++. Specifically we are mostly proposing a subset of features</span>
-<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a>suggested in [@P1240R2]{.title}.</span></code></pre></div>
+<div class="sourceCode" id="cb59"><pre class="sourceCode raw default"><code class="sourceCode default"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>This is a proposal for a reduced initial set of features to support static</span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>reflection in C++. Specifically we are mostly proposing a subset of features</span>
+<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a>suggested in [@P1240R2]{.title}.</span></code></pre></div>
 <p><strong>Rendered Output</strong></p>
 <div>
 <p>This is a proposal for a reduced initial set of features to support
@@ -2883,21 +2873,21 @@ note</em> ]</span></span></p>
 <a href="#title">Title</a>, typically at the bottom of the document.</p>
 <blockquote>
 <p><strong>Markdown Source</strong></p>
-<div class="sourceCode" id="cb61"><pre class="sourceCode raw default"><code class="sourceCode default"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a>The `id` field is for in-text citations (e.g., [@PAT]),</span>
-<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a>and `citation-label` is the label for the reference.</span>
-<span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-4"><a href="#cb61-4" aria-hidden="true" tabindex="-1"></a>Typically `id` and `citation-label` are kept the same.</span>
-<span id="cb61-5"><a href="#cb61-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-6"><a href="#cb61-6" aria-hidden="true" tabindex="-1"></a>---</span>
-<span id="cb61-7"><a href="#cb61-7" aria-hidden="true" tabindex="-1"></a>references:</span>
-<span id="cb61-8"><a href="#cb61-8" aria-hidden="true" tabindex="-1"></a>  - id: PAT</span>
-<span id="cb61-9"><a href="#cb61-9" aria-hidden="true" tabindex="-1"></a>    citation-label: Patterns</span>
-<span id="cb61-10"><a href="#cb61-10" aria-hidden="true" tabindex="-1"></a>    title: &quot;Pattern Matching in C++&quot;</span>
-<span id="cb61-11"><a href="#cb61-11" aria-hidden="true" tabindex="-1"></a>    author:</span>
-<span id="cb61-12"><a href="#cb61-12" aria-hidden="true" tabindex="-1"></a>      - family: Park</span>
-<span id="cb61-13"><a href="#cb61-13" aria-hidden="true" tabindex="-1"></a>        given: Michael</span>
-<span id="cb61-14"><a href="#cb61-14" aria-hidden="true" tabindex="-1"></a>    URL: https://github.com/mpark/patterns</span>
-<span id="cb61-15"><a href="#cb61-15" aria-hidden="true" tabindex="-1"></a>---</span></code></pre></div>
+<div class="sourceCode" id="cb60"><pre class="sourceCode raw default"><code class="sourceCode default"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>The `id` field is for in-text citations (e.g., [@PAT]),</span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>and `citation-label` is the label for the reference.</span>
+<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a>Typically `id` and `citation-label` are kept the same.</span>
+<span id="cb60-5"><a href="#cb60-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-6"><a href="#cb60-6" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb60-7"><a href="#cb60-7" aria-hidden="true" tabindex="-1"></a>references:</span>
+<span id="cb60-8"><a href="#cb60-8" aria-hidden="true" tabindex="-1"></a>  - id: PAT</span>
+<span id="cb60-9"><a href="#cb60-9" aria-hidden="true" tabindex="-1"></a>    citation-label: Patterns</span>
+<span id="cb60-10"><a href="#cb60-10" aria-hidden="true" tabindex="-1"></a>    title: &quot;Pattern Matching in C++&quot;</span>
+<span id="cb60-11"><a href="#cb60-11" aria-hidden="true" tabindex="-1"></a>    author:</span>
+<span id="cb60-12"><a href="#cb60-12" aria-hidden="true" tabindex="-1"></a>      - family: Park</span>
+<span id="cb60-13"><a href="#cb60-13" aria-hidden="true" tabindex="-1"></a>        given: Michael</span>
+<span id="cb60-14"><a href="#cb60-14" aria-hidden="true" tabindex="-1"></a>    URL: https://github.com/mpark/patterns</span>
+<span id="cb60-15"><a href="#cb60-15" aria-hidden="true" tabindex="-1"></a>---</span></code></pre></div>
 <p><strong>Rendered Output</strong></p>
 <div>
 <p>The <code class="sourceCode cpp">id</code> field is for in-text
@@ -2919,27 +2909,14 @@ Elements<a href="#default-language-for-code-elements" class="self-link"></a></h2
 <a href="#code-block">Code Block</a>, inline code elements are C++
 syntax highlighted by default, while code blocks are not.</p>
 <p>The default configuration is:</p>
-<div class="sourceCode" id="cb62"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
-<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a><span class="fu">highlighting</span><span class="kw">:</span><span class="at"> </span></span>
-<span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">inline-code</span><span class="kw">:</span><span class="at"> cpp</span></span>
-<span id="cb62-4"><a href="#cb62-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">code-block</span><span class="kw">:</span><span class="at"> default</span></span>
-<span id="cb62-5"><a href="#cb62-5" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code></pre></div>
+<div class="sourceCode" id="cb61"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
+<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a><span class="fu">highlighting</span><span class="kw">:</span><span class="at"> </span></span>
+<span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">inline-code</span><span class="kw">:</span><span class="at"> cpp</span></span>
+<span id="cb61-4"><a href="#cb61-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">code-block</span><span class="kw">:</span><span class="at"> default</span></span>
+<span id="cb61-5"><a href="#cb61-5" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code></pre></div>
 <p>You could change this for your document by adding both or either
 entries to the YAML metadata block. For example, if you also want code
 blocks to be C++ by default:</p>
-<div class="sourceCode" id="cb43"><pre class="sourceCode yaml embed_md"><code class="sourceCode yaml"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
-<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;`MPark/WG21` User&#39;s Guide&quot;</span></span>
-<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a><span class="fu">subtitle</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;Framework for Writing C++ Committee Proposals&quot;</span></span>
-<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a><span class="fu">document</span><span class="kw">:</span><span class="at"> D0000R0</span></span>
-<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a><span class="fu">date</span><span class="kw">:</span><span class="at"> today</span></span>
-<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a><span class="fu">audience</span><span class="kw">:</span><span class="at"> WG21</span></span>
-<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a><span class="fu">author</span><span class="kw">:</span></span>
-<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Michael Park</span></span>
-<span id="cb43-9"><a href="#cb43-9" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">email</span><span class="kw">:</span><span class="at"> &lt;mcypark@gmail.com&gt;</span></span>
-<span id="cb43-10"><a href="#cb43-10" aria-hidden="true" tabindex="-1"></a><span class="at"><mark>highlighting:</mark></span></span>
-<span id="cb43-11"><a href="#cb43-11" aria-hidden="true" tabindex="-1"></a><span class="at">  <mark>code-block: cpp</mark></span></span>
-<span id="cb43-12"><a href="#cb43-12" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code></pre></div>
-<p>or if you want inline-code to be treated normally, not as C++:</p>
 <div class="sourceCode" id="cb44"><pre class="sourceCode yaml embed_md"><code class="sourceCode yaml"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
 <span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;`MPark/WG21` User&#39;s Guide&quot;</span></span>
 <span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a><span class="fu">subtitle</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;Framework for Writing C++ Committee Proposals&quot;</span></span>
@@ -2950,8 +2927,21 @@ blocks to be C++ by default:</p>
 <span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Michael Park</span></span>
 <span id="cb44-9"><a href="#cb44-9" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">email</span><span class="kw">:</span><span class="at"> &lt;mcypark@gmail.com&gt;</span></span>
 <span id="cb44-10"><a href="#cb44-10" aria-hidden="true" tabindex="-1"></a><span class="at"><mark>highlighting:</mark></span></span>
-<span id="cb44-11"><a href="#cb44-11" aria-hidden="true" tabindex="-1"></a><span class="at">  <mark>inline-code: default</mark></span></span>
+<span id="cb44-11"><a href="#cb44-11" aria-hidden="true" tabindex="-1"></a><span class="at">  <mark>code-block: cpp</mark></span></span>
 <span id="cb44-12"><a href="#cb44-12" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code></pre></div>
+<p>or if you want inline-code to be treated normally, not as C++:</p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode yaml embed_md"><code class="sourceCode yaml"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;`MPark/WG21` User&#39;s Guide&quot;</span></span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a><span class="fu">subtitle</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;Framework for Writing C++ Committee Proposals&quot;</span></span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a><span class="fu">document</span><span class="kw">:</span><span class="at"> D0000R0</span></span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a><span class="fu">date</span><span class="kw">:</span><span class="at"> today</span></span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a><span class="fu">audience</span><span class="kw">:</span><span class="at"> WG21</span></span>
+<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a><span class="fu">author</span><span class="kw">:</span></span>
+<span id="cb45-8"><a href="#cb45-8" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Michael Park</span></span>
+<span id="cb45-9"><a href="#cb45-9" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">email</span><span class="kw">:</span><span class="at"> &lt;mcypark@gmail.com&gt;</span></span>
+<span id="cb45-10"><a href="#cb45-10" aria-hidden="true" tabindex="-1"></a><span class="at"><mark>highlighting:</mark></span></span>
+<span id="cb45-11"><a href="#cb45-11" aria-hidden="true" tabindex="-1"></a><span class="at">  <mark>inline-code: default</mark></span></span>
+<span id="cb45-12"><a href="#cb45-12" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code></pre></div>
 <h2 data-number="5.2" id="embedded-markdown-by-default-code-classes"><span class="header-section-number">5.2</span> Embedded Markdown by Default
 Code Classes<a href="#embedded-markdown-by-default-code-classes" class="self-link"></a></h2>
 <p><a href="#embedded-markdown">Embedded Markdown</a> is enabled by
@@ -2962,33 +2952,6 @@ class should be suffcient for most use cases to enable embedded Markdown
 as needed, if you want to change the default, you can set the
 <code class="sourceCode cpp">embedded<span class="op">-</span>md<span class="op">-</span>code<span class="op">-</span>classes</code>
 YAML metadata. For example:</p>
-<div class="sourceCode" id="cb45"><pre class="sourceCode yaml embed_md"><code class="sourceCode yaml"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
-<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;`MPark/WG21` User&#39;s Guide&quot;</span></span>
-<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a><span class="fu">subtitle</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;Framework for Writing C++ Committee Proposals&quot;</span></span>
-<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a><span class="fu">document</span><span class="kw">:</span><span class="at"> D0000R0</span></span>
-<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a><span class="fu">date</span><span class="kw">:</span><span class="at"> today</span></span>
-<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a><span class="fu">audience</span><span class="kw">:</span><span class="at"> WG21</span></span>
-<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a><span class="fu">author</span><span class="kw">:</span></span>
-<span id="cb45-8"><a href="#cb45-8" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Michael Park</span></span>
-<span id="cb45-9"><a href="#cb45-9" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">email</span><span class="kw">:</span><span class="at"> &lt;mcypark@gmail.com&gt;</span></span>
-<span id="cb45-10"><a href="#cb45-10" aria-hidden="true" tabindex="-1"></a><span class="at"><mark>embedded-md-code-classes:</mark></span></span>
-<span id="cb45-11"><a href="#cb45-11" aria-hidden="true" tabindex="-1"></a><span class="at">  <mark>- cpp</mark></span></span>
-<span id="cb45-12"><a href="#cb45-12" aria-hidden="true" tabindex="-1"></a><span class="at">  <mark>- default</mark></span></span>
-<span id="cb45-13"><a href="#cb45-13" aria-hidden="true" tabindex="-1"></a><span class="at">  <mark>- diff</mark></span></span>
-<span id="cb45-14"><a href="#cb45-14" aria-hidden="true" tabindex="-1"></a><span class="at">  <mark>- nasm</mark></span></span>
-<span id="cb45-15"><a href="#cb45-15" aria-hidden="true" tabindex="-1"></a><span class="at">  <mark>- rust</mark></span></span>
-<span id="cb45-16"><a href="#cb45-16" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code></pre></div>
-<p>This is an <strong>override</strong> for the existing list of
-<code class="sourceCode cpp">cpp</code> and
-<code class="sourceCode default">default</code>, so if it’s desired to
-keep <code class="sourceCode cpp">cpp</code> and
-<code class="sourceCode default">default</code> to have embedded
-Markdown enabled by default, they must be listed again.</p>
-<h2 data-number="5.3" id="unicode-fonts"><span class="header-section-number">5.3</span> Unicode Fonts<a href="#unicode-fonts" class="self-link"></a></h2>
-<p>If building for PDF (via LaTeX) output with Unicode characters, you
-may want to select specific <a href="https://pandoc.org/MANUAL.html#fonts">Fonts</a> for rendering. For
-example, <code class="sourceCode cpp">monofont</code> can be specified
-in the YAML metadata block to select a font for code elements.</p>
 <div class="sourceCode" id="cb46"><pre class="sourceCode yaml embed_md"><code class="sourceCode yaml"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
 <span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;`MPark/WG21` User&#39;s Guide&quot;</span></span>
 <span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a><span class="fu">subtitle</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;Framework for Writing C++ Committee Proposals&quot;</span></span>
@@ -2998,8 +2961,59 @@ in the YAML metadata block to select a font for code elements.</p>
 <span id="cb46-7"><a href="#cb46-7" aria-hidden="true" tabindex="-1"></a><span class="fu">author</span><span class="kw">:</span></span>
 <span id="cb46-8"><a href="#cb46-8" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Michael Park</span></span>
 <span id="cb46-9"><a href="#cb46-9" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">email</span><span class="kw">:</span><span class="at"> &lt;mcypark@gmail.com&gt;</span></span>
-<span id="cb46-10"><a href="#cb46-10" aria-hidden="true" tabindex="-1"></a><span class="at"><mark>monofont: &quot;DejaVu Sans Mono&quot;</mark></span></span>
-<span id="cb46-11"><a href="#cb46-11" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code></pre></div>
+<span id="cb46-10"><a href="#cb46-10" aria-hidden="true" tabindex="-1"></a><span class="at"><mark>embedded-md-code-classes:</mark></span></span>
+<span id="cb46-11"><a href="#cb46-11" aria-hidden="true" tabindex="-1"></a><span class="at">  <mark>- cpp</mark></span></span>
+<span id="cb46-12"><a href="#cb46-12" aria-hidden="true" tabindex="-1"></a><span class="at">  <mark>- default</mark></span></span>
+<span id="cb46-13"><a href="#cb46-13" aria-hidden="true" tabindex="-1"></a><span class="at">  <mark>- diff</mark></span></span>
+<span id="cb46-14"><a href="#cb46-14" aria-hidden="true" tabindex="-1"></a><span class="at">  <mark>- nasm</mark></span></span>
+<span id="cb46-15"><a href="#cb46-15" aria-hidden="true" tabindex="-1"></a><span class="at">  <mark>- rust</mark></span></span>
+<span id="cb46-16"><a href="#cb46-16" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code></pre></div>
+<p>This is an <strong>override</strong> for the existing list of
+<code class="sourceCode cpp">cpp</code> and
+<code class="sourceCode default">default</code>, so if it’s desired to
+keep <code class="sourceCode cpp">cpp</code> and
+<code class="sourceCode default">default</code> to have embedded
+Markdown enabled by default, they must be listed again.</p>
+<h2 data-number="5.3" id="control-numbering"><span class="header-section-number">5.3</span> Control the Numbering of
+Explicit Stable Names<a href="#control-numbering" class="self-link"></a></h2>
+<p>By default <em>explicit</em> stable names such as
+<code class="sourceCode default">[basic.life]{.sref}</code> renders with
+a leading section number and the section title.</p>
+<p>As mentioned in <a href="#explicit-stable-names">Explicit Stable
+Names</a>, you can disable numbering at the element-level via
+<code class="sourceCode cpp"><span class="op">[</span>basic<span class="op">.</span>life<span class="op">]{-</span> <span class="op">.</span>sref<span class="op">}</span></code>
+or
+<code class="sourceCode cpp"><span class="op">[</span>basic<span class="op">.</span>life<span class="op">]{.</span>unnumbered <span class="op">.</span>sref<span class="op">}</span></code>.
+To disable at the document-level, you can specify
+<code class="sourceCode cpp">number<span class="op">-</span>srefs<span class="op">:</span> <span class="kw">false</span></code>
+in the YAML metadata:</p>
+<div class="sourceCode" id="cb47"><pre class="sourceCode yaml embed_md"><code class="sourceCode yaml"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;`MPark/WG21` User&#39;s Guide&quot;</span></span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a><span class="fu">subtitle</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;Framework for Writing C++ Committee Proposals&quot;</span></span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a><span class="fu">document</span><span class="kw">:</span><span class="at"> D0000R0</span></span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a><span class="fu">date</span><span class="kw">:</span><span class="at"> today</span></span>
+<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a><span class="fu">audience</span><span class="kw">:</span><span class="at"> WG21</span></span>
+<span id="cb47-7"><a href="#cb47-7" aria-hidden="true" tabindex="-1"></a><span class="fu">author</span><span class="kw">:</span></span>
+<span id="cb47-8"><a href="#cb47-8" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Michael Park</span></span>
+<span id="cb47-9"><a href="#cb47-9" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">email</span><span class="kw">:</span><span class="at"> &lt;mcypark@gmail.com&gt;</span></span>
+<span id="cb47-10"><a href="#cb47-10" aria-hidden="true" tabindex="-1"></a><span class="at"><mark>number-srefs: false</mark></span></span>
+<span id="cb47-11"><a href="#cb47-11" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code></pre></div>
+<h2 data-number="5.4" id="unicode-fonts"><span class="header-section-number">5.4</span> Unicode Fonts<a href="#unicode-fonts" class="self-link"></a></h2>
+<p>If building for PDF (via LaTeX) output with Unicode characters, you
+may want to select specific <a href="https://pandoc.org/MANUAL.html#fonts">Fonts</a> for rendering. For
+example, <code class="sourceCode cpp">monofont</code> can be specified
+in the YAML metadata block to select a font for code elements.</p>
+<div class="sourceCode" id="cb48"><pre class="sourceCode yaml embed_md"><code class="sourceCode yaml"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;`MPark/WG21` User&#39;s Guide&quot;</span></span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a><span class="fu">subtitle</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;Framework for Writing C++ Committee Proposals&quot;</span></span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a><span class="fu">document</span><span class="kw">:</span><span class="at"> D0000R0</span></span>
+<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a><span class="fu">date</span><span class="kw">:</span><span class="at"> today</span></span>
+<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a><span class="fu">audience</span><span class="kw">:</span><span class="at"> WG21</span></span>
+<span id="cb48-7"><a href="#cb48-7" aria-hidden="true" tabindex="-1"></a><span class="fu">author</span><span class="kw">:</span></span>
+<span id="cb48-8"><a href="#cb48-8" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Michael Park</span></span>
+<span id="cb48-9"><a href="#cb48-9" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">email</span><span class="kw">:</span><span class="at"> &lt;mcypark@gmail.com&gt;</span></span>
+<span id="cb48-10"><a href="#cb48-10" aria-hidden="true" tabindex="-1"></a><span class="at"><mark>monofont: &quot;DejaVu Sans Mono&quot;</mark></span></span>
+<span id="cb48-11"><a href="#cb48-11" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code></pre></div>
 <p>“DejaVu Sans Mono” provides glyphs for a large amount of the Unicode
 characters. If you want the list of available fonts on your system, most
 supported systems will produce a list via the command-line tool

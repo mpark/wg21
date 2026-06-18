@@ -1202,35 +1202,35 @@ Stable names come in two flavors: *explicit* and *implicit* .
 
 ### Implicit Stable Names
 
-*Implicit* stable names are [`shortcut_reference_links`] such as `[basic.life]`,
-and automatically links to <https://eel.is/c++draft/basic.life>.
-This is typically used in quoting standard paragraphs like this:
+*Implicit* stable names are [`shortcut_reference_links`] such as `[stable.name]`.
+It automatically links to <https://eel.is/c++draft/stable.name>, if such a stable
+name exists. This is typically used in quoting standard paragraphs like this:
 
 ```render
 > [...] whose lifetime has begun and has not ended ([basic.life]).
 ```
 
-[Under the hood, `[basic.life]` expands to `[basic.life]{- .sref}` (See [Explicit Stable Names]).]{.note}
-
 ### Explicit Stable Names
 
 *Explicit* stable names are [bracketed `Span` elements][divspan] that look like:
-`[stable.name]@=={.sref}==@`{.default}. A leading section number is rendered
-automatically. This is typically used to describe the section to be modified:
+`[stable.name]@=={.sref}==@`{.default}. By default, a leading section number and
+the section title is automatically rendered.
+
+For example:
 
 ::: render
 ```
 Modify section [basic.life]{.sref}:
 ```
+
+...
 :::
 
-Add the `.title` class in addition to `.sref`, to also render the section title
-of the stable name, like: `[stable.name]{.sref @==.title==@}`{.default}.
-This is typically used as a header in wording:
+This is also useful in a header when updating large bodies of wording:
 
 ::: render
 ```
-## [basic.life]{.sref .title} {- .unlisted}
+## [basic.life]{.sref} {- .unlisted}
 ```
 :::
 
@@ -1238,16 +1238,21 @@ This is typically used as a header in wording:
 [disable the section numbering](#disable-section-number) and to
 [exclude it from the table of contents](#exclude-from-toc)]{.note}
 
-Lastly, you may also add the class `-` or `.unnumbered` to `.sref` to omit
-the section number. This is mostly for completeness, as something like
-`[basic.life]{- .sref}` can be written simply as `[basic.life]`. You can also
-use this to render *only* the section title without the section number like:
+Lastly, you may also add the class `-` or `.unnumbered` to to omit the section number.
 
-::: render
+This is useful if you prefer to use the regular header numbering instead:
+
+```{=markdown}
++----------------------------------------------------------+----------------------------------------------------------+
+| Markdown Source                                          | Rendered Output                                          |
++==========================================================+==========================================================+
+| ```                                                      |                                                          |
+| ## [basic.life]{- .sref}                                 | ## 4.9 [basic.life]{- .sref} {#basic-life-2 - .unlisted} |
+| ```                                                      |                                                          |
++----------------------------------------------------------+----------------------------------------------------------+
 ```
-[basic.life]{- .sref .title}
-```
-:::
+
+See [](#control-numbering) for how to disable numbering at the document-level.
 
 ### Paragraph Link
 
@@ -1409,6 +1414,29 @@ author:
 This is an **override** for the existing list of `cpp` and `default`{.default},
 so if it's desired to keep `cpp` and `default`{.default} to have embedded Markdown
 enabled by default, they must be listed again.
+
+## Control the Numbering of Explicit Stable Names {#control-numbering}
+
+By default *explicit* stable names such as `[basic.life]{.sref}`{.default}
+renders with a leading section number and the section title.
+
+As mentioned in [Explicit Stable Names], you can disable numbering at
+the element-level via `[basic.life]{- .sref}` or `[basic.life]{.unnumbered .sref}`.
+To disable at the document-level, you can specify `number-srefs: false` in the YAML metadata:
+
+```yaml {.embed_md}
+---
+title: "`MPark/WG21` User's Guide"
+subtitle: "Framework for Writing C++ Committee Proposals"
+document: D0000R0
+date: today
+audience: WG21
+author:
+  - name: Michael Park
+    email: <mcypark@gmail.com>
+@==number-srefs: false==@
+---
+```
 
 ## Unicode Fonts
 
