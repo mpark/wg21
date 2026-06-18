@@ -229,7 +229,7 @@ Guide}
 \subtitle{Framework for Writing C++ Committee Proposals}
 \author{&Michael
 Park\\&<\href{mailto:mcypark@gmail.com}{\nolinkurl{mcypark@gmail.com}}>\\}
-\date{2026-06-17}
+\date{2026-06-18}
 
 \begin{document}
 \hypertarget{title-block-header}{\label{title-block-header}}
@@ -404,7 +404,8 @@ is generated from:
 \begin{Shaded}
 \begin{Highlighting}[]
 \PreprocessorTok{{-}{-}{-}}
-\FunctionTok{title}\KeywordTok{:}\AttributeTok{ Framework for Writing C++ Committee Proposals}
+\FunctionTok{title}\KeywordTok{:}\AttributeTok{ }\StringTok{"\textasciigrave{}MPark/WG21\textasciigrave{} User\textquotesingle{}s Guide"}
+\FunctionTok{subtitle}\KeywordTok{:}\AttributeTok{ }\StringTok{"Framework for Writing C++ Committee Proposals"}
 \FunctionTok{document}\KeywordTok{:}\AttributeTok{ D0000R0}
 \FunctionTok{date}\KeywordTok{:}\AttributeTok{ today}
 \FunctionTok{audience}\KeywordTok{:}\AttributeTok{ WG21}
@@ -434,7 +435,8 @@ YAML lists can be used to specify multiple audiences and authors:
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{  {-}{-}{-}}
-\NormalTok{  title: Framework for Writing C++ Committee Proposals}
+\NormalTok{  title: "\textasciigrave{}MPark/WG21\textasciigrave{} User\textquotesingle{}s Guide"}
+\NormalTok{  subtitle: "Framework for Writing C++ Committee Proposals"}
 \NormalTok{  document: D0000R0}
 \NormalTok{  date: today}
 \StringTok{{-} audience: WG21}
@@ -467,7 +469,8 @@ To disable the table of contents entirely, set the
 \begin{Shaded}
 \begin{Highlighting}[]
 \PreprocessorTok{{-}{-}{-}}
-\FunctionTok{title}\KeywordTok{:}\AttributeTok{ Framework for Writing C++ Committee Proposals}
+\FunctionTok{title}\KeywordTok{:}\AttributeTok{ }\StringTok{"\textasciigrave{}MPark/WG21\textasciigrave{} User\textquotesingle{}s Guide"}
+\FunctionTok{subtitle}\KeywordTok{:}\AttributeTok{ }\StringTok{"Framework for Writing C++ Committee Proposals"}
 \FunctionTok{document}\KeywordTok{:}\AttributeTok{ D0000R0}
 \FunctionTok{date}\KeywordTok{:}\AttributeTok{ today}
 \FunctionTok{audience}\KeywordTok{:}\AttributeTok{ WG21}
@@ -509,7 +512,8 @@ up:
 \begin{Shaded}
 \begin{Highlighting}[]
 \PreprocessorTok{{-}{-}{-}}
-\FunctionTok{title}\KeywordTok{:}\AttributeTok{ Framework for Writing C++ Committee Proposals}
+\FunctionTok{title}\KeywordTok{:}\AttributeTok{ }\StringTok{"\textasciigrave{}MPark/WG21\textasciigrave{} User\textquotesingle{}s Guide"}
+\FunctionTok{subtitle}\KeywordTok{:}\AttributeTok{ }\StringTok{"Framework for Writing C++ Committee Proposals"}
 \FunctionTok{document}\KeywordTok{:}\AttributeTok{ D0000R0}
 \FunctionTok{date}\KeywordTok{:}\AttributeTok{ today}
 \FunctionTok{audience}\KeywordTok{:}\AttributeTok{ WG21}
@@ -3114,7 +3118,8 @@ be C++ by default:
 \begin{Shaded}
 \begin{Highlighting}[]
 \PreprocessorTok{{-}{-}{-}}
-\FunctionTok{title}\KeywordTok{:}\AttributeTok{ Framework for Writing C++ Committee Proposals}
+\FunctionTok{title}\KeywordTok{:}\AttributeTok{ }\StringTok{"\textasciigrave{}MPark/WG21\textasciigrave{} User\textquotesingle{}s Guide"}
+\FunctionTok{subtitle}\KeywordTok{:}\AttributeTok{ }\StringTok{"Framework for Writing C++ Committee Proposals"}
 \FunctionTok{document}\KeywordTok{:}\AttributeTok{ D0000R0}
 \FunctionTok{date}\KeywordTok{:}\AttributeTok{ today}
 \FunctionTok{audience}\KeywordTok{:}\AttributeTok{ WG21}
@@ -3132,7 +3137,8 @@ or if you want inline-code to be treated normally, not as C++:
 \begin{Shaded}
 \begin{Highlighting}[]
 \PreprocessorTok{{-}{-}{-}}
-\FunctionTok{title}\KeywordTok{:}\AttributeTok{ Framework for Writing C++ Committee Proposals}
+\FunctionTok{title}\KeywordTok{:}\AttributeTok{ }\StringTok{"\textasciigrave{}MPark/WG21\textasciigrave{} User\textquotesingle{}s Guide"}
+\FunctionTok{subtitle}\KeywordTok{:}\AttributeTok{ }\StringTok{"Framework for Writing C++ Committee Proposals"}
 \FunctionTok{document}\KeywordTok{:}\AttributeTok{ D0000R0}
 \FunctionTok{date}\KeywordTok{:}\AttributeTok{ today}
 \FunctionTok{audience}\KeywordTok{:}\AttributeTok{ WG21}
@@ -3161,7 +3167,8 @@ YAML metadata. For example:
 \begin{Shaded}
 \begin{Highlighting}[]
 \PreprocessorTok{{-}{-}{-}}
-\FunctionTok{title}\KeywordTok{:}\AttributeTok{ Framework for Writing C++ Committee Proposals}
+\FunctionTok{title}\KeywordTok{:}\AttributeTok{ }\StringTok{"\textasciigrave{}MPark/WG21\textasciigrave{} User\textquotesingle{}s Guide"}
+\FunctionTok{subtitle}\KeywordTok{:}\AttributeTok{ }\StringTok{"Framework for Writing C++ Committee Proposals"}
 \FunctionTok{document}\KeywordTok{:}\AttributeTok{ D0000R0}
 \FunctionTok{date}\KeywordTok{:}\AttributeTok{ today}
 \FunctionTok{audience}\KeywordTok{:}\AttributeTok{ WG21}
@@ -3195,7 +3202,8 @@ metadata block to select a font for code elements.
 \begin{Shaded}
 \begin{Highlighting}[]
 \PreprocessorTok{{-}{-}{-}}
-\FunctionTok{title}\KeywordTok{:}\AttributeTok{ Framework for Writing C++ Committee Proposals}
+\FunctionTok{title}\KeywordTok{:}\AttributeTok{ }\StringTok{"\textasciigrave{}MPark/WG21\textasciigrave{} User\textquotesingle{}s Guide"}
+\FunctionTok{subtitle}\KeywordTok{:}\AttributeTok{ }\StringTok{"Framework for Writing C++ Committee Proposals"}
 \FunctionTok{document}\KeywordTok{:}\AttributeTok{ D0000R0}
 \FunctionTok{date}\KeywordTok{:}\AttributeTok{ today}
 \FunctionTok{audience}\KeywordTok{:}\AttributeTok{ WG21}

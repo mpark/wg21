@@ -126,7 +126,8 @@ For example, the [title](#title-block-header) of this document is generated from
 
 ```yaml
 ---
-title: Framework for Writing C++ Committee Proposals
+title: "`MPark/WG21` User's Guide"
+subtitle: "Framework for Writing C++ Committee Proposals"
 document: D0000R0
 date: today
 audience: WG21
@@ -142,7 +143,8 @@ YAML lists can be used to specify multiple audiences and authors:
 
 ```diff
   ---
-  title: Framework for Writing C++ Committee Proposals
+  title: "`MPark/WG21` User's Guide"
+  subtitle: "Framework for Writing C++ Committee Proposals"
   document: D0000R0
   date: today
 - audience: WG21
@@ -168,7 +170,8 @@ To disable the table of contents entirely, set the `toc` metadata to `false`.
 
 ```yaml {.embed_md}
 ---
-title: Framework for Writing C++ Committee Proposals
+title: "`MPark/WG21` User's Guide"
+subtitle: "Framework for Writing C++ Committee Proposals"
 document: D0000R0
 date: today
 audience: WG21
@@ -200,7 +203,8 @@ For example, to make `#### Wildcard Pattern`{.default} show up:
 
 ```yaml {.embed_md}
 ---
-title: Framework for Writing C++ Committee Proposals
+title: "`MPark/WG21` User's Guide"
+subtitle: "Framework for Writing C++ Committee Proposals"
 document: D0000R0
 date: today
 audience: WG21
@@ -1345,7 +1349,8 @@ by default:
 
 ```yaml {.embed_md}
 ---
-title: Framework for Writing C++ Committee Proposals
+title: "`MPark/WG21` User's Guide"
+subtitle: "Framework for Writing C++ Committee Proposals"
 document: D0000R0
 date: today
 audience: WG21
@@ -1361,7 +1366,8 @@ or if you want inline-code to be treated normally, not as C++:
 
 ```yaml {.embed_md}
 ---
-title: Framework for Writing C++ Committee Proposals
+title: "`MPark/WG21` User's Guide"
+subtitle: "Framework for Writing C++ Committee Proposals"
 document: D0000R0
 date: today
 audience: WG21
@@ -1383,7 +1389,8 @@ can set the `embedded-md-code-classes` YAML metadata. For example:
 
 ```yaml {.embed_md}
 ---
-title: Framework for Writing C++ Committee Proposals
+title: "`MPark/WG21` User's Guide"
+subtitle: "Framework for Writing C++ Committee Proposals"
 document: D0000R0
 date: today
 audience: WG21
@@ -1411,7 +1418,8 @@ in the YAML metadata block to select a font for code elements.
 
 ```yaml {.embed_md}
 ---
-title: Framework for Writing C++ Committee Proposals
+title: "`MPark/WG21` User's Guide"
+subtitle: "Framework for Writing C++ Committee Proposals"
 document: D0000R0
 date: today
 audience: WG21
