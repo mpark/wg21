@@ -575,19 +575,24 @@ Tables\hyperref[comparison-tables]{}}{Comparison Tables}}\label{comparison-table
 \caption{Put your caption here with some
 {\protect\VERB|\NormalTok{code}|}}\tabularnewline
 \toprule\noalign{}
-\centering\arraybackslash\textbf{Before} &
-\centering\arraybackslash\textbf{After} \\
+\begin{minipage}[b]{\linewidth}\raggedright
+\centering\arraybackslash\textbf{Before}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\centering\arraybackslash\textbf{After}
+\end{minipage} \\
 \midrule\noalign{}
 \endfirsthead
 \toprule\noalign{}
-\centering\arraybackslash\textbf{Before} &
-\centering\arraybackslash\textbf{After} \\
+\begin{minipage}[b]{\linewidth}\raggedright
+\centering\arraybackslash\textbf{Before}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\centering\arraybackslash\textbf{After}
+\end{minipage} \\
 \midrule\noalign{}
 \endhead
 \bottomrule\noalign{}
 \endlastfoot
 \begin{minipage}[t]{\linewidth}\raggedright
-
 \begin{Shaded}
 \begin{Highlighting}[]
 \ControlFlowTok{switch} \OperatorTok{(}\NormalTok{x}\OperatorTok{)} \OperatorTok{\{}
@@ -597,9 +602,7 @@ Tables\hyperref[comparison-tables]{}}{Comparison Tables}}\label{comparison-table
 \OperatorTok{\}}
 \end{Highlighting}
 \end{Shaded}
-
 \end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
-
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{inspect }\OperatorTok{(}\NormalTok{x}\OperatorTok{)} \OperatorTok{\{}
@@ -609,7 +612,6 @@ Tables\hyperref[comparison-tables]{}}{Comparison Tables}}\label{comparison-table
 \OperatorTok{\}}
 \end{Highlighting}
 \end{Shaded}
-
 \end{minipage} \\
 \end{longtable}
 
@@ -628,8 +630,6 @@ Tables\hyperref[comparison-tables]{}}{Comparison Tables}}\label{comparison-table
 \bottomrule\noalign{}
 \endlastfoot
 \begin{minipage}[t]{\linewidth}\raggedright
-\begin{minipage}[t]{\linewidth}\raggedright
-
 \begin{Shaded}
 \begin{Highlighting}[]
 \ControlFlowTok{switch} \OperatorTok{(}\NormalTok{x}\OperatorTok{)} \OperatorTok{\{}
@@ -639,11 +639,7 @@ Tables\hyperref[comparison-tables]{}}{Comparison Tables}}\label{comparison-table
 \OperatorTok{\}}
 \end{Highlighting}
 \end{Shaded}
-
-\end{minipage}
 \end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
-\begin{minipage}[t]{\linewidth}\raggedright
-
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{inspect }\OperatorTok{(}\NormalTok{x}\OperatorTok{)} \OperatorTok{\{}
@@ -653,12 +649,8 @@ Tables\hyperref[comparison-tables]{}}{Comparison Tables}}\label{comparison-table
 \OperatorTok{\}}
 \end{Highlighting}
 \end{Shaded}
-
-\end{minipage}
 \end{minipage} \\
 \begin{minipage}[t]{\linewidth}\raggedright
-\begin{minipage}[t]{\linewidth}\raggedright
-
 \begin{Shaded}
 \begin{Highlighting}[]
 \ControlFlowTok{if} \OperatorTok{(}\NormalTok{s }\OperatorTok{==} \StringTok{"foo"}\OperatorTok{)} \OperatorTok{\{}
@@ -670,11 +662,7 @@ Tables\hyperref[comparison-tables]{}}{Comparison Tables}}\label{comparison-table
 \OperatorTok{\}}
 \end{Highlighting}
 \end{Shaded}
-
-\end{minipage}
 \end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
-\begin{minipage}[t]{\linewidth}\raggedright
-
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{inspect }\OperatorTok{(}\NormalTok{s}\OperatorTok{)} \OperatorTok{\{}
@@ -684,8 +672,6 @@ Tables\hyperref[comparison-tables]{}}{Comparison Tables}}\label{comparison-table
 \OperatorTok{\}}
 \end{Highlighting}
 \end{Shaded}
-
-\end{minipage}
 \end{minipage} \\
 \end{longtable}
 }

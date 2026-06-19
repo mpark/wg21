@@ -527,7 +527,7 @@ def cmptable(table, doc):
 
     header = pf.Null()
     caption = None
-    width = 'ColWidthDefault'
+    width = None
 
     first_row = True
     table.content.append(pf.HorizontalRule())
@@ -543,9 +543,7 @@ def cmptable(table, doc):
 
             if first_row:
                 header = pf.Plain(*elem.content)
-                width = (float(elem.attributes['width'])
-                         if 'width' in elem.attributes else
-                         'ColWidthDefault')
+                width = float(elem.attributes['width']) if 'width' in elem.attributes else None
             else:
                 warn(elem)
         elif isinstance(elem, pf.BlockQuote):
@@ -559,15 +557,9 @@ def cmptable(table, doc):
                 widths.append(width)
 
                 header = pf.Null()
-                width = 'ColWidthDefault'
+                width = None
 
-            codeblock = pf.Div(elem)
-            wrap_elem(
-                pf.RawInline('\\begin{minipage}[t]{\\linewidth}\\raggedright', 'latex'),
-                codeblock,
-                pf.RawInline('\\end{minipage}', 'latex'));
-
-            examples.append(codeblock)
+            examples.append(elem)
         elif isinstance(elem, pf.HorizontalRule) and examples:
             first_row = False
 
@@ -578,6 +570,17 @@ def cmptable(table, doc):
 
     if not all(isinstance(header, pf.Null) for header in headers):
         kwargs['head'] = pf.TableHead(pf.TableRow(*[pf.TableCell(header) for header in headers]))
+
+    if all(width is not None for width in widths):
+        total_width = sum(widths)
+        widths = [width / total_width for width in widths]
+    else:
+        if not all(width is None for width in widths):
+            pf.debug(f"""[WARNING] mpark/wg21: cmptable widths must be specified for all columns or none.
+          {table}
+
+          Ignoring the specified widths and defaulting to even column widths.""")
+        widths = [1 / len(widths) for _ in widths]
 
     kwargs['caption'] = pf.Caption() if caption is None else caption
     kwargs['colspec'] = [('AlignDefault', w) for w in widths]

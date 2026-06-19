@@ -2430,6 +2430,10 @@ block</a> is attached to the cell above.</p>
 <span id="cb52-19"><a href="#cb52-19" aria-hidden="true" tabindex="-1"></a>:::</span></code></pre></div>
 <p><strong>Rendered Output</strong></p>
 <table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
 <thead>
 <tr>
 <th><div style="text-align:center">
@@ -2442,24 +2446,16 @@ block</a> is attached to the cell above.</p>
 </thead>
 <tbody>
 <tr>
-<td><div>
-
-<div class="sourceCode" id="cb33"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="cf">switch</span> <span class="op">(</span>x<span class="op">)</span> <span class="op">{</span></span>
+<td><div class="sourceCode" id="cb33"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="cf">switch</span> <span class="op">(</span>x<span class="op">)</span> <span class="op">{</span></span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">case</span> <span class="dv">0</span><span class="op">:</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;got zero&quot;</span><span class="op">;</span> <span class="cf">break</span><span class="op">;</span></span>
 <span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">case</span> <span class="dv">1</span><span class="op">:</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;got one&quot;</span><span class="op">;</span> <span class="cf">break</span><span class="op">;</span></span>
 <span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">default</span><span class="op">:</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;don&#39;t care&quot;</span><span class="op">;</span></span>
-<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
-
-</div></td>
-<td><div>
-
-<div class="sourceCode" id="cb34"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>x match <span class="op">{</span></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div></td>
+<td><div class="sourceCode" id="cb34"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>x match <span class="op">{</span></span>
 <span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  <span class="dv">0</span> <span class="op">=&gt;</span> <span class="cf">do</span> <span class="op">{</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;got zero&quot;</span> <span class="op">};</span></span>
 <span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>  <span class="dv">1</span> <span class="op">=&gt;</span> <span class="cf">do</span> <span class="op">{</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;got one&quot;</span> <span class="op">};</span></span>
 <span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>  _ <span class="op">=&gt;</span> <span class="cf">do</span> <span class="op">{</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;don&#39;t care&quot;</span> <span class="op">};</span></span>
-<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span></code></pre></div>
-
-</div></td>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span></code></pre></div></td>
 </tr>
 </tbody>
 </table>
@@ -2511,6 +2507,10 @@ used to move to the next row.</p>
 <span id="cb35-41"><a href="#cb35-41" aria-hidden="true" tabindex="-1"></a>:::</span></code></pre></div>
 <p><strong>Rendered Output</strong></p>
 <table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
 <thead>
 <tr>
 <th><div style="text-align:center">
@@ -2523,46 +2523,30 @@ used to move to the next row.</p>
 </thead>
 <tbody>
 <tr>
-<td><div>
-
-<div class="sourceCode" id="cb36"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="cf">switch</span> <span class="op">(</span>x<span class="op">)</span> <span class="op">{</span></span>
+<td><div class="sourceCode" id="cb36"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="cf">switch</span> <span class="op">(</span>x<span class="op">)</span> <span class="op">{</span></span>
 <span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">case</span> <span class="dv">0</span><span class="op">:</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;got zero&quot;</span><span class="op">;</span> <span class="cf">break</span><span class="op">;</span></span>
 <span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">case</span> <span class="dv">1</span><span class="op">:</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;got one&quot;</span><span class="op">;</span> <span class="cf">break</span><span class="op">;</span></span>
 <span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">default</span><span class="op">:</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;don&#39;t care&quot;</span><span class="op">;</span></span>
-<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
-
-</div></td>
-<td><div>
-
-<div class="sourceCode" id="cb37"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>x match <span class="op">{</span></span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div></td>
+<td><div class="sourceCode" id="cb37"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>x match <span class="op">{</span></span>
 <span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>  <span class="dv">0</span> <span class="op">=&gt;</span> <span class="cf">do</span> <span class="op">{</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;got zero&quot;</span> <span class="op">};</span></span>
 <span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>  <span class="dv">1</span> <span class="op">=&gt;</span> <span class="cf">do</span> <span class="op">{</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;got one&quot;</span> <span class="op">};</span></span>
 <span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>  _ <span class="op">=&gt;</span> <span class="cf">do</span> <span class="op">{</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;don&#39;t care&quot;</span> <span class="op">};</span></span>
-<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span></code></pre></div>
-
-</div></td>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span></code></pre></div></td>
 </tr>
 <tr>
-<td><div>
-
-<div class="sourceCode" id="cb38"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="op">(</span>s <span class="op">==</span> <span class="st">&quot;foo&quot;</span><span class="op">)</span> <span class="op">{</span></span>
+<td><div class="sourceCode" id="cb38"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="op">(</span>s <span class="op">==</span> <span class="st">&quot;foo&quot;</span><span class="op">)</span> <span class="op">{</span></span>
 <span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>  std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;got foo&quot;</span><span class="op">;</span></span>
 <span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a><span class="op">}</span> <span class="cf">else</span> <span class="cf">if</span> <span class="op">(</span>s <span class="op">==</span> <span class="st">&quot;bar&quot;</span><span class="op">)</span> <span class="op">{</span></span>
 <span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>  std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;got bar&quot;</span><span class="op">;</span></span>
 <span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span> <span class="cf">else</span> <span class="op">{</span></span>
 <span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>  std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;don&#39;t care&quot;</span><span class="op">;</span></span>
-<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
-
-</div></td>
-<td><div>
-
-<div class="sourceCode" id="cb39"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>s match <span class="op">{</span></span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div></td>
+<td><div class="sourceCode" id="cb39"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>s match <span class="op">{</span></span>
 <span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;foo&quot;</span> <span class="op">=&gt;</span> <span class="cf">do</span> <span class="op">{</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;got foo&quot;</span> <span class="op">};</span></span>
 <span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;bar&quot;</span> <span class="op">=&gt;</span> <span class="cf">do</span> <span class="op">{</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;got bar&quot;</span> <span class="op">};</span></span>
 <span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>  _ <span class="op">=&gt;</span> <span class="cf">do</span> <span class="op">{</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;don&#39;t care&quot;</span> <span class="op">};</span></span>
-<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span></code></pre></div>
-
-</div></td>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span></code></pre></div></td>
 </tr>
 </tbody>
 </table>
@@ -2598,6 +2582,10 @@ used to move to the next row.</p>
 <caption><blockquote>
 <p>Put your caption here</p>
 </blockquote></caption>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
 <thead>
 <tr>
 <th><div style="text-align:center">
@@ -2610,24 +2598,16 @@ used to move to the next row.</p>
 </thead>
 <tbody>
 <tr>
-<td><div>
-
-<div class="sourceCode" id="cb41"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="cf">switch</span> <span class="op">(</span>x<span class="op">)</span> <span class="op">{</span></span>
+<td><div class="sourceCode" id="cb41"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="cf">switch</span> <span class="op">(</span>x<span class="op">)</span> <span class="op">{</span></span>
 <span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">case</span> <span class="dv">0</span><span class="op">:</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;got zero&quot;</span><span class="op">;</span> <span class="cf">break</span><span class="op">;</span></span>
 <span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">case</span> <span class="dv">1</span><span class="op">:</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;got one&quot;</span><span class="op">;</span> <span class="cf">break</span><span class="op">;</span></span>
 <span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">default</span><span class="op">:</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;don&#39;t care&quot;</span><span class="op">;</span></span>
-<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
-
-</div></td>
-<td><div>
-
-<div class="sourceCode" id="cb42"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>x match <span class="op">{</span></span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div></td>
+<td><div class="sourceCode" id="cb42"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>x match <span class="op">{</span></span>
 <span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>  <span class="dv">0</span> <span class="op">=&gt;</span> <span class="cf">do</span> <span class="op">{</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;got zero&quot;</span> <span class="op">};</span></span>
 <span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>  <span class="dv">1</span> <span class="op">=&gt;</span> <span class="cf">do</span> <span class="op">{</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;got one&quot;</span> <span class="op">};</span></span>
 <span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>  _ <span class="op">=&gt;</span> <span class="cf">do</span> <span class="op">{</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;don&#39;t care&quot;</span> <span class="op">};</span></span>
-<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span></code></pre></div>
-
-</div></td>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span></code></pre></div></td>
 </tr>
 </tbody>
 </table>
