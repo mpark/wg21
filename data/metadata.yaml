@@ -30,6 +30,7 @@ rmcolor: 'bf0303'
 embedded-md-code-classes:
   - cpp
   - default
+  - diff
 
 number-srefs: true
 

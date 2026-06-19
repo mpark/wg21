@@ -230,7 +230,7 @@ Reply-to:   \@author
 \author{&Author
 0\\&<\href{mailto:author0@gmail.com}{\nolinkurl{author0@gmail.com}}>\\&Author
 1\\&<\href{mailto:author1@gmail.com}{\nolinkurl{author1@gmail.com}}>\\}
-\date{2026-06-18}
+\date{2026-06-19}
 
 \begin{document}
 \hypertarget{title-block-header}{\label{title-block-header}}
@@ -534,9 +534,9 @@ Highlighting\hyperref[diff-syntax-highlighting]{}}{diff Syntax Highlighting}}\la
 \StringTok{{-}   get(std::pair\textless{}T1, T2\textgreater{}\&) noexcept;}
 \VariableTok{+   get(pair\textless{}T1, T2\textgreater{}\&) noexcept;}
 
-\NormalTok{$unspecified$ detail::foo::template foo;}
-\VariableTok{+ $unspecified$ detail::foo::template foo;}
-\StringTok{{-} $unspecified$ detail::foo::template foo;}
+\NormalTok{\emph{unspecified} detail::foo::template foo;}
+\VariableTok{+ \emph{unspecified} detail::foo::template foo;}
+\StringTok{{-} \emph{unspecified} detail::foo::template foo;}
 \end{Highlighting}
 \end{Shaded}
 
