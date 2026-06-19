@@ -19,7 +19,8 @@ In short, you write **Markdown** and the framework produces the paper either in
 **HTML** or **PDF** (via LaTeX).
 
 The framework provides Markdown extensions that are specifically useful for C++ proposals.
-Including, but not limited to:
+
+Couple of examples are:
 
   - [Modifying Wording Text][Modifying Text]
   - [Embedded Markdown in Code][Embedded Markdown]
@@ -861,32 +862,34 @@ void f(@[int i]{.add}@);
 :::
 
 This is perfectly fine, and quite intuitive. However, consider if the parameter
-is something more complicated, like `$foo$ *const *ptr`:
+is something more complicated, like `$Widget$ *const *ptr`:
 
 ::: render
 ``````
 ```cpp
-void f(@[*foo* *const *ptr]{.add}@);
+void f(@[*Widget* *const *ptr]{.add}@);
 ```
 ``````
 :::
 
 Now, the pointers have disappeared and `const` is italicized. This is because
 the **full text** within `@`{.default} is treated as Markdown, which is exactly
-what we want for `*foo*` for example. It's just not want we want for
-the `*const *` part of it.
+what we want for the `*Widget*` part of it, for example. It's just not want we
+want for the `*const *` part of it.
 
 There are a couple of ways to resolve this issue:
 
 1. Introduce an **inline code within the embedded Markdown**:
 
-   ``````render
+   ::: render
+   ``````
    ```cpp
-   void f(@[`$foo$ *const *ptr`]{.add}@);
+   void f(@[`$Widget$ *const *ptr`]{.add}@);
    ```
    ``````
+   :::
 
-   Given that `` `$foo$ *const *ptr` ``{.default .raw} is exactly how it would be written if
+   Given that `` `$Widget$ *const *ptr` ``{.default .raw} is exactly how it would be written if
    we were writing inline code, this is a decent solution.
 
    However, this approach can't really handle markup more complicated than italicizing
@@ -896,20 +899,24 @@ There are a couple of ways to resolve this issue:
    Any symbol can be escaped with a backslash like `\*`, and is interpreted literally
    by the Pandoc extension: [`all_symbols_escapable`](https://pandoc.org/MANUAL.html#extension-all_symbols_escapable).
 
-   ``````render
+   ::: render
+   ``````
    ```cpp
-   void f(@[*foo* \*const \*ptr]{.add}@);
+   void f(@[*Widget* \*const \*ptr]{.add}@);
    ```
    ``````
+   :::
 
    This approach can handle more complicated markup requirements.
-   For example, if `foo` needed to be bolded instead, we can just do:
+   For example, if `Widget` needed to be bolded instead, we can just do:
 
-   ``````render
+   ::: render
+   ``````
    ```cpp
-   void f(@[**foo** \*const \*ptr]{.add}@);
+   void f(@[**Widget** \*const \*ptr]{.add}@);
    ```
    ``````
+   :::
 
 #### Opt-out for Default Languages: `.raw`
 
@@ -1255,7 +1262,7 @@ This is useful if you prefer to use the regular header numbering instead:
 +----------------------------------------------------------+----------------------------------------------------------+
 ```
 
-See [](#control-numbering) for how to disable numbering at the document-level.
+See [](#numbering-stable-names) for how to disable numbering at the document-level.
 
 ### Paragraph Link
 
@@ -1425,7 +1432,7 @@ This is an **override** for the existing list of `cpp` and `default`{.default},
 so if it's desired to keep `cpp` and `default`{.default} to have embedded Markdown
 enabled by default, they must be listed again.
 
-## Control the Numbering of Explicit Stable Names {#control-numbering}
+## Numbering of Explicit Stable Names {#numbering-stable-names}
 
 By default *explicit* stable names such as `[basic.life]{.sref}`{.default}
 renders with a leading section number and the section title.

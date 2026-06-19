@@ -664,8 +664,8 @@ Markdown</a></li>
 Elements</a></li>
 <li><a href="#embedded-markdown-by-default-code-classes" id="toc-embedded-markdown-by-default-code-classes"><span class="toc-section-number">5.2</span> Embedded Markdown by Default Code
 Classes</a></li>
-<li><a href="#control-numbering" id="toc-control-numbering"><span class="toc-section-number">5.3</span> Control the Numbering of Explicit
-Stable Names</a></li>
+<li><a href="#numbering-stable-names" id="toc-numbering-stable-names"><span class="toc-section-number">5.3</span> Numbering of Explicit Stable
+Names</a></li>
 <li><a href="#unicode-fonts" id="toc-unicode-fonts"><span class="toc-section-number">5.4</span> Unicode Fonts</a></li>
 </ul></li>
 <li><a href="#license" id="toc-license"><span class="toc-section-number">6</span> License</a></li>
@@ -681,7 +681,8 @@ built on top of <a href="https://pandoc.org">Pandoc</a>.</p>
 produces the paper either in <strong>HTML</strong> or
 <strong>PDF</strong> (via LaTeX).</p>
 <p>The framework provides Markdown extensions that are specifically
-useful for C++ proposals. Including, but not limited to:</p>
+useful for C++ proposals.</p>
+<p>Couple of examples are:</p>
 <ul>
 <li><a href="#modifying-text">Modifying Wording Text</a></li>
 <li><a href="#embedded-markdown">Embedded Markdown in Code</a></li>
@@ -2163,7 +2164,7 @@ function <code class="sourceCode cpp">f</code>:</p>
 </table>
 <p>This is perfectly fine, and quite intuitive. However, consider if the
 parameter is something more complicated, like
-<code class="sourceCode cpp"><em>foo</em> <span class="op">*</span><span class="kw">const</span> <span class="op">*</span>ptr</code>:</p>
+<code class="sourceCode cpp"><em>Widget</em> <span class="op">*</span><span class="kw">const</span> <span class="op">*</span>ptr</code>:</p>
 <table>
 <colgroup>
 <col style="width: 50%" />
@@ -2182,10 +2183,10 @@ parameter is something more complicated, like
 <tbody>
 <tr>
 <td><div class="sourceCode" id="cb39"><pre class="sourceCode raw default"><code class="sourceCode default"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>```cpp</span>
-<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>void f(@[*foo* *const *ptr]{.add}@);</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>void f(@[*Widget* *const *ptr]{.add}@);</span>
 <span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>```</span></code></pre></div></td>
 <td><div>
-<div class="sourceCode" id="cb26"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> f<span class="op">(</span><span class="add" style="color: #006e28"><ins><em>foo</em> <em>const </em>ptr</ins></span><span class="op">);</span></span></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> f<span class="op">(</span><span class="add" style="color: #006e28"><ins><em>Widget</em> <em>const </em>ptr</ins></span><span class="op">);</span></span></code></pre></div>
 </div></td>
 </tr>
 </tbody>
@@ -2194,27 +2195,43 @@ parameter is something more complicated, like
 <code class="sourceCode cpp"><span class="kw">const</span></code> is
 italicized. This is because the <strong>full text</strong> within
 <code class="sourceCode default">@</code> is treated as Markdown, which
-is exactly what we want for
-<code class="sourceCode cpp"><span class="op">*</span>foo<span class="op">*</span></code>
-for example. It’s just not want we want for the
+is exactly what we want for the
+<code class="sourceCode cpp"><span class="op">*</span>Widget<span class="op">*</span></code>
+part of it, for example. It’s just not want we want for the
 <code class="sourceCode cpp"><span class="op">*</span><span class="kw">const</span> <span class="op">*</span></code>
 part of it.</p>
 <p>There are a couple of ways to resolve this issue:</p>
 <ol type="1">
 <li><p>Introduce an <strong>inline code within the embedded
 Markdown</strong>:</p>
-<blockquote>
-<p><strong>Markdown Source</strong></p>
-<div class="sourceCode" id="cb40"><pre class="sourceCode raw default"><code class="sourceCode default"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>```cpp</span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>void f(@[`$foo$ *const *ptr`]{.add}@);</span>
-<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>```</span></code></pre></div>
-<p><strong>Rendered Output</strong></p>
-<div>
-<div class="sourceCode" id="cb27"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> f<span class="op">(</span><span class="add" style="color: #006e28"><ins><code class="sourceCode default cpp"><em>foo</em> *const *ptr</code></ins></span><span class="op">);</span></span></code></pre></div>
-</div>
-</blockquote>
-<p>Given that <code class="sourceCode default raw">`$foo$ *const *ptr`</code> is exactly how
-it would be written if we were writing inline code, this is a decent
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th><div style="text-align:center">
+<strong>Markdown Source</strong>
+</div></th>
+<th><div style="text-align:center">
+<strong>Rendered Output</strong>
+</div></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><div class="sourceCode" id="cb40"><pre class="sourceCode raw default"><code class="sourceCode default"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>```cpp</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>void f(@[`$Widget$ *const *ptr`]{.add}@);</span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>```</span></code></pre></div></td>
+<td><div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> f<span class="op">(</span><span class="add" style="color: #006e28"><ins><code class="sourceCode default cpp"><em>Widget</em> *const *ptr</code></ins></span><span class="op">);</span></span></code></pre></div>
+</div></td>
+</tr>
+</tbody>
+</table>
+<p>Given that <code class="sourceCode default raw">`$Widget$ *const *ptr`</code> is exactly
+how it would be written if we were writing inline code, this is a decent
 solution.</p>
 <p>However, this approach can’t really handle markup more complicated
 than italicizing because the parsing of
@@ -2224,29 +2241,61 @@ current implementation.</p></li>
 want interpreted literally. Any symbol can be escaped with a backslash
 like <code class="sourceCode cpp">\<span class="op">*</span></code>, and
 is interpreted literally by the Pandoc extension: <a href="https://pandoc.org/MANUAL.html#extension-all_symbols_escapable"><code class="sourceCode cpp">all_symbols_escapable</code></a>.</p>
-<blockquote>
-<p><strong>Markdown Source</strong></p>
-<div class="sourceCode" id="cb41"><pre class="sourceCode raw default"><code class="sourceCode default"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>```cpp</span>
-<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>void f(@[*foo* \*const \*ptr]{.add}@);</span>
-<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>```</span></code></pre></div>
-<p><strong>Rendered Output</strong></p>
-<div>
-<div class="sourceCode" id="cb28"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> f<span class="op">(</span><span class="add" style="color: #006e28"><ins><em>foo</em> *const *ptr</ins></span><span class="op">);</span></span></code></pre></div>
-</div>
-</blockquote>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th><div style="text-align:center">
+<strong>Markdown Source</strong>
+</div></th>
+<th><div style="text-align:center">
+<strong>Rendered Output</strong>
+</div></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><div class="sourceCode" id="cb41"><pre class="sourceCode raw default"><code class="sourceCode default"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>```cpp</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>void f(@[*Widget* \*const \*ptr]{.add}@);</span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>```</span></code></pre></div></td>
+<td><div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> f<span class="op">(</span><span class="add" style="color: #006e28"><ins><em>Widget</em> *const *ptr</ins></span><span class="op">);</span></span></code></pre></div>
+</div></td>
+</tr>
+</tbody>
+</table>
 <p>This approach can handle more complicated markup requirements. For
-example, if <code class="sourceCode cpp">foo</code> needed to be bolded
-instead, we can just do:</p>
-<blockquote>
-<p><strong>Markdown Source</strong></p>
-<div class="sourceCode" id="cb42"><pre class="sourceCode raw default"><code class="sourceCode default"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>```cpp</span>
-<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>void f(@[**foo** \*const \*ptr]{.add}@);</span>
-<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>```</span></code></pre></div>
-<p><strong>Rendered Output</strong></p>
-<div>
-<div class="sourceCode" id="cb29"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> f<span class="op">(</span><span class="add" style="color: #006e28"><ins><strong>foo</strong> *const *ptr</ins></span><span class="op">);</span></span></code></pre></div>
-</div>
-</blockquote></li>
+example, if <code class="sourceCode cpp">Widget</code> needed to be
+bolded instead, we can just do:</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th><div style="text-align:center">
+<strong>Markdown Source</strong>
+</div></th>
+<th><div style="text-align:center">
+<strong>Rendered Output</strong>
+</div></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><div class="sourceCode" id="cb42"><pre class="sourceCode raw default"><code class="sourceCode default"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>```cpp</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>void f(@[**Widget** \*const \*ptr]{.add}@);</span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>```</span></code></pre></div></td>
+<td><div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> f<span class="op">(</span><span class="add" style="color: #006e28"><ins><strong>Widget</strong> *const *ptr</ins></span><span class="op">);</span></span></code></pre></div>
+</div></td>
+</tr>
+</tbody>
+</table></li>
 </ol>
 <h4 data-number="4.6.3.2" id="opt-out-for-default-languages-.raw"><span class="header-section-number">4.6.3.2</span> Opt-out for Default
 Languages:
@@ -2729,8 +2778,8 @@ instead:</p>
 </tr>
 </tbody>
 </table>
-<p>See <a href="#control-numbering">Control the Numbering of Explicit
-Stable Names</a> for how to disable numbering at the document-level.</p>
+<p>See <a href="#numbering-stable-names">Numbering of Explicit Stable
+Names</a> for how to disable numbering at the document-level.</p>
 <h3 data-number="4.8.3" id="paragraph-link"><span class="header-section-number">4.8.3</span> Paragraph Link<a href="#paragraph-link" class="self-link"></a></h3>
 <p>A suffix <code class="sourceCode default">/pnum</code> can be added
 to link to a specific paragraph number, where
@@ -2957,8 +3006,8 @@ YAML metadata. For example:</p>
 keep <code class="sourceCode cpp">cpp</code> and
 <code class="sourceCode default">default</code> to have embedded
 Markdown enabled by default, they must be listed again.</p>
-<h2 data-number="5.3" id="control-numbering"><span class="header-section-number">5.3</span> Control the Numbering of
-Explicit Stable Names<a href="#control-numbering" class="self-link"></a></h2>
+<h2 data-number="5.3" id="numbering-stable-names"><span class="header-section-number">5.3</span> Numbering of Explicit Stable
+Names<a href="#numbering-stable-names" class="self-link"></a></h2>
 <p>By default <em>explicit</em> stable names such as
 <code class="sourceCode default">[basic.life]{.sref}</code> renders with
 a leading section number and the section title.</p>

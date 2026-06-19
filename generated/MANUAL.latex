@@ -251,7 +251,9 @@ In short, you write \textbf{Markdown} and the framework produces the
 paper either in \textbf{HTML} or \textbf{PDF} (via LaTeX).
 
 The framework provides Markdown extensions that are specifically useful
-for C++ proposals. Including, but not limited to:
+for C++ proposals.
+
+Couple of examples are:
 
 \begin{itemize}
 \tightlist
@@ -2147,7 +2149,7 @@ Suppose we want to \textbf{add} a parameter
 
 This is perfectly fine, and quite intuitive. However, consider if the
 parameter is something more complicated, like
-\VERB|\NormalTok{\emph{foo} }\OperatorTok{*}\KeywordTok{const} \OperatorTok{*}\NormalTok{ptr}|:
+\VERB|\NormalTok{\emph{Widget} }\OperatorTok{*}\KeywordTok{const} \OperatorTok{*}\NormalTok{ptr}|:
 
 {\def\LTcaptype{none} % do not increment counter
 \begin{longtable}[]{@{}
@@ -2167,14 +2169,14 @@ parameter is something more complicated, like
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}cpp}
-\NormalTok{void f(@[*foo* *const *ptr]\{.add\}@);}
+\NormalTok{void f(@[*Widget* *const *ptr]\{.add\}@);}
 \NormalTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}}
 \end{Highlighting}
 \end{Shaded}
 \end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
 \begin{Shaded}
 \begin{Highlighting}[]
-\DataTypeTok{void}\NormalTok{ f}\OperatorTok{(}\NormalTok{{{\color[HTML]{006e28}\uline{\emph{foo} \emph{const }ptr}}}}\OperatorTok{);}
+\DataTypeTok{void}\NormalTok{ f}\OperatorTok{(}\NormalTok{{{\color[HTML]{006e28}\uline{\emph{Widget} \emph{const }ptr}}}}\OperatorTok{);}
 \end{Highlighting}
 \end{Shaded}
 \end{minipage} \\
@@ -2184,8 +2186,8 @@ parameter is something more complicated, like
 Now, the pointers have disappeared and \VERB|\KeywordTok{const}| is
 italicized. This is because the \textbf{full text} within
 \VERB|\NormalTok{@}| is treated as Markdown, which is exactly what we
-want for \VERB|\OperatorTok{*}\NormalTok{foo}\OperatorTok{*}| for
-example. It's just not want we want for the
+want for the \VERB|\OperatorTok{*}\NormalTok{Widget}\OperatorTok{*}|
+part of it, for example. It's just not want we want for the
 \VERB|\OperatorTok{*}\KeywordTok{const} \OperatorTok{*}| part of it.
 
 There are a couple of ways to resolve this issue:
@@ -2195,28 +2197,40 @@ There are a couple of ways to resolve this issue:
 \item
   Introduce an \textbf{inline code within the embedded Markdown}:
 
-  \begin{quote}
-  \textbf{Markdown Source}
-
+  {\def\LTcaptype{none} % do not increment counter
+  \begin{longtable}[]{@{}
+    >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}
+    >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}@{}}
+  \toprule\noalign{}
+  \begin{minipage}[b]{\linewidth}\raggedright
+  \centering\arraybackslash\textbf{Markdown Source}
+  \end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+  \centering\arraybackslash\textbf{Rendered Output}
+  \end{minipage} \\
+  \midrule\noalign{}
+  \endhead
+  \bottomrule\noalign{}
+  \endlastfoot
+  \begin{minipage}[t]{\linewidth}\raggedright
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}cpp}
-\NormalTok{void f(@[\textasciigrave{}$foo$ *const *ptr\textasciigrave{}]\{.add\}@);}
+\NormalTok{void f(@[\textasciigrave{}$Widget$ *const *ptr\textasciigrave{}]\{.add\}@);}
 \NormalTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}}
 \end{Highlighting}
 \end{Shaded}
-
-  \textbf{Rendered Output}
-
+  \end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
   \begin{Shaded}
   \begin{Highlighting}[]
-  \DataTypeTok{void}\NormalTok{ f}\OperatorTok{(}\NormalTok{{{\color[HTML]{006e28}\uline{\VERB|\NormalTok{\emph{foo} *const *ptr}|}}}}\OperatorTok{);}
+  \DataTypeTok{void}\NormalTok{ f}\OperatorTok{(}\NormalTok{{{\color[HTML]{006e28}\uline{\VERB|\NormalTok{\emph{Widget} *const *ptr}|}}}}\OperatorTok{);}
   \end{Highlighting}
   \end{Shaded}
-  \end{quote}
+  \end{minipage} \\
+  \end{longtable}
+  }
 
   Given that
-  \VERB|\NormalTok{\textasciigrave{}$foo$ *const *ptr\textasciigrave{}}|
+  \VERB|\NormalTok{\textasciigrave{}$Widget$ *const *ptr\textasciigrave{}}|
   is exactly how it would be written if we were writing inline code,
   this is a decent solution.
 
@@ -2230,49 +2244,73 @@ There are a couple of ways to resolve this issue:
   literally by the Pandoc extension:
   \href{https://pandoc.org/MANUAL.html\#extension-all_symbols_escapable}{\VERB|\NormalTok{all\_symbols\_escapable}|}.
 
-  \begin{quote}
-  \textbf{Markdown Source}
-
+  {\def\LTcaptype{none} % do not increment counter
+  \begin{longtable}[]{@{}
+    >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}
+    >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}@{}}
+  \toprule\noalign{}
+  \begin{minipage}[b]{\linewidth}\raggedright
+  \centering\arraybackslash\textbf{Markdown Source}
+  \end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+  \centering\arraybackslash\textbf{Rendered Output}
+  \end{minipage} \\
+  \midrule\noalign{}
+  \endhead
+  \bottomrule\noalign{}
+  \endlastfoot
+  \begin{minipage}[t]{\linewidth}\raggedright
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}cpp}
-\NormalTok{void f(@[*foo* \textbackslash{}*const \textbackslash{}*ptr]\{.add\}@);}
+\NormalTok{void f(@[*Widget* \textbackslash{}*const \textbackslash{}*ptr]\{.add\}@);}
 \NormalTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}}
 \end{Highlighting}
 \end{Shaded}
-
-  \textbf{Rendered Output}
-
+  \end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
   \begin{Shaded}
   \begin{Highlighting}[]
-  \DataTypeTok{void}\NormalTok{ f}\OperatorTok{(}\NormalTok{{{\color[HTML]{006e28}\uline{\emph{foo} *const *ptr}}}}\OperatorTok{);}
+  \DataTypeTok{void}\NormalTok{ f}\OperatorTok{(}\NormalTok{{{\color[HTML]{006e28}\uline{\emph{Widget} *const *ptr}}}}\OperatorTok{);}
   \end{Highlighting}
   \end{Shaded}
-  \end{quote}
+  \end{minipage} \\
+  \end{longtable}
+  }
 
   This approach can handle more complicated markup requirements. For
-  example, if \VERB|\NormalTok{foo}| needed to be bolded instead, we can
-  just do:
+  example, if \VERB|\NormalTok{Widget}| needed to be bolded instead, we
+  can just do:
 
-  \begin{quote}
-  \textbf{Markdown Source}
-
+  {\def\LTcaptype{none} % do not increment counter
+  \begin{longtable}[]{@{}
+    >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}
+    >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}@{}}
+  \toprule\noalign{}
+  \begin{minipage}[b]{\linewidth}\raggedright
+  \centering\arraybackslash\textbf{Markdown Source}
+  \end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+  \centering\arraybackslash\textbf{Rendered Output}
+  \end{minipage} \\
+  \midrule\noalign{}
+  \endhead
+  \bottomrule\noalign{}
+  \endlastfoot
+  \begin{minipage}[t]{\linewidth}\raggedright
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}cpp}
-\NormalTok{void f(@[**foo** \textbackslash{}*const \textbackslash{}*ptr]\{.add\}@);}
+\NormalTok{void f(@[**Widget** \textbackslash{}*const \textbackslash{}*ptr]\{.add\}@);}
 \NormalTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}}
 \end{Highlighting}
 \end{Shaded}
-
-  \textbf{Rendered Output}
-
+  \end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
   \begin{Shaded}
   \begin{Highlighting}[]
-  \DataTypeTok{void}\NormalTok{ f}\OperatorTok{(}\NormalTok{{{\color[HTML]{006e28}\uline{\textbf{foo} *const *ptr}}}}\OperatorTok{);}
+  \DataTypeTok{void}\NormalTok{ f}\OperatorTok{(}\NormalTok{{{\color[HTML]{006e28}\uline{\textbf{Widget} *const *ptr}}}}\OperatorTok{);}
   \end{Highlighting}
   \end{Shaded}
-  \end{quote}
+  \end{minipage} \\
+  \end{longtable}
+  }
 \end{enumerate}
 
 \paragraph{\texorpdfstring{Opt-out for Default Languages:
@@ -2899,7 +2937,7 @@ instead:
 }
 
 See
-\hyperref[control-numbering]{Control the Numbering of Explicit Stable Names}
+\hyperref[numbering-stable-names]{Numbering of Explicit Stable Names}
 for how to disable numbering at the document-level.
 
 \subsubsection{\texorpdfstring{Paragraph
@@ -3180,8 +3218,8 @@ This is an \textbf{override} for the existing list of
 desired to keep \VERB|\NormalTok{cpp}| and \VERB|\NormalTok{default}| to
 have embedded Markdown enabled by default, they must be listed again.
 
-\subsection{\texorpdfstring{Control the Numbering of Explicit Stable
-Names\hyperref[control-numbering]{}}{Control the Numbering of Explicit Stable Names}}\label{control-numbering}
+\subsection{\texorpdfstring{Numbering of Explicit Stable
+Names\hyperref[numbering-stable-names]{}}{Numbering of Explicit Stable Names}}\label{numbering-stable-names}
 
 By default \emph{explicit} stable names such as
 \VERB|\NormalTok{[basic.life]\{.sref\}}| renders with a leading section
