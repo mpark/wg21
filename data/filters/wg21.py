@@ -117,8 +117,8 @@ def prepare(doc):
     if number is not None:
         doc.metadata['number'] = number.group(1)
     else:
-        pf.debug(f"""[WARNING] mpark/wg21: {document} is an unrecognized format; expected "{document_pattern}".
-            This means that [Latest] and [Status] links will be missing.""")
+        pf.debug(f"""[WARNING] mpark/wg21: Document number '{document}' is an unrecognized format; expected "{document_pattern}".
+          This just means that [Latest] and [Status] links will be missing.""")
 
     title = pf.convert_text(
         pf.Plain(*doc.metadata['title'].content),
@@ -191,7 +191,7 @@ def sref(elem, doc):
     info = srefs.get(name)
     if info is None:
         pf.debug(f"""[WARNING] mpark/wg21: stable name {name} not found.
-            Tip: run `make update` to refresh the local databases, including stable names""")
+          Tip: run `make update` to refresh the local databases, including stable names""")
         return link
 
     number, title = info
