@@ -7,6 +7,10 @@ table tbody tr {
   border-bottom: 1px solid black;
 }
 
+.cmptable {
+  width: 100%;
+}
+
 /* Handle document information table in title header */
 
 #title-block-header > table {

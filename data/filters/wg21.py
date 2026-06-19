@@ -584,7 +584,10 @@ def cmptable(table, doc):
 
     kwargs['caption'] = pf.Caption() if caption is None else caption
     kwargs['colspec'] = [('AlignDefault', w) for w in widths]
-    return pf.Table(pf.TableBody(*rows), **kwargs)
+    return pf.Table(
+        pf.TableBody(*rows),
+        classes=table.classes,
+        **kwargs)
 
 def header(elem, doc):
     if not isinstance(elem, pf.Header):
