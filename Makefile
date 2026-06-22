@@ -58,6 +58,7 @@ $(eval $(and $(DEFAULTS), override SRCDEPS += $(DEFAULTS)))
 $(eval $(and $(METADATA), override SRCDEPS += $(METADATA)))
 
 override GENDEPS := $(PANDOC_DIR) $(PYTHON_DIR) $(addprefix $(DATADIR)/, csl.json srefs.json srefs.md)
+override DEPS := $(SRCDEPS) $(GENDEPS)  # This is used by downstream projects. Do not remove.
 
 .PHONY: all
 all: $(PDF)
@@ -105,14 +106,14 @@ $(DATADIR)/srefs.md: $(DATADIR)/srefs-md.py $(DATADIR)/srefs.json $(PYTHON_DIR)
 $(OUTDIR)/MANUAL.render.md: $(SRCDIR)/MANUAL.md $(DATADIR)/filters/render.py $(PANDOC_DIR) $(PYTHON_DIR) | $(OUTDIR)
 	pandoc $< -o $@ --standalone --filter $(DATADIR)/filters/render.py
 
-$(OUTDIR)/MANUAL.html $(OUTDIR)/MANUAL.latex $(OUTDIR)/MANUAL.pdf: $(OUTDIR)/MANUAL.render.md $(SRCDEPS) $(GENDEPS) | $(OUTDIR)
+$(OUTDIR)/MANUAL.html $(OUTDIR)/MANUAL.latex $(OUTDIR)/MANUAL.pdf: $(OUTDIR)/MANUAL.render.md $(DEPS) | $(OUTDIR)
 	$(PANDOC)
 
-$(OUTDIR)/%.html: $(SRCDIR)/%.md $(SRCDEPS) $(GENDEPS) | $(OUTDIR)
+$(OUTDIR)/%.html: $(SRCDIR)/%.md $(DEPS) | $(OUTDIR)
 	$(PANDOC)
 
-$(OUTDIR)/%.latex: $(SRCDIR)/%.md $(SRCDEPS) $(GENDEPS) | $(OUTDIR)
+$(OUTDIR)/%.latex: $(SRCDIR)/%.md $(DEPS) | $(OUTDIR)
 	$(PANDOC)
 
-$(OUTDIR)/%.pdf: $(SRCDIR)/%.md $(SRCDEPS) $(GENDEPS) | $(OUTDIR)
+$(OUTDIR)/%.pdf: $(SRCDIR)/%.md $(DEPS) | $(OUTDIR)
 	$(PANDOC)
