@@ -37,7 +37,23 @@ $(if $(filter %.html, $@),
 $(CMD)
 endef
 
-override SRCDEPS := $(shell find $(DATADIR) -type f)
+override SRCDEPS := $(addprefix $(DATADIR)/, \
+	csl/wg21.csl \
+	defaults/doc.yaml \
+	defaults/formatting.yaml \
+	filters/citetitle.py \
+	filters/wg21.py \
+	syntax/highlighting-css.yaml \
+	syntax/highlighting-macros.yaml \
+	syntax/wg21.theme \
+	syntax/wg21.xml \
+	templates/14882.css \
+	templates/wg21.css \
+	templates/wg21.html \
+	templates/wg21.latex \
+	favicon.ico \
+	metadata.yaml \
+	toc-depth.py)
 $(eval $(and $(DEFAULTS), override SRCDEPS += $(DEFAULTS)))
 $(eval $(and $(METADATA), override SRCDEPS += $(METADATA)))
 
