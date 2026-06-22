@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="generator" content="mpark/wg21" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-  <meta name="dcterms.date" content="2026-06-19" />
+  <meta name="dcterms.date" content="2026-06-22" />
   <title>`MPark/WG21` User&#39;s Guide</title>
   <style>
 
@@ -174,6 +174,7 @@ margin-left: -1.5em;
 }
 :target { background-color: yellow; }
 :target .codeblock { background-color: yellow; }
+:target .sourceCode { background-color: yellow; }
 :target ul { background-color: yellow; }
 p:has(> span.marginalizedparent > a.marginalized:target),
 li:has(> span.marginalizedparent > a.marginalized:target) {
@@ -547,7 +548,7 @@ Committee Proposals</h3>
   </tr>
   <tr>
     <td>Date:</td>
-    <td>2026-06-19</td>
+    <td>2026-06-22</td>
   </tr>
   <tr>
     <td style="vertical-align:top">Project:</td>
@@ -1274,8 +1275,8 @@ object of class type without invoking the destructor, by reusing or
 releasing the storage as described above.</p>
 </div>
 </blockquote>
-<p>Within <code class="sourceCode default">::: wording</code>, use
-<code class="sourceCode default">#</code> within a paragraph number
+<p>Within <code class="sourceCode default">::: wording</code> blocks,
+use <code class="sourceCode default">#</code> within a paragraph number
 element to automatically fill in that part. For example:</p>
 <blockquote>
 <p><strong>Markdown Source</strong></p>
@@ -1624,13 +1625,57 @@ definition is</p>
 </tr>
 </tbody>
 </table>
+<p>Within <code class="sourceCode default">::: wording</code> blocks,
+examples are numbered automatically. You may add the class
+<code class="sourceCode cpp"><span class="op">-</span></code> or
+<code class="sourceCode cpp"><span class="op">.</span>unnumbered</code>
+to omit the number, or specify the
+<code class="sourceCode cpp">num</code> attribute like
+<code class="sourceCode cpp">num<span class="op">=</span><span class="dv">5</span></code>
+to pin a number. The examples after a pinned number will increment from
+that number.</p>
+<blockquote>
+<p><strong>Markdown Source</strong></p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode raw default"><code class="sourceCode default"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>::: wording</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>[`T x = T(T(T()));` value-initializes `x`.]{.example}</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>[`int a = do { 42 };`]{.example}</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>::: {.example num=5}</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>```cpp</span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>auto a = do { do_return 1; };           // OK, deduces int</span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>auto b = do -&gt; long { do_return 1; };   // OK, explicit type is long</span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>```</span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>:::</span></code></pre></div>
+<p><strong>Rendered Output</strong></p>
+<div>
+<div class="wording">
+<p><span id="example-1" class="example" data-num="1"><span>[ <em>Example
+<a href="#example-1">1</a>:</em>
+</span><code class="sourceCode cpp">T x <span class="op">=</span> T<span class="op">(</span>T<span class="op">(</span>T<span class="op">()));</span></code>
+value-initializes <code class="sourceCode cpp">x</code>.<span> — <em>end
+example</em> ]</span></span></p>
+<p><span id="example-2" class="example" data-num="2"><span>[ <em>Example
+<a href="#example-2">2</a>:</em>
+</span><code class="sourceCode cpp"><span class="dt">int</span> a <span class="op">=</span> <span class="cf">do</span> <span class="op">{</span> <span class="dv">42</span> <span class="op">};</span></code><span>
+— <em>end example</em> ]</span></span></p>
+<div id="example-3" class="example" data-num="5">
+<span>[ <em>Example <a href="#example-3">5</a>:</em> </span>
+<div class="sourceCode" id="cb20"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> a <span class="op">=</span> <span class="cf">do</span> <span class="op">{</span> do_return <span class="dv">1</span><span class="op">;</span> <span class="op">};</span>           <span class="co">// OK, deduces int</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> b <span class="op">=</span> <span class="cf">do</span> <span class="op">-&gt;</span> <span class="dt">long</span> <span class="op">{</span> do_return <span class="dv">1</span><span class="op">;</span> <span class="op">};</span>   <span class="co">// OK, explicit type is long</span></span></code></pre></div>
+<span> — <em>end example</em> ]</span>
+</div>
+</div>
+</div>
+</blockquote>
 <h3 data-number="4.5.5" id="notes"><span class="header-section-number">4.5.5</span> Notes<a href="#notes" class="self-link"></a></h3>
 <p>Smaller, inline notes are <a href="https://pandoc.org/MANUAL.html#divs-and-spans">bracketed
 <code class="sourceCode cpp">Span</code> elements</a> that looks like
 <code class="sourceCode cpp"><span class="op">[</span>note text<span class="op">]{.</span>note<span class="op">}</span></code>.</p>
 <blockquote>
 <p><strong>Markdown Source</strong></p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode raw default"><code class="sourceCode default"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>[Padding bits have unspecified value, but cannot cause traps.]{.note}</span></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode raw default"><code class="sourceCode default"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>[Padding bits have unspecified value, but cannot cause traps.]{.note}</span></code></pre></div>
 <p><strong>Rendered Output</strong></p>
 <div>
 <p><span class="note"><span>[ <em>Note:</em> </span>Padding bits have
@@ -1643,16 +1688,16 @@ unspecified value, but cannot cause traps.<span> — <em>end note</em>
 <code class="sourceCode cpp"><span class="op">:::</span> note</code>.</p>
 <blockquote>
 <p><strong>Markdown Source</strong></p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode raw default"><code class="sourceCode default"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>::: note</span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>An expression of type &quot;*cv1* `T`&quot; can initialize an object of type &quot;*cv2* `T`&quot;</span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>independently of the cv-qualifiers *cv1* and *cv2*.</span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>```cpp</span>
-<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>int a;</span>
-<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>const int b = a;</span>
-<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>int c = b;</span>
-<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>```</span>
-<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>:::</span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode raw default"><code class="sourceCode default"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>::: note</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>An expression of type &quot;*cv1* `T`&quot; can initialize an object of type &quot;*cv2* `T`&quot;</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>independently of the cv-qualifiers *cv1* and *cv2*.</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>```cpp</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>int a;</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>const int b = a;</span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>int c = b;</span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>```</span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>:::</span></code></pre></div>
 <p><strong>Rendered Output</strong></p>
 <div>
 <div class="note">
@@ -1660,10 +1705,54 @@ unspecified value, but cannot cause traps.<span> — <em>end note</em>
 <code class="sourceCode cpp">T</code>” can initialize an object of type
 “<em>cv2</em> <code class="sourceCode cpp">T</code>” independently of
 the cv-qualifiers <em>cv1</em> and <em>cv2</em>.</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> a<span class="op">;</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> <span class="dt">int</span> b <span class="op">=</span> a<span class="op">;</span></span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> c <span class="op">=</span> b<span class="op">;</span></span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> a<span class="op">;</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> <span class="dt">int</span> b <span class="op">=</span> a<span class="op">;</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> c <span class="op">=</span> b<span class="op">;</span></span></code></pre></div>
 <span> — <em>end note</em> ]</span>
+</div>
+</div>
+</blockquote>
+<p>Within <code class="sourceCode default">::: wording</code> blocks,
+notes are numbered automatically. You may add the class
+<code class="sourceCode cpp"><span class="op">-</span></code> or
+<code class="sourceCode cpp"><span class="op">.</span>unnumbered</code>
+to omit the number, or specify the
+<code class="sourceCode cpp">num</code> attribute like
+<code class="sourceCode cpp">num<span class="op">=</span><span class="dv">5</span></code>
+to pin a number. The notes after a pinned number will increment from
+that number.</p>
+<blockquote>
+<p><strong>Markdown Source</strong></p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode raw default"><code class="sourceCode default"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>::: wording</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>[Padding bits have unspecified value, but cannot cause traps.]{.note}</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>::: note</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>An expression of type &quot;*cv1* `T`&quot; can initialize an object of type &quot;*cv2* `T`&quot;</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>independently of the cv-qualifiers *cv1* and *cv2*.</span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>```cpp</span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>int a;</span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>const int b = a;</span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>int c = b;</span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>```</span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a>:::</span></code></pre></div>
+<p><strong>Rendered Output</strong></p>
+<div>
+<div class="wording">
+<p><span id="note-1" class="note" data-num="1"><span>[ <em>Note <a href="#note-1">1</a>:</em> </span>Padding bits have unspecified value,
+but cannot cause traps.<span> — <em>end note</em> ]</span></span></p>
+<div id="note-2" class="note" data-num="2">
+<p><span>[ <em>Note <a href="#note-2">2</a>:</em> </span>An expression
+of type “<em>cv1</em> <code class="sourceCode cpp">T</code>” can
+initialize an object of type “<em>cv2</em>
+<code class="sourceCode cpp">T</code>” independently of the
+cv-qualifiers <em>cv1</em> and <em>cv2</em>.</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> a<span class="op">;</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> <span class="dt">int</span> b <span class="op">=</span> a<span class="op">;</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> c <span class="op">=</span> b<span class="op">;</span></span></code></pre></div>
+<span> — <em>end note</em> ]</span>
+</div>
 </div>
 </div>
 </blockquote>
@@ -1686,7 +1775,7 @@ notes:</p>
 </thead>
 <tbody>
 <tr>
-<td><div class="sourceCode" id="cb23"><pre class="sourceCode raw default"><code class="sourceCode default"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>[This is a drive-by fix.]{.ednote}</span></code></pre></div></td>
+<td><div class="sourceCode" id="cb25"><pre class="sourceCode raw default"><code class="sourceCode default"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>[This is a drive-by fix.]{.ednote}</span></code></pre></div></td>
 <td><div>
 <p><span class="ednote" style="color: #0000ff">[ Editor&#39;s note: This is
 a drive-by fix. ]</span></p>
@@ -1696,12 +1785,12 @@ a drive-by fix. ]</span></p>
 </table>
 <blockquote>
 <p><strong>Markdown Source</strong></p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode raw default"><code class="sourceCode default"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>::: ednote</span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>Throughout the wording, we say that a reflection (an object of type `std::meta::info`)</span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>represents some source construct, while splicing that reflection designates that source</span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>construct. For instance, `^^int` represents the type `int` and `[: ^^int :]` designates</span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>the type `int`.</span>
-<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>:::</span></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode raw default"><code class="sourceCode default"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>::: ednote</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>Throughout the wording, we say that a reflection (an object of type `std::meta::info`)</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>represents some source construct, while splicing that reflection designates that source</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>construct. For instance, `^^int` represents the type `int` and `[: ^^int :]` designates</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>the type `int`.</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>:::</span></code></pre></div>
 <p><strong>Rendered Output</strong></p>
 <div>
 <div class="ednote" style="color: #0000ff">
@@ -1721,7 +1810,7 @@ type <code class="sourceCode default cpp">int</code>. ]</p>
 notes:</p>
 <blockquote>
 <p><strong>Markdown Source</strong></p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode raw default"><code class="sourceCode default"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>[An `audience` attribute addresses a specific audience]{.draftnote audience=&quot;the reader&quot;}</span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode raw default"><code class="sourceCode default"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>[An `audience` attribute addresses a specific audience]{.draftnote audience=&quot;the reader&quot;}</span></code></pre></div>
 <p><strong>Rendered Output</strong></p>
 <div>
 <p><span class="draftnote" data-audience="the reader" style="color: #0000ff">[ Drafting note for the reader: An
@@ -1731,11 +1820,11 @@ a specific audience ]</span></p>
 </blockquote>
 <blockquote>
 <p><strong>Markdown Source</strong></p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode raw default"><code class="sourceCode default"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>::: draftnote</span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>We don’t think we have to change anything here, since if `E` is a *splice-specifier*</span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>that can be interpreted as a *splice-expression*, the requirements already fall out</span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>based on how paragraphs 1 and 3 are already worded</span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>:::</span></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode raw default"><code class="sourceCode default"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>::: draftnote</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>We don’t think we have to change anything here, since if `E` is a *splice-specifier*</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>that can be interpreted as a *splice-expression*, the requirements already fall out</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>based on how paragraphs 1 and 3 are already worded</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>:::</span></code></pre></div>
 <p><strong>Rendered Output</strong></p>
 <div>
 <div class="draftnote" style="color: #0000ff">
@@ -1750,24 +1839,25 @@ how paragraphs 1 and 3 are already worded ]</p>
 <p>To specify an audience for the <a href="https://pandoc.org/MANUAL.html#divs-and-spans">fenced
 <code class="sourceCode cpp">Div</code> block</a>, you’ll need
 <code class="sourceCode cpp"><span class="op">:::</span> <span class="op">{.</span>draftnote audience<span class="op">=</span><span class="st">&quot;the reader&quot;</span><span class="op">}</span></code>.</p>
+<p>These editorial notes are not automatically numbered.</p>
 <p>Finally, in the relatively common situation where an example appears
 within a note, you can simply nest them:</p>
 <blockquote>
 <p><strong>Markdown Source</strong></p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode raw default"><code class="sourceCode default"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>::: note</span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>The declaration of a class name takes effect immediately after the *identifier*</span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>is seen in the class definition or *elaborated-type-specifier*.</span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>::: example</span>
-<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>```cpp</span>
-<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>class A * A;</span>
-<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>```</span>
-<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>first specifies `A` to be the name of a class and then redefines it as the name of</span>
-<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>a pointer to an object of that class. This means that the elaborated form `class A`</span>
-<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>must be used to refer to the class. Such artistry with names can be confusing and</span>
-<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>is best avoided.</span>
-<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a>:::</span></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode raw default"><code class="sourceCode default"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>::: note</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>The declaration of a class name takes effect immediately after the *identifier*</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>is seen in the class definition or *elaborated-type-specifier*.</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>::: example</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>```cpp</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>class A * A;</span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>```</span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>first specifies `A` to be the name of a class and then redefines it as the name of</span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>a pointer to an object of that class. This means that the elaborated form `class A`</span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>must be used to refer to the class. Such artistry with names can be confusing and</span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a>is best avoided.</span>
+<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a>:::</span></code></pre></div>
 <p><strong>Rendered Output</strong></p>
 <div>
 <div class="note">
@@ -1776,7 +1866,7 @@ effect immediately after the <em>identifier</em> is seen in the class
 definition or <em>elaborated-type-specifier</em>.</p>
 <div class="example">
 <span>[ <em>Example:</em> </span>
-<div class="sourceCode" id="cb21"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> A <span class="op">*</span> A<span class="op">;</span></span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> A <span class="op">*</span> A<span class="op">;</span></span></code></pre></div>
 <p>first specifies <code class="sourceCode cpp">A</code> to be the name
 of a class and then redefines it as the name of a pointer to an object
 of that class. This means that the elaborated form
@@ -1795,34 +1885,34 @@ blocks</a>
 to preserve the leading spaces.</p>
 <blockquote>
 <p><strong>Markdown Source</strong></p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode raw default"><code class="sourceCode default"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>&gt; | _selection-statement:_</span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>&gt; |     `if constexpr`_~opt~_ `(` _init-statement~opt~_ _condition_ `)` _statement_</span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>&gt; |     `if constexpr`_~opt~_ `(` _init-statement~opt~_ _condition_ `)` _statement_ `else` _statement_</span>
-<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>&gt; |     `switch (` _init-statement~opt~_ _condition_ `)` _statement_</span>
-<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>&gt; |     [`inspect` `constexpr`~_opt_~ `(` _init-statement~opt~_ _condition_ `)` `{`</span>
-<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>&gt;            _inspect-case-seq_</span>
-<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>&gt;        `}`]{.add}</span>
-<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>&gt;</span>
-<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>&gt; ::: add</span>
-<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>&gt; | _inspect-case-seq:_</span>
-<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>&gt; |     _inspect-case_</span>
-<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a>&gt; |     _inspect-case-seq_ _inspect-case_</span>
-<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a>&gt;</span>
-<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a>&gt; | _inspect-case:_</span>
-<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a>&gt; |     _attribute-specifier-seq~opt~_ _inspect-pattern_ _inspect-guard~opt~_ `:` _statement_</span>
-<span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a>&gt;</span>
-<span id="cb28-17"><a href="#cb28-17" aria-hidden="true" tabindex="-1"></a>&gt; | _inspect-pattern:_</span>
-<span id="cb28-18"><a href="#cb28-18" aria-hidden="true" tabindex="-1"></a>&gt; |     _wildcard-pattern_</span>
-<span id="cb28-19"><a href="#cb28-19" aria-hidden="true" tabindex="-1"></a>&gt; |     _identifier-pattern_</span>
-<span id="cb28-20"><a href="#cb28-20" aria-hidden="true" tabindex="-1"></a>&gt; |     _constant-pattern_</span>
-<span id="cb28-21"><a href="#cb28-21" aria-hidden="true" tabindex="-1"></a>&gt; |     _structured-binding-pattern_</span>
-<span id="cb28-22"><a href="#cb28-22" aria-hidden="true" tabindex="-1"></a>&gt; |     _alternative-pattern_</span>
-<span id="cb28-23"><a href="#cb28-23" aria-hidden="true" tabindex="-1"></a>&gt; |     _binding-pattern_</span>
-<span id="cb28-24"><a href="#cb28-24" aria-hidden="true" tabindex="-1"></a>&gt; |     _extractor-pattern_</span>
-<span id="cb28-25"><a href="#cb28-25" aria-hidden="true" tabindex="-1"></a>&gt;</span>
-<span id="cb28-26"><a href="#cb28-26" aria-hidden="true" tabindex="-1"></a>&gt; | _inspect-guard:_</span>
-<span id="cb28-27"><a href="#cb28-27" aria-hidden="true" tabindex="-1"></a>&gt; |     `if (` _expression_ `)`</span>
-<span id="cb28-28"><a href="#cb28-28" aria-hidden="true" tabindex="-1"></a>&gt; :::</span></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode raw default"><code class="sourceCode default"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>&gt; | _selection-statement:_</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>&gt; |     `if constexpr`_~opt~_ `(` _init-statement~opt~_ _condition_ `)` _statement_</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>&gt; |     `if constexpr`_~opt~_ `(` _init-statement~opt~_ _condition_ `)` _statement_ `else` _statement_</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>&gt; |     `switch (` _init-statement~opt~_ _condition_ `)` _statement_</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>&gt; |     [`inspect` `constexpr`~_opt_~ `(` _init-statement~opt~_ _condition_ `)` `{`</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>&gt;            _inspect-case-seq_</span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>&gt;        `}`]{.add}</span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>&gt;</span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>&gt; ::: add</span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>&gt; | _inspect-case-seq:_</span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>&gt; |     _inspect-case_</span>
+<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a>&gt; |     _inspect-case-seq_ _inspect-case_</span>
+<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a>&gt;</span>
+<span id="cb30-14"><a href="#cb30-14" aria-hidden="true" tabindex="-1"></a>&gt; | _inspect-case:_</span>
+<span id="cb30-15"><a href="#cb30-15" aria-hidden="true" tabindex="-1"></a>&gt; |     _attribute-specifier-seq~opt~_ _inspect-pattern_ _inspect-guard~opt~_ `:` _statement_</span>
+<span id="cb30-16"><a href="#cb30-16" aria-hidden="true" tabindex="-1"></a>&gt;</span>
+<span id="cb30-17"><a href="#cb30-17" aria-hidden="true" tabindex="-1"></a>&gt; | _inspect-pattern:_</span>
+<span id="cb30-18"><a href="#cb30-18" aria-hidden="true" tabindex="-1"></a>&gt; |     _wildcard-pattern_</span>
+<span id="cb30-19"><a href="#cb30-19" aria-hidden="true" tabindex="-1"></a>&gt; |     _identifier-pattern_</span>
+<span id="cb30-20"><a href="#cb30-20" aria-hidden="true" tabindex="-1"></a>&gt; |     _constant-pattern_</span>
+<span id="cb30-21"><a href="#cb30-21" aria-hidden="true" tabindex="-1"></a>&gt; |     _structured-binding-pattern_</span>
+<span id="cb30-22"><a href="#cb30-22" aria-hidden="true" tabindex="-1"></a>&gt; |     _alternative-pattern_</span>
+<span id="cb30-23"><a href="#cb30-23" aria-hidden="true" tabindex="-1"></a>&gt; |     _binding-pattern_</span>
+<span id="cb30-24"><a href="#cb30-24" aria-hidden="true" tabindex="-1"></a>&gt; |     _extractor-pattern_</span>
+<span id="cb30-25"><a href="#cb30-25" aria-hidden="true" tabindex="-1"></a>&gt;</span>
+<span id="cb30-26"><a href="#cb30-26" aria-hidden="true" tabindex="-1"></a>&gt; | _inspect-guard:_</span>
+<span id="cb30-27"><a href="#cb30-27" aria-hidden="true" tabindex="-1"></a>&gt; |     `if (` _expression_ `)`</span>
+<span id="cb30-28"><a href="#cb30-28" aria-hidden="true" tabindex="-1"></a>&gt; :::</span></code></pre></div>
 <p><strong>Rendered Output</strong></p>
 <div>
 <blockquote>
@@ -1971,27 +2061,27 @@ implicitly
 </thead>
 <tbody>
 <tr>
-<td><div class="sourceCode" id="cb29"><pre class="sourceCode raw default"><code class="sourceCode default"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>```</span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>int main() {</span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  return 0;</span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>```</span></code></pre></div></td>
+<td><div class="sourceCode" id="cb31"><pre class="sourceCode raw default"><code class="sourceCode default"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>```</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>int main() {</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>  return 0;</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>```</span></code></pre></div></td>
 <td><div>
-<div class="sourceCode" id="cb22"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>int main() {</span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  return 0;</span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>int main() {</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  return 0;</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 </div></td>
 </tr>
 <tr>
-<td><div class="sourceCode" id="cb30"><pre class="sourceCode raw default"><code class="sourceCode default"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>```cpp</span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>int main() {</span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>  return 0;</span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>```</span></code></pre></div></td>
+<td><div class="sourceCode" id="cb32"><pre class="sourceCode raw default"><code class="sourceCode default"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>```cpp</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>int main() {</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>  return 0;</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>```</span></code></pre></div></td>
 <td><div>
-<div class="sourceCode" id="cb23"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 </div></td>
 </tr>
 </tbody>
@@ -2020,27 +2110,27 @@ attribute to specify the starting number, using the Pandoc extension: <a href="h
 </thead>
 <tbody>
 <tr>
-<td><div class="sourceCode" id="cb31"><pre class="sourceCode raw default"><code class="sourceCode default"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>```cpp {.numberLines}</span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>int main() {</span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>  return 0;</span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>```</span></code></pre></div></td>
+<td><div class="sourceCode" id="cb33"><pre class="sourceCode raw default"><code class="sourceCode default"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>```cpp {.numberLines}</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>int main() {</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  return 0;</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>```</span></code></pre></div></td>
 <td><div>
-<div class="sourceCode" id="cb24"><pre class="sourceCode numberSource cpp numberLines"><code class="sourceCode cpp"><span id="cb24-1"><a href="#cb24-1"></a><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
-<span id="cb24-2"><a href="#cb24-2"></a>  <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb24-3"><a href="#cb24-3"></a><span class="op">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode numberSource cpp numberLines"><code class="sourceCode cpp"><span id="cb26-1"><a href="#cb26-1"></a><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb26-2"><a href="#cb26-2"></a>  <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb26-3"><a href="#cb26-3"></a><span class="op">}</span></span></code></pre></div>
 </div></td>
 </tr>
 <tr>
-<td><div class="sourceCode" id="cb32"><pre class="sourceCode raw default"><code class="sourceCode default"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>```cpp {.numberLines startFrom=8}</span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>int main() {</span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>  return 0;</span>
-<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>```</span></code></pre></div></td>
+<td><div class="sourceCode" id="cb34"><pre class="sourceCode raw default"><code class="sourceCode default"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>```cpp {.numberLines startFrom=8}</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>int main() {</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>  return 0;</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>```</span></code></pre></div></td>
 <td><div>
-<div class="sourceCode" id="cb25" data-startFrom="8"><pre class="sourceCode numberSource cpp numberLines"><code class="sourceCode cpp" style="counter-reset: source-line 7;"><span id="cb25-8"><a href="#cb25-8"></a><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
-<span id="cb25-9"><a href="#cb25-9"></a>  <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb25-10"><a href="#cb25-10"></a><span class="op">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb27" data-startFrom="8"><pre class="sourceCode numberSource cpp numberLines"><code class="sourceCode cpp" style="counter-reset: source-line 7;"><span id="cb27-8"><a href="#cb27-8"></a><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb27-9"><a href="#cb27-9"></a>  <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb27-10"><a href="#cb27-10"></a><span class="op">}</span></span></code></pre></div>
 </div></td>
 </tr>
 </tbody>
@@ -2065,7 +2155,7 @@ no-syntax-highlighting code. This is essentially:</p>
 </ul>
 <blockquote>
 <p><strong>Markdown Source</strong></p>
-<div class="sourceCode" id="cb33"><pre class="sourceCode raw default"><code class="sourceCode default"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>Recall the `static_cast` syntax: `static_cast &lt; @*type-id*@ &gt; ( @*expression*@ )`.</span></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode raw default"><code class="sourceCode default"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>Recall the `static_cast` syntax: `static_cast &lt; @*type-id*@ &gt; ( @*expression*@ )`.</span></code></pre></div>
 <p><strong>Rendered Output</strong></p>
 <div>
 <p>Recall the
@@ -2080,7 +2170,7 @@ is provided as a shorthand for
 <code class="sourceCode default"><mark><span class="citation" data-cites="*">@*</span></mark>text<mark>*@</mark></code>.</p>
 <blockquote>
 <p><strong>Markdown Source</strong></p>
-<div class="sourceCode" id="cb34"><pre class="sourceCode raw default"><code class="sourceCode default"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>Recall the `static_cast` syntax: `static_cast &lt; $type-id$ &gt; ( $expression$ )`.</span></code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode raw default"><code class="sourceCode default"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>Recall the `static_cast` syntax: `static_cast &lt; $type-id$ &gt; ( $expression$ )`.</span></code></pre></div>
 <p><strong>Rendered Output</strong></p>
 <div>
 <p>Recall the
@@ -2093,42 +2183,42 @@ syntax:
 text</a>:</p>
 <blockquote>
 <p><strong>Markdown Source</strong></p>
-<div class="sourceCode" id="cb35"><pre class="sourceCode raw default"><code class="sourceCode default"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>```cpp</span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>template &lt;@[invocable](class){.sub}@ F@[, class]{.add}@&gt;</span>
-<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>struct $as-receiver$ {</span>
-<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>@[private:]{.rm}@</span>
-<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>  @[using invocable_type = std::remove_cvref_t&lt;F&gt;;]{.rm}@</span>
-<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>  @[invocable_type](F){.sub}@ f_;</span>
-<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>@[public:]{.rm}@</span>
-<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a>  @[explicit *as-receiver*(invocable_type&amp;&amp; f)]{.rm}@</span>
-<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a>  @[*as-receiver*(*as-receiver*&amp;&amp; other) = default;]{.rm}@</span>
-<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a>  void set_value() @[noexcept(is_nothrow_invocable_v&lt;F&amp;&gt;)]{.add}@ {</span>
-<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a>    invoke(f_);</span>
-<span id="cb35-12"><a href="#cb35-12" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb35-13"><a href="#cb35-13" aria-hidden="true" tabindex="-1"></a>  @[[[noreturn]]]{.add}@ void set_error(std::exception_ptr) @[noexcept]{.add}@ {</span>
-<span id="cb35-14"><a href="#cb35-14" aria-hidden="true" tabindex="-1"></a>    terminate();</span>
-<span id="cb35-15"><a href="#cb35-15" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb35-16"><a href="#cb35-16" aria-hidden="true" tabindex="-1"></a>  void set_done() noexcept {}</span>
-<span id="cb35-17"><a href="#cb35-17" aria-hidden="true" tabindex="-1"></a>};</span>
-<span id="cb35-18"><a href="#cb35-18" aria-hidden="true" tabindex="-1"></a>```</span></code></pre></div>
+<div class="sourceCode" id="cb37"><pre class="sourceCode raw default"><code class="sourceCode default"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>```cpp</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>template &lt;@[invocable](class){.sub}@ F@[, class]{.add}@&gt;</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>struct $as-receiver$ {</span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>@[private:]{.rm}@</span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>  @[using invocable_type = std::remove_cvref_t&lt;F&gt;;]{.rm}@</span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>  @[invocable_type](F){.sub}@ f_;</span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>@[public:]{.rm}@</span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>  @[explicit *as-receiver*(invocable_type&amp;&amp; f)]{.rm}@</span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a>  @[*as-receiver*(*as-receiver*&amp;&amp; other) = default;]{.rm}@</span>
+<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a>  void set_value() @[noexcept(is_nothrow_invocable_v&lt;F&amp;&gt;)]{.add}@ {</span>
+<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a>    invoke(f_);</span>
+<span id="cb37-12"><a href="#cb37-12" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb37-13"><a href="#cb37-13" aria-hidden="true" tabindex="-1"></a>  @[[[noreturn]]]{.add}@ void set_error(std::exception_ptr) @[noexcept]{.add}@ {</span>
+<span id="cb37-14"><a href="#cb37-14" aria-hidden="true" tabindex="-1"></a>    terminate();</span>
+<span id="cb37-15"><a href="#cb37-15" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb37-16"><a href="#cb37-16" aria-hidden="true" tabindex="-1"></a>  void set_done() noexcept {}</span>
+<span id="cb37-17"><a href="#cb37-17" aria-hidden="true" tabindex="-1"></a>};</span>
+<span id="cb37-18"><a href="#cb37-18" aria-hidden="true" tabindex="-1"></a>```</span></code></pre></div>
 <p><strong>Rendered Output</strong></p>
 <div>
-<div class="sourceCode" id="cb26"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="kw">template</span> <span class="op">&lt;</span><span><span class="rm" style="color: #bf0303"><del>invocable</del></span><span class="add" style="color: #006e28"><ins>class</ins></span></span> F<span class="add" style="color: #006e28"><ins>, class</ins></span><span class="op">&gt;</span></span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> <em>as-receiver</em> <span class="op">{</span></span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="rm" style="color: #bf0303"><del>private:</del></span></span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>  <span class="rm" style="color: #bf0303"><del>using invocable_type = std::remove_cvref_t&lt;F&gt;;</del></span></span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>  <span><span class="rm" style="color: #bf0303"><del>invocable_type</del></span><span class="add" style="color: #006e28"><ins>F</ins></span></span> f_<span class="op">;</span></span>
-<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a><span class="rm" style="color: #bf0303"><del>public:</del></span></span>
-<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>  <span class="rm" style="color: #bf0303"><del>explicit <em>as-receiver</em>(invocable_type&amp;&amp; f)</del></span></span>
-<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>  <span class="rm" style="color: #bf0303"><del><em>as-receiver</em>(<em>as-receiver</em>&amp;&amp; other) = default;</del></span></span>
-<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>  <span class="dt">void</span> set_value<span class="op">()</span> <span class="add" style="color: #006e28"><ins>noexcept(is_nothrow_invocable_v&lt;F&amp;&gt;)</ins></span> <span class="op">{</span></span>
-<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>    invoke<span class="op">(</span>f_<span class="op">);</span></span>
-<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
-<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>  <span class="add" style="color: #006e28"><ins>[[noreturn]]</ins></span> <span class="dt">void</span> set_error<span class="op">(</span>std<span class="op">::</span>exception_ptr<span class="op">)</span> <span class="add" style="color: #006e28"><ins>noexcept</ins></span> <span class="op">{</span></span>
-<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a>    terminate<span class="op">();</span></span>
-<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
-<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a>  <span class="dt">void</span> set_done<span class="op">()</span> <span class="kw">noexcept</span> <span class="op">{}</span></span>
-<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="kw">template</span> <span class="op">&lt;</span><span><span class="rm" style="color: #bf0303"><del>invocable</del></span><span class="add" style="color: #006e28"><ins>class</ins></span></span> F<span class="add" style="color: #006e28"><ins>, class</ins></span><span class="op">&gt;</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> <em>as-receiver</em> <span class="op">{</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="rm" style="color: #bf0303"><del>private:</del></span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>  <span class="rm" style="color: #bf0303"><del>using invocable_type = std::remove_cvref_t&lt;F&gt;;</del></span></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>  <span><span class="rm" style="color: #bf0303"><del>invocable_type</del></span><span class="add" style="color: #006e28"><ins>F</ins></span></span> f_<span class="op">;</span></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a><span class="rm" style="color: #bf0303"><del>public:</del></span></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>  <span class="rm" style="color: #bf0303"><del>explicit <em>as-receiver</em>(invocable_type&amp;&amp; f)</del></span></span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>  <span class="rm" style="color: #bf0303"><del><em>as-receiver</em>(<em>as-receiver</em>&amp;&amp; other) = default;</del></span></span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>  <span class="dt">void</span> set_value<span class="op">()</span> <span class="add" style="color: #006e28"><ins>noexcept(is_nothrow_invocable_v&lt;F&amp;&gt;)</ins></span> <span class="op">{</span></span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>    invoke<span class="op">(</span>f_<span class="op">);</span></span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a>  <span class="add" style="color: #006e28"><ins>[[noreturn]]</ins></span> <span class="dt">void</span> set_error<span class="op">(</span>std<span class="op">::</span>exception_ptr<span class="op">)</span> <span class="add" style="color: #006e28"><ins>noexcept</ins></span> <span class="op">{</span></span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a>    terminate<span class="op">();</span></span>
+<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a>  <span class="dt">void</span> set_done<span class="op">()</span> <span class="kw">noexcept</span> <span class="op">{}</span></span>
+<span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span></code></pre></div>
 </div>
 </blockquote>
 <h4 data-number="4.6.3.1" id="code-within-embedded-markdown"><span class="header-section-number">4.6.3.1</span> Code within Embedded
@@ -2153,11 +2243,11 @@ function <code class="sourceCode cpp">f</code>:</p>
 </thead>
 <tbody>
 <tr>
-<td><div class="sourceCode" id="cb36"><pre class="sourceCode raw default"><code class="sourceCode default"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>```cpp</span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>void f(@[int i]{.add}@);</span>
-<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>```</span></code></pre></div></td>
+<td><div class="sourceCode" id="cb38"><pre class="sourceCode raw default"><code class="sourceCode default"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>```cpp</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>void f(@[int i]{.add}@);</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>```</span></code></pre></div></td>
 <td><div>
-<div class="sourceCode" id="cb27"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> f<span class="op">(</span><span class="add" style="color: #006e28"><ins>int i</ins></span><span class="op">);</span></span></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> f<span class="op">(</span><span class="add" style="color: #006e28"><ins>int i</ins></span><span class="op">);</span></span></code></pre></div>
 </div></td>
 </tr>
 </tbody>
@@ -2182,11 +2272,11 @@ parameter is something more complicated, like
 </thead>
 <tbody>
 <tr>
-<td><div class="sourceCode" id="cb37"><pre class="sourceCode raw default"><code class="sourceCode default"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>```cpp</span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>void f(@[*Widget* *const *ptr]{.add}@);</span>
-<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>```</span></code></pre></div></td>
+<td><div class="sourceCode" id="cb39"><pre class="sourceCode raw default"><code class="sourceCode default"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>```cpp</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>void f(@[*Widget* *const *ptr]{.add}@);</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>```</span></code></pre></div></td>
 <td><div>
-<div class="sourceCode" id="cb28"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> f<span class="op">(</span><span class="add" style="color: #006e28"><ins><em>Widget</em> <em>const </em>ptr</ins></span><span class="op">);</span></span></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> f<span class="op">(</span><span class="add" style="color: #006e28"><ins><em>Widget</em> <em>const </em>ptr</ins></span><span class="op">);</span></span></code></pre></div>
 </div></td>
 </tr>
 </tbody>
@@ -2221,11 +2311,11 @@ Markdown</strong>:</p>
 </thead>
 <tbody>
 <tr>
-<td><div class="sourceCode" id="cb38"><pre class="sourceCode raw default"><code class="sourceCode default"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>```cpp</span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>void f(@[`$Widget$ *const *ptr`]{.add}@);</span>
-<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>```</span></code></pre></div></td>
+<td><div class="sourceCode" id="cb40"><pre class="sourceCode raw default"><code class="sourceCode default"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>```cpp</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>void f(@[`$Widget$ *const *ptr`]{.add}@);</span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>```</span></code></pre></div></td>
 <td><div>
-<div class="sourceCode" id="cb29"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> f<span class="op">(</span><span class="add" style="color: #006e28"><ins><code class="sourceCode default cpp"><em>Widget</em> *const *ptr</code></ins></span><span class="op">);</span></span></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> f<span class="op">(</span><span class="add" style="color: #006e28"><ins><code class="sourceCode default cpp"><em>Widget</em> *const *ptr</code></ins></span><span class="op">);</span></span></code></pre></div>
 </div></td>
 </tr>
 </tbody>
@@ -2258,11 +2348,11 @@ is interpreted literally by the Pandoc extension: <a href="https://pandoc.org/MA
 </thead>
 <tbody>
 <tr>
-<td><div class="sourceCode" id="cb39"><pre class="sourceCode raw default"><code class="sourceCode default"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>```cpp</span>
-<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>void f(@[*Widget* \*const \*ptr]{.add}@);</span>
-<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>```</span></code></pre></div></td>
+<td><div class="sourceCode" id="cb41"><pre class="sourceCode raw default"><code class="sourceCode default"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>```cpp</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>void f(@[*Widget* \*const \*ptr]{.add}@);</span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>```</span></code></pre></div></td>
 <td><div>
-<div class="sourceCode" id="cb30"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> f<span class="op">(</span><span class="add" style="color: #006e28"><ins><em>Widget</em> *const *ptr</ins></span><span class="op">);</span></span></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> f<span class="op">(</span><span class="add" style="color: #006e28"><ins><em>Widget</em> *const *ptr</ins></span><span class="op">);</span></span></code></pre></div>
 </div></td>
 </tr>
 </tbody>
@@ -2287,11 +2377,11 @@ bolded instead, we can just do:</p>
 </thead>
 <tbody>
 <tr>
-<td><div class="sourceCode" id="cb40"><pre class="sourceCode raw default"><code class="sourceCode default"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>```cpp</span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>void f(@[**Widget** \*const \*ptr]{.add}@);</span>
-<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>```</span></code></pre></div></td>
+<td><div class="sourceCode" id="cb42"><pre class="sourceCode raw default"><code class="sourceCode default"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>```cpp</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>void f(@[**Widget** \*const \*ptr]{.add}@);</span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>```</span></code></pre></div></td>
 <td><div>
-<div class="sourceCode" id="cb31"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> f<span class="op">(</span><span class="add" style="color: #006e28"><ins><strong>Widget</strong> *const *ptr</ins></span><span class="op">);</span></span></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> f<span class="op">(</span><span class="add" style="color: #006e28"><ins><strong>Widget</strong> *const *ptr</ins></span><span class="op">);</span></span></code></pre></div>
 </div></td>
 </tr>
 </tbody>
@@ -2322,19 +2412,19 @@ or <a href="https://pandoc.org/MANUAL.html#extension-fenced_code_attributes"><co
 </thead>
 <tbody>
 <tr>
-<td><div class="sourceCode" id="cb41"><pre class="sourceCode raw default"><code class="sourceCode default"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>```cpp {.raw}</span>
-<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>auto emails = { &quot;a@mail.com&quot;, &quot;b@mail.com&quot; };</span>
-<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>```</span></code></pre></div></td>
-<td><div>
-<div class="sourceCode" id="cb42"><pre class="sourceCode cpp raw"><code class="sourceCode cpp"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> emails <span class="op">=</span> <span class="op">{</span> <span class="st">&quot;a@mail.com&quot;</span><span class="op">,</span> <span class="st">&quot;b@mail.com&quot;</span> <span class="op">};</span></span></code></pre></div>
-</div></td>
-</tr>
-<tr>
-<td><div class="sourceCode" id="cb43"><pre class="sourceCode raw default"><code class="sourceCode default"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>```cpp</span>
+<td><div class="sourceCode" id="cb43"><pre class="sourceCode raw default"><code class="sourceCode default"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>```cpp {.raw}</span>
 <span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>auto emails = { &quot;a@mail.com&quot;, &quot;b@mail.com&quot; };</span>
 <span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>```</span></code></pre></div></td>
 <td><div>
-<div class="sourceCode" id="cb32"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> emails <span class="op">=</span> <span class="op">{</span> <span class="st">&quot;amail.com&quot;, &quot;bmail.com&quot;</span> <span class="op">};</span></span></code></pre></div>
+<div class="sourceCode" id="cb44"><pre class="sourceCode cpp raw"><code class="sourceCode cpp"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> emails <span class="op">=</span> <span class="op">{</span> <span class="st">&quot;a@mail.com&quot;</span><span class="op">,</span> <span class="st">&quot;b@mail.com&quot;</span> <span class="op">};</span></span></code></pre></div>
+</div></td>
+</tr>
+<tr>
+<td><div class="sourceCode" id="cb45"><pre class="sourceCode raw default"><code class="sourceCode default"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>```cpp</span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>auto emails = { &quot;a@mail.com&quot;, &quot;b@mail.com&quot; };</span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>```</span></code></pre></div></td>
+<td><div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> emails <span class="op">=</span> <span class="op">{</span> <span class="st">&quot;amail.com&quot;, &quot;bmail.com&quot;</span> <span class="op">};</span></span></code></pre></div>
 </div></td>
 </tr>
 </tbody>
@@ -2369,27 +2459,27 @@ or <a href="https://pandoc.org/MANUAL.html#extension-fenced_code_attributes"><co
 </thead>
 <tbody>
 <tr>
-<td><div class="sourceCode" id="cb44"><pre class="sourceCode raw default"><code class="sourceCode default"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>```rust</span>
-<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>fn main() {</span>
-<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>    @**println**@!(&quot;hello!&quot;);</span>
-<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>```</span></code></pre></div></td>
-<td><div>
-<div class="sourceCode" id="cb45"><pre class="sourceCode rust"><code class="sourceCode rust"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="kw">fn</span> main() <span class="op">{</span></span>
-<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>    <span class="op">@**</span>println<span class="op">**@!</span>(<span class="st">&quot;hello!&quot;</span>)<span class="op">;</span></span>
-<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
-</div></td>
-</tr>
-<tr>
-<td><div class="sourceCode" id="cb46"><pre class="sourceCode raw default"><code class="sourceCode default"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>```rust {.embed_md}</span>
+<td><div class="sourceCode" id="cb46"><pre class="sourceCode raw default"><code class="sourceCode default"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>```rust</span>
 <span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>fn main() {</span>
 <span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>    @**println**@!(&quot;hello!&quot;);</span>
 <span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>```</span></code></pre></div></td>
 <td><div>
-<div class="sourceCode" id="cb33"><pre class="sourceCode rust embed_md"><code class="sourceCode rust"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="kw">fn</span> main() <span class="op">{</span></span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>    <strong>println</strong><span class="op">!</span>(<span class="st">&quot;hello!&quot;</span>)<span class="op">;</span></span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb47"><pre class="sourceCode rust"><code class="sourceCode rust"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="kw">fn</span> main() <span class="op">{</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>    <span class="op">@**</span>println<span class="op">**@!</span>(<span class="st">&quot;hello!&quot;</span>)<span class="op">;</span></span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+</div></td>
+</tr>
+<tr>
+<td><div class="sourceCode" id="cb48"><pre class="sourceCode raw default"><code class="sourceCode default"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>```rust {.embed_md}</span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>fn main() {</span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>    @**println**@!(&quot;hello!&quot;);</span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a>```</span></code></pre></div></td>
+<td><div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode rust embed_md"><code class="sourceCode rust"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="kw">fn</span> main() <span class="op">{</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>    <strong>println</strong><span class="op">!</span>(<span class="st">&quot;hello!&quot;</span>)<span class="op">;</span></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 </div></td>
 </tr>
 <tr>
@@ -2417,12 +2507,12 @@ to set the italics delimiter or disable.</p>
 <p>Consider this <code class="sourceCode cpp">bash</code> example:</p>
 <blockquote>
 <p><strong>Markdown Source</strong></p>
-<div class="sourceCode" id="cb47"><pre class="sourceCode raw default"><code class="sourceCode default"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>```bash</span>
-<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>rsync -av &quot;$@&quot; &quot;deploy@$target:/srv/app/&quot;</span>
-<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>```</span></code></pre></div>
+<div class="sourceCode" id="cb49"><pre class="sourceCode raw default"><code class="sourceCode default"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>```bash</span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>rsync -av &quot;$@&quot; &quot;deploy@$target:/srv/app/&quot;</span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>```</span></code></pre></div>
 <p><strong>Rendered Output</strong></p>
 <div>
-<div class="sourceCode" id="cb48"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rsync</span> <span class="at">-av</span> <span class="st">&quot;</span><span class="va">$@</span><span class="st">&quot;</span> <span class="st">&quot;deploy@</span><span class="va">$target</span><span class="st">:/srv/app/&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb50"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rsync</span> <span class="at">-av</span> <span class="st">&quot;</span><span class="va">$@</span><span class="st">&quot;</span> <span class="st">&quot;deploy@</span><span class="va">$target</span><span class="st">:/srv/app/&quot;</span></span></code></pre></div>
 </div>
 </blockquote>
 <p>If we want to bold the
@@ -2437,12 +2527,12 @@ set the Markdown delimiter to be
 italics delimiter entirely.</p>
 <blockquote>
 <p><strong>Markdown Source</strong></p>
-<div class="sourceCode" id="cb49"><pre class="sourceCode raw default"><code class="sourceCode default"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>```bash {md=% em=none}</span>
-<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>rsync -av %**&quot;$@&quot;**% &quot;deploy@$target:/srv/app/&quot;</span>
-<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>```</span></code></pre></div>
+<div class="sourceCode" id="cb51"><pre class="sourceCode raw default"><code class="sourceCode default"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>```bash {md=% em=none}</span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>rsync -av %**&quot;$@&quot;**% &quot;deploy@$target:/srv/app/&quot;</span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a>```</span></code></pre></div>
 <p><strong>Rendered Output</strong></p>
 <div>
-<div class="sourceCode" id="cb34"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rsync</span> <span class="at">-av</span> <strong>&quot;$@&quot;</strong> <span class="st">&quot;deploy@</span><span class="va">$target</span><span class="st">:/srv/app/&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rsync</span> <span class="at">-av</span> <strong>&quot;$@&quot;</strong> <span class="st">&quot;deploy@</span><span class="va">$target</span><span class="st">:/srv/app/&quot;</span></span></code></pre></div>
 </div>
 </blockquote>
 <p><span class="note"><span>[ <em>Note:</em> </span>Effectively,
@@ -2461,25 +2551,25 @@ blocks</a> are the only elements that actually get added to Comparison
 Tables, except that the last header (if any) before a <a href="https://pandoc.org/MANUAL.html#fenced-code-blocks">fenced code
 block</a> is attached to the cell above.</p>
 <p><strong>Markdown Source</strong></p>
-<div class="sourceCode" id="cb50"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>::: cmptable</span>
-<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="fu">### Before</span></span>
-<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a><span class="in">```cpp</span></span>
-<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a><span class="cf">switch</span> <span class="op">(</span>x<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">case</span> <span class="dv">0</span><span class="op">:</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;got zero&quot;</span><span class="op">;</span> <span class="cf">break</span><span class="op">;</span></span>
-<span id="cb50-6"><a href="#cb50-6" aria-hidden="true" tabindex="-1"></a>  <span class="cf">case</span> <span class="dv">1</span><span class="op">:</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;got one&quot;</span><span class="op">;</span> <span class="cf">break</span><span class="op">;</span></span>
-<span id="cb50-7"><a href="#cb50-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">default</span><span class="op">:</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;don&#39;t care&quot;</span><span class="op">;</span></span>
-<span id="cb50-8"><a href="#cb50-8" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
-<span id="cb50-9"><a href="#cb50-9" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb50-10"><a href="#cb50-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-11"><a href="#cb50-11" aria-hidden="true" tabindex="-1"></a><span class="fu">### After</span></span>
-<span id="cb50-12"><a href="#cb50-12" aria-hidden="true" tabindex="-1"></a><span class="in">```cpp</span></span>
-<span id="cb50-13"><a href="#cb50-13" aria-hidden="true" tabindex="-1"></a>x match <span class="op">{</span></span>
-<span id="cb50-14"><a href="#cb50-14" aria-hidden="true" tabindex="-1"></a>  <span class="dv">0</span> <span class="op">=&gt;</span> <span class="cf">do</span> <span class="op">{</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;got zero&quot;</span> <span class="op">};</span></span>
-<span id="cb50-15"><a href="#cb50-15" aria-hidden="true" tabindex="-1"></a>  <span class="dv">1</span> <span class="op">=&gt;</span> <span class="cf">do</span> <span class="op">{</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;got one&quot;</span> <span class="op">};</span></span>
-<span id="cb50-16"><a href="#cb50-16" aria-hidden="true" tabindex="-1"></a>  _ <span class="op">=&gt;</span> <span class="cf">do</span> <span class="op">{</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;don&#39;t care&quot;</span> <span class="op">};</span></span>
-<span id="cb50-17"><a href="#cb50-17" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span>
-<span id="cb50-18"><a href="#cb50-18" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb50-19"><a href="#cb50-19" aria-hidden="true" tabindex="-1"></a>:::</span></code></pre></div>
+<div class="sourceCode" id="cb52"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>::: cmptable</span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="fu">### Before</span></span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a><span class="in">```cpp</span></span>
+<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a><span class="cf">switch</span> <span class="op">(</span>x<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">case</span> <span class="dv">0</span><span class="op">:</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;got zero&quot;</span><span class="op">;</span> <span class="cf">break</span><span class="op">;</span></span>
+<span id="cb52-6"><a href="#cb52-6" aria-hidden="true" tabindex="-1"></a>  <span class="cf">case</span> <span class="dv">1</span><span class="op">:</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;got one&quot;</span><span class="op">;</span> <span class="cf">break</span><span class="op">;</span></span>
+<span id="cb52-7"><a href="#cb52-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">default</span><span class="op">:</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;don&#39;t care&quot;</span><span class="op">;</span></span>
+<span id="cb52-8"><a href="#cb52-8" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb52-9"><a href="#cb52-9" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb52-10"><a href="#cb52-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-11"><a href="#cb52-11" aria-hidden="true" tabindex="-1"></a><span class="fu">### After</span></span>
+<span id="cb52-12"><a href="#cb52-12" aria-hidden="true" tabindex="-1"></a><span class="in">```cpp</span></span>
+<span id="cb52-13"><a href="#cb52-13" aria-hidden="true" tabindex="-1"></a>x match <span class="op">{</span></span>
+<span id="cb52-14"><a href="#cb52-14" aria-hidden="true" tabindex="-1"></a>  <span class="dv">0</span> <span class="op">=&gt;</span> <span class="cf">do</span> <span class="op">{</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;got zero&quot;</span> <span class="op">};</span></span>
+<span id="cb52-15"><a href="#cb52-15" aria-hidden="true" tabindex="-1"></a>  <span class="dv">1</span> <span class="op">=&gt;</span> <span class="cf">do</span> <span class="op">{</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;got one&quot;</span> <span class="op">};</span></span>
+<span id="cb52-16"><a href="#cb52-16" aria-hidden="true" tabindex="-1"></a>  _ <span class="op">=&gt;</span> <span class="cf">do</span> <span class="op">{</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;don&#39;t care&quot;</span> <span class="op">};</span></span>
+<span id="cb52-17"><a href="#cb52-17" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span>
+<span id="cb52-18"><a href="#cb52-18" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb52-19"><a href="#cb52-19" aria-hidden="true" tabindex="-1"></a>:::</span></code></pre></div>
 <p><strong>Rendered Output</strong></p>
 <table class="cmptable">
 <colgroup>
@@ -2498,16 +2588,16 @@ block</a> is attached to the cell above.</p>
 </thead>
 <tbody>
 <tr>
-<td><div class="sourceCode" id="cb35"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="cf">switch</span> <span class="op">(</span>x<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">case</span> <span class="dv">0</span><span class="op">:</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;got zero&quot;</span><span class="op">;</span> <span class="cf">break</span><span class="op">;</span></span>
-<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">case</span> <span class="dv">1</span><span class="op">:</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;got one&quot;</span><span class="op">;</span> <span class="cf">break</span><span class="op">;</span></span>
-<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">default</span><span class="op">:</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;don&#39;t care&quot;</span><span class="op">;</span></span>
-<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div></td>
-<td><div class="sourceCode" id="cb36"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>x match <span class="op">{</span></span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>  <span class="dv">0</span> <span class="op">=&gt;</span> <span class="cf">do</span> <span class="op">{</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;got zero&quot;</span> <span class="op">};</span></span>
-<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>  <span class="dv">1</span> <span class="op">=&gt;</span> <span class="cf">do</span> <span class="op">{</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;got one&quot;</span> <span class="op">};</span></span>
-<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>  _ <span class="op">=&gt;</span> <span class="cf">do</span> <span class="op">{</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;don&#39;t care&quot;</span> <span class="op">};</span></span>
-<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span></code></pre></div></td>
+<td><div class="sourceCode" id="cb37"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="cf">switch</span> <span class="op">(</span>x<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">case</span> <span class="dv">0</span><span class="op">:</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;got zero&quot;</span><span class="op">;</span> <span class="cf">break</span><span class="op">;</span></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">case</span> <span class="dv">1</span><span class="op">:</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;got one&quot;</span><span class="op">;</span> <span class="cf">break</span><span class="op">;</span></span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">default</span><span class="op">:</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;don&#39;t care&quot;</span><span class="op">;</span></span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div></td>
+<td><div class="sourceCode" id="cb38"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>x match <span class="op">{</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>  <span class="dv">0</span> <span class="op">=&gt;</span> <span class="cf">do</span> <span class="op">{</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;got zero&quot;</span> <span class="op">};</span></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>  <span class="dv">1</span> <span class="op">=&gt;</span> <span class="cf">do</span> <span class="op">{</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;got one&quot;</span> <span class="op">};</span></span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>  _ <span class="op">=&gt;</span> <span class="cf">do</span> <span class="op">{</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;don&#39;t care&quot;</span> <span class="op">};</span></span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span></code></pre></div></td>
 </tr>
 </tbody>
 </table>
@@ -2516,47 +2606,47 @@ block</a> is pushed onto the current row, and horizontal rules
 (<code class="sourceCode cpp"><span class="op">---</span></code>) are
 used to move to the next row.</p>
 <p><strong>Markdown Source</strong></p>
-<div class="sourceCode" id="cb37"><pre class="sourceCode md default"><code class="sourceCode markdown"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>::: cmptable</span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="fu">### Before</span></span>
-<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a><span class="in">```cpp</span></span>
-<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a><span class="cf">switch</span> <span class="op">(</span>x<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>  <span class="cf">case</span> <span class="dv">0</span><span class="op">:</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;got zero&quot;</span><span class="op">;</span> <span class="cf">break</span><span class="op">;</span></span>
-<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">case</span> <span class="dv">1</span><span class="op">:</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;got one&quot;</span><span class="op">;</span> <span class="cf">break</span><span class="op">;</span></span>
-<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>  <span class="cf">default</span><span class="op">:</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;don&#39;t care&quot;</span><span class="op">;</span></span>
-<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
-<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-12"><a href="#cb37-12" aria-hidden="true" tabindex="-1"></a><span class="fu">### After</span></span>
-<span id="cb37-13"><a href="#cb37-13" aria-hidden="true" tabindex="-1"></a><span class="in">```cpp</span></span>
-<span id="cb37-14"><a href="#cb37-14" aria-hidden="true" tabindex="-1"></a>x match <span class="op">{</span></span>
-<span id="cb37-15"><a href="#cb37-15" aria-hidden="true" tabindex="-1"></a>  <span class="dv">0</span> <span class="op">=&gt;</span> <span class="cf">do</span> <span class="op">{</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;got zero&quot;</span> <span class="op">};</span></span>
-<span id="cb37-16"><a href="#cb37-16" aria-hidden="true" tabindex="-1"></a>  <span class="dv">1</span> <span class="op">=&gt;</span> <span class="cf">do</span> <span class="op">{</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;got one&quot;</span> <span class="op">};</span></span>
-<span id="cb37-17"><a href="#cb37-17" aria-hidden="true" tabindex="-1"></a>  _ <span class="op">=&gt;</span> <span class="cf">do</span> <span class="op">{</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;don&#39;t care&quot;</span> <span class="op">};</span></span>
-<span id="cb37-18"><a href="#cb37-18" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span>
-<span id="cb37-19"><a href="#cb37-19" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb37-20"><a href="#cb37-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-21"><a href="#cb37-21" aria-hidden="true" tabindex="-1"></a>---</span>
-<span id="cb37-22"><a href="#cb37-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-23"><a href="#cb37-23" aria-hidden="true" tabindex="-1"></a><span class="in">```cpp</span></span>
-<span id="cb37-24"><a href="#cb37-24" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="op">(</span>s <span class="op">==</span> <span class="st">&quot;foo&quot;</span><span class="op">)</span> <span class="op">{</span></span>
-<span id="cb37-25"><a href="#cb37-25" aria-hidden="true" tabindex="-1"></a>  std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;got foo&quot;</span><span class="op">;</span></span>
-<span id="cb37-26"><a href="#cb37-26" aria-hidden="true" tabindex="-1"></a><span class="op">}</span> <span class="cf">else</span> <span class="cf">if</span> <span class="op">(</span>s <span class="op">==</span> <span class="st">&quot;bar&quot;</span><span class="op">)</span> <span class="op">{</span></span>
-<span id="cb37-27"><a href="#cb37-27" aria-hidden="true" tabindex="-1"></a>  std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;got bar&quot;</span><span class="op">;</span></span>
-<span id="cb37-28"><a href="#cb37-28" aria-hidden="true" tabindex="-1"></a><span class="op">}</span> <span class="cf">else</span> <span class="op">{</span></span>
-<span id="cb37-29"><a href="#cb37-29" aria-hidden="true" tabindex="-1"></a>  std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;don&#39;t care&quot;</span><span class="op">;</span></span>
-<span id="cb37-30"><a href="#cb37-30" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
-<span id="cb37-31"><a href="#cb37-31" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb37-32"><a href="#cb37-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-33"><a href="#cb37-33" aria-hidden="true" tabindex="-1"></a><span class="in">```cpp</span></span>
-<span id="cb37-34"><a href="#cb37-34" aria-hidden="true" tabindex="-1"></a>s match <span class="op">{</span></span>
-<span id="cb37-35"><a href="#cb37-35" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;foo&quot;</span> <span class="op">=&gt;</span> <span class="cf">do</span> <span class="op">{</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;got foo&quot;</span> <span class="op">};</span></span>
-<span id="cb37-36"><a href="#cb37-36" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;bar&quot;</span> <span class="op">=&gt;</span> <span class="cf">do</span> <span class="op">{</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;got bar&quot;</span> <span class="op">};</span></span>
-<span id="cb37-37"><a href="#cb37-37" aria-hidden="true" tabindex="-1"></a>  _ <span class="op">=&gt;</span> <span class="cf">do</span> <span class="op">{</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;don&#39;t care&quot;</span> <span class="op">};</span></span>
-<span id="cb37-38"><a href="#cb37-38" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span>
-<span id="cb37-39"><a href="#cb37-39" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb37-40"><a href="#cb37-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-41"><a href="#cb37-41" aria-hidden="true" tabindex="-1"></a>:::</span></code></pre></div>
+<div class="sourceCode" id="cb39"><pre class="sourceCode md default"><code class="sourceCode markdown"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>::: cmptable</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a><span class="fu">### Before</span></span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a><span class="in">```cpp</span></span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a><span class="cf">switch</span> <span class="op">(</span>x<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>  <span class="cf">case</span> <span class="dv">0</span><span class="op">:</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;got zero&quot;</span><span class="op">;</span> <span class="cf">break</span><span class="op">;</span></span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">case</span> <span class="dv">1</span><span class="op">:</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;got one&quot;</span><span class="op">;</span> <span class="cf">break</span><span class="op">;</span></span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>  <span class="cf">default</span><span class="op">:</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;don&#39;t care&quot;</span><span class="op">;</span></span>
+<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-12"><a href="#cb39-12" aria-hidden="true" tabindex="-1"></a><span class="fu">### After</span></span>
+<span id="cb39-13"><a href="#cb39-13" aria-hidden="true" tabindex="-1"></a><span class="in">```cpp</span></span>
+<span id="cb39-14"><a href="#cb39-14" aria-hidden="true" tabindex="-1"></a>x match <span class="op">{</span></span>
+<span id="cb39-15"><a href="#cb39-15" aria-hidden="true" tabindex="-1"></a>  <span class="dv">0</span> <span class="op">=&gt;</span> <span class="cf">do</span> <span class="op">{</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;got zero&quot;</span> <span class="op">};</span></span>
+<span id="cb39-16"><a href="#cb39-16" aria-hidden="true" tabindex="-1"></a>  <span class="dv">1</span> <span class="op">=&gt;</span> <span class="cf">do</span> <span class="op">{</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;got one&quot;</span> <span class="op">};</span></span>
+<span id="cb39-17"><a href="#cb39-17" aria-hidden="true" tabindex="-1"></a>  _ <span class="op">=&gt;</span> <span class="cf">do</span> <span class="op">{</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;don&#39;t care&quot;</span> <span class="op">};</span></span>
+<span id="cb39-18"><a href="#cb39-18" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span>
+<span id="cb39-19"><a href="#cb39-19" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb39-20"><a href="#cb39-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-21"><a href="#cb39-21" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb39-22"><a href="#cb39-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-23"><a href="#cb39-23" aria-hidden="true" tabindex="-1"></a><span class="in">```cpp</span></span>
+<span id="cb39-24"><a href="#cb39-24" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="op">(</span>s <span class="op">==</span> <span class="st">&quot;foo&quot;</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb39-25"><a href="#cb39-25" aria-hidden="true" tabindex="-1"></a>  std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;got foo&quot;</span><span class="op">;</span></span>
+<span id="cb39-26"><a href="#cb39-26" aria-hidden="true" tabindex="-1"></a><span class="op">}</span> <span class="cf">else</span> <span class="cf">if</span> <span class="op">(</span>s <span class="op">==</span> <span class="st">&quot;bar&quot;</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb39-27"><a href="#cb39-27" aria-hidden="true" tabindex="-1"></a>  std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;got bar&quot;</span><span class="op">;</span></span>
+<span id="cb39-28"><a href="#cb39-28" aria-hidden="true" tabindex="-1"></a><span class="op">}</span> <span class="cf">else</span> <span class="op">{</span></span>
+<span id="cb39-29"><a href="#cb39-29" aria-hidden="true" tabindex="-1"></a>  std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;don&#39;t care&quot;</span><span class="op">;</span></span>
+<span id="cb39-30"><a href="#cb39-30" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb39-31"><a href="#cb39-31" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb39-32"><a href="#cb39-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-33"><a href="#cb39-33" aria-hidden="true" tabindex="-1"></a><span class="in">```cpp</span></span>
+<span id="cb39-34"><a href="#cb39-34" aria-hidden="true" tabindex="-1"></a>s match <span class="op">{</span></span>
+<span id="cb39-35"><a href="#cb39-35" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;foo&quot;</span> <span class="op">=&gt;</span> <span class="cf">do</span> <span class="op">{</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;got foo&quot;</span> <span class="op">};</span></span>
+<span id="cb39-36"><a href="#cb39-36" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;bar&quot;</span> <span class="op">=&gt;</span> <span class="cf">do</span> <span class="op">{</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;got bar&quot;</span> <span class="op">};</span></span>
+<span id="cb39-37"><a href="#cb39-37" aria-hidden="true" tabindex="-1"></a>  _ <span class="op">=&gt;</span> <span class="cf">do</span> <span class="op">{</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;don&#39;t care&quot;</span> <span class="op">};</span></span>
+<span id="cb39-38"><a href="#cb39-38" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span>
+<span id="cb39-39"><a href="#cb39-39" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb39-40"><a href="#cb39-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-41"><a href="#cb39-41" aria-hidden="true" tabindex="-1"></a>:::</span></code></pre></div>
 <p><strong>Rendered Output</strong></p>
 <table class="cmptable">
 <colgroup>
@@ -2575,30 +2665,30 @@ used to move to the next row.</p>
 </thead>
 <tbody>
 <tr>
-<td><div class="sourceCode" id="cb38"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="cf">switch</span> <span class="op">(</span>x<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">case</span> <span class="dv">0</span><span class="op">:</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;got zero&quot;</span><span class="op">;</span> <span class="cf">break</span><span class="op">;</span></span>
-<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">case</span> <span class="dv">1</span><span class="op">:</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;got one&quot;</span><span class="op">;</span> <span class="cf">break</span><span class="op">;</span></span>
-<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">default</span><span class="op">:</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;don&#39;t care&quot;</span><span class="op">;</span></span>
-<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div></td>
-<td><div class="sourceCode" id="cb39"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>x match <span class="op">{</span></span>
-<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>  <span class="dv">0</span> <span class="op">=&gt;</span> <span class="cf">do</span> <span class="op">{</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;got zero&quot;</span> <span class="op">};</span></span>
-<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>  <span class="dv">1</span> <span class="op">=&gt;</span> <span class="cf">do</span> <span class="op">{</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;got one&quot;</span> <span class="op">};</span></span>
-<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>  _ <span class="op">=&gt;</span> <span class="cf">do</span> <span class="op">{</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;don&#39;t care&quot;</span> <span class="op">};</span></span>
-<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span></code></pre></div></td>
-</tr>
-<tr>
-<td><div class="sourceCode" id="cb40"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="op">(</span>s <span class="op">==</span> <span class="st">&quot;foo&quot;</span><span class="op">)</span> <span class="op">{</span></span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>  std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;got foo&quot;</span><span class="op">;</span></span>
-<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a><span class="op">}</span> <span class="cf">else</span> <span class="cf">if</span> <span class="op">(</span>s <span class="op">==</span> <span class="st">&quot;bar&quot;</span><span class="op">)</span> <span class="op">{</span></span>
-<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>  std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;got bar&quot;</span><span class="op">;</span></span>
-<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span> <span class="cf">else</span> <span class="op">{</span></span>
-<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>  std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;don&#39;t care&quot;</span><span class="op">;</span></span>
-<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div></td>
-<td><div class="sourceCode" id="cb41"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>s match <span class="op">{</span></span>
-<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;foo&quot;</span> <span class="op">=&gt;</span> <span class="cf">do</span> <span class="op">{</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;got foo&quot;</span> <span class="op">};</span></span>
-<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;bar&quot;</span> <span class="op">=&gt;</span> <span class="cf">do</span> <span class="op">{</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;got bar&quot;</span> <span class="op">};</span></span>
+<td><div class="sourceCode" id="cb40"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="cf">switch</span> <span class="op">(</span>x<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">case</span> <span class="dv">0</span><span class="op">:</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;got zero&quot;</span><span class="op">;</span> <span class="cf">break</span><span class="op">;</span></span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">case</span> <span class="dv">1</span><span class="op">:</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;got one&quot;</span><span class="op">;</span> <span class="cf">break</span><span class="op">;</span></span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">default</span><span class="op">:</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;don&#39;t care&quot;</span><span class="op">;</span></span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div></td>
+<td><div class="sourceCode" id="cb41"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>x match <span class="op">{</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>  <span class="dv">0</span> <span class="op">=&gt;</span> <span class="cf">do</span> <span class="op">{</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;got zero&quot;</span> <span class="op">};</span></span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>  <span class="dv">1</span> <span class="op">=&gt;</span> <span class="cf">do</span> <span class="op">{</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;got one&quot;</span> <span class="op">};</span></span>
 <span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>  _ <span class="op">=&gt;</span> <span class="cf">do</span> <span class="op">{</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;don&#39;t care&quot;</span> <span class="op">};</span></span>
 <span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span></code></pre></div></td>
+</tr>
+<tr>
+<td><div class="sourceCode" id="cb42"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="op">(</span>s <span class="op">==</span> <span class="st">&quot;foo&quot;</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>  std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;got foo&quot;</span><span class="op">;</span></span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a><span class="op">}</span> <span class="cf">else</span> <span class="cf">if</span> <span class="op">(</span>s <span class="op">==</span> <span class="st">&quot;bar&quot;</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>  std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;got bar&quot;</span><span class="op">;</span></span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span> <span class="cf">else</span> <span class="op">{</span></span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>  std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;don&#39;t care&quot;</span><span class="op">;</span></span>
+<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div></td>
+<td><div class="sourceCode" id="cb43"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>s match <span class="op">{</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;foo&quot;</span> <span class="op">=&gt;</span> <span class="cf">do</span> <span class="op">{</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;got foo&quot;</span> <span class="op">};</span></span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;bar&quot;</span> <span class="op">=&gt;</span> <span class="cf">do</span> <span class="op">{</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;got bar&quot;</span> <span class="op">};</span></span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>  _ <span class="op">=&gt;</span> <span class="cf">do</span> <span class="op">{</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;don&#39;t care&quot;</span> <span class="op">};</span></span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span></code></pre></div></td>
 </tr>
 </tbody>
 </table>
@@ -2606,29 +2696,29 @@ used to move to the next row.</p>
 <code class="sourceCode cpp"><span class="op">&gt;</span> caption</code>
 (if any) is used as the caption.</p>
 <p><strong>Markdown Source</strong></p>
-<div class="sourceCode" id="cb42"><pre class="sourceCode md default"><code class="sourceCode markdown"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>::: cmptable</span>
-<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Put your caption here</span></span>
-<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a><span class="fu">### Before</span></span>
-<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a><span class="in">```cpp</span></span>
-<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a><span class="cf">switch</span> <span class="op">(</span>x<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a>  <span class="cf">case</span> <span class="dv">0</span><span class="op">:</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;got zero&quot;</span><span class="op">;</span> <span class="cf">break</span><span class="op">;</span></span>
-<span id="cb42-9"><a href="#cb42-9" aria-hidden="true" tabindex="-1"></a>  <span class="cf">case</span> <span class="dv">1</span><span class="op">:</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;got one&quot;</span><span class="op">;</span> <span class="cf">break</span><span class="op">;</span></span>
-<span id="cb42-10"><a href="#cb42-10" aria-hidden="true" tabindex="-1"></a>  <span class="cf">default</span><span class="op">:</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;don&#39;t care&quot;</span><span class="op">;</span></span>
-<span id="cb42-11"><a href="#cb42-11" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
-<span id="cb42-12"><a href="#cb42-12" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb42-13"><a href="#cb42-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-14"><a href="#cb42-14" aria-hidden="true" tabindex="-1"></a><span class="fu">### After</span></span>
-<span id="cb42-15"><a href="#cb42-15" aria-hidden="true" tabindex="-1"></a><span class="in">```cpp</span></span>
-<span id="cb42-16"><a href="#cb42-16" aria-hidden="true" tabindex="-1"></a>x match <span class="op">{</span></span>
-<span id="cb42-17"><a href="#cb42-17" aria-hidden="true" tabindex="-1"></a>  <span class="dv">0</span> <span class="op">=&gt;</span> <span class="cf">do</span> <span class="op">{</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;got zero&quot;</span> <span class="op">};</span></span>
-<span id="cb42-18"><a href="#cb42-18" aria-hidden="true" tabindex="-1"></a>  <span class="dv">1</span> <span class="op">=&gt;</span> <span class="cf">do</span> <span class="op">{</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;got one&quot;</span> <span class="op">};</span></span>
-<span id="cb42-19"><a href="#cb42-19" aria-hidden="true" tabindex="-1"></a>  _ <span class="op">=&gt;</span> <span class="cf">do</span> <span class="op">{</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;don&#39;t care&quot;</span> <span class="op">};</span></span>
-<span id="cb42-20"><a href="#cb42-20" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span>
-<span id="cb42-21"><a href="#cb42-21" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb42-22"><a href="#cb42-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-23"><a href="#cb42-23" aria-hidden="true" tabindex="-1"></a>:::</span></code></pre></div>
+<div class="sourceCode" id="cb44"><pre class="sourceCode md default"><code class="sourceCode markdown"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>::: cmptable</span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Put your caption here</span></span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a><span class="fu">### Before</span></span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a><span class="in">```cpp</span></span>
+<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a><span class="cf">switch</span> <span class="op">(</span>x<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a>  <span class="cf">case</span> <span class="dv">0</span><span class="op">:</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;got zero&quot;</span><span class="op">;</span> <span class="cf">break</span><span class="op">;</span></span>
+<span id="cb44-9"><a href="#cb44-9" aria-hidden="true" tabindex="-1"></a>  <span class="cf">case</span> <span class="dv">1</span><span class="op">:</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;got one&quot;</span><span class="op">;</span> <span class="cf">break</span><span class="op">;</span></span>
+<span id="cb44-10"><a href="#cb44-10" aria-hidden="true" tabindex="-1"></a>  <span class="cf">default</span><span class="op">:</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;don&#39;t care&quot;</span><span class="op">;</span></span>
+<span id="cb44-11"><a href="#cb44-11" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb44-12"><a href="#cb44-12" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb44-13"><a href="#cb44-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-14"><a href="#cb44-14" aria-hidden="true" tabindex="-1"></a><span class="fu">### After</span></span>
+<span id="cb44-15"><a href="#cb44-15" aria-hidden="true" tabindex="-1"></a><span class="in">```cpp</span></span>
+<span id="cb44-16"><a href="#cb44-16" aria-hidden="true" tabindex="-1"></a>x match <span class="op">{</span></span>
+<span id="cb44-17"><a href="#cb44-17" aria-hidden="true" tabindex="-1"></a>  <span class="dv">0</span> <span class="op">=&gt;</span> <span class="cf">do</span> <span class="op">{</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;got zero&quot;</span> <span class="op">};</span></span>
+<span id="cb44-18"><a href="#cb44-18" aria-hidden="true" tabindex="-1"></a>  <span class="dv">1</span> <span class="op">=&gt;</span> <span class="cf">do</span> <span class="op">{</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;got one&quot;</span> <span class="op">};</span></span>
+<span id="cb44-19"><a href="#cb44-19" aria-hidden="true" tabindex="-1"></a>  _ <span class="op">=&gt;</span> <span class="cf">do</span> <span class="op">{</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;don&#39;t care&quot;</span> <span class="op">};</span></span>
+<span id="cb44-20"><a href="#cb44-20" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span>
+<span id="cb44-21"><a href="#cb44-21" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb44-22"><a href="#cb44-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-23"><a href="#cb44-23" aria-hidden="true" tabindex="-1"></a>:::</span></code></pre></div>
 <p><strong>Rendered Output</strong></p>
 <table class="cmptable">
 <caption><blockquote>
@@ -2650,16 +2740,16 @@ used to move to the next row.</p>
 </thead>
 <tbody>
 <tr>
-<td><div class="sourceCode" id="cb43"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="cf">switch</span> <span class="op">(</span>x<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">case</span> <span class="dv">0</span><span class="op">:</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;got zero&quot;</span><span class="op">;</span> <span class="cf">break</span><span class="op">;</span></span>
-<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">case</span> <span class="dv">1</span><span class="op">:</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;got one&quot;</span><span class="op">;</span> <span class="cf">break</span><span class="op">;</span></span>
-<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">default</span><span class="op">:</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;don&#39;t care&quot;</span><span class="op">;</span></span>
-<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div></td>
-<td><div class="sourceCode" id="cb44"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>x match <span class="op">{</span></span>
-<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>  <span class="dv">0</span> <span class="op">=&gt;</span> <span class="cf">do</span> <span class="op">{</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;got zero&quot;</span> <span class="op">};</span></span>
-<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>  <span class="dv">1</span> <span class="op">=&gt;</span> <span class="cf">do</span> <span class="op">{</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;got one&quot;</span> <span class="op">};</span></span>
-<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>  _ <span class="op">=&gt;</span> <span class="cf">do</span> <span class="op">{</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;don&#39;t care&quot;</span> <span class="op">};</span></span>
-<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span></code></pre></div></td>
+<td><div class="sourceCode" id="cb45"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="cf">switch</span> <span class="op">(</span>x<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">case</span> <span class="dv">0</span><span class="op">:</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;got zero&quot;</span><span class="op">;</span> <span class="cf">break</span><span class="op">;</span></span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">case</span> <span class="dv">1</span><span class="op">:</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;got one&quot;</span><span class="op">;</span> <span class="cf">break</span><span class="op">;</span></span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">default</span><span class="op">:</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;don&#39;t care&quot;</span><span class="op">;</span></span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div></td>
+<td><div class="sourceCode" id="cb46"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>x match <span class="op">{</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>  <span class="dv">0</span> <span class="op">=&gt;</span> <span class="cf">do</span> <span class="op">{</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;got zero&quot;</span> <span class="op">};</span></span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>  <span class="dv">1</span> <span class="op">=&gt;</span> <span class="cf">do</span> <span class="op">{</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;got one&quot;</span> <span class="op">};</span></span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>  _ <span class="op">=&gt;</span> <span class="cf">do</span> <span class="op">{</span> std<span class="op">::</span>cout <span class="op">&lt;&lt;</span> <span class="st">&quot;don&#39;t care&quot;</span> <span class="op">};</span></span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span></code></pre></div></td>
 </tr>
 </tbody>
 </table>
@@ -2679,7 +2769,7 @@ name exists. This is typically used in quoting standard paragraphs like
 this:</p>
 <blockquote>
 <p><strong>Markdown Source</strong></p>
-<div class="sourceCode" id="cb51"><pre class="sourceCode raw default"><code class="sourceCode default"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>&gt; [...] whose lifetime has begun and has not ended ([basic.life]).</span></code></pre></div>
+<div class="sourceCode" id="cb53"><pre class="sourceCode raw default"><code class="sourceCode default"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>&gt; [...] whose lifetime has begun and has not ended ([basic.life]).</span></code></pre></div>
 <p><strong>Rendered Output</strong></p>
 <div>
 <blockquote>
@@ -2711,7 +2801,7 @@ automatically rendered.</p>
 </thead>
 <tbody>
 <tr>
-<td><div class="sourceCode" id="cb52"><pre class="sourceCode raw default"><code class="sourceCode default"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>Modify section [basic.life]{.sref}:</span></code></pre></div></td>
+<td><div class="sourceCode" id="cb54"><pre class="sourceCode raw default"><code class="sourceCode default"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>Modify section [basic.life]{.sref}:</span></code></pre></div></td>
 <td><div>
 <p>Modify section <span>6.8.4 Lifetime <a href="https://eel.is/c++draft/basic.life" title="6.8.4 Lifetime">[basic.life]</a></span>:</p>
 </div></td>
@@ -2737,7 +2827,7 @@ wording:</p>
 </thead>
 <tbody>
 <tr>
-<td><div class="sourceCode" id="cb53"><pre class="sourceCode raw default"><code class="sourceCode default"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>## [basic.life]{.sref} {- .unlisted}</span></code></pre></div></td>
+<td><div class="sourceCode" id="cb55"><pre class="sourceCode raw default"><code class="sourceCode default"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>## [basic.life]{.sref} {- .unlisted}</span></code></pre></div></td>
 <td><div>
 <h2 id="basic.life" class="unnumbered unlisted"><span>6.8.4 Lifetime <a href="https://eel.is/c++draft/basic.life" title="6.8.4 Lifetime">[basic.life]</a></span><a href="#basic.life" class="self-link"></a></h2>
 </div></td>
@@ -2772,7 +2862,7 @@ instead:</p>
 </thead>
 <tbody>
 <tr>
-<td><div class="sourceCode" id="cb45"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>## [basic.life]{- .sref}</span></code></pre></div></td>
+<td><div class="sourceCode" id="cb47"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>## [basic.life]{- .sref}</span></code></pre></div></td>
 <td><h2 id="basic-life-2" class="unnumbered unlisted">4.9 <span>Lifetime
 <a href="https://eel.is/c++draft/basic.life" title="6.8.4 Lifetime">[basic.life]</a></span><a href="#basic-life-2" class="self-link"></a></h2></td>
 </tr>
@@ -2803,13 +2893,13 @@ like <code class="sourceCode cpp"><span class="dv">1</span></code> or
 </thead>
 <tbody>
 <tr>
-<td><div class="sourceCode" id="cb54"><pre class="sourceCode raw default"><code class="sourceCode default"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>Refer to a specific paragraph [basic.life]/1:</span></code></pre></div></td>
+<td><div class="sourceCode" id="cb56"><pre class="sourceCode raw default"><code class="sourceCode default"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>Refer to a specific paragraph [basic.life]/1:</span></code></pre></div></td>
 <td><div>
 <p>Refer to a specific paragraph <a href="https://eel.is/c++draft/basic.life#1" title="6.8.4 Lifetime, paragraph 1">[basic.life]/1</a>:</p>
 </div></td>
 </tr>
 <tr>
-<td><div class="sourceCode" id="cb55"><pre class="sourceCode raw default"><code class="sourceCode default"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>Change [basic.life]{.sref}/2.1 as follows:</span></code></pre></div></td>
+<td><div class="sourceCode" id="cb57"><pre class="sourceCode raw default"><code class="sourceCode default"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>Change [basic.life]{.sref}/2.1 as follows:</span></code></pre></div></td>
 <td><div>
 <p>Change <span>6.8.4 Lifetime <a href="https://eel.is/c++draft/basic.life#2.1" title="6.8.4 Lifetime, paragraph 2.1">[basic.life]/2.1</a></span> as
 follows:</p>
@@ -2822,9 +2912,9 @@ follows:</p>
 <code class="sourceCode default">[@paper]</code></p>
 <blockquote>
 <p><strong>Markdown Source</strong></p>
-<div class="sourceCode" id="cb56"><pre class="sourceCode raw default"><code class="sourceCode default"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>This is a proposal for a reduced initial set of features to support static</span>
-<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>reflection in C++. Specifically we are mostly proposing a subset of features</span>
-<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a>suggested in [@P1240R2].</span></code></pre></div>
+<div class="sourceCode" id="cb58"><pre class="sourceCode raw default"><code class="sourceCode default"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>This is a proposal for a reduced initial set of features to support static</span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>reflection in C++. Specifically we are mostly proposing a subset of features</span>
+<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a>suggested in [@P1240R2].</span></code></pre></div>
 <p><strong>Rendered Output</strong></p>
 <div>
 <p>This is a proposal for a reduced initial set of features to support
@@ -2839,9 +2929,9 @@ class, like
 which generates:</p>
 <blockquote>
 <p><strong>Markdown Source</strong></p>
-<div class="sourceCode" id="cb57"><pre class="sourceCode raw default"><code class="sourceCode default"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>This is a proposal for a reduced initial set of features to support static</span>
-<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>reflection in C++. Specifically we are mostly proposing a subset of features</span>
-<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a>suggested in [@P1240R2]{.title}.</span></code></pre></div>
+<div class="sourceCode" id="cb59"><pre class="sourceCode raw default"><code class="sourceCode default"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>This is a proposal for a reduced initial set of features to support static</span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>reflection in C++. Specifically we are mostly proposing a subset of features</span>
+<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a>suggested in [@P1240R2]{.title}.</span></code></pre></div>
 <p><strong>Rendered Output</strong></p>
 <div>
 <p>This is a proposal for a reduced initial set of features to support
@@ -2905,21 +2995,21 @@ note</em> ]</span></span></p>
 <a href="#title">Title</a>, typically at the bottom of the document.</p>
 <blockquote>
 <p><strong>Markdown Source</strong></p>
-<div class="sourceCode" id="cb58"><pre class="sourceCode raw default"><code class="sourceCode default"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>The `id` field is for in-text citations (e.g., [@PAT]),</span>
-<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>and `citation-label` is the label for the reference.</span>
-<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb58-4"><a href="#cb58-4" aria-hidden="true" tabindex="-1"></a>Typically `id` and `citation-label` are kept the same.</span>
-<span id="cb58-5"><a href="#cb58-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb58-6"><a href="#cb58-6" aria-hidden="true" tabindex="-1"></a>---</span>
-<span id="cb58-7"><a href="#cb58-7" aria-hidden="true" tabindex="-1"></a>references:</span>
-<span id="cb58-8"><a href="#cb58-8" aria-hidden="true" tabindex="-1"></a>  - id: PAT</span>
-<span id="cb58-9"><a href="#cb58-9" aria-hidden="true" tabindex="-1"></a>    citation-label: Patterns</span>
-<span id="cb58-10"><a href="#cb58-10" aria-hidden="true" tabindex="-1"></a>    title: &quot;Pattern Matching in C++&quot;</span>
-<span id="cb58-11"><a href="#cb58-11" aria-hidden="true" tabindex="-1"></a>    author:</span>
-<span id="cb58-12"><a href="#cb58-12" aria-hidden="true" tabindex="-1"></a>      - family: Park</span>
-<span id="cb58-13"><a href="#cb58-13" aria-hidden="true" tabindex="-1"></a>        given: Michael</span>
-<span id="cb58-14"><a href="#cb58-14" aria-hidden="true" tabindex="-1"></a>    URL: https://github.com/mpark/patterns</span>
-<span id="cb58-15"><a href="#cb58-15" aria-hidden="true" tabindex="-1"></a>---</span></code></pre></div>
+<div class="sourceCode" id="cb60"><pre class="sourceCode raw default"><code class="sourceCode default"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>The `id` field is for in-text citations (e.g., [@PAT]),</span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>and `citation-label` is the label for the reference.</span>
+<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a>Typically `id` and `citation-label` are kept the same.</span>
+<span id="cb60-5"><a href="#cb60-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-6"><a href="#cb60-6" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb60-7"><a href="#cb60-7" aria-hidden="true" tabindex="-1"></a>references:</span>
+<span id="cb60-8"><a href="#cb60-8" aria-hidden="true" tabindex="-1"></a>  - id: PAT</span>
+<span id="cb60-9"><a href="#cb60-9" aria-hidden="true" tabindex="-1"></a>    citation-label: Patterns</span>
+<span id="cb60-10"><a href="#cb60-10" aria-hidden="true" tabindex="-1"></a>    title: &quot;Pattern Matching in C++&quot;</span>
+<span id="cb60-11"><a href="#cb60-11" aria-hidden="true" tabindex="-1"></a>    author:</span>
+<span id="cb60-12"><a href="#cb60-12" aria-hidden="true" tabindex="-1"></a>      - family: Park</span>
+<span id="cb60-13"><a href="#cb60-13" aria-hidden="true" tabindex="-1"></a>        given: Michael</span>
+<span id="cb60-14"><a href="#cb60-14" aria-hidden="true" tabindex="-1"></a>    URL: https://github.com/mpark/patterns</span>
+<span id="cb60-15"><a href="#cb60-15" aria-hidden="true" tabindex="-1"></a>---</span></code></pre></div>
 <p><strong>Rendered Output</strong></p>
 <div>
 <p>The <code class="sourceCode cpp">id</code> field is for in-text
@@ -2941,39 +3031,39 @@ Elements<a href="#default-language-for-code-elements" class="self-link"></a></h2
 <a href="#code-block">Code Block</a>, inline code elements are C++
 syntax highlighted by default, while code blocks are not.</p>
 <p>The default configuration is:</p>
-<div class="sourceCode" id="cb59"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
-<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a><span class="fu">highlighting</span><span class="kw">:</span><span class="at"> </span></span>
-<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">inline-code</span><span class="kw">:</span><span class="at"> cpp</span></span>
-<span id="cb59-4"><a href="#cb59-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">code-block</span><span class="kw">:</span><span class="at"> default</span></span>
-<span id="cb59-5"><a href="#cb59-5" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code></pre></div>
+<div class="sourceCode" id="cb61"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
+<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a><span class="fu">highlighting</span><span class="kw">:</span><span class="at"> </span></span>
+<span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">inline-code</span><span class="kw">:</span><span class="at"> cpp</span></span>
+<span id="cb61-4"><a href="#cb61-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">code-block</span><span class="kw">:</span><span class="at"> default</span></span>
+<span id="cb61-5"><a href="#cb61-5" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code></pre></div>
 <p>You could change this for your document by adding both or either
 entries to the YAML metadata block. For example, if you also want code
 blocks to be C++ by default:</p>
-<div class="sourceCode" id="cb46"><pre class="sourceCode yaml embed_md"><code class="sourceCode yaml"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
-<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;`MPark/WG21` User&#39;s Guide&quot;</span></span>
-<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a><span class="fu">subtitle</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;Framework for Writing C++ Committee Proposals&quot;</span></span>
-<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a><span class="fu">document</span><span class="kw">:</span><span class="at"> D0000R0</span></span>
-<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a><span class="fu">date</span><span class="kw">:</span><span class="at"> today</span></span>
-<span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a><span class="fu">audience</span><span class="kw">:</span><span class="at"> WG21</span></span>
-<span id="cb46-7"><a href="#cb46-7" aria-hidden="true" tabindex="-1"></a><span class="fu">author</span><span class="kw">:</span></span>
-<span id="cb46-8"><a href="#cb46-8" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Michael Park</span></span>
-<span id="cb46-9"><a href="#cb46-9" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">email</span><span class="kw">:</span><span class="at"> &lt;mcypark@gmail.com&gt;</span></span>
-<span id="cb46-10"><a href="#cb46-10" aria-hidden="true" tabindex="-1"></a><span class="at"><mark>highlighting:</mark></span></span>
-<span id="cb46-11"><a href="#cb46-11" aria-hidden="true" tabindex="-1"></a><span class="at">  <mark>code-block: cpp</mark></span></span>
-<span id="cb46-12"><a href="#cb46-12" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code></pre></div>
+<div class="sourceCode" id="cb48"><pre class="sourceCode yaml embed_md"><code class="sourceCode yaml"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;`MPark/WG21` User&#39;s Guide&quot;</span></span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a><span class="fu">subtitle</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;Framework for Writing C++ Committee Proposals&quot;</span></span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a><span class="fu">document</span><span class="kw">:</span><span class="at"> D0000R0</span></span>
+<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a><span class="fu">date</span><span class="kw">:</span><span class="at"> today</span></span>
+<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a><span class="fu">audience</span><span class="kw">:</span><span class="at"> WG21</span></span>
+<span id="cb48-7"><a href="#cb48-7" aria-hidden="true" tabindex="-1"></a><span class="fu">author</span><span class="kw">:</span></span>
+<span id="cb48-8"><a href="#cb48-8" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Michael Park</span></span>
+<span id="cb48-9"><a href="#cb48-9" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">email</span><span class="kw">:</span><span class="at"> &lt;mcypark@gmail.com&gt;</span></span>
+<span id="cb48-10"><a href="#cb48-10" aria-hidden="true" tabindex="-1"></a><span class="at"><mark>highlighting:</mark></span></span>
+<span id="cb48-11"><a href="#cb48-11" aria-hidden="true" tabindex="-1"></a><span class="at">  <mark>code-block: cpp</mark></span></span>
+<span id="cb48-12"><a href="#cb48-12" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code></pre></div>
 <p>or if you want inline-code to be treated normally, not as C++:</p>
-<div class="sourceCode" id="cb47"><pre class="sourceCode yaml embed_md"><code class="sourceCode yaml"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
-<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;`MPark/WG21` User&#39;s Guide&quot;</span></span>
-<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a><span class="fu">subtitle</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;Framework for Writing C++ Committee Proposals&quot;</span></span>
-<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a><span class="fu">document</span><span class="kw">:</span><span class="at"> D0000R0</span></span>
-<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a><span class="fu">date</span><span class="kw">:</span><span class="at"> today</span></span>
-<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a><span class="fu">audience</span><span class="kw">:</span><span class="at"> WG21</span></span>
-<span id="cb47-7"><a href="#cb47-7" aria-hidden="true" tabindex="-1"></a><span class="fu">author</span><span class="kw">:</span></span>
-<span id="cb47-8"><a href="#cb47-8" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Michael Park</span></span>
-<span id="cb47-9"><a href="#cb47-9" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">email</span><span class="kw">:</span><span class="at"> &lt;mcypark@gmail.com&gt;</span></span>
-<span id="cb47-10"><a href="#cb47-10" aria-hidden="true" tabindex="-1"></a><span class="at"><mark>highlighting:</mark></span></span>
-<span id="cb47-11"><a href="#cb47-11" aria-hidden="true" tabindex="-1"></a><span class="at">  <mark>inline-code: default</mark></span></span>
-<span id="cb47-12"><a href="#cb47-12" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code></pre></div>
+<div class="sourceCode" id="cb49"><pre class="sourceCode yaml embed_md"><code class="sourceCode yaml"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;`MPark/WG21` User&#39;s Guide&quot;</span></span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a><span class="fu">subtitle</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;Framework for Writing C++ Committee Proposals&quot;</span></span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a><span class="fu">document</span><span class="kw">:</span><span class="at"> D0000R0</span></span>
+<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a><span class="fu">date</span><span class="kw">:</span><span class="at"> today</span></span>
+<span id="cb49-6"><a href="#cb49-6" aria-hidden="true" tabindex="-1"></a><span class="fu">audience</span><span class="kw">:</span><span class="at"> WG21</span></span>
+<span id="cb49-7"><a href="#cb49-7" aria-hidden="true" tabindex="-1"></a><span class="fu">author</span><span class="kw">:</span></span>
+<span id="cb49-8"><a href="#cb49-8" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Michael Park</span></span>
+<span id="cb49-9"><a href="#cb49-9" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">email</span><span class="kw">:</span><span class="at"> &lt;mcypark@gmail.com&gt;</span></span>
+<span id="cb49-10"><a href="#cb49-10" aria-hidden="true" tabindex="-1"></a><span class="at"><mark>highlighting:</mark></span></span>
+<span id="cb49-11"><a href="#cb49-11" aria-hidden="true" tabindex="-1"></a><span class="at">  <mark>inline-code: default</mark></span></span>
+<span id="cb49-12"><a href="#cb49-12" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code></pre></div>
 <h2 data-number="5.2" id="embedded-markdown-by-default-code-classes"><span class="header-section-number">5.2</span> Embedded Markdown by Default
 Code Classes<a href="#embedded-markdown-by-default-code-classes" class="self-link"></a></h2>
 <p><a href="#embedded-markdown">Embedded Markdown</a> is enabled by
@@ -2984,22 +3074,22 @@ class should be suffcient for most use cases to enable embedded Markdown
 as needed, if you want to change the default, you can set the
 <code class="sourceCode cpp">embedded<span class="op">-</span>md<span class="op">-</span>code<span class="op">-</span>classes</code>
 YAML metadata. For example:</p>
-<div class="sourceCode" id="cb48"><pre class="sourceCode yaml embed_md"><code class="sourceCode yaml"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
-<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;`MPark/WG21` User&#39;s Guide&quot;</span></span>
-<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a><span class="fu">subtitle</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;Framework for Writing C++ Committee Proposals&quot;</span></span>
-<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a><span class="fu">document</span><span class="kw">:</span><span class="at"> D0000R0</span></span>
-<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a><span class="fu">date</span><span class="kw">:</span><span class="at"> today</span></span>
-<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a><span class="fu">audience</span><span class="kw">:</span><span class="at"> WG21</span></span>
-<span id="cb48-7"><a href="#cb48-7" aria-hidden="true" tabindex="-1"></a><span class="fu">author</span><span class="kw">:</span></span>
-<span id="cb48-8"><a href="#cb48-8" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Michael Park</span></span>
-<span id="cb48-9"><a href="#cb48-9" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">email</span><span class="kw">:</span><span class="at"> &lt;mcypark@gmail.com&gt;</span></span>
-<span id="cb48-10"><a href="#cb48-10" aria-hidden="true" tabindex="-1"></a><span class="at"><mark>embedded-md-code-classes:</mark></span></span>
-<span id="cb48-11"><a href="#cb48-11" aria-hidden="true" tabindex="-1"></a><span class="at">  <mark>- cpp</mark></span></span>
-<span id="cb48-12"><a href="#cb48-12" aria-hidden="true" tabindex="-1"></a><span class="at">  <mark>- default</mark></span></span>
-<span id="cb48-13"><a href="#cb48-13" aria-hidden="true" tabindex="-1"></a><span class="at">  <mark>- diff</mark></span></span>
-<span id="cb48-14"><a href="#cb48-14" aria-hidden="true" tabindex="-1"></a><span class="at">  <mark>- nasm</mark></span></span>
-<span id="cb48-15"><a href="#cb48-15" aria-hidden="true" tabindex="-1"></a><span class="at">  <mark>- rust</mark></span></span>
-<span id="cb48-16"><a href="#cb48-16" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code></pre></div>
+<div class="sourceCode" id="cb50"><pre class="sourceCode yaml embed_md"><code class="sourceCode yaml"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;`MPark/WG21` User&#39;s Guide&quot;</span></span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a><span class="fu">subtitle</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;Framework for Writing C++ Committee Proposals&quot;</span></span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a><span class="fu">document</span><span class="kw">:</span><span class="at"> D0000R0</span></span>
+<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a><span class="fu">date</span><span class="kw">:</span><span class="at"> today</span></span>
+<span id="cb50-6"><a href="#cb50-6" aria-hidden="true" tabindex="-1"></a><span class="fu">audience</span><span class="kw">:</span><span class="at"> WG21</span></span>
+<span id="cb50-7"><a href="#cb50-7" aria-hidden="true" tabindex="-1"></a><span class="fu">author</span><span class="kw">:</span></span>
+<span id="cb50-8"><a href="#cb50-8" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Michael Park</span></span>
+<span id="cb50-9"><a href="#cb50-9" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">email</span><span class="kw">:</span><span class="at"> &lt;mcypark@gmail.com&gt;</span></span>
+<span id="cb50-10"><a href="#cb50-10" aria-hidden="true" tabindex="-1"></a><span class="at"><mark>embedded-md-code-classes:</mark></span></span>
+<span id="cb50-11"><a href="#cb50-11" aria-hidden="true" tabindex="-1"></a><span class="at">  <mark>- cpp</mark></span></span>
+<span id="cb50-12"><a href="#cb50-12" aria-hidden="true" tabindex="-1"></a><span class="at">  <mark>- default</mark></span></span>
+<span id="cb50-13"><a href="#cb50-13" aria-hidden="true" tabindex="-1"></a><span class="at">  <mark>- diff</mark></span></span>
+<span id="cb50-14"><a href="#cb50-14" aria-hidden="true" tabindex="-1"></a><span class="at">  <mark>- nasm</mark></span></span>
+<span id="cb50-15"><a href="#cb50-15" aria-hidden="true" tabindex="-1"></a><span class="at">  <mark>- rust</mark></span></span>
+<span id="cb50-16"><a href="#cb50-16" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code></pre></div>
 <p>This is an <strong>override</strong> for the existing list of
 <code class="sourceCode cpp">cpp</code> and
 <code class="sourceCode default">default</code>, so if it’s desired to
@@ -3019,33 +3109,33 @@ or
 To disable at the document-level, you can specify
 <code class="sourceCode cpp">number<span class="op">-</span>srefs<span class="op">:</span> <span class="kw">false</span></code>
 in the YAML metadata:</p>
-<div class="sourceCode" id="cb49"><pre class="sourceCode yaml embed_md"><code class="sourceCode yaml"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
-<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;`MPark/WG21` User&#39;s Guide&quot;</span></span>
-<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a><span class="fu">subtitle</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;Framework for Writing C++ Committee Proposals&quot;</span></span>
-<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a><span class="fu">document</span><span class="kw">:</span><span class="at"> D0000R0</span></span>
-<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a><span class="fu">date</span><span class="kw">:</span><span class="at"> today</span></span>
-<span id="cb49-6"><a href="#cb49-6" aria-hidden="true" tabindex="-1"></a><span class="fu">audience</span><span class="kw">:</span><span class="at"> WG21</span></span>
-<span id="cb49-7"><a href="#cb49-7" aria-hidden="true" tabindex="-1"></a><span class="fu">author</span><span class="kw">:</span></span>
-<span id="cb49-8"><a href="#cb49-8" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Michael Park</span></span>
-<span id="cb49-9"><a href="#cb49-9" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">email</span><span class="kw">:</span><span class="at"> &lt;mcypark@gmail.com&gt;</span></span>
-<span id="cb49-10"><a href="#cb49-10" aria-hidden="true" tabindex="-1"></a><span class="at"><mark>number-srefs: false</mark></span></span>
-<span id="cb49-11"><a href="#cb49-11" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code></pre></div>
+<div class="sourceCode" id="cb51"><pre class="sourceCode yaml embed_md"><code class="sourceCode yaml"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;`MPark/WG21` User&#39;s Guide&quot;</span></span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a><span class="fu">subtitle</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;Framework for Writing C++ Committee Proposals&quot;</span></span>
+<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a><span class="fu">document</span><span class="kw">:</span><span class="at"> D0000R0</span></span>
+<span id="cb51-5"><a href="#cb51-5" aria-hidden="true" tabindex="-1"></a><span class="fu">date</span><span class="kw">:</span><span class="at"> today</span></span>
+<span id="cb51-6"><a href="#cb51-6" aria-hidden="true" tabindex="-1"></a><span class="fu">audience</span><span class="kw">:</span><span class="at"> WG21</span></span>
+<span id="cb51-7"><a href="#cb51-7" aria-hidden="true" tabindex="-1"></a><span class="fu">author</span><span class="kw">:</span></span>
+<span id="cb51-8"><a href="#cb51-8" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Michael Park</span></span>
+<span id="cb51-9"><a href="#cb51-9" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">email</span><span class="kw">:</span><span class="at"> &lt;mcypark@gmail.com&gt;</span></span>
+<span id="cb51-10"><a href="#cb51-10" aria-hidden="true" tabindex="-1"></a><span class="at"><mark>number-srefs: false</mark></span></span>
+<span id="cb51-11"><a href="#cb51-11" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code></pre></div>
 <h2 data-number="5.4" id="unicode-fonts"><span class="header-section-number">5.4</span> Unicode Fonts<a href="#unicode-fonts" class="self-link"></a></h2>
 <p>If building for PDF (via LaTeX) output with Unicode characters, you
 may want to select specific <a href="https://pandoc.org/MANUAL.html#fonts">Fonts</a> for rendering. For
 example, <code class="sourceCode cpp">monofont</code> can be specified
 in the YAML metadata block to select a font for code elements.</p>
-<div class="sourceCode" id="cb50"><pre class="sourceCode yaml embed_md"><code class="sourceCode yaml"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
-<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;`MPark/WG21` User&#39;s Guide&quot;</span></span>
-<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a><span class="fu">subtitle</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;Framework for Writing C++ Committee Proposals&quot;</span></span>
-<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a><span class="fu">document</span><span class="kw">:</span><span class="at"> D0000R0</span></span>
-<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a><span class="fu">date</span><span class="kw">:</span><span class="at"> today</span></span>
-<span id="cb50-6"><a href="#cb50-6" aria-hidden="true" tabindex="-1"></a><span class="fu">audience</span><span class="kw">:</span><span class="at"> WG21</span></span>
-<span id="cb50-7"><a href="#cb50-7" aria-hidden="true" tabindex="-1"></a><span class="fu">author</span><span class="kw">:</span></span>
-<span id="cb50-8"><a href="#cb50-8" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Michael Park</span></span>
-<span id="cb50-9"><a href="#cb50-9" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">email</span><span class="kw">:</span><span class="at"> &lt;mcypark@gmail.com&gt;</span></span>
-<span id="cb50-10"><a href="#cb50-10" aria-hidden="true" tabindex="-1"></a><span class="at"><mark>monofont: &quot;DejaVu Sans Mono&quot;</mark></span></span>
-<span id="cb50-11"><a href="#cb50-11" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code></pre></div>
+<div class="sourceCode" id="cb52"><pre class="sourceCode yaml embed_md"><code class="sourceCode yaml"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;`MPark/WG21` User&#39;s Guide&quot;</span></span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a><span class="fu">subtitle</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;Framework for Writing C++ Committee Proposals&quot;</span></span>
+<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a><span class="fu">document</span><span class="kw">:</span><span class="at"> D0000R0</span></span>
+<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a><span class="fu">date</span><span class="kw">:</span><span class="at"> today</span></span>
+<span id="cb52-6"><a href="#cb52-6" aria-hidden="true" tabindex="-1"></a><span class="fu">audience</span><span class="kw">:</span><span class="at"> WG21</span></span>
+<span id="cb52-7"><a href="#cb52-7" aria-hidden="true" tabindex="-1"></a><span class="fu">author</span><span class="kw">:</span></span>
+<span id="cb52-8"><a href="#cb52-8" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Michael Park</span></span>
+<span id="cb52-9"><a href="#cb52-9" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">email</span><span class="kw">:</span><span class="at"> &lt;mcypark@gmail.com&gt;</span></span>
+<span id="cb52-10"><a href="#cb52-10" aria-hidden="true" tabindex="-1"></a><span class="at"><mark>monofont: &quot;DejaVu Sans Mono&quot;</mark></span></span>
+<span id="cb52-11"><a href="#cb52-11" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code></pre></div>
 <p>“DejaVu Sans Mono” provides glyphs for a large amount of the Unicode
 characters. If you want the list of available fonts on your system, most
 supported systems will produce a list via the command-line tool

@@ -230,7 +230,7 @@ Reply-to:   \@author
 \author{&Author
 0\\&<\href{mailto:author0@gmail.com}{\nolinkurl{author0@gmail.com}}>\\&Author
 1\\&<\href{mailto:author1@gmail.com}{\nolinkurl{author1@gmail.com}}>\\}
-\date{2026-06-19}
+\date{2026-06-22}
 
 \begin{document}
 \hypertarget{title-block-header}{\label{title-block-header}}
@@ -929,9 +929,9 @@ execution of programs. Such requirements have the following meaning:
   message.
 \end{itemize}
 
-{{{[} \emph{Note:} }During template argument deduction and substitution,
-certain constructs that in other contexts require a diagnostic are
-treated differently; see {Template argument deduction
+{{{[} \emph{Note 1:} }During template argument deduction and
+substitution, certain constructs that in other contexts require a
+diagnostic are treated differently; see {Template argument deduction
 \href{https://eel.is/c++draft/temp.deduct}{{[}temp.deduct{]}}}.{ --- \emph{end note} {]}}}
 
 Furthermore, a conforming implementation shall not accept

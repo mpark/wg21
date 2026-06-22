@@ -13,6 +13,9 @@ import panflute as pf
 import re
 
 document_pattern = r"[PD]([0-9]+)R[0-9]+"
+nonnormative_classes = {'example', 'note'}
+editorial_classes = {'ednote', 'draftnote'}
+note_classes = nonnormative_classes | editorial_classes
 
 srefs = {}
 highlight_languages = set()
@@ -20,6 +23,7 @@ highlight_languages = set()
 headers = {}
 refs = {}
 pnum_count = 0
+nonnormative_count = { c : 0 for c in nonnormative_classes }
 
 def prepend_elem(elem, *prefix):
     assert(all(isinstance(e, pf.Inline) for e in prefix))
@@ -215,6 +219,7 @@ def wording(elem, doc):
 
     # Keeps track of automatic pnum assignment state.
     pnum_state = []
+    nonnormative_state = { c : 0 for c in nonnormative_classes }
 
     def process_pnum(elem, doc):
         if not (isinstance(elem, pf.Span) and 'pnum' in elem.classes):
@@ -252,6 +257,24 @@ def wording(elem, doc):
             literal if literal is not None else str(cur)
             for cur, literal in pnum_state)
         elem.content = [pf.Str(pnum)]
+
+    def process_nonnormative(elem, doc):
+        if not isinstance(elem, (pf.Div, pf.Span)):
+            return None
+
+        if 'unnumbered' in elem.classes:
+            return None
+
+        note_cls = next(iter(c for c in elem.classes if c in note_classes), None)
+        if note_cls is None or note_cls not in nonnormative_classes:
+            return None
+
+        num = elem.attributes.get('num')
+        if num is not None:
+            nonnormative_state[note_cls] = int(num)
+        else:
+            nonnormative_state[note_cls] += 1
+            elem.attributes['num'] = str(nonnormative_state[note_cls])
 
     def get_list_type(elem):
         if isinstance(elem, pf.OrderedList):
@@ -316,6 +339,7 @@ def wording(elem, doc):
 
     process_block(elem)
     elem.walk(process_pnum)
+    elem.walk(process_nonnormative)
     return elem
 
 def divspan(elem, doc):
@@ -351,9 +375,20 @@ def divspan(elem, doc):
             pf.RawInline('}', 'latex'))
         elem.attributes['style'] = f'color: #{html_color}'
 
-    def _nonnormative(name):
+    def _nonnormative(name, num):
+        label = [pf.Str(name.title())]
+        if num is not None:
+            label.append(pf.Space())
+            if doc.format == 'html':
+                if not elem.identifier:
+                    nonnormative_count[name] += 1
+                    elem.identifier = f'{name}-{nonnormative_count[name]}'
+                label.append(pf.Link(pf.Str(num), url=f'#{elem.identifier}'))
+            else:
+                label.append(pf.Str(num))
+
         wrap_elem(
-            pf.Span(pf.Str('[ '), pf.Emph(pf.Str(f'{name.title()}:')), pf.Space()),
+            pf.Span(pf.Str('[ '), pf.Emph(*label, pf.Str(':')), pf.Space()),
             elem,
             pf.Span(pf.Str(' — '), pf.Emph(pf.Str(f'end {name.lower()}')), pf.Str(' ]')))
 
@@ -391,8 +426,8 @@ def divspan(elem, doc):
 
         return pf.Superscript(pf.Str(num))
 
-    def example(): _nonnormative('example')
-    def note():    _nonnormative('note')
+    def example(): _nonnormative('example', elem.attributes.get('num'))
+    def note():    _nonnormative('note', elem.attributes.get('num'))
     def ednote():
         wrap_elem(pf.Str("[ Editor's note: "), elem, pf.Str(' ]'))
         _color('0000ff')
@@ -424,13 +459,13 @@ def divspan(elem, doc):
     if 'pnum' in elem.classes and isinstance(elem, pf.Span):
         return pnum()
 
-    note_cls = next(iter(cls for cls in elem.classes if cls in {'example', 'note', 'ednote', 'draftnote'}), None)
+    note_cls = next(iter(c for c in elem.classes if c in note_classes), None)
     if note_cls == 'example':  example()
     elif note_cls == 'note':   note()
     elif note_cls == 'ednote': ednote(); return
     elif note_cls == 'draftnote': draftnote(); return
 
-    color_cls = next(iter(cls for cls in elem.classes if cls in {'add', 'rm', 'mark'}), None)
+    color_cls = next(iter(c for c in elem.classes if c in {'add', 'rm', 'mark'}), None)
     if color_cls == 'add':  add()
     elif color_cls == 'rm': rm()
     elif color_cls == 'mark': mark()

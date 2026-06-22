@@ -75,6 +75,7 @@ ul > li:before {
 
 :target { background-color: yellow; }
 :target .codeblock { background-color: yellow; }
+:target .sourceCode { background-color: yellow; }
 :target ul { background-color: yellow; }
 
 p:has(> span.marginalizedparent > a.marginalized:target),

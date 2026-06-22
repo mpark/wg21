@@ -229,7 +229,7 @@ Guide}
 \subtitle{Framework for Writing C++ Committee Proposals}
 \author{&Michael
 Park\\&<\href{mailto:mcypark@gmail.com}{\nolinkurl{mcypark@gmail.com}}>\\}
-\date{2026-06-19}
+\date{2026-06-22}
 
 \begin{document}
 \hypertarget{title-block-header}{\label{title-block-header}}
@@ -1039,9 +1039,9 @@ without invoking the destructor, by reusing or releasing the storage as
 described above.
 \end{quote}
 
-Within \VERB|\NormalTok{::: wording}|, use \VERB|\NormalTok{\#}| within
-a paragraph number element to automatically fill in that part. For
-example:
+Within \VERB|\NormalTok{::: wording}| blocks, use \VERB|\NormalTok{\#}|
+within a paragraph number element to automatically fill in that part.
+For example:
 
 \begin{quote}
 \textbf{Markdown Source}
@@ -1493,6 +1493,54 @@ Large examples are
 \end{longtable}
 }
 
+Within \VERB|\NormalTok{::: wording}| blocks, examples are numbered
+automatically. You may add the class \VERB|\OperatorTok{{-}}| or
+\VERB|\OperatorTok{.}\NormalTok{unnumbered}| to omit the number, or
+specify the \VERB|\NormalTok{num}| attribute like
+\VERB|\NormalTok{num}\OperatorTok{=}\DecValTok{5}| to pin a number. The
+examples after a pinned number will increment from that number.
+
+\begin{quote}
+\textbf{Markdown Source}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{::: wording}
+\NormalTok{[\textasciigrave{}T x = T(T(T()));\textasciigrave{} value{-}initializes \textasciigrave{}x\textasciigrave{}.]\{.example\}}
+
+\NormalTok{[\textasciigrave{}int a = do \{ 42 \};\textasciigrave{}]\{.example\}}
+
+\NormalTok{::: \{.example num=5\}}
+\NormalTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}cpp}
+\NormalTok{auto a = do \{ do\_return 1; \};           // OK, deduces int}
+\NormalTok{auto b = do {-}\textgreater{} long \{ do\_return 1; \};   // OK, explicit type is long}
+\NormalTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}}
+\NormalTok{:::}
+\NormalTok{:::}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{Rendered Output}
+
+{{{[} \emph{Example 1:}
+}\VERB|\NormalTok{T x }\OperatorTok{=}\NormalTok{ T}\OperatorTok{(}\NormalTok{T}\OperatorTok{(}\NormalTok{T}\OperatorTok{()));}|
+value-initializes \VERB|\NormalTok{x}|.{ --- \emph{end example} {]}}}
+
+{{{[} \emph{Example 2:}
+}\VERB|\DataTypeTok{int}\NormalTok{ a }\OperatorTok{=} \ControlFlowTok{do} \OperatorTok{\{} \DecValTok{42} \OperatorTok{\};}|{ --- \emph{end example} {]}}}
+
+{{[} \emph{Example 5:} }
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{auto}\NormalTok{ a }\OperatorTok{=} \ControlFlowTok{do} \OperatorTok{\{}\NormalTok{ do\_return }\DecValTok{1}\OperatorTok{;} \OperatorTok{\};}           \CommentTok{// OK, deduces int}
+\KeywordTok{auto}\NormalTok{ b }\OperatorTok{=} \ControlFlowTok{do} \OperatorTok{{-}\textgreater{}} \DataTypeTok{long} \OperatorTok{\{}\NormalTok{ do\_return }\DecValTok{1}\OperatorTok{;} \OperatorTok{\};}   \CommentTok{// OK, explicit type is long}
+\end{Highlighting}
+\end{Shaded}
+
+{ --- \emph{end example} {]}}
+\end{quote}
+
 \subsubsection{\texorpdfstring{Notes\hyperref[notes]{}}{Notes}}\label{notes}
 
 Smaller, inline notes are
@@ -1541,6 +1589,56 @@ Large notes are
 \textbf{Rendered Output}
 
 {{[} \emph{Note:} }An expression of type ``\emph{cv1}
+\VERB|\NormalTok{T}|'' can initialize an object of type ``\emph{cv2}
+\VERB|\NormalTok{T}|'' independently of the cv-qualifiers \emph{cv1} and
+\emph{cv2}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DataTypeTok{int}\NormalTok{ a}\OperatorTok{;}
+\KeywordTok{const} \DataTypeTok{int}\NormalTok{ b }\OperatorTok{=}\NormalTok{ a}\OperatorTok{;}
+\DataTypeTok{int}\NormalTok{ c }\OperatorTok{=}\NormalTok{ b}\OperatorTok{;}
+\end{Highlighting}
+\end{Shaded}
+
+{ --- \emph{end note} {]}}
+\end{quote}
+
+Within \VERB|\NormalTok{::: wording}| blocks, notes are numbered
+automatically. You may add the class \VERB|\OperatorTok{{-}}| or
+\VERB|\OperatorTok{.}\NormalTok{unnumbered}| to omit the number, or
+specify the \VERB|\NormalTok{num}| attribute like
+\VERB|\NormalTok{num}\OperatorTok{=}\DecValTok{5}| to pin a number. The
+notes after a pinned number will increment from that number.
+
+\begin{quote}
+\textbf{Markdown Source}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{::: wording}
+\NormalTok{[Padding bits have unspecified value, but cannot cause traps.]\{.note\}}
+
+\NormalTok{::: note}
+\NormalTok{An expression of type "*cv1* \textasciigrave{}T\textasciigrave{}" can initialize an object of type "*cv2* \textasciigrave{}T\textasciigrave{}"}
+\NormalTok{independently of the cv{-}qualifiers *cv1* and *cv2*.}
+
+\NormalTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}cpp}
+\NormalTok{int a;}
+\NormalTok{const int b = a;}
+\NormalTok{int c = b;}
+\NormalTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}}
+\NormalTok{:::}
+\NormalTok{:::}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{Rendered Output}
+
+{{{[} \emph{Note 1:} }Padding bits have unspecified value, but cannot
+cause traps.{ --- \emph{end note} {]}}}
+
+{{[} \emph{Note 2:} }An expression of type ``\emph{cv1}
 \VERB|\NormalTok{T}|'' can initialize an object of type ``\emph{cv2}
 \VERB|\NormalTok{T}|'' independently of the cv-qualifiers \emph{cv1} and
 \emph{cv2}.
@@ -1654,6 +1752,8 @@ To specify an audience for the
 \href{https://pandoc.org/MANUAL.html\#divs-and-spans}{fenced
 \VERB|\NormalTok{Div}| block}, you'll need
 \VERB|\OperatorTok{:::} \OperatorTok{\{.}\NormalTok{draftnote audience}\OperatorTok{=}\StringTok{"the reader"}\OperatorTok{\}}|.
+
+These editorial notes are not automatically numbered.
 
 Finally, in the relatively common situation where an example appears
 within a note, you can simply nest them:

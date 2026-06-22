@@ -433,8 +433,8 @@ the object or reference. [...]
 invoking the destructor, by reusing or releasing the storage as described above.
 ```
 
-Within `::: wording`{.default}, use `#`{.default} within a paragraph number element to
-automatically fill in that part. For example:
+Within `::: wording`{.default} blocks, use `#`{.default} within a paragraph
+number element to automatically fill in that part. For example:
 
 ```render
 ::: wording
@@ -616,6 +616,26 @@ struct tnode {
 ``````
 :::
 
+Within `::: wording`{.default} blocks, examples are numbered automatically.
+You may add the class `-` or `.unnumbered` to omit the number, or specify
+the `num` attribute like `num=5` to pin a number.
+The examples after a pinned number will increment from that number.
+
+``````render
+::: wording
+[`T x = T(T(T()));` value-initializes `x`.]{.example}
+
+[`int a = do { 42 };`]{.example}
+
+::: {.example num=5}
+```cpp
+auto a = do { do_return 1; };           // OK, deduces int
+auto b = do -> long { do_return 1; };   // OK, explicit type is long
+```
+:::
+:::
+``````
+
 ### Notes
 
 Smaller, inline notes are [bracketed `Span` elements][divspan] that looks like `[note text]{.note}`.
@@ -636,6 +656,28 @@ int a;
 const int b = a;
 int c = b;
 ```
+:::
+``````
+
+Within `::: wording`{.default} blocks, notes are numbered automatically.
+You may add the class `-` or `.unnumbered` to omit the number, or specify
+the `num` attribute like `num=5` to pin a number.
+The notes after a pinned number will increment from that number.
+
+``````render
+::: wording
+[Padding bits have unspecified value, but cannot cause traps.]{.note}
+
+::: note
+An expression of type "*cv1* `T`" can initialize an object of type "*cv2* `T`"
+independently of the cv-qualifiers *cv1* and *cv2*.
+
+```cpp
+int a;
+const int b = a;
+int c = b;
+```
+:::
 :::
 ``````
 
@@ -671,6 +713,8 @@ based on how paragraphs 1 and 3 are already worded
 ```
 
 To specify an audience for the [fenced `Div` block][divspan], you'll need `::: {.draftnote audience="the reader"}`.
+
+These editorial notes are not automatically numbered.
 
 Finally, in the relatively common situation where an example appears within a note, you can simply nest them:
 
