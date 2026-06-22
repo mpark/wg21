@@ -706,69 +706,59 @@ defined as follows:
 \VERB|\OperatorTok{[}\FloatTok{2.1}\OperatorTok{]\{.}\NormalTok{pnum}\OperatorTok{\}}|
 explicitly pins the nested count.
 
-\pnum{(2.2)} \VERB|\OperatorTok{[}\ErrorTok{\#.\#]\{.pnum\}}|
-automatically continues to
-\VERB|\OperatorTok{(}\FloatTok{2.2}\OperatorTok{)}|.
+\pnum{(2.2)} \VERB|\NormalTok{[\#.\#]\{.pnum\}}| automatically continues
+to \VERB|\OperatorTok{(}\FloatTok{2.2}\OperatorTok{)}|.
 
-\pnum{3} \VERB|\OperatorTok{[}\ErrorTok{\#]\{.pnum\}}| automatically
-continues to \VERB|\DecValTok{3}|.
+\pnum{3} \VERB|\NormalTok{[\#]\{.pnum\}}| automatically continues to
+\VERB|\DecValTok{3}|.
 
-\pnum{(3.1)} \VERB|\OperatorTok{[}\ErrorTok{\#.\#]\{.pnum\}}|
-automatically starts the nested count at
-\VERB|\OperatorTok{(}\FloatTok{3.1}\OperatorTok{)}|.
+\pnum{(3.1)} \VERB|\NormalTok{[\#.\#]\{.pnum\}}| automatically starts
+the nested count at \VERB|\OperatorTok{(}\FloatTok{3.1}\OperatorTok{)}|.
 
-\pnum{(2.1)} \VERB|\OperatorTok{[}\FloatTok{2.}\ErrorTok{\#]\{.pnum\}}|
-resets the nested count to
-\VERB|\OperatorTok{(}\FloatTok{2.1}\OperatorTok{)}|.
+\pnum{(2.1)} \VERB|\NormalTok{[2.\#]\{.pnum\}}| resets the nested count
+to \VERB|\OperatorTok{(}\FloatTok{2.1}\OperatorTok{)}|.
 
 \pnum{x} \VERB|\NormalTok{x}| doesn't contribute to automatic numbering.
 
-\pnum{(x.1)}
-\VERB|\OperatorTok{[}\NormalTok{x}\OperatorTok{.}\ErrorTok{\#]\{.pnum\}}|
-automatically starts the nested count at
+\pnum{(x.1)} \VERB|\NormalTok{[x.\#]\{.pnum\}}| automatically starts the
+nested count at
 \VERB|\OperatorTok{(}\NormalTok{x}\FloatTok{.1}\OperatorTok{)}|.
 
-\pnum{(x.2)}
-\VERB|\OperatorTok{[}\NormalTok{x}\OperatorTok{.}\ErrorTok{\#]\{.pnum\}}|
-automatically continues to
-\VERB|\OperatorTok{(}\NormalTok{x}\FloatTok{.2}\OperatorTok{)}|.
+\pnum{(x.2)} \VERB|\NormalTok{[x.\#]\{.pnum\}}| automatically continues
+to \VERB|\OperatorTok{(}\NormalTok{x}\FloatTok{.2}\OperatorTok{)}|.
 
 \pnum{x} \VERB|\NormalTok{x}| resets its own nested count.
 
-\pnum{(x.1)}
-\VERB|\OperatorTok{[}\NormalTok{x}\OperatorTok{.}\ErrorTok{\#]\{.pnum\}}|
-automatically restarts at
-\VERB|\OperatorTok{(}\NormalTok{x}\FloatTok{.1}\OperatorTok{)}|.
+\pnum{(x.1)} \VERB|\NormalTok{[x.\#]\{.pnum\}}| automatically restarts
+at \VERB|\OperatorTok{(}\NormalTok{x}\FloatTok{.1}\OperatorTok{)}|.
 
-\pnum{(3.1)} \VERB|\OperatorTok{[}\ErrorTok{\#.\#]\{.pnum\}}| returns to
-the numeric path and continues to
+\pnum{(3.1)} \VERB|\NormalTok{[\#.\#]\{.pnum\}}| returns to the numeric
+path and continues to
 \VERB|\OperatorTok{(}\FloatTok{3.1}\OperatorTok{)}|.
 
-\pnum{(3.x.1)} \VERB|\OperatorTok{[}\ErrorTok{\#.x.\#]\{.pnum\}}| starts
-a literal nested path at
+\pnum{(3.x.1)} \VERB|\NormalTok{[\#.x.\#]\{.pnum\}}| starts a literal
+nested path at
 \VERB|\OperatorTok{(}\FloatTok{3.}\ErrorTok{x.1}\OperatorTok{)}|.
 
-\pnum{(3.x.2)} \VERB|\OperatorTok{[}\ErrorTok{\#.x.\#]\{.pnum\}}|
-continues the literal nested path at
+\pnum{(3.x.2)} \VERB|\NormalTok{[\#.x.\#]\{.pnum\}}| continues the
+literal nested path at
 \VERB|\OperatorTok{(}\FloatTok{3.}\ErrorTok{x.2}\OperatorTok{)}|.
 
-\pnum{(3.2)} \VERB|\OperatorTok{[}\ErrorTok{\#.\#]\{.pnum\}}| returns to
-the numeric nested count at
-\VERB|\OperatorTok{(}\FloatTok{3.2}\OperatorTok{)}|.
+\pnum{(3.2)} \VERB|\NormalTok{[\#.\#]\{.pnum\}}| returns to the numeric
+nested count at \VERB|\OperatorTok{(}\FloatTok{3.2}\OperatorTok{)}|.
 
 \pnum{(4.2.5)} Explicitly pins a deeper numeric path.
 
-\pnum{(4.x.1)} \VERB|\OperatorTok{[}\ErrorTok{\#.x.\#]\{.pnum\}}| starts
-a separate literal nested path at
+\pnum{(4.x.1)} \VERB|\NormalTok{[\#.x.\#]\{.pnum\}}| starts a separate
+literal nested path at
 \VERB|\OperatorTok{(}\FloatTok{4.}\ErrorTok{x.1}\OperatorTok{)}|.
 
-\pnum{(4.x.2)} \VERB|\OperatorTok{[}\ErrorTok{\#.x.\#]\{.pnum\}}|
-continues the literal nested path at
+\pnum{(4.x.2)} \VERB|\NormalTok{[\#.x.\#]\{.pnum\}}| continues the
+literal nested path at
 \VERB|\OperatorTok{(}\FloatTok{4.}\ErrorTok{x.2}\OperatorTok{)}|.
 
-\pnum{(4.3)} \VERB|\OperatorTok{[}\ErrorTok{\#.\#]\{.pnum\}}| returns to
-the numeric nested count at
-\VERB|\OperatorTok{(}\FloatTok{4.3}\OperatorTok{)}|.
+\pnum{(4.3)} \VERB|\NormalTok{[\#.\#]\{.pnum\}}| returns to the numeric
+nested count at \VERB|\OperatorTok{(}\FloatTok{4.3}\OperatorTok{)}|.
 
 \subsection{\texorpdfstring{Automatic Paragraph
 Numbers\hyperref[automatic-paragraph-numbers]{}}{Automatic Paragraph Numbers}}\label{automatic-paragraph-numbers}
@@ -872,9 +862,9 @@ after the skips.
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
-\subsubsection*{\texorpdfstring{General {4.1.1 General
-\href{https://eel.is/c++draft/intro.compliance.general}{{[}intro.compliance.general{]}}}\hyperref[general-intro.compliance.general]{}}{General 4.1.1 General {[}intro.compliance.general{]}}}\label{general-intro.compliance.general}
-\addcontentsline{toc}{subsubsection}{General {4.1.1 General
+\subsubsection*{\texorpdfstring{{4.1.1 General
+\href{https://eel.is/c++draft/intro.compliance.general}{{[}intro.compliance.general{]}}}\hyperref[intro.compliance.general]{}}{4.1.1 General {[}intro.compliance.general{]}}}\label{intro.compliance.general}
+\addcontentsline{toc}{subsubsection}{{4.1.1 General
 {{[}intro.compliance.general{]}}}{}}
 
 \pnum{1} The set of \emph{diagnosable rules} consists of all syntactic
@@ -960,11 +950,10 @@ partial definitions. Private members are not specified, but each
 implementation shall supply them to complete the definitions according
 to the description in the library Clauses.
 
-\subsubsection*{\texorpdfstring{Diagnostic directives {15.9
-Diagnostic directives
-\href{https://eel.is/c++draft/cpp.error}{{[}cpp.error{]}}}\hyperref[diagnostic-directives-cpp.error]{}}{Diagnostic directives 15.9 Diagnostic directives {[}cpp.error{]}}}\label{diagnostic-directives-cpp.error}
-\addcontentsline{toc}{subsubsection}{Diagnostic directives {15.9
-Diagnostic directives {{[}cpp.error{]}}}{}}
+\subsubsection*{\texorpdfstring{{15.9 Diagnostic directives
+\href{https://eel.is/c++draft/cpp.error}{{[}cpp.error{]}}}\hyperref[cpp.error]{}}{15.9 Diagnostic directives {[}cpp.error{]}}}\label{cpp.error}
+\addcontentsline{toc}{subsubsection}{{15.9 Diagnostic directives
+{{[}cpp.error{]}}}{}}
 
 \pnum{1} A preprocessing directive of the form
 

@@ -357,41 +357,41 @@ an expression `e` is defined as follows:
 
 [2.1]{.pnum} `[2.1]{.pnum}` explicitly pins the nested count.
 
-[#.#]{.pnum} `[#.#]{.pnum}` automatically continues to `(2.2)`.
+[#.#]{.pnum} `[#.#]{.pnum}`{.default} automatically continues to `(2.2)`.
 
-[#]{.pnum} `[#]{.pnum}` automatically continues to `3`.
+[#]{.pnum} `[#]{.pnum}`{.default} automatically continues to `3`.
 
-[#.#]{.pnum} `[#.#]{.pnum}` automatically starts the nested count at `(3.1)`.
+[#.#]{.pnum} `[#.#]{.pnum}`{.default} automatically starts the nested count at `(3.1)`.
 
-[2.#]{.pnum} `[2.#]{.pnum}` resets the nested count to `(2.1)`.
+[2.#]{.pnum} `[2.#]{.pnum}`{.default} resets the nested count to `(2.1)`.
 
 [x]{.pnum} `x` doesn't contribute to automatic numbering.
 
-[x.#]{.pnum} `[x.#]{.pnum}` automatically starts the nested count at `(x.1)`.
+[x.#]{.pnum} `[x.#]{.pnum}`{.default} automatically starts the nested count at `(x.1)`.
 
-[x.#]{.pnum} `[x.#]{.pnum}` automatically continues to `(x.2)`.
+[x.#]{.pnum} `[x.#]{.pnum}`{.default} automatically continues to `(x.2)`.
 
 [x]{.pnum} `x` resets its own nested count.
 
-[x.#]{.pnum} `[x.#]{.pnum}` automatically restarts at `(x.1)`.
+[x.#]{.pnum} `[x.#]{.pnum}`{.default} automatically restarts at `(x.1)`.
 
-[#.#]{.pnum} `[#.#]{.pnum}` returns to the numeric path and continues to `(3.1)`.
+[#.#]{.pnum} `[#.#]{.pnum}`{.default} returns to the numeric path and continues to `(3.1)`.
 
-[#.x.#]{.pnum} `[#.x.#]{.pnum}` starts a literal nested path at `(3.x.1)`.
+[#.x.#]{.pnum} `[#.x.#]{.pnum}`{.default} starts a literal nested path at `(3.x.1)`.
 
-[#.x.#]{.pnum} `[#.x.#]{.pnum}` continues the literal nested path at `(3.x.2)`.
+[#.x.#]{.pnum} `[#.x.#]{.pnum}`{.default} continues the literal nested path at `(3.x.2)`.
 
-[#.#]{.pnum} `[#.#]{.pnum}` returns to the numeric nested count at `(3.2)`.
+[#.#]{.pnum} `[#.#]{.pnum}`{.default} returns to the numeric nested count at `(3.2)`.
 :::
 
 ::: wording
 [4.2.5]{.pnum} Explicitly pins a deeper numeric path.
 
-[#.x.#]{.pnum} `[#.x.#]{.pnum}` starts a separate literal nested path at `(4.x.1)`.
+[#.x.#]{.pnum} `[#.x.#]{.pnum}`{.default} starts a separate literal nested path at `(4.x.1)`.
 
-[#.x.#]{.pnum} `[#.x.#]{.pnum}` continues the literal nested path at `(4.x.2)`.
+[#.x.#]{.pnum} `[#.x.#]{.pnum}`{.default} continues the literal nested path at `(4.x.2)`.
 
-[#.#]{.pnum} `[#.#]{.pnum}` returns to the numeric nested count at `(4.3)`.
+[#.#]{.pnum} `[#.#]{.pnum}`{.default} returns to the numeric nested count at `(4.3)`.
 :::
 
 ## Automatic Paragraph Numbers
@@ -446,11 +446,10 @@ x) Second added paragraph.
 
 ---
 
+### [intro.compliance.general]{.sref} {-}
+
 ::: wording
-
-### General [intro.compliance.general]{.sref} {-}
-
-1. The set of _diagnosable rules_ consists of all syntactic and semantic rules
+#. The set of _diagnosable rules_ consists of all syntactic and semantic rules
    in this document except for those rules containing an explicit notation that
    "no diagnostic is required" or which are described as resulting in "undefined behavior".
 
@@ -493,10 +492,12 @@ x) Second added paragraph.
 #. For classes and class templates, the library Clauses specify partial definitions.
    Private members are not specified, but each implementation shall supply them to complete
    the definitions according to the description in the library Clauses.
+:::
 
-### Diagnostic directives [cpp.error]{.sref} {-}
+### [cpp.error]{.sref} {-}
 
-1. A preprocessing directive of the form
+::: wording
+#. A preprocessing directive of the form
 
    > ```cpp
    > # error $pp-tokens~opt~$ $new-line$

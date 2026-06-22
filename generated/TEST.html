@@ -941,68 +941,68 @@ paragraph number to
 <code class="sourceCode cpp"><span class="op">[</span><span class="fl">2.1</span><span class="op">]{.</span>pnum<span class="op">}</span></code>
 explicitly pins the nested count.</p>
 <p><span class="marginalizedparent"><a href="#pnum-6" id="pnum-6" class="marginalized">(2.2)</a></span>
-<code class="sourceCode cpp"><span class="op">[</span><span class="er">#.#]{.pnum}</span></code>
-automatically continues to
+<code class="sourceCode default">[#.#]{.pnum}</code> automatically
+continues to
 <code class="sourceCode cpp"><span class="op">(</span><span class="fl">2.2</span><span class="op">)</span></code>.</p>
 <p><span class="marginalizedparent"><a href="#pnum-7" id="pnum-7" class="marginalized">3</a></span>
-<code class="sourceCode cpp"><span class="op">[</span><span class="er">#]{.pnum}</span></code>
-automatically continues to
+<code class="sourceCode default">[#]{.pnum}</code> automatically
+continues to
 <code class="sourceCode cpp"><span class="dv">3</span></code>.</p>
 <p><span class="marginalizedparent"><a href="#pnum-8" id="pnum-8" class="marginalized">(3.1)</a></span>
-<code class="sourceCode cpp"><span class="op">[</span><span class="er">#.#]{.pnum}</span></code>
-automatically starts the nested count at
+<code class="sourceCode default">[#.#]{.pnum}</code> automatically
+starts the nested count at
 <code class="sourceCode cpp"><span class="op">(</span><span class="fl">3.1</span><span class="op">)</span></code>.</p>
 <p><span class="marginalizedparent"><a href="#pnum-9" id="pnum-9" class="marginalized">(2.1)</a></span>
-<code class="sourceCode cpp"><span class="op">[</span><span class="fl">2.</span><span class="er">#]{.pnum}</span></code>
-resets the nested count to
+<code class="sourceCode default">[2.#]{.pnum}</code> resets the nested
+count to
 <code class="sourceCode cpp"><span class="op">(</span><span class="fl">2.1</span><span class="op">)</span></code>.</p>
 <p><span class="marginalizedparent"><a href="#pnum-10" id="pnum-10" class="marginalized">x</a></span> <code class="sourceCode cpp">x</code>
 doesn’t contribute to automatic numbering.</p>
 <p><span class="marginalizedparent"><a href="#pnum-11" id="pnum-11" class="marginalized">(x.1)</a></span>
-<code class="sourceCode cpp"><span class="op">[</span>x<span class="op">.</span><span class="er">#]{.pnum}</span></code>
-automatically starts the nested count at
+<code class="sourceCode default">[x.#]{.pnum}</code> automatically
+starts the nested count at
 <code class="sourceCode cpp"><span class="op">(</span>x<span class="fl">.1</span><span class="op">)</span></code>.</p>
 <p><span class="marginalizedparent"><a href="#pnum-12" id="pnum-12" class="marginalized">(x.2)</a></span>
-<code class="sourceCode cpp"><span class="op">[</span>x<span class="op">.</span><span class="er">#]{.pnum}</span></code>
-automatically continues to
+<code class="sourceCode default">[x.#]{.pnum}</code> automatically
+continues to
 <code class="sourceCode cpp"><span class="op">(</span>x<span class="fl">.2</span><span class="op">)</span></code>.</p>
 <p><span class="marginalizedparent"><a href="#pnum-13" id="pnum-13" class="marginalized">x</a></span> <code class="sourceCode cpp">x</code>
 resets its own nested count.</p>
 <p><span class="marginalizedparent"><a href="#pnum-14" id="pnum-14" class="marginalized">(x.1)</a></span>
-<code class="sourceCode cpp"><span class="op">[</span>x<span class="op">.</span><span class="er">#]{.pnum}</span></code>
-automatically restarts at
+<code class="sourceCode default">[x.#]{.pnum}</code> automatically
+restarts at
 <code class="sourceCode cpp"><span class="op">(</span>x<span class="fl">.1</span><span class="op">)</span></code>.</p>
 <p><span class="marginalizedparent"><a href="#pnum-15" id="pnum-15" class="marginalized">(3.1)</a></span>
-<code class="sourceCode cpp"><span class="op">[</span><span class="er">#.#]{.pnum}</span></code>
-returns to the numeric path and continues to
+<code class="sourceCode default">[#.#]{.pnum}</code> returns to the
+numeric path and continues to
 <code class="sourceCode cpp"><span class="op">(</span><span class="fl">3.1</span><span class="op">)</span></code>.</p>
 <p><span class="marginalizedparent"><a href="#pnum-16" id="pnum-16" class="marginalized">(3.x.1)</a></span>
-<code class="sourceCode cpp"><span class="op">[</span><span class="er">#.x.#]{.pnum}</span></code>
-starts a literal nested path at
+<code class="sourceCode default">[#.x.#]{.pnum}</code> starts a literal
+nested path at
 <code class="sourceCode cpp"><span class="op">(</span><span class="fl">3.</span><span class="er">x.1</span><span class="op">)</span></code>.</p>
 <p><span class="marginalizedparent"><a href="#pnum-17" id="pnum-17" class="marginalized">(3.x.2)</a></span>
-<code class="sourceCode cpp"><span class="op">[</span><span class="er">#.x.#]{.pnum}</span></code>
-continues the literal nested path at
+<code class="sourceCode default">[#.x.#]{.pnum}</code> continues the
+literal nested path at
 <code class="sourceCode cpp"><span class="op">(</span><span class="fl">3.</span><span class="er">x.2</span><span class="op">)</span></code>.</p>
 <p><span class="marginalizedparent"><a href="#pnum-18" id="pnum-18" class="marginalized">(3.2)</a></span>
-<code class="sourceCode cpp"><span class="op">[</span><span class="er">#.#]{.pnum}</span></code>
-returns to the numeric nested count at
+<code class="sourceCode default">[#.#]{.pnum}</code> returns to the
+numeric nested count at
 <code class="sourceCode cpp"><span class="op">(</span><span class="fl">3.2</span><span class="op">)</span></code>.</p>
 </div>
 <div class="wording">
 <p><span class="marginalizedparent"><a href="#pnum-19" id="pnum-19" class="marginalized">(4.2.5)</a></span> Explicitly pins a deeper numeric
 path.</p>
 <p><span class="marginalizedparent"><a href="#pnum-20" id="pnum-20" class="marginalized">(4.x.1)</a></span>
-<code class="sourceCode cpp"><span class="op">[</span><span class="er">#.x.#]{.pnum}</span></code>
-starts a separate literal nested path at
+<code class="sourceCode default">[#.x.#]{.pnum}</code> starts a separate
+literal nested path at
 <code class="sourceCode cpp"><span class="op">(</span><span class="fl">4.</span><span class="er">x.1</span><span class="op">)</span></code>.</p>
 <p><span class="marginalizedparent"><a href="#pnum-21" id="pnum-21" class="marginalized">(4.x.2)</a></span>
-<code class="sourceCode cpp"><span class="op">[</span><span class="er">#.x.#]{.pnum}</span></code>
-continues the literal nested path at
+<code class="sourceCode default">[#.x.#]{.pnum}</code> continues the
+literal nested path at
 <code class="sourceCode cpp"><span class="op">(</span><span class="fl">4.</span><span class="er">x.2</span><span class="op">)</span></code>.</p>
 <p><span class="marginalizedparent"><a href="#pnum-22" id="pnum-22" class="marginalized">(4.3)</a></span>
-<code class="sourceCode cpp"><span class="op">[</span><span class="er">#.#]{.pnum}</span></code>
-returns to the numeric nested count at
+<code class="sourceCode default">[#.#]{.pnum}</code> returns to the
+numeric nested count at
 <code class="sourceCode cpp"><span class="op">(</span><span class="fl">4.3</span><span class="op">)</span></code>.</p>
 </div>
 <h2 data-number="5.2" id="automatic-paragraph-numbers"><span class="header-section-number">5.2</span> Automatic Paragraph Numbers<a href="#automatic-paragraph-numbers" class="self-link"></a></h2>
@@ -1091,9 +1091,9 @@ e.g. <code class="sourceCode default">24.</code>.</p>
 <p><span class="marginalizedparent"><a href="#pnum-43" id="pnum-43" class="marginalized">25</a></span> Automatically continue to 25.</p>
 </div>
 <hr />
+<h3 class="unnumbered" id="intro.compliance.general"><span>4.1.1 General
+<a href="https://eel.is/c++draft/intro.compliance.general" title="4.1.1 General">[intro.compliance.general]</a></span><a href="#intro.compliance.general" class="self-link"></a></h3>
 <div class="wording">
-<h3 class="unnumbered" id="general-intro.compliance.general">General
-<span>4.1.1 General <a href="https://eel.is/c++draft/intro.compliance.general" title="4.1.1 General">[intro.compliance.general]</a></span><a href="#general-intro.compliance.general" class="self-link"></a></h3>
 <p><span class="marginalizedparent"><a href="#pnum-44" id="pnum-44" class="marginalized">1</a></span> The set of <em>diagnosable rules</em>
 consists of all syntactic and semantic rules in this document except for
 those rules containing an explicit notation that “no diagnostic is
@@ -1159,8 +1159,10 @@ resulting in a contract violation.</p></li>
 library Clauses specify partial definitions. Private members are not
 specified, but each implementation shall supply them to complete the
 definitions according to the description in the library Clauses.</p>
-<h3 class="unnumbered" id="diagnostic-directives-cpp.error">Diagnostic
-directives <span>15.9 Diagnostic directives <a href="https://eel.is/c++draft/cpp.error" title="15.9 Diagnostic directives">[cpp.error]</a></span><a href="#diagnostic-directives-cpp.error" class="self-link"></a></h3>
+</div>
+<h3 class="unnumbered" id="cpp.error"><span>15.9 Diagnostic directives
+<a href="https://eel.is/c++draft/cpp.error" title="15.9 Diagnostic directives">[cpp.error]</a></span><a href="#cpp.error" class="self-link"></a></h3>
+<div class="wording">
 <p><span class="marginalizedparent"><a href="#pnum-57" id="pnum-57" class="marginalized">1</a></span> A preprocessing directive of the
 form</p>
 <blockquote>
