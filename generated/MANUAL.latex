@@ -1055,9 +1055,11 @@ For example:
 
 \NormalTok{[\#]\{.pnum\} Automatically continues to 6.}
 
-\NormalTok{[\#.\#]\{.pnum\} Automatically starts a nested numbering at (6.1).}
+\NormalTok{{-} [\#.\#]\{.pnum\} Automatically starts a nested numbering at (6.1).}
 
 \NormalTok{::: add}
+\NormalTok{{-} [\#.\#]\{.pnum\} Automatically continues a nested numbering at (6.2).}
+
 \NormalTok{[x]\{.pnum\} Added paragraph that does not affect the next automatic number.}
 \NormalTok{:::}
 
@@ -1074,10 +1076,22 @@ For example:
 
 \pnum{6} Automatically continues to 6.
 
-\pnum{(6.1)} Automatically starts a nested numbering at (6.1).
+\begin{itemize}
+\tightlist
+\item
+  \pnum{(6.1)} Automatically starts a nested numbering at (6.1).
+\end{itemize}
 
-{\color[HTML]{006e28}\pnum{x} Added paragraph that does not affect the
-next automatic number.}
+{\color[HTML]{006e28}
+
+\begin{itemize}
+\tightlist
+\item
+  \pnum{(6.2)} Automatically continues a nested numbering at (6.2).
+\end{itemize}
+
+\pnum{x} Added paragraph that does not affect the next automatic
+number.}
 
 \pnum{7} Automatically continues to 7.
 \end{quote}

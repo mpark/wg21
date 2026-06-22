@@ -444,9 +444,11 @@ number element to automatically fill in that part. For example:
 
 [#]{.pnum} Automatically continues to 6.
 
-[#.#]{.pnum} Automatically starts a nested numbering at (6.1).
+- [#.#]{.pnum} Automatically starts a nested numbering at (6.1).
 
 ::: add
+- [#.#]{.pnum} Automatically continues a nested numbering at (6.2).
+
 [x]{.pnum} Added paragraph that does not affect the next automatic number.
 :::
 
