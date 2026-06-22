@@ -5,7 +5,7 @@ DEFAULTS ?= $(wildcard $(SRCDIR)/defaults.yaml)
 METADATA ?= $(wildcard $(SRCDIR)/metadata.yaml)
 REQUIREMENTS ?= $(wildcard $(SRCDIR)/requirements.txt)
 
-override SRC := $(filter-out %/LICENSE.md %/README.md, $(wildcard $(SRCDIR)/*.md))
+override SRC := $(filter-out %/CHANGELOG.md %/LICENSE.md %/README.md, $(wildcard $(SRCDIR)/*.md))
 
 override HTML := $(SRC:.md=.html)
 override LATEX := $(SRC:.md=.latex)
