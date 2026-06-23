@@ -2116,23 +2116,25 @@ code element. This is useful for italicized terms, exposition-only
 names, \hyperref[modifying-text]{modifying text}, and
 \hyperref[stable-names]{stable names}.
 
-Embedded Markdown is \textbf{enabled by default} for C++ and
-no-syntax-highlighting code. This is essentially:
+Embedded Markdown is \textbf{enabled by default} for
+\VERB|\NormalTok{cpp}|, \VERB|\ControlFlowTok{default}|, and
+\VERB|\NormalTok{diff}| code classes. This is essentially:
 
 \begin{itemize}
 \tightlist
 \item
-  Inline code such as
+  Inline code:
   \VERB|\NormalTok{\textasciigrave{}code\textasciigrave{}}|,
   \VERB|\NormalTok{\textasciigrave{}code\textasciigrave{}\{.cpp\}}|,
   \VERB|\NormalTok{\textasciigrave{}code\textasciigrave{}\{.default\}}|,
-  and
+  \VERB|\NormalTok{\textasciigrave{}code\textasciigrave{}\{.diff\}}| and
 \item
-  Code blocks that start with either
+  Code blocks that start with
   \VERB|\NormalTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}}|,
   \VERB|\NormalTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}cpp}|,
+  \VERB|\NormalTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}default}|,
   or
-  \VERB|\NormalTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}default}|
+  \VERB|\NormalTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}diff}|
 \end{itemize}
 
 \begin{quote}

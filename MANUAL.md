@@ -855,11 +855,13 @@ With embedded Markdown enabled, text surrounded by `@`{.default} is parsed as
 Markdown and then placed back into the code element. This is useful for
 italicized terms, exposition-only names, [modifying text], and [stable names].
 
-Embedded Markdown is **enabled by default** for C++ and no-syntax-highlighting code.
-This is essentially:
+Embedded Markdown is **enabled by default** for `cpp`, `default`, and `diff`
+code classes. This is essentially:
 
-  - Inline code such as `` `code` ``{.default}, `` `code`{.cpp}``{.default}, `` `code`{.default}``{.default}, and
-  - Code blocks that start with either ` ``` `{.default}, ` ```cpp`{.default}, or ` ```default`{.default}
+  - Inline code: `` `code` ``{.default}, `` `code`{.cpp}``{.default},
+    `` `code`{.default}``{.default}, `` `code`{.diff}``{.default} and
+  - Code blocks that start with ` ``` `{.default}, ` ```cpp`{.default},
+    ` ```default`{.default}, or ` ```diff`{.default}
 
 ```render
 Recall the `static_cast` syntax: `static_cast < @*type-id*@ > ( @*expression*@ )`.

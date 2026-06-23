@@ -2151,16 +2151,21 @@ inside it. With embedded Markdown enabled, text surrounded by
 placed back into the code element. This is useful for italicized terms,
 exposition-only names, <a href="#modifying-text">modifying text</a>, and
 <a href="#stable-names">stable names</a>.</p>
-<p>Embedded Markdown is <strong>enabled by default</strong> for C++ and
-no-syntax-highlighting code. This is essentially:</p>
+<p>Embedded Markdown is <strong>enabled by default</strong> for
+<code class="sourceCode cpp">cpp</code>,
+<code class="sourceCode cpp"><span class="cf">default</span></code>, and
+<code class="sourceCode cpp">diff</code> code classes. This is
+essentially:</p>
 <ul>
-<li>Inline code such as <code class="sourceCode default">`code`</code>,
+<li>Inline code: <code class="sourceCode default">`code`</code>,
 <code class="sourceCode default">`code`{.cpp}</code>,
-<code class="sourceCode default">`code`{.default}</code>, and</li>
-<li>Code blocks that start with either
+<code class="sourceCode default">`code`{.default}</code>,
+<code class="sourceCode default">`code`{.diff}</code> and</li>
+<li>Code blocks that start with
 <code class="sourceCode default">```</code>,
-<code class="sourceCode default">```cpp</code>, or
-<code class="sourceCode default">```default</code></li>
+<code class="sourceCode default">```cpp</code>,
+<code class="sourceCode default">```default</code>, or
+<code class="sourceCode default">```diff</code></li>
 </ul>
 <blockquote>
 <p><strong>Markdown Source</strong></p>
