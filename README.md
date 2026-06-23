@@ -14,6 +14,26 @@ The detailed documentation is **written with the framework itself** (see
   - [User's Guide, rendered as HTML](https://mpark.github.io/wg21/MANUAL.html)
   - [User's Guide, rendered as PDF](https://mpark.github.io/wg21/MANUAL.pdf)
 
+## Testing
+
+The framework has rendering tests under [tests](tests). The expected HTML and
+LaTeX output is checked in under [tests/gold](tests/gold).
+
+From [tests](tests), run:
+
+```sh
+make check       # render HTML/LaTeX into out/ and compare against gold/
+make update-gold # overwrite the checked-in HTML/LaTeX gold output
+make tests       # render HTML, LaTeX, and PDF into out/ for inspection
+```
+
+`make check` verifies that the rendered HTML and LaTeX have not changed. If a
+change is expected, review the diff, run `make update-gold`, and check in the
+updated files under [tests/gold](tests/gold) with the source change.
+
+You can also run `make html`, `make latex`, or `make pdf` in [tests](tests) to
+render just one output format into `tests/out`.
+
 ## Resources
 
 - [Example paper repository](https://github.com/mpark/wg21-papers)

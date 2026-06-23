@@ -5,4 +5,4 @@ data/srefs.md
 data/annex-f
 deps/pandoc
 deps/python
-generated/*.render.md
+tests/out

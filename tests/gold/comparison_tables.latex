@@ -1,0 +1,313 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+\documentclass[
+  english,
+  10pt,
+  a4paper,
+  oneside,
+  final]{article}
+\usepackage{xcolor}
+\usepackage[left=2.245cm,right=2.245cm,top=2.5cm,bottom=2.5cm]{geometry}
+\usepackage{amsmath,amssymb}
+\setcounter{secnumdepth}{5}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+% Make \paragraph and \subparagraph free-standing
+\makeatletter
+\ifx\paragraph\undefined\else
+  \let\oldparagraph\paragraph
+  \renewcommand{\paragraph}{
+    \@ifstar
+      \xxxParagraphStar
+      \xxxParagraphNoStar
+  }
+  \newcommand{\xxxParagraphStar}[1]{\oldparagraph*{#1}\mbox{}}
+  \newcommand{\xxxParagraphNoStar}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+  \let\oldsubparagraph\subparagraph
+  \renewcommand{\subparagraph}{
+    \@ifstar
+      \xxxSubParagraphStar
+      \xxxSubParagraphNoStar
+  }
+  \newcommand{\xxxSubParagraphStar}[1]{\oldsubparagraph*{#1}\mbox{}}
+  \newcommand{\xxxSubParagraphNoStar}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+\makeatother
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{246,248,250}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{#1}}
+\newcommand{\AnnotationTok}[1]{#1}
+\newcommand{\AttributeTok}[1]{#1}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.62,0.41,0.03}{#1}}
+\newcommand{\BuiltInTok}[1]{\textcolor[rgb]{0.62,0.41,0.03}{#1}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.62,0.41,0.03}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.42,0.45,0.49}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.42,0.45,0.49}{\textit{#1}}}
+\newcommand{\ConstantTok}[1]{#1}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.38,0.49}{#1}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.00,0.38,0.49}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.62,0.41,0.03}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.42,0.45,0.49}{#1}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.62,0.41,0.03}{#1}}
+\newcommand{\FunctionTok}[1]{#1}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.42,0.45,0.49}{#1}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.38,0.49}{#1}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.48,0.24,0.57}{#1}}
+\newcommand{\OtherTok}[1]{#1}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.44,0.31,0.22}{#1}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.62,0.41,0.03}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.62,0.41,0.03}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.62,0.41,0.03}{#1}}
+\newcommand{\VariableTok}[1]{#1}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.62,0.41,0.03}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.42,0.45,0.49}{\textbf{#1}}}
+\usepackage{longtable,booktabs,array}
+\newcounter{none} % for unnumbered tables
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\ifLuaTeX
+  \usepackage{luacolor}
+  \usepackage[soul]{lua-ul}
+\else
+  \usepackage{soul}
+\fi
+\ifLuaTeX
+\usepackage[bidi=basic,shorthands=off]{babel}
+\else
+\usepackage[bidi=default,shorthands=off]{babel}
+\fi
+\ifLuaTeX
+  \usepackage{selnolig} % disable illegal ligatures
+\fi
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\usepackage[normalem]{ulem}
+\providecommand{\CSLIndent}{}
+\renewcommand{\CSLIndent}[1]{\hfill\break\hspace*{\cslhangindent}\ignorespaces#1}
+
+% adjust quote indent
+\renewenvironment{quote}{\list{}{\leftmargin=0.2in}\item[]}{\endlist}
+
+% https://github.com/cplusplus/draft/blob/97b615a5a6ab0598b624ee05402c531d0421cff6/source/styles.tex#L127-L133
+\renewcommand{\labelitemi}{---}
+\renewcommand{\labelitemii}{---}
+\renewcommand{\labelitemiii}{---}
+\renewcommand{\labelitemiv}{---}
+
+% https://github.com/cplusplus/draft/blob/97b615a5a6ab0598b624ee05402c531d0421cff6/source/layout.tex#L32-L68
+\makeatletter
+\newcommand{\pnum}[1]{%
+\noindent\makebox[0pt][l]{\makebox[0pt][r]{%
+\scriptsize\raisebox{.7ex}{#1}%
+\hspace{\@totalleftmargin}\quad%
+}}\ignorespaces}
+\makeatother
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={Comparison Table Tests},
+  pdflang={en},
+  colorlinks=true,
+  linkcolor={blue},
+  filecolor={Maroon},
+  citecolor={blue},
+  urlcolor={blue},
+  pdfcreator={LaTeX via pandoc}}
+\hypersetup{pdfcreator={mpark/wg21}}
+
+\makeatletter
+\def\@maketitle{
+  \newpage \null \vskip 2em
+  {\center \LARGE \@title \par}
+  \vskip 1.5em
+  \begin{flushright}
+    \begin{tabular}{ll}
+Document \#:&D0000R1\\
+Date:       &\@date\\
+Project:    &Programming Language C++\\
+Audience:   &Library Evolution\\
+Reply-to:   \@author
+    \end{tabular}
+  \end{flushright}
+}
+\makeatother
+
+\title{Comparison Table Tests}
+\author{&Test
+Author\\&<\href{mailto:test@example.com}{\nolinkurl{test@example.com}}>\\}
+\date{2026-01-01}
+
+\begin{document}
+\hypertarget{title-block-header}{\label{title-block-header}}
+\maketitle
+
+{
+\hypersetup{linkcolor=black}
+\setcounter{tocdepth}{2}
+\hypertarget{toctitle}{\label{toctitle}}
+\tableofcontents
+}
+\section{\texorpdfstring{Comparison
+Tables\hyperref[comparison-tables]{}}{Comparison Tables}}\label{comparison-tables}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\caption{Put your caption here with some
+{\protect\VERB|\NormalTok{code}|}}\tabularnewline
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\centering\arraybackslash\textbf{Before}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\centering\arraybackslash\textbf{After}
+\end{minipage} \\
+\midrule\noalign{}
+\endfirsthead
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\centering\arraybackslash\textbf{Before}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\centering\arraybackslash\textbf{After}
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{switch} \OperatorTok{(}\NormalTok{x}\OperatorTok{)} \OperatorTok{\{}
+  \ControlFlowTok{case} \DecValTok{0}\OperatorTok{:}\NormalTok{ std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"got zero"}\OperatorTok{;} \ControlFlowTok{break}\OperatorTok{;}
+  \ControlFlowTok{case} \DecValTok{1}\OperatorTok{:}\NormalTok{ std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"got one"}\OperatorTok{;} \ControlFlowTok{break}\OperatorTok{;}
+  \ControlFlowTok{default}\OperatorTok{:}\NormalTok{ std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"don\textquotesingle{}t care"}\OperatorTok{;}
+\OperatorTok{\}}
+\end{Highlighting}
+\end{Shaded}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{inspect }\OperatorTok{(}\NormalTok{x}\OperatorTok{)} \OperatorTok{\{}
+  \DecValTok{0}\OperatorTok{:}\NormalTok{ std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"got zero"}\OperatorTok{;}
+  \DecValTok{1}\OperatorTok{:}\NormalTok{ std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"got one"}\OperatorTok{;}
+\NormalTok{  \_}\OperatorTok{:}\NormalTok{ std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"don\textquotesingle{}t care"}\OperatorTok{;}
+\OperatorTok{\}}
+\end{Highlighting}
+\end{Shaded}
+\end{minipage} \\
+\end{longtable}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.6000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.4000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\centering\arraybackslash\textbf{Before}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\centering\arraybackslash\textbf{After}
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{switch} \OperatorTok{(}\NormalTok{x}\OperatorTok{)} \OperatorTok{\{}
+  \ControlFlowTok{case} \DecValTok{0}\OperatorTok{:}\NormalTok{ std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"got zero"}\OperatorTok{;} \ControlFlowTok{break}\OperatorTok{;}
+  \ControlFlowTok{case} \DecValTok{1}\OperatorTok{:}\NormalTok{ std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"got one"}\OperatorTok{;} \ControlFlowTok{break}\OperatorTok{;}
+  \ControlFlowTok{default}\OperatorTok{:}\NormalTok{ std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"don\textquotesingle{}t care"}\OperatorTok{;}
+\OperatorTok{\}}
+\end{Highlighting}
+\end{Shaded}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{inspect }\OperatorTok{(}\NormalTok{x}\OperatorTok{)} \OperatorTok{\{}
+  \DecValTok{0}\OperatorTok{:}\NormalTok{ std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"got zero"}\OperatorTok{;}
+  \DecValTok{1}\OperatorTok{:}\NormalTok{ std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"got one"}\OperatorTok{;}
+\NormalTok{  \_}\OperatorTok{:}\NormalTok{ std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"don\textquotesingle{}t care"}\OperatorTok{;}
+\OperatorTok{\}}
+\end{Highlighting}
+\end{Shaded}
+\end{minipage} \\
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{if} \OperatorTok{(}\NormalTok{s }\OperatorTok{==} \StringTok{"foo"}\OperatorTok{)} \OperatorTok{\{}
+\NormalTok{  std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"got foo"}\OperatorTok{;}
+\OperatorTok{\}} \ControlFlowTok{else} \ControlFlowTok{if} \OperatorTok{(}\NormalTok{s }\OperatorTok{==} \StringTok{"bar"}\OperatorTok{)} \OperatorTok{\{}
+\NormalTok{  std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"got bar"}\OperatorTok{;}
+\OperatorTok{\}} \ControlFlowTok{else} \OperatorTok{\{}
+\NormalTok{  std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"don\textquotesingle{}t care"}\OperatorTok{;}
+\OperatorTok{\}}
+\end{Highlighting}
+\end{Shaded}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{inspect }\OperatorTok{(}\NormalTok{s}\OperatorTok{)} \OperatorTok{\{}
+  \StringTok{"foo"}\OperatorTok{:}\NormalTok{ std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"got foo"}\OperatorTok{;}
+  \StringTok{"bar"}\OperatorTok{:}\NormalTok{ std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"got bar"}\OperatorTok{;}
+\NormalTok{  \_}\OperatorTok{:}\NormalTok{ std}\OperatorTok{::}\NormalTok{cout }\OperatorTok{\textless{}\textless{}} \StringTok{"don\textquotesingle{}t care"}\OperatorTok{;}
+\OperatorTok{\}}
+\end{Highlighting}
+\end{Shaded}
+\end{minipage} \\
+\end{longtable}
+}
+
+\end{document}

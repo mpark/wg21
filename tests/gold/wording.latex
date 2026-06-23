@@ -1,0 +1,295 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+\documentclass[
+  english,
+  10pt,
+  a4paper,
+  oneside,
+  final]{article}
+\usepackage{xcolor}
+\usepackage[left=2.245cm,right=2.245cm,top=2.5cm,bottom=2.5cm]{geometry}
+\usepackage{amsmath,amssymb}
+\setcounter{secnumdepth}{5}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+% Make \paragraph and \subparagraph free-standing
+\makeatletter
+\ifx\paragraph\undefined\else
+  \let\oldparagraph\paragraph
+  \renewcommand{\paragraph}{
+    \@ifstar
+      \xxxParagraphStar
+      \xxxParagraphNoStar
+  }
+  \newcommand{\xxxParagraphStar}[1]{\oldparagraph*{#1}\mbox{}}
+  \newcommand{\xxxParagraphNoStar}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+  \let\oldsubparagraph\subparagraph
+  \renewcommand{\subparagraph}{
+    \@ifstar
+      \xxxSubParagraphStar
+      \xxxSubParagraphNoStar
+  }
+  \newcommand{\xxxSubParagraphStar}[1]{\oldsubparagraph*{#1}\mbox{}}
+  \newcommand{\xxxSubParagraphNoStar}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+\makeatother
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{246,248,250}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{#1}}
+\newcommand{\AnnotationTok}[1]{#1}
+\newcommand{\AttributeTok}[1]{#1}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.62,0.41,0.03}{#1}}
+\newcommand{\BuiltInTok}[1]{\textcolor[rgb]{0.62,0.41,0.03}{#1}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.62,0.41,0.03}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.42,0.45,0.49}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.42,0.45,0.49}{\textit{#1}}}
+\newcommand{\ConstantTok}[1]{#1}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.38,0.49}{#1}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.00,0.38,0.49}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.62,0.41,0.03}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.42,0.45,0.49}{#1}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.62,0.41,0.03}{#1}}
+\newcommand{\FunctionTok}[1]{#1}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.42,0.45,0.49}{#1}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.38,0.49}{#1}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.48,0.24,0.57}{#1}}
+\newcommand{\OtherTok}[1]{#1}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.44,0.31,0.22}{#1}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.62,0.41,0.03}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.62,0.41,0.03}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.62,0.41,0.03}{#1}}
+\newcommand{\VariableTok}[1]{#1}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.62,0.41,0.03}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.42,0.45,0.49}{\textbf{#1}}}
+\ifLuaTeX
+  \usepackage{luacolor}
+  \usepackage[soul]{lua-ul}
+\else
+  \usepackage{soul}
+\fi
+\ifLuaTeX
+\usepackage[bidi=basic,shorthands=off]{babel}
+\else
+\usepackage[bidi=default,shorthands=off]{babel}
+\fi
+\ifLuaTeX
+  \usepackage{selnolig} % disable illegal ligatures
+\fi
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\usepackage[normalem]{ulem}
+\providecommand{\CSLIndent}{}
+\renewcommand{\CSLIndent}[1]{\hfill\break\hspace*{\cslhangindent}\ignorespaces#1}
+
+% adjust quote indent
+\renewenvironment{quote}{\list{}{\leftmargin=0.2in}\item[]}{\endlist}
+
+% https://github.com/cplusplus/draft/blob/97b615a5a6ab0598b624ee05402c531d0421cff6/source/styles.tex#L127-L133
+\renewcommand{\labelitemi}{---}
+\renewcommand{\labelitemii}{---}
+\renewcommand{\labelitemiii}{---}
+\renewcommand{\labelitemiv}{---}
+
+% https://github.com/cplusplus/draft/blob/97b615a5a6ab0598b624ee05402c531d0421cff6/source/layout.tex#L32-L68
+\makeatletter
+\newcommand{\pnum}[1]{%
+\noindent\makebox[0pt][l]{\makebox[0pt][r]{%
+\scriptsize\raisebox{.7ex}{#1}%
+\hspace{\@totalleftmargin}\quad%
+}}\ignorespaces}
+\makeatother
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={Wording Tests},
+  pdflang={en},
+  colorlinks=true,
+  linkcolor={blue},
+  filecolor={Maroon},
+  citecolor={blue},
+  urlcolor={blue},
+  pdfcreator={LaTeX via pandoc}}
+\hypersetup{pdfcreator={mpark/wg21}}
+
+\makeatletter
+\def\@maketitle{
+  \newpage \null \vskip 2em
+  {\center \LARGE \@title \par}
+  \vskip 1.5em
+  \begin{flushright}
+    \begin{tabular}{ll}
+Document \#:&D0000R1\\
+Date:       &\@date\\
+Project:    &Programming Language C++\\
+Audience:   &Library Evolution\\
+Reply-to:   \@author
+    \end{tabular}
+  \end{flushright}
+}
+\makeatother
+
+\title{Wording Tests}
+\author{&Test
+Author\\&<\href{mailto:test@example.com}{\nolinkurl{test@example.com}}>\\}
+\date{2026-01-01}
+
+\begin{document}
+\hypertarget{title-block-header}{\label{title-block-header}}
+\maketitle
+
+{
+\hypersetup{linkcolor=black}
+\setcounter{tocdepth}{2}
+\hypertarget{toctitle}{\label{toctitle}}
+\tableofcontents
+}
+\section{\texorpdfstring{Wording
+Blocks\hyperref[wording-blocks]{}}{Wording Blocks}}\label{wording-blocks}
+
+\subsection*{\texorpdfstring{{4.1.1 General
+\href{https://eel.is/c++draft/intro.compliance.general}{{[}intro.compliance.general{]}}}\hyperref[intro.compliance.general]{}}{4.1.1 General {[}intro.compliance.general{]}}}\label{intro.compliance.general}
+\addcontentsline{toc}{subsection}{{4.1.1 General
+{{[}intro.compliance.general{]}}}{}}
+
+\pnum{1} The set of \emph{diagnosable rules} consists of all syntactic
+and semantic rules in this document except for those rules containing an
+explicit notation that ``no diagnostic is required'' or which are
+described as resulting in ``undefined behavior''.
+
+\pnum{2} Although this document states only requirements on C++
+implementations, those requirements are often easier to understand if
+they are phrased as requirements on programs, parts of programs, or
+execution of programs. Such requirements have the following meaning:
+
+\begin{itemize}
+\item
+  \pnum{(2.1)} If a program contains no violations of the rules in
+  {Lexical conventions \href{https://eel.is/c++draft/lex}{{[}lex{]}}}
+  through {Execution control library
+  \href{https://eel.is/c++draft/exec}{{[}exec{]}}} as well as those
+  specified in {Compatibility features
+  \href{https://eel.is/c++draft/depr}{{[}depr{]}}}, a conforming
+  implementation shall accept and correctly execute that program, except
+  when the implementation's limitations are exceeded.
+\item
+  \pnum{(2.2)} If a program contains a violation of a rule for which no
+  diagnostic is required, this document places no requirement on
+  implementations with respect to that program.
+\item
+  \pnum{(2.3)} Otherwise, if a program contains
+
+  \begin{itemize}
+  \item
+    \pnum{(2.3.1)} a violation of any diagnosable rule,
+  \item
+    \pnum{(2.3.2)} a preprocessing translation unit with a
+    \VERB|\PreprocessorTok{\#warning}| preprocessing directive
+    ({Diagnostic directives
+    \href{https://eel.is/c++draft/cpp.error}{{[}cpp.error{]}}}),
+  \item
+    \pnum{(2.3.3)} an occurrence of a construct described in this
+    document as ``conditionally-supported'', when the implementation
+    does not support that construct, or
+  \item
+    \pnum{(2.3.4)} a contract assertion ({Evaluation
+    \href{https://eel.is/c++draft/basic.contract.eval}{{[}basic.contract.eval{]}}})
+    evaluated with a checking semantic in a manifestly
+    constant-evaluated context ({Further definitions
+    \href{https://eel.is/c++draft/expr.const.defns}{{[}expr.const.defns{]}}})
+    resulting in a contract violation,
+  \end{itemize}
+
+  a conforming implementation shall issue at least one diagnostic
+  message.
+\end{itemize}
+
+{{{[} \emph{Note 1:} }During template argument deduction and
+substitution, certain constructs that in other contexts require a
+diagnostic are treated differently; see {Template argument deduction
+\href{https://eel.is/c++draft/temp.deduct}{{[}temp.deduct{]}}}.{ --- \emph{end note} {]}}}
+
+\pnum{3} For classes and class templates, the library Clauses specify
+partial definitions. Private members are not specified, but each
+implementation shall supply them to complete the definitions according
+to the description in the library Clauses.
+
+\subsection*{\texorpdfstring{{15.9 Diagnostic directives
+\href{https://eel.is/c++draft/cpp.error}{{[}cpp.error{]}}}\hyperref[cpp.error]{}}{15.9 Diagnostic directives {[}cpp.error{]}}}\label{cpp.error}
+\addcontentsline{toc}{subsection}{{15.9 Diagnostic directives
+{{[}cpp.error{]}}}{}}
+
+\pnum{1} A preprocessing directive of the form
+
+\begin{quote}
+\begin{Shaded}
+\begin{Highlighting}[]
+\PreprocessorTok{\# error \emph{pp-tokens\textsubscript{opt}} \emph{new-line}}
+\end{Highlighting}
+\end{Shaded}
+\end{quote}
+
+renders the program ill-formed. A preprocessing directive of the form
+
+\begin{quote}
+\begin{Shaded}
+\begin{Highlighting}[]
+\PreprocessorTok{\# warning \emph{pp-tokens\textsubscript{opt}} \emph{new-line}}
+\end{Highlighting}
+\end{Shaded}
+\end{quote}
+
+requires the implementation to produce at least one diagnostic message
+for the preprocessing translation unit ({General
+\href{https://eel.is/c++draft/intro.compliance.general}{{[}intro.compliance.general{]}}}).
+
+\pnum{2} \emph{Recommended practice}: Any diagnostic message caused by
+either of these directives should include the specified sequence of
+preprocessing tokens.
+
+\end{document}
