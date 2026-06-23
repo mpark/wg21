@@ -208,14 +208,6 @@ width: 5em;
 opacity: 0;
 }
 a.itemDeclLink:hover { opacity: 1; }
-span.marginalizedparent {
-position: relative;
-left: -5em;
-}
-li span.marginalizedparent { left: -7em; }
-li ul > li span.marginalizedparent { left: -9em; }
-li ul > li ul > li span.marginalizedparent { left: -11em; }
-li ul > li ul > li ul > li span.marginalizedparent { left: -13em; }
 div.footnoteNumberParent {
 position: relative;
 left: -4.7em;
@@ -469,10 +461,32 @@ text-decoration-thickness: 1px;
 ins {
 text-underline-offset: 3.5px;
 }
-
+div.sourceCode,
+div.wording {
+color: #000000;
+background-color: #F1F1F1;
+border: 1px solid #D1D1D1;
+}
 div.sourceCode {
 padding: 0.5em;
 }
+div.wording {
+padding-left: 1em;
+padding-right: 1em;
+}
+span.marginalizedparent {
+position: relative;
+left: -4.5em;
+}
+li span.marginalizedparent { left: -6.5em; }
+li ul > li span.marginalizedparent { left: -8.5em; }
+li ul > li ul > li span.marginalizedparent { left: -10.5em; }
+li ul > li ul > li ul > li span.marginalizedparent { left: -12.5em; }
+div.wording span.marginalizedparent { left: -5.5em; }
+div.wording li span.marginalizedparent { left: -7.5em; }
+div.wording li ul > li span.marginalizedparent { left: -9.5em; }
+div.wording li ul > li ul > li span.marginalizedparent { left: -11.5em; }
+div.wording li ul > li ul > li ul > li span.marginalizedparent { left: -13.5em; }
 
 .view-controls {
 position: sticky;

@@ -32,10 +32,36 @@ ins {
   text-underline-offset: 3.5px;
 }
 
-/* Leave room for underline/strikeout decorations in code blocks. */
+div.sourceCode,
+div.wording {
+  color: #000000;
+  background-color: #F1F1F1;
+  border: 1px solid #D1D1D1;
+}
+
 div.sourceCode {
   padding: 0.5em;
 }
+
+div.wording {
+  padding-left: 1em;
+  padding-right: 1em;
+}
+
+span.marginalizedparent {
+  position: relative;
+  left: -4.5em;
+}
+li span.marginalizedparent { left: -6.5em; }
+li ul > li span.marginalizedparent { left: -8.5em; }
+li ul > li ul > li span.marginalizedparent { left: -10.5em; }
+li ul > li ul > li ul > li span.marginalizedparent { left: -12.5em; }
+
+div.wording span.marginalizedparent { left: -5.5em; }
+div.wording li span.marginalizedparent { left: -7.5em; }
+div.wording li ul > li span.marginalizedparent { left: -9.5em; }
+div.wording li ul > li ul > li span.marginalizedparent { left: -11.5em; }
+div.wording li ul > li ul > li ul > li span.marginalizedparent { left: -13.5em; }
 
 /* Interactive view controls. Disable syntax highlighting, and hide deleted text. */
 
