@@ -2,7 +2,6 @@ SRCDIR ?= .
 OUTDIR ?= generated
 
 DEFAULTS ?= $(wildcard $(SRCDIR)/defaults.yaml)
-METADATA ?= $(wildcard $(SRCDIR)/metadata.yaml)
 REQUIREMENTS ?= $(wildcard $(SRCDIR)/requirements.txt)
 
 override SRC := $(filter-out %/CHANGELOG.md %/LICENSE.md %/README.md, $(wildcard $(SRCDIR)/*.md))
@@ -30,7 +29,6 @@ $(eval override AUX := $(filter $(DATADIR)/%, $(filter %.md, $^)))
 $(eval override FILE := $(filter-out $(DATADIR)/%, $(filter %.md, $^)))
 $(eval override CMD := pandoc $(AUX) $(FILE) -o $@ --data-dir=$(DATADIR) -M data-dir=$(DATADIR) -d doc -d formatting)
 $(eval $(and $(DEFAULTS), override CMD += -d $(DEFAULTS)))
-$(eval $(and $(METADATA), override CMD += --metadata-file $(METADATA)))
 $(if $(filter %.html, $@),
   $(eval override TOCDEPTH := $(shell $(PYTHON_BIN) $(DATADIR)/toc-depth.py < $(firstword $(FILE))))
   $(eval $(and $(TOCDEPTH), override CMD += --toc-depth $(TOCDEPTH))))
@@ -55,7 +53,6 @@ override SRCDEPS := $(addprefix $(DATADIR)/, \
 	metadata.yaml \
 	toc-depth.py)
 $(eval $(and $(DEFAULTS), override SRCDEPS += $(DEFAULTS)))
-$(eval $(and $(METADATA), override SRCDEPS += $(METADATA)))
 
 override GENDEPS := $(PANDOC_DIR) $(PYTHON_DIR) $(addprefix $(DATADIR)/, csl.json srefs.json srefs.md)
 override DEPS := $(SRCDEPS) $(GENDEPS)  # This is used by downstream projects. Do not remove.
