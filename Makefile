@@ -11,9 +11,9 @@ override HTML := $(SRC:.md=.html)
 override LATEX := $(SRC:.md=.latex)
 override PDF := $(SRC:.md=.pdf)
 
-override ROOTDIR := $(abspath $(dir $(lastword $(MAKEFILE_LIST))))
+override ROOTDIR := $(dir $(lastword $(MAKEFILE_LIST)))
 
-override DEPSDIR := $(ROOTDIR)/deps
+override DEPSDIR := $(ROOTDIR)deps
 
 override PANDOC_VER := 3.9.0.2
 override PANDOC_DIR := $(DEPSDIR)/pandoc/$(PANDOC_VER)
@@ -23,7 +23,7 @@ override PYTHON_BIN := $(PYTHON_DIR)/bin/python3
 export SHELL := bash
 export PATH := $(PANDOC_DIR):$(PYTHON_DIR)/bin:$(PATH)
 
-override DATADIR := $(ROOTDIR)/data
+override DATADIR := $(ROOTDIR)data
 
 override define PANDOC
 $(eval override FILE := $(filter-out $(DATADIR)/%, $(filter %.md, $^)))
