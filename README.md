@@ -19,20 +19,25 @@ The detailed documentation is **written with the framework itself** (see
 The framework has rendering tests under [tests](tests). The expected HTML and
 LaTeX output is checked in under [tests/gold](tests/gold).
 
-From [tests](tests), run:
+From [tests](tests), the following commands are available:
 
 ```sh
-make check       # render HTML/LaTeX into out/ and compare against gold/
-make update-gold # overwrite the checked-in HTML/LaTeX gold output
-make tests       # render HTML, LaTeX, and PDF into out/ for inspection
+cd tests
+
+make check         # build HTML/LaTeX into check/ and compare against gold/
+make gold          # overwrite the checked-in HTML/LaTeX gold output
+
+make heading.html  # build a specific test case into generated/heading.html
+
+make               # build all of the test cases in all formats into generated/
+make html          # build all of the test cases in HTML format into generated/
+make latex         # build all of the test cases in LaTeX format into generated/
+make pdf           # build all of the test cases in PDF format into generated/
 ```
 
-`make check` verifies that the rendered HTML and LaTeX have not changed. If a
-change is expected, review the diff, run `make update-gold`, and check in the
-updated files under [tests/gold](tests/gold) with the source change.
-
-You can also run `make html`, `make latex`, or `make pdf` in [tests](tests) to
-render just one output format into `tests/out`.
+`make check` verifies that the rendered HTML and LaTeX have not changed.
+If a change is expected, run `make gold`, review the diff, and check in
+the updated files under [tests/gold](tests/gold).
 
 ## Resources
 

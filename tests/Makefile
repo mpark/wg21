@@ -1,22 +1,17 @@
-SRCDIR := .
-OUTDIR ?= out
-
-.DEFAULT_GOAL := check
-
 include ../Makefile
 
+.DEFAULT_GOAL := tests
+
 .PHONY: tests
-tests:
-	rm -rf out
-	@$(MAKE) html latex pdf
+tests: $(HTML) $(LATEX) $(PDF)
 
 .PHONY: check
 check:
-	rm -rf out
-	@$(MAKE) html latex
-	diff -ruN gold out
+	rm -rf check
+	@$(MAKE) -f ../Makefile OUTDIR=check html latex
+	diff -ruN gold check
 
-.PHONY: update-gold
-update-gold:
+.PHONY: gold
+gold:
 	rm -rf gold
-	@$(MAKE) OUTDIR=gold html latex
+	@$(MAKE) -f ../Makefile OUTDIR=gold html latex
