@@ -26,9 +26,9 @@ export PATH := $(PANDOC_DIR):$(PYTHON_DIR)/bin:$(PATH)
 override DATADIR := $(ROOTDIR)data
 
 override define PANDOC
-$(eval override FILE := $(filter-out $(DATADIR)/%, $(filter %.md, $^)))
 $(eval override AUX := $(filter $(DATADIR)/%, $(filter %.md, $^)))
-$(eval override CMD := pandoc $(FILE) $(AUX) -o $@ --data-dir=$(DATADIR) -M data-dir=$(DATADIR) -d doc -d formatting)
+$(eval override FILE := $(filter-out $(DATADIR)/%, $(filter %.md, $^)))
+$(eval override CMD := pandoc $(AUX) $(FILE) -o $@ --data-dir=$(DATADIR) -M data-dir=$(DATADIR) -d doc -d formatting)
 $(eval $(and $(DEFAULTS), override CMD += -d $(DEFAULTS)))
 $(eval $(and $(METADATA), override CMD += --metadata-file $(METADATA)))
 $(if $(filter %.html, $@),

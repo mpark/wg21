@@ -36,3 +36,9 @@ Also supported:
 | ------------------------------------------- | ------------------------------- |
 | `[basic.life#1]{.sref}`{.default}           | [basic.life#1]{.sref}           |
 | `[basic.life]{- .sref .title}`{.default}    | [basic.life]{- .sref .title}    |
+
+# Override stable name links
+
+Override [over.match] to something else.
+
+[over.match]: https://isocpp.org

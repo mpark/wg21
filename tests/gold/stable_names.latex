@@ -275,4 +275,9 @@ Also supported:
 \end{longtable}
 }
 
+\section{\texorpdfstring{Override stable name
+links\hyperref[override-stable-name-links]{}}{Override stable name links}}\label{override-stable-name-links}
+
+Override \href{https://isocpp.org}{over.match} to something else.
+
 \end{document}
