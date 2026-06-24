@@ -7,11 +7,11 @@ tests: $(HTML) $(LATEX) $(PDF)
 
 .PHONY: check
 check:
-	rm -rf check
-	@$(MAKE) -f ../Makefile OUTDIR=check html latex
-	diff -ruN gold check
+	rm -rf actual
+	@$(MAKE) -f ../Makefile OUTDIR=actual html latex
+	diff -ruN expected actual
 
-.PHONY: gold
-gold:
-	rm -rf gold
-	@$(MAKE) -f ../Makefile OUTDIR=gold html latex
+.PHONY: expected
+expected:
+	rm -rf expected
+	@$(MAKE) -f ../Makefile OUTDIR=expected html latex

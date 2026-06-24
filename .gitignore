@@ -6,4 +6,4 @@ data/annex-f
 deps/pandoc
 deps/python
 generated/
-tests/check
+tests/actual
