@@ -1,17 +1,12 @@
-include ../Makefile
-
-.DEFAULT_GOAL := tests
-
-.PHONY: tests
-tests: $(HTML) $(LATEX) $(PDF)
+include ../flat.mk
 
 .PHONY: check
 check:
 	rm -rf actual
-	@$(MAKE) -f ../Makefile OUTDIR=actual html latex
+	@$(MAKE) -f ../flat.mk OUTDIR=actual html latex
 	diff -ruN expected actual
 
 .PHONY: expected
 expected:
 	rm -rf expected
-	@$(MAKE) -f ../Makefile OUTDIR=expected html latex
+	@$(MAKE) -f ../flat.mk OUTDIR=expected html latex

@@ -27,7 +27,7 @@ features, paper milestones, and large implementation changes.
   pinned numbers, unnumbered notes/examples, and independent note/example
   counters.
 - Added paragraph suffix stable references such as `[stable.name]/1`, and
-  improved stable-name data generation through `srefs.json` and `srefs.md`.
+  improved stable-name data generation through `srefs.json` and `srefs.defs`.
 - Added `number-srefs` metadata to control whether section numbers are shown
   by default for stable-name references.
 - Simplified stable-name reference rendering so numbered stable references
