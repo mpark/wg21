@@ -16,6 +16,8 @@ export PATH := $(PANDOC_DIR):$(PYTHON_DIR)/bin:$(PATH)
 
 override define PANDOC
 $(eval override FILES := $(filter %.md, $^))
+$(eval override SUGGESTION := $(shell $(PYTHON_BIN) $(DATADIR)/suggest-target.py '$@'))
+$(if $(FILES),,$(error No Markdown input found for target '$@'$(if $(SUGGESTION),. $(SUGGESTION))))
 $(eval override CMD := pandoc $(DATADIR)/srefs.defs $(FILES) -o $@ --data-dir=$(DATADIR) -M data-dir=$(DATADIR) -d doc -d formatting)
 $(eval $(and $(DEFAULTS), override CMD += -d $(DEFAULTS)))
 $(if $(filter %.html, $@),
@@ -40,6 +42,7 @@ override SRCDEPS := $(addprefix $(DATADIR)/, \
 	templates/wg21.latex \
 	favicon.ico \
 	metadata.yaml \
+	suggest-target.py \
 	toc-depth.py)
 $(eval $(and $(DEFAULTS), override SRCDEPS += $(DEFAULTS)))
 
