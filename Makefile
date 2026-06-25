@@ -5,3 +5,7 @@ $(OUTDIR)/MANUAL.render.md: MANUAL.md $(DATADIR)/filters/render.py $(PANDOC_DIR)
 
 $(OUTDIR)/MANUAL.html $(OUTDIR)/MANUAL.latex $(OUTDIR)/MANUAL.pdf: $(OUTDIR)/MANUAL.render.md $(DEPS) | $(OUTDIR)
 	$(PANDOC)
+
+.PHONY: check
+check:
+	@$(MAKE) -C tests check
