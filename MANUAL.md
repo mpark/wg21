@@ -86,34 +86,122 @@ Add this repository to your paper repository as a git submodule:
 git submodule add https://github.com/mpark/wg21.git
 ```
 
-Then include the framework `Makefile` from your repository's top-level `Makefile`:
+## Project Layouts
+
+The framework provides two Makefile fragments for common project layouts.
+
+### Flat Project Layout
+
+Use [`flat.mk`](https://github.com/mpark/wg21/blob/master/flat.mk) when all papers
+live in one directory and outputs should be written to a common output directory.
+
+```text
+wg21-papers/
+|-- wg21 (submodule)
+|-- Makefile
+|-- p2806r4.md
+|-- p2996r13.md
+`-- generated/
+    |-- p2806r4.html
+    `-- p2996r13.html
+```
+
+In the top-level `Makefile`:
 
 ```make
-include wg21/Makefile
+include wg21/flat.mk
 ```
 
-Markdown files in the repository root become build targets. For example,
-`P0000R0.md` can be built as `generated/P0000R0.html` or `generated/P0000R0.pdf`.
+Markdown files in the repository root become build targets. By default, outputs
+are written under `generated/`.
 
-See [mpark/wg21-papers](https://github.com/mpark/wg21-papers) for an example use of this project.
-
-## Generation
-
-Given a `P0000R0.md` at the top-level of your repository:
+For example:
 
 ```bash
-make generated/P0000R0.html  # HTML Output
-make generated/P0000R0.pdf   # PDF Output
+make p2806r4.html  # builds generated/p2806r4.html
+make p2806r4.pdf   # builds generated/p2806r4.pdf
 ```
 
-For convenience, the `Makefile` also accepts:
+You may also build all papers at once:
 
 ```bash
-make P0000R0.html  # HTML Output
-make P0000R0.pdf   # PDF Output
+make       # builds all papers in all formats
+make html  # builds all papers in HTML format
+make latex # builds all papers in LaTeX format
+make pdf   # builds all papers in PDF format
 ```
 
-In both cases, the output is written under `generated/`.
+To use a different output directory, set `OUTDIR` before the include:
+
+```make
+OUTDIR := out
+include wg21/flat.mk
+```
+
+If a top-level `defaults.yaml` or `requirements.txt` exists, it is picked up
+automatically. To use a different file, set `DEFAULTS` or `REQUIREMENTS` before
+the include.
+
+See [mpark/wg21-papers](https://github.com/mpark/wg21-papers) for an example use of this layout.
+
+### Per-paper Project Layout
+
+Use [`paper.mk`](https://github.com/mpark/wg21/blob/master/paper.mk) when each
+paper has its own directory. Outputs are written in that paper directory.
+
+```text
+wg21-papers/
+|-- wg21 (submodule)
+|-- p2806/
+|   |-- Makefile
+|   |-- p2806r4.md
+|   `-- p2806r4.html
+`-- p2996/
+    |-- Makefile
+    |-- p2996r13.md
+    `-- p2996r13.html
+```
+
+In each per-paper `Makefile`:
+
+```make
+include ../wg21/paper.mk
+```
+
+Same-stem targets work automatically. For example:
+
+```bash
+cd p2806
+make p2806r4.html  # builds from p2806r4.md
+```
+
+You may also introduce explicit source-to-output mappings. Suppose you have:
+
+```text
+wg21-papers/
+|-- wg21 (submodule)
+`-- p2806-do-expr/
+    |-- Makefile
+    |-- do-expr.md
+    `-- p2806r4.html
+```
+
+In `p2806-do-expr/Makefile`{.default}:
+
+```make
+include ../wg21/paper.mk
+
+p2806r4.html: do-expr.md
+```
+
+With this, you can do:
+
+```bash
+cd p2806-do-expr
+make p2806r4.html  # builds from do-expr.md
+```
+
+See [brevzin/cpp_proposals](https://github.com/brevzin/cpp_proposals) for an example use of this layout.
 
 # Formatting
 
