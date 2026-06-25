@@ -199,6 +199,9 @@ With this, you can do:
 ```bash
 cd p2806-do-expr
 make p2806r4.html  # builds from do-expr.md
+
+# or just...
+make               # also builds p2806r4.html from do-expr.md
 ```
 
 See [brevzin/cpp_proposals](https://github.com/brevzin/cpp_proposals) for an example use of this layout.
