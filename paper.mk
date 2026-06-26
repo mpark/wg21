@@ -72,6 +72,8 @@
 #
 # and from each of the per-paper Makefile, include that top-level mk file.
 
+override SAVED_GOAL := $(.DEFAULT_GOAL)
+
 DEFAULTS ?=
 REQUIREMENTS ?=
 
@@ -95,4 +97,4 @@ include $(dir $(lastword $(MAKEFILE_LIST)))wg21.mk
 %.pdf: $(DEPS)
 	$(PANDOC)
 
-.DEFAULT_GOAL :=
+.DEFAULT_GOAL := $(SAVED_GOAL)

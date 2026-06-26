@@ -73,5 +73,3 @@ distclean:
 .PHONY: update
 update:
 	@$(MAKE) -W $(DATADIR)/refs.py -W $(DATADIR)/srefs.py $(DATADIR)/csl.json $(DATADIR)/srefs.json $(DATADIR)/srefs.defs
-
-.DEFAULT_GOAL :=
