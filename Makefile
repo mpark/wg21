@@ -14,9 +14,9 @@ else
 override SAVED_GOAL := $(.DEFAULT_GOAL)
 override THIS_FILE := $(lastword $(MAKEFILE_LIST))
 override THIS_DIR := $(dir $(THIS_FILE))
+override INCLUDED_FROM := $(lastword $(filter-out $(THIS_FILE),$(MAKEFILE_LIST)))
 
-$(warning Including $(THIS_FILE) is deprecated; include $(THIS_DIR)flat.mk instead.)
-$(warning See https://mpark.github.io/wg21/MANUAL.html#project-layouts for further details.)
+$(warning $(INCLUDED_FROM) includes deprecated $(THIS_FILE); include $(THIS_DIR)flat.mk instead. See https://mpark.github.io/wg21/MANUAL.html#project-layouts)
 
 include $(THIS_DIR)flat.mk
 
