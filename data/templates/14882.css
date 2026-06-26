@@ -120,6 +120,16 @@ a.itemDeclLink {
 }
 a.itemDeclLink:hover { opacity: 1; }
 
+span.marginalizedparent {
+	position: relative;
+	left: -5em;
+}
+
+li span.marginalizedparent { left: -7em; }
+li ul > li span.marginalizedparent { left: -9em; }
+li ul > li ul > li span.marginalizedparent { left: -11em; }
+li ul > li ul > li ul > li span.marginalizedparent { left: -13em; }
+
 div.footnoteNumberParent {
 	position: relative;
 	left: -4.7em;
