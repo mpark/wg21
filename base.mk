@@ -1,3 +1,10 @@
+override THIS_FILE := $(lastword $(MAKEFILE_LIST))
+override INCLUDED_FROM := $(notdir $(lastword $(filter-out $(THIS_FILE),$(MAKEFILE_LIST))))
+
+ifneq ($(filter $(INCLUDED_FROM),flat.mk paper.mk),$(INCLUDED_FROM))
+$(warning Including $(THIS_FILE) from $(INCLUDED_FROM) is not supported; include flat.mk or paper.mk instead.)
+endif
+
 DEFAULTS ?=
 REQUIREMENTS ?=
 

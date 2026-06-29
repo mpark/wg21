@@ -6,53 +6,33 @@
 #   |   |-- Makefile
 #   |   |-- p2806r4.md
 #   |   `-- p2806r4.html
-#   `-- p2996/
-#       |-- Makefile
-#       |-- p2996r13.md
-#       `-- p2996r13.html
-#
-# In each per-paper Makefile:
-#
-#   include path/to/wg21/paper.mk
-#
-# With that in place, the following commands are available:
-#
-#   cd p2806
-#   make p2806r4.html   # builds p2806r4.html from p2806r4.md
-#   make p2806r4.latex  # builds p2806r4.latex from p2806r4.md
-#   make p2806r4.pdf    # builds p2806r4.pdf from p2806r4.md
-#
-# You may also introduce explicit source-to-output mappings.
-# For example, given a layout like:
-#
-#   wg21-papers/
-#   |-- wg21 (submodule)
-#   |-- p2806-do-expr/
-#   |   |-- Makefile
-#   |   |-- do-expr.md
-#   |   `-- p2806r4.html
-#   `-- p2996-reflection/
+#   `-- reflection/
 #       |-- Makefile
 #       |-- reflection.md
 #       `-- p2996r13.html
 #
-# In p2806-do-expr/Makefile:
+# In p2806/Makefile:
 #
-#   include path/to/wg21/paper.mk
-#   p2806r4.html: do-expr.md
+#   include ../wg21/paper.mk
+
+# With that in place, same-stem targets are available:
 #
-# In p2996-reflection/Makefile:
+#   cd p2806
+#   make p2806r4.html   # builds p2806r4.html from p2806r4.md
+#   make                # also builds p2806r4.html from p2806r4.md
 #
-#   include path/to/wg21/paper.mk
+# You may also introduce explicit source-to-output mappings.
+#
+# In reflection/Makefile:
+#
 #   p2996r13.html: reflection.md
+#   include ../wg21/paper.mk
 #
-# With those mappings, you can use them to build:
+# With that mapping, you can use:
 #
-#   cd p2806-do-expr
-#   make p2806r4.html   # builds p2806r4.html from do-expr.md
-#
-#   cd p2996-reflection
+#   cd reflection
 #   make p2996r13.html  # builds p2996r13.html from reflection.md
+#   make                # also builds p2996r13.html from reflection.md
 #
 # The following variables can be set before including this file:
 #
@@ -72,21 +52,11 @@
 #
 # and from each of the per-paper Makefile, include that top-level mk file.
 
-override SAVED_GOAL := $(.DEFAULT_GOAL)
-
+OUTDIR := .
 DEFAULTS ?=
 REQUIREMENTS ?=
 
-include $(dir $(lastword $(MAKEFILE_LIST)))wg21.mk
-
-%.html: %.md $(DEPS)
-	$(PANDOC)
-
-%.latex: %.md $(DEPS)
-	$(PANDOC)
-
-%.pdf: %.md $(DEPS)
-	$(PANDOC)
+include $(dir $(lastword $(MAKEFILE_LIST)))flat.mk
 
 %.html: $(DEPS)
 	$(PANDOC)
@@ -96,5 +66,3 @@ include $(dir $(lastword $(MAKEFILE_LIST)))wg21.mk
 
 %.pdf: $(DEPS)
 	$(PANDOC)
-
-.DEFAULT_GOAL := $(SAVED_GOAL)

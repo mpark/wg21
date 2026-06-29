@@ -88,12 +88,14 @@ git submodule add https://github.com/mpark/wg21.git
 
 ## Project Layouts
 
-The framework provides two Makefile fragments for common project layouts.
+The framework provides two Makefile fragments for common project layouts,
+`flat.mk` and `paper.mk`. Note that there is no need to stress about choosing
+a layout, since the two layouts can co-exist.
 
 ### Flat Project Layout
 
-Use [`flat.mk`](https://github.com/mpark/wg21/blob/master/flat.mk) when all papers
-live in one directory and outputs should be written to a common output directory.
+Use [`flat.mk`](https://github.com/mpark/wg21/blob/master/flat.mk) for all the papers that
+live at the top-level directory. The outputs should be written to a common output directory.
 
 ```text
 wg21-papers/
@@ -125,7 +127,7 @@ make p2806r4.pdf   # builds generated/p2806r4.pdf
 You may also build all papers at once:
 
 ```bash
-make       # builds all papers in all formats
+make       # builds all papers in HTML format (default)
 make html  # builds all papers in HTML format
 make latex # builds all papers in LaTeX format
 make pdf   # builds all papers in PDF format
@@ -138,16 +140,16 @@ OUTDIR := out
 include wg21/flat.mk
 ```
 
-If a top-level `defaults.yaml` or `requirements.txt` exists, it is picked up
-automatically. To use a different file, set `DEFAULTS` or `REQUIREMENTS` before
-the include.
+If a top-level `defaults.yaml` or `requirements.txt` exists, it is picked
+up automatically. To use a different file path, you may set `DEFAULTS` or
+`REQUIREMENTS` variables explicitly before the include.
 
 See [mpark/wg21-papers](https://github.com/mpark/wg21-papers) for an example use of this layout.
 
 ### Per-paper Project Layout
 
-Use [`paper.mk`](https://github.com/mpark/wg21/blob/master/paper.mk) when each
-paper has its own directory. Outputs are written in that paper directory.
+Use [`paper.mk`](https://github.com/mpark/wg21/blob/master/paper.mk) for each
+paper in its own directory. Outputs are written in that paper directory.
 
 ```text
 wg21-papers/
@@ -156,13 +158,13 @@ wg21-papers/
 |   |-- Makefile
 |   |-- p2806r4.md
 |   `-- p2806r4.html
-`-- p2996/
+`-- reflection/
     |-- Makefile
-    |-- p2996r13.md
+    |-- reflection.md
     `-- p2996r13.html
 ```
 
-In each per-paper `Makefile`:
+In `p2806/Makefile`, with:
 
 ```make
 include ../wg21/paper.mk
@@ -172,36 +174,30 @@ Same-stem targets work automatically. For example:
 
 ```bash
 cd p2806
-make p2806r4.html  # builds from p2806r4.md
+make p2806r4.html  # builds p2806r4.html from p2806r4.md
+
+# or just...
+make               # also builds p2806r4.html from p2806r4.md
 ```
 
-You may also introduce explicit source-to-output mappings. Suppose you have:
+You may also introduce explicit source-to-output mappings.
 
-```text
-wg21-papers/
-|-- wg21 (submodule)
-`-- p2806-do-expr/
-    |-- Makefile
-    |-- do-expr.md
-    `-- p2806r4.html
-```
-
-In `p2806-do-expr/Makefile`{.default}:
+In `reflection/Makefile`{.default}, with:
 
 ```make
-include ../wg21/paper.mk
+p2996r13.html: reflection.md
 
-p2806r4.html: do-expr.md
+include ../wg21/paper.mk
 ```
 
 With this, you can do:
 
 ```bash
-cd p2806-do-expr
-make p2806r4.html  # builds from do-expr.md
+cd reflection
+make p2996r13.html  # builds p2996r13.html from reflection.md
 
 # or just...
-make               # also builds p2806r4.html from do-expr.md
+make                # also builds p2996r13.html from reflection.md
 ```
 
 See [brevzin/cpp_proposals](https://github.com/brevzin/cpp_proposals) for an example use of this layout.

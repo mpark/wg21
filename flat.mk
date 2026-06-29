@@ -19,12 +19,12 @@
 #   make p2806r4.latex # builds generated/p2806r4.latex from p2806r4.md
 #   make p2806r4.pdf   # builds generated/p2806r4.pdf from p2806r4.md
 #
-#   make               # builds all the papers in all of the formats
+#   make               # builds all the papers in HTML format (default)
 #   make html          # builds all the papers in HTML format
 #   make latex         # builds all the papers in LaTeX format
 #   make pdf           # builds all the papers in PDF format
 #
-#   make clean         # deletes the OUTDIR (`generated` by default)
+#   make clean         # deletes generated files
 #
 # The following variables can be set before including this file:
 #
@@ -47,8 +47,6 @@ OUTDIR ?= generated
 DEFAULTS ?= $(wildcard defaults.yaml)
 REQUIREMENTS ?= $(wildcard requirements.txt)
 
-include $(dir $(lastword $(MAKEFILE_LIST)))wg21.mk
-
 override SRC := $(filter-out CHANGELOG.md LICENSE.md README.md, $(wildcard *.md))
 
 override HTML := $(SRC:.md=.html)
@@ -56,7 +54,7 @@ override LATEX := $(SRC:.md=.latex)
 override PDF := $(SRC:.md=.pdf)
 
 .PHONY: all
-all: $(HTML) $(LATEX) $(PDF)
+all: $(HTML)
 
 .PHONY: html
 html: $(HTML)
@@ -67,15 +65,23 @@ latex: $(LATEX)
 .PHONY: pdf
 pdf: $(PDF)
 
+include $(dir $(lastword $(MAKEFILE_LIST)))base.mk
+
 .PHONY: clean
+
+ifeq ($(OUTDIR),.)
+clean:
+	rm -f $(HTML) $(LATEX) $(PDF)
+else
 clean:
 	rm -rf $(OUTDIR)
 
-.PHONY: $(HTML) $(LATEX) $(PDF)
-$(HTML) $(LATEX) $(PDF): %: $(OUTDIR)/%
-
 $(OUTDIR):
 	mkdir -p $@
+
+.PHONY: $(HTML) $(LATEX) $(PDF)
+$(HTML) $(LATEX) $(PDF): %: $(OUTDIR)/%
+endif
 
 $(OUTDIR)/%.html: %.md $(DEPS) | $(OUTDIR)
 	$(PANDOC)
