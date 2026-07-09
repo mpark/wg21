@@ -89,13 +89,13 @@ git submodule add https://github.com/mpark/wg21.git
 ## Project Layouts
 
 The framework provides two Makefile fragments for common project layouts,
-`flat.mk` and `paper.mk`. Note that there is no need to stress about choosing
-a layout, since the two layouts can co-exist.
+`flat.mk` and `paper.mk`. Note that you do not need to *choose* a layout.
+You can have both in a single project.
 
 ### Flat Project Layout
 
 Use [`flat.mk`](https://github.com/mpark/wg21/blob/master/flat.mk) for all the papers that
-live at the top-level directory. The outputs should be written to a common output directory.
+live at the top-level directory. The outputs are written to a common output directory.
 
 ```text
 wg21-papers/
@@ -111,17 +111,35 @@ wg21-papers/
 In the top-level `Makefile`:
 
 ```make
+# Makefile
 include wg21/flat.mk
 ```
 
-Markdown files in the repository root become build targets. By default, outputs
-are written under `generated/`.
+Markdown files at the top-level directory become build targets with
+the same stem. By default, outputs are written under `generated/`.
 
 For example:
 
 ```bash
-make p2806r4.html  # builds generated/p2806r4.html
-make p2806r4.pdf   # builds generated/p2806r4.pdf
+make p2806r4.html  # builds generated/p2806r4.html from p2806r4.md
+make p2806r4.pdf   # builds generated/p2806r4.pdf from p2806r4.md
+```
+
+You could also use a short name instead of a paper number like `do-expr.md`{.default},
+in which case targets `do-expr.html`{.default} and `do-expr.pdf`{.default} are available,
+producing `generated/do-expr.html`{.default} and `generated/do-expr.pdf`{.default}.
+
+The WG21 paper submission system automatically renames the uploaded file to
+the paper number / revision anyway, so this is a reasonable approach as well.
+For example, `do-expr.html`{.default} will be automatically renamed to `P2806R4.html`.
+
+To use a different output directory, set `OUTDIR` in the Makefile before
+including `flat.mk`. For example:
+
+```make {.embed_md}
+# Makefile
+@==OUTDIR := out==@  # Output to `out` directory instead of `generated`.
+include wg21/flat.mk
 ```
 
 You may also build all papers at once:
@@ -133,23 +151,21 @@ make latex # builds all papers in LaTeX format
 make pdf   # builds all papers in PDF format
 ```
 
-To use a different output directory, set `OUTDIR` before the include:
+To change the bare `make` command default, set `DEFAULT_FORMAT=<html|pdf|latex>`
+(`html` by default) in `Makefile` before including `flat.mk`. For example:
 
-```make
-OUTDIR := out
+```make {.embed_md}
+# Makefile
+@==DEFAULT_FORMAT := pdf==@
 include wg21/flat.mk
 ```
-
-If a top-level `defaults.yaml` or `requirements.txt` exists, it is picked
-up automatically. To use a different file path, you may set `DEFAULTS` or
-`REQUIREMENTS` variables explicitly before the include.
 
 See [mpark/wg21-papers](https://github.com/mpark/wg21-papers) for an example use of this layout.
 
 ### Per-paper Project Layout
 
 Use [`paper.mk`](https://github.com/mpark/wg21/blob/master/paper.mk) for each
-paper in its own directory. Outputs are written in that paper directory.
+paper in its own directory. Outputs are always written in that paper directory.
 
 ```text
 wg21-papers/
@@ -158,7 +174,7 @@ wg21-papers/
 |   |-- Makefile
 |   |-- p2806r4.md
 |   `-- p2806r4.html
-`-- reflection/
+`-- p2996_reflection/
     |-- Makefile
     |-- reflection.md
     `-- p2996r13.html
@@ -167,6 +183,7 @@ wg21-papers/
 In `p2806/Makefile`, with:
 
 ```make
+# p2806/Makefile
 include ../wg21/paper.mk
 ```
 
@@ -180,20 +197,60 @@ make p2806r4.html  # builds p2806r4.html from p2806r4.md
 make               # also builds p2806r4.html from p2806r4.md
 ```
 
-You may also introduce explicit source-to-output mappings.
+To change the bare `make` command default, set `DEFAULT_FORMAT=<html|pdf|latex>`
+(`html` by default) before including `paper.mk`:
 
-In `reflection/Makefile`{.default}, with:
-
-```make
-p2996r13.html: reflection.md
-
+```make {.embed_md}
+# p2806/Makefile
+@==DEFAULT_FORMAT := pdf==@
 include ../wg21/paper.mk
 ```
 
-With this, you can do:
+To share the same setting across the different papers, create a top-level `config.mk`:
+
+```text
+wg21-papers/
+|-- wg21 (submodule)
+|-- @==config.mk==@
+|-- p2806/
+|   |-- Makefile
+|   |-- p2806r4.md
+|   `-- p2806r4.html
+`-- p2996_reflection/
+    |-- Makefile
+    |-- reflection.md
+    `-- p2996r13.html
+```
+
+Define the configs you want to share across the repo:
+
+```make {.embed_md}
+# config.mk
+DEFAULT_FORMAT := pdf
+```
+
+and include that from each of the per-paper `Makefile`s:
+
+```make {.embed_md}
+# p2806/Makefile
+@==include ../config.mk==@
+include ../wg21/paper.mk
+```
+
+You may also introduce an explicit source-to-output mapping.
+
+In `p2996_reflection/Makefile`, with:
+
+```make
+PAPER_RULE := p2996r13:reflection
+include ../wg21/paper.mk
+```
+
+This registers `p2996r13.html`, `p2996r13.pdf`, and `p2996r13.latex` as
+outputs built from `reflection.md`. With this, you can do:
 
 ```bash
-cd reflection
+cd p2996_reflection
 make p2996r13.html  # builds p2996r13.html from reflection.md
 
 # or just...

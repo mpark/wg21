@@ -7,3 +7,4 @@ deps/pandoc
 deps/python
 generated/
 tests/actual
+tests/paper/actual

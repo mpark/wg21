@@ -25,7 +25,7 @@
 #
 # In reflection/Makefile:
 #
-#   p2996r13.html: reflection.md
+#   PAPER_RULE := p2996r13:reflection
 #   include ../wg21/paper.mk
 #
 # With that mapping, you can use:
@@ -33,36 +33,29 @@
 #   cd reflection
 #   make p2996r13.html  # builds p2996r13.html from reflection.md
 #   make                # also builds p2996r13.html from reflection.md
-#
-# The following variables can be set before including this file:
-#
-#   - DEFAULTS := <path/to/defaults.yaml>
-#
-#     Passed to Pandoc as an additional defaults file.
-#
-#   - REQUIREMENTS := <path/to/requirements.txt>
-#
-#     Passed to Python virtual env to install additional packages.
-#
-# To set these variables at repo-level, create a top-level mk file with:
-#
-#   DEFAULTS := ...
-#   REQUIREMENTS := ...
-#   include path/to/wg21/paper.mk
-#
-# and from each of the per-paper Makefile, include that top-level mk file.
 
 OUTDIR := .
-DEFAULTS ?=
-REQUIREMENTS ?=
 
+ifeq ($(PAPER_RULE),)
 include $(dir $(lastword $(MAKEFILE_LIST)))flat.mk
+else
+DEFAULT_FORMAT ?= html
 
-%.html: $(DEPS)
-	$(PANDOC)
+paper_id := $(word 1,$(subst :, ,$(PAPER_RULE)))
+paper_src := $(word 2,$(subst :, ,$(PAPER_RULE)))
 
-%.latex: $(DEPS)
-	$(PANDOC)
+.PHONY: all html pdf latex
+all: $(DEFAULT_FORMAT)
+html: $(paper_id).html
+pdf: $(paper_id).pdf
+latex: $(paper_id).latex
 
-%.pdf: $(DEPS)
+include $(dir $(lastword $(MAKEFILE_LIST)))base.mk
+
+.PHONY: clean
+clean:
+	rm -f $(paper_id).html $(paper_id).pdf $(paper_id).latex
+
+$(paper_id).html $(paper_id).pdf $(paper_id).latex: $(paper_src).md $(DEPS)
 	$(PANDOC)
+endif
