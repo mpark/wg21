@@ -1619,7 +1619,7 @@ author:
 ---
 ```
 
-For a single keyword, `cpp: match` is equivalent to the list above.
+For a single keyword, ==`cpp: match`{.default}== is equivalent to the list above.
 
 ```cpp
 f() match {
