@@ -1037,6 +1037,21 @@ def finalize(doc):
     with CodeElems._keyword_defaults(doc) as keyword_defaults:
         CodeElems.run(doc, keyword_defaults)
 
+    has_missing_citations = False
+    def find_missing_citation(elem, doc):
+        nonlocal has_missing_citations
+        if not isinstance(elem, pf.Cite):
+            return None
+
+        text = pf.stringify(elem)
+        has_missing_citations |= any(
+            f'{citation.id}?' in text for citation in elem.citations)
+
+    doc.walk(find_missing_citation)
+    if has_missing_citations:
+        pf.debug("""[WARNING] mpark/wg21: missing citations may indicate a stale local paper index.
+          Tip: run `make update` to refresh it""")
+
 if __name__ == '__main__':
   pf.run_filters([
       soul,
