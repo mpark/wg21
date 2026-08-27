@@ -208,6 +208,8 @@ Highlighting\hyperref[no-syntax-highlighting]{}}{No Syntax Highlighting}}\label{
 
 \NormalTok{bool b = true;}
 
+\NormalTok{f() match \{ case 0 =\textgreater{} 0; case auto y =\textgreater{} y {-} x \}}
+
 \NormalTok{struct process \{}
 \NormalTok{  hello {{\color[HTML]{bf0303}\sout{constexpr~}}}detail::foo::template \emph{foo};}
 
@@ -245,6 +247,8 @@ Highlighting\hyperref[c-syntax-highlighting]{}}{C++ Syntax Highlighting}}\label{
 
 \DataTypeTok{bool}\NormalTok{ b }\OperatorTok{=} \KeywordTok{true}\OperatorTok{;}
 
+\NormalTok{f}\OperatorTok{()} \KeywordTok{match} \OperatorTok{\{} \ControlFlowTok{case} \DecValTok{0} \OperatorTok{=\textgreater{}} \DecValTok{0}\OperatorTok{;} \ControlFlowTok{case} \KeywordTok{auto}\NormalTok{ y }\OperatorTok{=\textgreater{}}\NormalTok{ y }\OperatorTok{{-}}\NormalTok{ x }\OperatorTok{\}}
+
 \KeywordTok{struct}\NormalTok{ process }\OperatorTok{\{}
 \NormalTok{  hello {{\color[HTML]{006e28}\uline{constexpr~}}}detail}\OperatorTok{::}\NormalTok{foo}\OperatorTok{::}\KeywordTok{template}\NormalTok{ foo}\OperatorTok{;}
 
@@ -270,6 +274,12 @@ Highlighting\hyperref[c-syntax-highlighting]{}}{C++ Syntax Highlighting}}\label{
 \OperatorTok{\};}
 
 \DataTypeTok{void}\NormalTok{ f}\OperatorTok{(}\NormalTok{{{\color[HTML]{006e28}\uline{int *const *\emph{p\textsubscript{i}}}}}}\OperatorTok{);}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{f}\OperatorTok{()} \KeywordTok{match} \OperatorTok{\{} \ControlFlowTok{case} \DecValTok{0} \OperatorTok{=\textgreater{}} \DecValTok{0}\OperatorTok{;} \ControlFlowTok{case} \KeywordTok{auto}\NormalTok{ y }\OperatorTok{=\textgreater{}}\NormalTok{ y }\OperatorTok{{-}}\NormalTok{ x }\OperatorTok{\}}
 \end{Highlighting}
 \end{Shaded}
 

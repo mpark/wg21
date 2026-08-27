@@ -7,10 +7,14 @@
 # Distributed under the Boost Software License, Version 1.0.
 # (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
 
-import os.path
 import json
 import panflute as pf
 import re
+import tempfile
+import yaml
+from contextlib import contextmanager
+from pathlib import Path
+from xml.sax.saxutils import escape
 
 document_pattern = r"[PD]([0-9]+)R[0-9]+"
 nonnormative_classes = {'example', 'note'}
@@ -133,11 +137,10 @@ def prepare(doc):
 
     datadir = doc.get_metadata('data-dir')
 
-    with open(os.path.join(datadir, 'defaults', 'doc.yaml'), 'r') as f:
-        import yaml
+    with Path(datadir, 'defaults', 'doc.yaml').open() as f:
         doc.metadata['from'] = yaml.safe_load(f)['from']
 
-    with open(os.path.join(datadir, 'srefs.json'), 'r') as f:
+    with Path(datadir, 'srefs.json').open() as f:
         srefs.update(json.load(f))
 
     highlight_languages.update(
@@ -719,12 +722,6 @@ def diff(elem, doc):
             pf.RawBlock('}', 'latex'))
 
 def code_init(elem, doc):
-    if isinstance(elem, pf.Header) and doc.format == 'latex':
-        elem.walk(lambda elem, _:
-            elem.classes.append('raw')
-            if isinstance(elem, (pf.Code, pf.CodeBlock))
-            else None)
-
     # Mark code elements within colored divspan as default.
     if isinstance(elem, (pf.Div, pf.Span)) and \
        any(c in {'add', 'rm', 'ednote', 'draftnote'} for c in elem.classes):
@@ -791,13 +788,47 @@ class CodeElems:
       7. Split the batch converted code text into individual elements, and
          update the code elements with the fully processed elements.
     """
+    keyword_defaults = None
     placeholder_prefix = None
 
     # Unique list of fragments, kept track in `fragment_idx`.
     fragments = []
 
-    # Mapping from embedded md fragment to its index within `fragments`
+    # Mapping from embedded md fragment to its index within `fragments`.
     fragment_idx = {}
+
+    @staticmethod
+    @contextmanager
+    def _keyword_defaults(doc):
+        datadir = doc.get_metadata('data-dir')
+        keyword_languages = doc.get_metadata('highlighting.keywords', {})
+        with tempfile.TemporaryDirectory(prefix='wg21-keywords-') as directory:
+            syntax_definitions = []
+            for language, keywords in keyword_languages.items():
+                if not keywords:
+                    continue
+                if isinstance(keywords, str):
+                    keywords = [keywords]
+
+                if language == 'cpp':
+                    syntax = Path(datadir, 'syntax', 'wg21.xml').read_text()
+                    keywords_tag = '<list name="keywords">\n'
+                    items = ''.join(
+                        f'<item>{escape(keyword)}</item>\n' for keyword in keywords)
+                    assert keywords_tag in syntax
+                    syntax = syntax.replace(keywords_tag, keywords_tag + items, 1)
+
+                    syntax_definition = Path(directory, 'cpp.xml')
+                    syntax_definition.write_text(syntax)
+                    syntax_definitions.append(str(syntax_definition))
+
+            if not syntax_definitions:
+                yield None
+                return
+
+            defaults = Path(directory, 'keywords.yaml')
+            defaults.write_text(yaml.safe_dump({'syntax-definitions': syntax_definitions}))
+            yield defaults
     
     @staticmethod
     def _compute_unique_placeholder(texts):
@@ -807,8 +838,8 @@ class CodeElems:
              if not any(placeholder in text for text in texts):
                  return placeholder
 
-    @staticmethod
-    def _convert_blocks(blocks, token, doc):
+    @classmethod
+    def _convert_blocks(cls, blocks, token, doc):
         def intersperse(lst, item):
             result = [item] * (len(lst) * 2 - 1)
             result[0::2] = lst
@@ -820,8 +851,9 @@ class CodeElems:
             output_format=doc.format,
             extra_args=[
                 '--data-dir', doc.get_metadata('data-dir'),
+                '--wrap', 'none',
                 '-d', 'formatting',
-                '--wrap', 'none'])
+                *([] if cls.keyword_defaults is None else ['-d', cls.keyword_defaults])])
 
         if doc.format == 'latex':
             # The normal text mode such as "template<class" gets translated
@@ -941,15 +973,17 @@ class CodeElems:
         return ''.join(pieces)
 
     @classmethod
-    def run(cls, doc):
+    def run(cls, doc, keyword_defaults):
+        keyword_languages = doc.get_metadata('highlighting.keywords', {})
         elems = []
         containers = []
         def code(elem, doc):
-            if not (
-                isinstance(elem, (pf.Code, pf.CodeBlock)) and
-                (elem.attributes.get('md') is not None or
-                 elem.attributes.get('em') is not None)
-            ):
+            if not isinstance(elem, (pf.Code, pf.CodeBlock)):
+                return None
+
+            if (elem.attributes.get('md') is None and
+                elem.attributes.get('em') is None and
+                not any(c in keyword_languages for c in elem.classes)):
                 return None
 
             elems.append(elem)
@@ -960,9 +994,11 @@ class CodeElems:
             containers.append(container)
             return container
 
-        doc.walk(code)
+        doc.walk(code, stop_if=lambda elem: doc.format == 'latex' and isinstance(elem, pf.Header))
         if not elems:
             return
+
+        cls.keyword_defaults = keyword_defaults
 
         cls.placeholder_prefix = cls._compute_unique_placeholder(
             elem.text for elem in elems)
@@ -998,7 +1034,8 @@ class CodeElems:
             container.text = result
 
 def finalize(doc):
-    CodeElems.run(doc)
+    with CodeElems._keyword_defaults(doc) as keyword_defaults:
+        CodeElems.run(doc, keyword_defaults)
 
 if __name__ == '__main__':
   pf.run_filters([

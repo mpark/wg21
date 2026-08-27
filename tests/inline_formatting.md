@@ -9,6 +9,9 @@ author:
     email: <test@example.com>
 toc: true
 toc-depth: 2
+highlighting:
+  keywords:
+    cpp: match
 ---
 
 # Inline Formatting
@@ -16,7 +19,7 @@ toc-depth: 2
 Inline formatting such as __bold__, _italics_, and `verbatim` work as expected.
 There are also useful extensions such as ~~strikeout~~, su~b~script,
 su^per^script, highlighted text ==highlighted==, and highlighted code:
-`constexpr`{.cpp}.
+`constexpr`{.cpp}, including a custom keyword: `match`{.cpp}.
 
 Various compositions in compact list:
 

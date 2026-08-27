@@ -9,6 +9,10 @@ author:
     email: <test@example.com>
 toc: true
 toc-depth: 2
+highlighting:
+  keywords:
+    cpp:
+      - match
 ---
 
 # Code Blocks
@@ -26,6 +30,8 @@ const int x = 42ul;
 const int x = 0B01011;
 
 bool b = true;
+
+f() match { case 0 => 0; case auto y => y - x }
 
 struct process {
   hello @[constexpr\ ]{.rm}@detail::foo::template $foo$;
@@ -61,6 +67,8 @@ const int x = 0B01011;
 
 bool b = true;
 
+f() match { case 0 => 0; case auto y => y - x }
+
 struct process {
   hello @[constexpr\ ]{.add}@detail::foo::template foo;
 
@@ -86,6 +94,10 @@ struct $as-receiver$ {
 };
 
 void f(@[int \*const \*_p~i~_]{.add}@);
+```
+
+```cpp {.raw}
+f() match { case 0 => 0; case auto y => y - x }
 ```
 
 ## `diff` Syntax Highlighting

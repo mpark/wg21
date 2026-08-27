@@ -197,7 +197,8 @@ Inline formatting such as \textbf{bold}, \emph{italics}, and
 extensions such as \st{strikeout}, su\textsubscript{b}script,
 su\textsuperscript{per}script, highlighted text
 {{\setlength{\fboxsep}{1pt}\colorbox{yellow}{highlighted}}}, and
-highlighted code: \VERB|\KeywordTok{constexpr}|.
+highlighted code: \VERB|\KeywordTok{constexpr}|, including a custom
+keyword: \VERB|\KeywordTok{match}|.
 
 Various compositions in compact list:
 

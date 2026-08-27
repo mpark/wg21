@@ -6,6 +6,11 @@ features, paper milestones, and large implementation changes.
 
 ## 2026
 
+### August 2026
+
+- Added custom C++ keyword highlighting through `highlighting.keywords.cpp`
+  in the YAML metadata block of a document.
+
 ### June 2026
 
 - Added `MANUAL.md` as the source for the up-to-date user's guide, generated

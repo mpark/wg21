@@ -8,6 +8,10 @@ author:
   - name: Michael Park
     email: <mcypark@gmail.com>
 toc-depth: 4
+highlighting:
+  keywords:
+    cpp:
+      - match
 ---
 
 # Introduction
@@ -1592,6 +1596,39 @@ author:
   @==inline-code: default==@
 ---
 ```
+
+## New Keywords
+
+Papers that propose new keywords can add them to be syntax highlighted, by
+adding entries to the YAML metadata block:
+
+```yaml {.embed_md}
+---
+title: "`MPark/WG21` User's Guide"
+subtitle: "Framework for Writing C++ Committee Proposals"
+document: D0000R0
+date: today
+audience: WG21
+author:
+  - name: Michael Park
+    email: <mcypark@gmail.com>
+@==highlighting:==@
+  @==keywords:==@
+    @==cpp:==@
+      @==- match==@
+---
+```
+
+For a single keyword, `cpp: match` is equivalent to the list above.
+
+```cpp
+f() match {
+  case 0 => 0;
+  case auto y => y - x;
+};
+```
+
+Currently, only `cpp` is supported.
 
 ## Embedded Markdown by Default Code Classes
 
