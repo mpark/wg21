@@ -18,3 +18,6 @@ actual expected:
 	@$(MAKE) -C p2806 DEFAULT_FORMAT=latex
 	cp p2806/p2806r4.latex $@/p2806r4.latex
 	@$(MAKE) -C p2806 clean
+	@$(MAKE) -C p2806 LEGACY=1
+	@cmp p2806/p2806r4.html $@/p2806r4.html
+	rm -f p2806/p2806r4.html
