@@ -141,11 +141,7 @@ def prepare(doc):
         srefs.update(json.load(f))
 
     highlight_languages.update(
-        pf.run_pandoc(
-            args=['--data-dir', datadir,
-                  '-d', 'formatting',
-                  '--list-highlight-languages'])
-        .splitlines())
+        pf.run_pandoc(args=['--list-highlight-languages']).splitlines())
 
     process_subs(doc, doc.get_metadata('from'))
 
