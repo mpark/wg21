@@ -114,7 +114,7 @@ wg21-papers/
 
 In the top-level `Makefile`:
 
-```make
+```makefile
 # Makefile
 include wg21/flat.mk
 ```
@@ -140,7 +140,7 @@ For example, `do-expr.html`{.default} will be automatically renamed to `P2806R4.
 To use a different output directory, set `OUTDIR` in the Makefile before
 including `flat.mk`. For example:
 
-```make {.embed_md}
+```makefile {.embed_md}
 # Makefile
 @==OUTDIR := out==@  # Output to `out` directory instead of `generated`.
 include wg21/flat.mk
@@ -158,7 +158,7 @@ make pdf   # builds all papers in PDF format
 To change the bare `make` command default, set `DEFAULT_FORMAT=<html|pdf|latex>`
 (`html` by default) in `Makefile` before including `flat.mk`. For example:
 
-```make {.embed_md}
+```makefile {.embed_md}
 # Makefile
 @==DEFAULT_FORMAT := pdf==@
 include wg21/flat.mk
@@ -186,7 +186,7 @@ wg21-papers/
 
 In `p2806/Makefile`, with:
 
-```make
+```makefile
 # p2806/Makefile
 include ../wg21/paper.mk
 ```
@@ -204,7 +204,7 @@ make               # also builds p2806r4.html from p2806r4.md
 To change the bare `make` command default, set `DEFAULT_FORMAT=<html|pdf|latex>`
 (`html` by default) before including `paper.mk`:
 
-```make {.embed_md}
+```makefile {.embed_md}
 # p2806/Makefile
 @==DEFAULT_FORMAT := pdf==@
 include ../wg21/paper.mk
@@ -228,14 +228,14 @@ wg21-papers/
 
 Define the configs you want to share across the repo:
 
-```make {.embed_md}
+```makefile
 # config.mk
 DEFAULT_FORMAT := pdf
 ```
 
 and include that from each of the per-paper `Makefile`s:
 
-```make {.embed_md}
+```makefile {.embed_md}
 # p2806/Makefile
 @==include ../config.mk==@
 include ../wg21/paper.mk
@@ -245,7 +245,7 @@ You may also introduce an explicit source-to-output mapping.
 
 In `p2996_reflection/Makefile`, with:
 
-```make
+```makefile
 PAPER_RULE := p2996r13:reflection
 include ../wg21/paper.mk
 ```
@@ -1545,6 +1545,55 @@ references:
 This produces a bibliography entry `[Patterns]` in [References](#bibliography).
 
 # Configurations
+
+## Local Configuration
+
+For machine- or organization-specific environment variables and
+other local configuration, add a `local.mk`:
+
+```
+wg21-papers/
+|-- wg21 (submodule)
+|-- Makefile
+|-- @==local.mk==@
+|-- p2806r4.md
+|-- p2996r13.md
+`-- generated/
+    |-- p2806r4.html
+    `-- p2996r13.html
+```
+
+With the local configurations in `local.mk`:
+
+```makefile
+# local.mk
+export SSL_CERT_FILE      := /etc/ssl/certs/ca-certificates.crt
+export REQUESTS_CA_BUNDLE := /etc/ssl/certs/ca-certificates.crt
+export PIP_CERT           := /etc/ssl/certs/ca-certificates.crt
+```
+
+Add an optional include of `local.mk` to the top-level `Makefile`:
+
+```makefile {.embed_md}
+# Makefile
+@==-include local.mk==@  # The leading dash makes the include optional
+include wg21/flat.mk
+```
+
+This approach allows the checked-in `Makefile` to remain intact, while keeping
+`local.mk` in `.gitignore` and only present on machines that require it.
+
+For the `paper.mk` configuration, add the optional include of `local.mk` to
+each per-paper `Makefile`, after the shared `config.mk`:
+
+```makefile {.embed_md}
+# p2806/Makefile
+include ../config.mk
+@==-include ../local.mk==@
+include ../wg21/paper.mk
+```
+
+See [Per-paper Project Layout] for further information on `config.mk`.
 
 ## Default Language for Code Elements
 
