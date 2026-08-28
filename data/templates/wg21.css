@@ -126,7 +126,7 @@ body[data-deleted-text="hide"] .rm del {
     --unchanged-color: #e0e0e0;
     --add-color: #d0fddd;
     --rm-color: #ff9b98;
-    --note-color: #74bdff;
+    --note-color: #6699ff;
   }
 
   table thead tr {
