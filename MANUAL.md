@@ -1584,7 +1584,7 @@ This approach allows the checked-in `Makefile` to remain intact, while keeping
 `local.mk` in `.gitignore` and only present on machines that require it.
 
 For the `paper.mk` configuration, add the optional include of `local.mk` to
-each per-paper `Makefile`, after the shared `config.mk`:
+each per-paper `Makefile`, before `paper.mk`:
 
 ```makefile {.embed_md}
 # p2806/Makefile
