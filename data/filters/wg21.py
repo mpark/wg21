@@ -1044,8 +1044,13 @@ def finalize(doc):
             return None
 
         text = pf.stringify(elem)
-        has_missing_citations |= any(
-            f'{citation.id}?' in text for citation in elem.citations)
+        for citation in elem.citations:
+            if f'{citation.id}?' not in text:
+                continue
+            if re.fullmatch(r'P\d+', citation.id):
+                pf.debug(f'[WARNING] mpark/wg21: citation {citation.id} requires a revision. (e.g. `[@{citation.id}R0]`)')
+            else:
+                has_missing_citations = True
 
     doc.walk(find_missing_citation)
     if has_missing_citations:

@@ -10,6 +10,12 @@ check: actual
 		-d doc -d formatting 2>&1)"; \
 	printf '%s\n' "$$output"; \
 	printf '%s\n' "$$output" | grep -Fq 'Tip: run `make update` to refresh it'
+	@output="$$(pandoc $(DATADIR)/srefs.defs warnings/missing_revision.md \
+		-o /dev/null -t html --data-dir=$(DATADIR) -M data-dir=$(DATADIR) \
+		-d doc -d formatting 2>&1)"; \
+	printf '%s\n' "$$output"; \
+	printf '%s\n' "$$output" | grep -Fq 'citation P2806 requires a revision. (e.g. `[@P2806R0]`)'; \
+	! printf '%s\n' "$$output" | grep -Fq 'make update'
 	# Running paper.mk tests...
 	@$(MAKE) -C paper check
 
