@@ -367,12 +367,12 @@ def divspan(elem, doc):
     > The return type is `decltype(`_e_(`m`)`)` [for the first form]{.add}.
     """
 
-    def _color(html_color):
-        wrap_elem(
-            pf.RawInline(f'{{\\color[HTML]{{{html_color}}}', 'latex'),
-            elem,
-            pf.RawInline('}', 'latex'))
-        elem.attributes['style'] = f'color: #{html_color}'
+    def _color(hex_color):
+        if doc.format == 'latex':
+            wrap_elem(
+                pf.RawInline(f'{{\\color[HTML]{{{hex_color}}}', 'latex'),
+                elem,
+                pf.RawInline('}', 'latex'))
 
     def _nonnormative(name, num):
         label = [pf.Str(name.title())]
@@ -704,7 +704,7 @@ def diff(elem, doc):
             'diff' in elem.classes):
         return None
 
-    # For HTML, this is handled via CSS in `data/templates/wg21.html`.
+    # For HTML, this is handled in `data/templates/wg21.css`.
     command = '\\renewcommand{{\\{}}}[1]{{\\textcolor[HTML]{{{}}}{{#1}}}}'
     colors = [
       command.format('NormalTok', doc.get_metadata('uccolor')),

@@ -87,9 +87,6 @@ code span.st { color: #9f6807; }
 code span.va { } 
 code span.vs { color: #9f6807; } 
 code span.wa { color: #6a737d; font-weight: bold; } 
-code.diff {color: #898887}
-code.diff span.va {color: #006e28}
-code.diff span.st {color: #bf0303}
 </style>
   <style type="text/css">
 body {
@@ -423,7 +420,13 @@ margin-top: 1em;
 ol.enumeratea { list-style-type: none; background: inherit; }
 ol.enumerate { list-style-type: none; background: inherit; }
 </style>
-  <style type="text/css">table thead tr {
+  <style type="text/css">:root {
+--unchanged-color: #898887;
+--add-color: #006e28;
+--rm-color: #bf0303;
+--note-color: #0000ff;
+}
+table thead tr {
 border-bottom: 3px solid black;
 border-bottom-style: double;
 }
@@ -448,6 +451,25 @@ text-decoration-thickness: 1px;
 
 ins {
 text-underline-offset: 3.5px;
+}
+.add {
+color: var(--add-color);
+}
+.rm {
+color: var(--rm-color);
+}
+code.diff {
+color: var(--unchanged-color);
+}
+code.diff span.va {
+color: var(--add-color);
+}
+code.diff span.st {
+color: var(--rm-color);
+}
+.ednote,
+.draftnote {
+color: var(--note-color);
 }
 
 div.sourceCode {
@@ -563,8 +585,8 @@ this<span> — <em>end note</em> ]</span></span></p></li>
 <li><p>Use <code class="sourceCode cpp">ednote</code> for editorial
 notes.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>[Editorial notes are important]{.ednote}</span></code></pre></div>
-<p><span class="ednote" style="color: #0000ff">[ Editor&#39;s note:
-Editorial notes are important ]</span></p></li>
+<p><span class="ednote">[ Editor&#39;s note: Editorial notes are important
+]</span></p></li>
 <li><p>Use <code class="sourceCode cpp">draftnote</code> to include text
 that is intended as questions or information for reviews and working
 groups.</p>
@@ -573,13 +595,13 @@ groups.</p>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>[It is also possible to indicate that a note is for</span>
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a> a specific `audience` via this optional attribute.]{.draftnote audience=&quot;the reader&quot;}</span></code></pre></div>
-<p><span class="draftnote" style="color: #0000ff">[ Drafting note:
-Drafting notes can be used to provide comments for reviewers that are
-explicitly not to be included in the specification. ]</span></p>
-<p><span class="draftnote" data-audience="the reader" style="color: #0000ff">[ Drafting note for the reader: It is also
-possible to indicate that a note is for a specific
-<code class="sourceCode default cpp">audience</code> via this optional
-attribute. ]</span></p></li>
+<p><span class="draftnote">[ Drafting note: Drafting notes can be used
+to provide comments for reviewers that are explicitly not to be included
+in the specification. ]</span></p>
+<p><span class="draftnote" data-audience="the reader">[ Drafting note
+for the reader: It is also possible to indicate that a note is for a
+specific <code class="sourceCode default cpp">audience</code> via this
+optional attribute. ]</span></p></li>
 </ul>
 </div>
 </div>

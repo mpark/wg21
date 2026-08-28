@@ -87,9 +87,6 @@ code span.st { color: #9f6807; }
 code span.va { } 
 code span.vs { color: #9f6807; } 
 code span.wa { color: #6a737d; font-weight: bold; } 
-code.diff {color: #898887}
-code.diff span.va {color: #006e28}
-code.diff span.st {color: #bf0303}
 </style>
   <style type="text/css">
 body {
@@ -423,7 +420,13 @@ margin-top: 1em;
 ol.enumeratea { list-style-type: none; background: inherit; }
 ol.enumerate { list-style-type: none; background: inherit; }
 </style>
-  <style type="text/css">table thead tr {
+  <style type="text/css">:root {
+--unchanged-color: #898887;
+--add-color: #006e28;
+--rm-color: #bf0303;
+--note-color: #0000ff;
+}
+table thead tr {
 border-bottom: 3px solid black;
 border-bottom-style: double;
 }
@@ -448,6 +451,25 @@ text-decoration-thickness: 1px;
 
 ins {
 text-underline-offset: 3.5px;
+}
+.add {
+color: var(--add-color);
+}
+.rm {
+color: var(--rm-color);
+}
+code.diff {
+color: var(--unchanged-color);
+}
+code.diff span.va {
+color: var(--add-color);
+}
+code.diff span.st {
+color: var(--rm-color);
+}
+.ednote,
+.draftnote {
+color: var(--note-color);
 }
 
 div.sourceCode {
@@ -576,7 +598,7 @@ display: none !important;
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>f() match { case 0 =&gt; 0; case auto y =&gt; y - x }</span>
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>struct process {</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  hello <span class="rm" style="color: #bf0303"><del>constexpr </del></span>detail::foo::template <em>foo</em>;</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  hello <span class="rm"><del>constexpr </del></span>detail::foo::template <em>foo</em>;</span>
 <span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  [[using CC: opt(1), debug]] x;</span>
 <span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
@@ -584,14 +606,14 @@ display: none !important;
 <span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>  [[nodiscard]] auto operator()(I i) -&gt; O&lt;I&gt; { /* ... */ };</span>
 <span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>};</span>
 <span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="add" style="color: #006e28"><ins>namespace <em>unspecified</em> { struct sender_base {}; }</ins></span></span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="add" style="color: #006e28"><ins><code class="sourceCode default cpp">namespace <em>unspecified</em> { struct sender_base {}; }</code></ins></span></span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="add" style="color: #006e28"><ins><code class="sourceCode default cpp">namespace <em>unspecified</em> { struct sender_base {}; }</code></ins></span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="add"><ins>namespace <em>unspecified</em> { struct sender_base {}; }</ins></span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="add"><ins><code class="sourceCode default cpp">namespace <em>unspecified</em> { struct sender_base {}; }</code></ins></span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="add"><ins><code class="sourceCode default cpp">namespace <em>unspecified</em> { struct sender_base {}; }</code></ins></span></span>
 <span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mfrac><mrow><mi>a</mi><mo>+</mo><mi>b</mi></mrow><mn>2</mn></mfrac><annotation encoding="application/x-tex">\frac{a+b}{2}</annotation></semantics></math>  // math</span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="add" style="color: #006e28"><ins><code class="sourceCode default cpp"><em>bar</em></code></ins></span>  // italicized code</span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="add" style="color: #006e28"><ins><code class="sourceCode default cpp"><em>baz</em></code></ins></span>  // italicized code</span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="add" style="color: #006e28"><ins><code class="sourceCode default raw cpp">$bar$</code></ins></span>  // raw <em>bar</em></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="add"><ins><code class="sourceCode default cpp"><em>bar</em></code></ins></span>  // italicized code</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="add"><ins><code class="sourceCode default cpp"><em>baz</em></code></ins></span>  // italicized code</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="add"><ins><code class="sourceCode default raw cpp">$bar$</code></ins></span>  // raw <em>bar</em></span>
 <span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a><mark>$</mark>text<mark>$</mark>  highlighted $</span></code></pre></div>
 <h2 data-number="1.2" id="c-syntax-highlighting"><span class="header-section-number">1.2</span> C++ Syntax Highlighting<a href="#c-syntax-highlighting" class="self-link"></a></h2>
 <div class="sourceCode" id="cb2"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;iostream&gt;</span></span>
@@ -608,7 +630,7 @@ display: none !important;
 <span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>f<span class="op">()</span> <span class="kw">match</span> <span class="op">{</span> <span class="cf">case</span> <span class="dv">0</span> <span class="op">=&gt;</span> <span class="dv">0</span><span class="op">;</span> <span class="cf">case</span> <span class="kw">auto</span> y <span class="op">=&gt;</span> y <span class="op">-</span> x <span class="op">}</span></span>
 <span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> process <span class="op">{</span></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  hello <span class="add" style="color: #006e28"><ins>constexpr </ins></span>detail<span class="op">::</span>foo<span class="op">::</span><span class="kw">template</span> foo<span class="op">;</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  hello <span class="add"><ins>constexpr </ins></span>detail<span class="op">::</span>foo<span class="op">::</span><span class="kw">template</span> foo<span class="op">;</span></span>
 <span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>  <span class="op">[[</span><span class="kw">using</span><span class="at"> CC</span><span class="op">:</span><span class="at"> opt</span><span class="op">(</span><span class="dv">1</span><span class="op">),</span><span class="at"> debug</span><span class="op">]]</span> x<span class="op">;</span></span>
 <span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a></span>
@@ -618,20 +640,20 @@ display: none !important;
 <span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>  x<em><sub>i</sub></em> <span class="op">&lt;=&gt;</span> y<em><sub>i</sub></em><span class="op">;</span></span>
 <span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span>
 <span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a><span class="kw">template</span> <span class="op">&lt;</span><span><span class="rm" style="color: #bf0303"><del>invocable</del></span><span class="add" style="color: #006e28"><ins>class</ins></span></span> F<span class="add" style="color: #006e28"><ins>, class</ins></span><span class="op">&gt;</span></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a><span class="kw">template</span> <span class="op">&lt;</span><span><span class="rm"><del>invocable</del></span><span class="add"><ins>class</ins></span></span> F<span class="add"><ins>, class</ins></span><span class="op">&gt;</span></span>
 <span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> <em>as-receiver</em> <span class="op">{</span></span>
-<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a><span class="rm" style="color: #bf0303"><del>private:</del></span></span>
-<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>  <span class="rm" style="color: #bf0303"><del>using invocable_type = std::remove_cvref_t&lt;F&gt;;</del></span></span>
-<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>  <span><span class="rm" style="color: #bf0303"><del>invocable_type</del></span><span class="add" style="color: #006e28"><ins>F</ins></span></span> f_<span class="op">;</span></span>
-<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a><span class="rm" style="color: #bf0303"><del>public:</del></span></span>
-<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>  <span class="rm" style="color: #bf0303"><del>explicit <em>as-receiver</em>(invocable_type&amp;&amp; f)</del></span></span>
-<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>  <span class="rm" style="color: #bf0303"><del><em>as-receiver</em>(<em>as-receiver</em>&amp;&amp; other) = default;</del></span></span>
-<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>  <span class="dt">void</span> set_value<span class="op">()</span> <span class="add" style="color: #006e28"><ins>noexcept(is_nothrow_invocable_v&lt;F&amp;&gt;)</ins></span> <span class="op">{</span></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a><span class="rm"><del>private:</del></span></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>  <span class="rm"><del>using invocable_type = std::remove_cvref_t&lt;F&gt;;</del></span></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>  <span><span class="rm"><del>invocable_type</del></span><span class="add"><ins>F</ins></span></span> f_<span class="op">;</span></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a><span class="rm"><del>public:</del></span></span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>  <span class="rm"><del>explicit <em>as-receiver</em>(invocable_type&amp;&amp; f)</del></span></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>  <span class="rm"><del><em>as-receiver</em>(<em>as-receiver</em>&amp;&amp; other) = default;</del></span></span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>  <span class="dt">void</span> set_value<span class="op">()</span> <span class="add"><ins>noexcept(is_nothrow_invocable_v&lt;F&amp;&gt;)</ins></span> <span class="op">{</span></span>
 <span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>    invoke<span class="op">(</span>f_<span class="op">);</span></span>
 <span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
 <span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span>
 <span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> f<span class="op">(</span><span class="add" style="color: #006e28"><ins>int *const *<em>p<sub>i</sub></em></ins></span><span class="op">);</span></span></code></pre></div>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> f<span class="op">(</span><span class="add"><ins>int *const *<em>p<sub>i</sub></em></ins></span><span class="op">);</span></span></code></pre></div>
 <div class="sourceCode" id="cb3"><pre class="sourceCode cpp raw"><code class="sourceCode cpp"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>f<span class="op">()</span> <span class="kw">match</span> <span class="op">{</span> <span class="cf">case</span> <span class="dv">0</span> <span class="op">=&gt;</span> <span class="dv">0</span><span class="op">;</span> <span class="cf">case</span> <span class="kw">auto</span> y <span class="op">=&gt;</span> y <span class="op">-</span> x <span class="op">}</span></span></code></pre></div>
 <h2 data-number="1.3" id="diff-syntax-highlighting"><span class="header-section-number">1.3</span>
 <code class="sourceCode cpp">diff</code> Syntax Highlighting<a href="#diff-syntax-highlighting" class="self-link"></a></h2>

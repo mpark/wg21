@@ -107,10 +107,7 @@ padding-left:1em;
 }
 div.csl-indent {
 margin-left: 2em;
-} code.diff {color: #898887}
-code.diff span.va {color: #006e28}
-code.diff span.st {color: #bf0303}
-</style>
+} </style>
   <style type="text/css">
 body {
 margin: 5em;
@@ -443,7 +440,13 @@ margin-top: 1em;
 ol.enumeratea { list-style-type: none; background: inherit; }
 ol.enumerate { list-style-type: none; background: inherit; }
 </style>
-  <style type="text/css">table thead tr {
+  <style type="text/css">:root {
+--unchanged-color: #898887;
+--add-color: #006e28;
+--rm-color: #bf0303;
+--note-color: #0000ff;
+}
+table thead tr {
 border-bottom: 3px solid black;
 border-bottom-style: double;
 }
@@ -468,6 +471,25 @@ text-decoration-thickness: 1px;
 
 ins {
 text-underline-offset: 3.5px;
+}
+.add {
+color: var(--add-color);
+}
+.rm {
+color: var(--rm-color);
+}
+code.diff {
+color: var(--unchanged-color);
+}
+code.diff span.va {
+color: var(--add-color);
+}
+code.diff span.st {
+color: var(--rm-color);
+}
+.ednote,
+.draftnote {
+color: var(--note-color);
 }
 
 div.sourceCode {

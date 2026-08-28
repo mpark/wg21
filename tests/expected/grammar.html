@@ -87,9 +87,6 @@ code span.st { color: #9f6807; }
 code span.va { } 
 code span.vs { color: #9f6807; } 
 code span.wa { color: #6a737d; font-weight: bold; } 
-code.diff {color: #898887}
-code.diff span.va {color: #006e28}
-code.diff span.st {color: #bf0303}
 </style>
   <style type="text/css">
 body {
@@ -423,7 +420,13 @@ margin-top: 1em;
 ol.enumeratea { list-style-type: none; background: inherit; }
 ol.enumerate { list-style-type: none; background: inherit; }
 </style>
-  <style type="text/css">table thead tr {
+  <style type="text/css">:root {
+--unchanged-color: #898887;
+--add-color: #006e28;
+--rm-color: #bf0303;
+--note-color: #0000ff;
+}
+table thead tr {
 border-bottom: 3px solid black;
 border-bottom-style: double;
 }
@@ -448,6 +451,25 @@ text-decoration-thickness: 1px;
 
 ins {
 text-underline-offset: 3.5px;
+}
+.add {
+color: var(--add-color);
+}
+.rm {
+color: var(--rm-color);
+}
+code.diff {
+color: var(--unchanged-color);
+}
+code.diff span.va {
+color: var(--add-color);
+}
+code.diff span.st {
+color: var(--rm-color);
+}
+.ednote,
+.draftnote {
+color: var(--note-color);
 }
 
 div.sourceCode {
@@ -571,15 +593,14 @@ display: none !important;
 <em>init-statement<sub>opt</sub></em> <em>condition</em>
 <code class="sourceCode cpp"><span class="op">)</span></code>
 <em>statement</em><br />
-    <span class="add" style="color: #006e28"><ins><code class="sourceCode default cpp">inspect</code>
+    <span class="add"><ins><code class="sourceCode default cpp">inspect</code>
 <code class="sourceCode default cpp">constexpr</code><sub><em>opt</em></sub>
 <code class="sourceCode default cpp">(</code>
 <em>init-statement<sub>opt</sub></em> <em>condition</em>
 <code class="sourceCode default cpp">)</code>
 <code class="sourceCode default cpp">{</code> <em>inspect-case-seq</em>
 <code class="sourceCode default cpp">}</code></ins></span></div>
-<div class="add" style="color: #006e28">
-
+<div class="add">
 <div class="line-block"><em>inspect-case-seq:</em><br />
     <em>inspect-case</em><br />
     <em>inspect-case-seq</em> <em>inspect-case</em></div>
@@ -598,7 +619,6 @@ display: none !important;
 <div class="line-block"><em>inspect-guard:</em><br />
     <code class="sourceCode default cpp">if (</code> <em>expression</em>
 <code class="sourceCode default cpp">)</code></div>
-
 </div>
 </blockquote>
 </div>

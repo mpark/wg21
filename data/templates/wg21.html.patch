@@ -11,13 +11,10 @@ index 7dfa95e..0b55daa 100644
    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
  $for(author-meta)$
    <meta name="author" content="$author-meta$" />
-@@ -19,10 +19,14 @@ $endif$
+@@ -19,10 +19,11 @@ $endif$
    <title>$if(title-prefix)$$title-prefix$ – $endif$$pagetitle$</title>
    <style>
      $styles.html()$
-+    code.diff {color: #$uccolor$}
-+    code.diff span.va {color: #$addcolor$}
-+    code.diff span.st {color: #$rmcolor$}
    </style>
  $for(css)$
    <link rel="stylesheet" href="$css$" />

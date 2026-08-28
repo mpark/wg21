@@ -1,3 +1,10 @@
+:root {
+  --unchanged-color: #898887;
+  --add-color: #006e28;
+  --rm-color: #bf0303;
+  --note-color: #0000ff;
+}
+
 table thead tr {
   border-bottom: 3px solid black;
   border-bottom-style: double;
@@ -30,6 +37,31 @@ ins, del {
 /* Move underline down slightly as to not overlap with underscore */
 ins {
   text-underline-offset: 3.5px;
+}
+
+.add {
+  color: var(--add-color);
+}
+
+.rm {
+  color: var(--rm-color);
+}
+
+code.diff {
+  color: var(--unchanged-color);
+}
+
+code.diff span.va {
+  color: var(--add-color);
+}
+
+code.diff span.st {
+  color: var(--rm-color);
+}
+
+.ednote,
+.draftnote {
+  color: var(--note-color);
 }
 
 /* Leave room for underline/strikeout decorations in code blocks. */

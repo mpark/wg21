@@ -87,9 +87,6 @@ code span.st { color: #9f6807; }
 code span.va { } 
 code span.vs { color: #9f6807; } 
 code span.wa { color: #6a737d; font-weight: bold; } 
-code.diff {color: #898887}
-code.diff span.va {color: #006e28}
-code.diff span.st {color: #bf0303}
 </style>
   <style type="text/css">
 body {
@@ -423,7 +420,13 @@ margin-top: 1em;
 ol.enumeratea { list-style-type: none; background: inherit; }
 ol.enumerate { list-style-type: none; background: inherit; }
 </style>
-  <style type="text/css">table thead tr {
+  <style type="text/css">:root {
+--unchanged-color: #898887;
+--add-color: #006e28;
+--rm-color: #bf0303;
+--note-color: #0000ff;
+}
+table thead tr {
 border-bottom: 3px solid black;
 border-bottom-style: double;
 }
@@ -448,6 +451,25 @@ text-decoration-thickness: 1px;
 
 ins {
 text-underline-offset: 3.5px;
+}
+.add {
+color: var(--add-color);
+}
+.rm {
+color: var(--rm-color);
+}
+code.diff {
+color: var(--unchanged-color);
+}
+code.diff span.va {
+color: var(--add-color);
+}
+code.diff span.st {
+color: var(--rm-color);
+}
+.ednote,
+.draftnote {
+color: var(--note-color);
 }
 
 div.sourceCode {
@@ -565,7 +587,7 @@ including a custom keyword:
 <ul>
 <li><del><code class="sourceCode cpp">A<span class="op">&lt;</span>B<span class="op">&lt;</span>T<span class="op">&gt;&gt;</span></code></del></li>
 <li><code class="sourceCode cpp">compare_3way</code></li>
-<li><span class="add" style="color: #006e28"><ins><code class="sourceCode default cpp">compare_3way</code></ins></span></li>
+<li><span class="add"><ins><code class="sourceCode default cpp">compare_3way</code></ins></span></li>
 <li><code class="sourceCode default">3WAY</code><code class="sourceCode cpp"><span class="op">&lt;</span>R<span class="op">&gt;</span></code></li>
 <li><code class="sourceCode default">operator@</code></li>
 <li><code class="sourceCode cpp"><span class="kw">operator</span><span class="op">+</span></code></li>
@@ -580,8 +602,8 @@ bar</em></li>
 <li><del>foo
 <code class="sourceCode cpp"><span class="kw">constexpr</span></code>
 bar</del></li>
-<li><span class="add" style="color: #006e28"><ins><code class="sourceCode default cpp">hello world</code></ins></span></li>
-<li><code class="sourceCode cpp"><span class="add" style="color: #006e28"><ins>hello&lt;T&gt;</ins></span></code></li>
+<li><span class="add"><ins><code class="sourceCode default cpp">hello world</code></ins></span></li>
+<li><code class="sourceCode cpp"><span class="add"><ins>hello&lt;T&gt;</ins></span></code></li>
 <li><del><em><code class="sourceCode cpp">hello world</code></em></del></li>
 <li><del><code class="sourceCode cpp">hello world</code></del></li>
 <li><code class="sourceCode cpp"><span class="kw">namespace</span> <em>unspecified</em> <span class="op">{</span> <span class="kw">struct</span> sender_base <span class="op">{};</span> <span class="op">}</span></code></li>
@@ -596,7 +618,7 @@ bar</del></li>
 <p>Loose list:</p>
 <ul>
 <li><p><code class="sourceCode cpp">x<em><sub>i</sub></em> <span class="op">&lt;=&gt;</span> y<em><sub>i</sub></em></code></p></li>
-<li><p><span class="rm" style="color: #bf0303"><del>foo
+<li><p><span class="rm"><del>foo
 <code class="sourceCode default cpp">hello world</code>
 bar</del></span></p></li>
 </ul>

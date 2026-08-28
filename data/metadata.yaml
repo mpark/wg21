@@ -23,6 +23,7 @@ urlcolor: blue
 toccolor: black
 lang: en
 
+# These only affect LaTeX output. HTML colors are defined in templates/wg21.css.
 uccolor: '898887'
 addcolor: '006e28'
 rmcolor: 'bf0303'
