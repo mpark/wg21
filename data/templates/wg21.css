@@ -119,3 +119,86 @@ body[data-syntax-highlighting="off"] code.sourceCode:not(.diff) span:not(.add, .
 body[data-deleted-text="hide"] .rm del {
   display: none !important;
 }
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+    --unchanged-color: #e0e0e0;
+    --add-color: #d0fddd;
+    --rm-color: #ff9b98;
+    --note-color: #74bdff;
+  }
+
+  table thead tr {
+    border-bottom-color: #e0e0e0;
+  }
+
+  table tbody tr {
+    border-bottom-color: #e0e0e0;
+  }
+
+  div.sourceCode {
+    background-color: rgba(255, 255, 255, 0.03);
+  }
+
+  .view-controls {
+    border-color: #59636c;
+    background: rgba(37, 37, 37, 0.96);
+    color: #e0e0e0;
+    box-shadow: 0 0.2rem 0.8rem rgba(0, 0, 0, 0.4);
+  }
+
+  .view-controls:hover {
+    background: #303030;
+  }
+
+  mark {
+    background-color: #665c00;
+    color: #ffffff;
+  }
+
+  code span.al,
+  code span.er {
+    color: #ff7070;
+  }
+
+  code span.cf,
+  code span.dt,
+  code span.kw {
+    color: #32eade;
+  }
+
+  code span.bn,
+  code span.bu,
+  code span.ch,
+  code span.dv,
+  code span.fl,
+  code span.sc,
+  code span.ss,
+  code span.st,
+  code span.vs {
+    color: #ffd867;
+  }
+
+  code span.co,
+  code span.cv,
+  code span.do,
+  code span.in,
+  code span.wa {
+    color: #60ff60;
+  }
+
+  code span.op {
+    color: #dac6d9;
+  }
+
+  code span.pp {
+    color: #c28c68;
+  }
+
+  :target .sourceCode,
+  p:has(> span.marginalizedparent > a.marginalized:target),
+  li:has(> span.marginalizedparent > a.marginalized:target) {
+    background-color: #4b6345;
+  }
+}
