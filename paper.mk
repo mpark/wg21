@@ -38,6 +38,21 @@ OUTDIR := .
 
 ifeq ($(PAPER_RULE),)
 include $(dir $(lastword $(MAKEFILE_LIST)))flat.mk
+
+# Backward compatibility for explicit source-to-output mappings such as:
+#
+#   p2996r13.html: reflection.md
+#
+# The explicit rule supplies the Markdown prerequisite; these fallback rules
+# supply the recipe.
+$(OUTDIR)/%.html:
+	$(PANDOC)
+
+$(OUTDIR)/%.latex:
+	$(PANDOC)
+
+$(OUTDIR)/%.pdf:
+	$(PANDOC)
 else
 DEFAULT_FORMAT ?= html
 

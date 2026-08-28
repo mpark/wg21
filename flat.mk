@@ -93,18 +93,3 @@ $(OUTDIR)/%.latex: %.md $(DEPS) | $(OUTDIR)
 
 $(OUTDIR)/%.pdf: %.md $(DEPS) | $(OUTDIR)
 	$(PANDOC)
-
-# Backward compatibility for explicit source-to-output mappings such as:
-#
-#   p2996r13.html: reflection.md
-#
-# The explicit rule supplies the Markdown prerequisite; these fallback rules
-# supply the recipe.
-$(OUTDIR)/%.html:
-	$(PANDOC)
-
-$(OUTDIR)/%.latex:
-	$(PANDOC)
-
-$(OUTDIR)/%.pdf:
-	$(PANDOC)
