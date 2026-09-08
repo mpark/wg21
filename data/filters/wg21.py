@@ -924,7 +924,7 @@ class CodeElems:
         return f' {cls.placeholder_prefix}{idx} '
 
     @classmethod
-    def _process_fragment(cls, text, i, closing, md, em, wrap=lambda fragment: fragment):
+    def _process_fragment(cls, text, i, closing, wrap=lambda fragment: fragment):
         """
         Returns the placeholder for the parsed embedded Markdown region and
         the index where parsing should continue.
@@ -953,12 +953,12 @@ class CodeElems:
         while i < len(text):
             result = None
             if md is not None and text.startswith(md * 2, i):
-                result = cls._process_fragment(text, i + len(md) * 2, md * 2, md, em)
+                result = cls._process_fragment(text, i + len(md) * 2, md * 2)
             elif md is not None and text.startswith(md, i):
-                result = cls._process_fragment(text, i + len(md), md, md, em)
+                result = cls._process_fragment(text, i + len(md), md)
             elif em is not None and text.startswith(em, i):
                 result = cls._process_fragment(
-                    text, i + len(em), em, md, em, lambda fragment: f'*{fragment}*')
+                    text, i + len(em), em, lambda fragment: f'*{fragment}*')
 
             if result is not None:
                 pieces.append(text[start:i])
