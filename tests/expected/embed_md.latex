@@ -252,4 +252,17 @@ C++\hyperref[embedded-markdown-in-c]{}}{Embedded Markdown in C++}}\label{embedde
 \end{Highlighting}
 \end{Shaded}
 
+\subsection{\texorpdfstring{Emphasis with a Leading
+Underscore\hyperref[emphasis-with-a-leading-underscore]{}}{Emphasis with a Leading Underscore}}\label{emphasis-with-a-leading-underscore}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{struct}\NormalTok{ \emph{Template} }\OperatorTok{\{}
+  \DataTypeTok{int}\NormalTok{ \emph{\_0}}\OperatorTok{;}
+\OperatorTok{\};}
+
+\KeywordTok{auto}\NormalTok{ interp }\OperatorTok{=}\NormalTok{ \emph{Template}}\OperatorTok{\{}\NormalTok{get\_result}\OperatorTok{()\};}
+\end{Highlighting}
+\end{Shaded}
+
 \end{document}

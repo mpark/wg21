@@ -59,7 +59,7 @@ def wrap_elem(opening, elem, closing):
 
 def convert_fragments(fragments, input_format):
     """
-    Converts a list of fragment texts into panflute elements
+    Converts a list of (text, emphasize) fragments into panflute elements
     in a single invocation of `pf.convert_text`.
 
     A fragment is essentially a piece of raw Markdown text that we need to parse
@@ -70,7 +70,7 @@ def convert_fragments(fragments, input_format):
     # injects an empty span []{} in front of the fragment such that a fragment
     # that starts with a - (dash) doesn't get interpreted as a nested list.
     result = pf.convert_text(
-               '\n'.join(f'- []{{}}{fragment}' for fragment in fragments),
+               '\n'.join(f'- []{{}}{text}' for text, _ in fragments),
                input_format=input_format,
                output_format='panflute')
     assert(len(result) == 1)
@@ -78,12 +78,14 @@ def convert_fragments(fragments, input_format):
     assert(isinstance(lst, pf.BulletList))
     assert(len(lst.content) == len(fragments))
     process_subs(lst, input_format)
-    for item in lst.content:
+    for item, (_, emphasize) in zip(lst.content, fragments):
         assert(len(item.content) == 1)
         plain = item.content[0]
         assert(isinstance(plain, pf.Plain))
         marker = plain.content.pop(0)
         assert(isinstance(marker, pf.Span) and not marker.content)
+        if emphasize:
+            plain.content = [pf.Emph(*plain.content)]
         yield plain
 
 def process_subs(elem, input_format):
@@ -106,7 +108,7 @@ def process_subs(elem, input_format):
         adds.append(add)
 
         import html, urllib.parse
-        fragments.append(html.unescape(urllib.parse.unquote(elem.url)))
+        fragments.append((html.unescape(urllib.parse.unquote(elem.url)), False))
         return pf.Span(rm, add)
 
     elem.walk(subs)
@@ -791,10 +793,10 @@ class CodeElems:
     keyword_defaults = None
     placeholder_prefix = None
 
-    # Unique list of fragments, kept track in `fragment_idx`.
+    # Unique list of (text, emphasize) fragments, kept track in `fragment_idx`.
     fragments = []
 
-    # Mapping from embedded md fragment to its index within `fragments`.
+    # Mapping from (text, emphasize) fragment to its index within `fragments`.
     fragment_idx = {}
 
     @staticmethod
@@ -902,7 +904,7 @@ class CodeElems:
                     plain = plain.walk(f, doc)
                 plain.walk(nested_code, doc)
                 blocks.append(plain)
-            token = cls._compute_unique_placeholder(fragments)
+            token = cls._compute_unique_placeholder(text for text, _ in fragments)
             text, sep = cls._convert_blocks(blocks, token, doc)
             result = text.split(sep)
             assert(len(result) == len(batch))
@@ -924,7 +926,7 @@ class CodeElems:
         return f' {cls.placeholder_prefix}{idx} '
 
     @classmethod
-    def _process_fragment(cls, text, i, closing, wrap=lambda fragment: fragment):
+    def _process_fragment(cls, text, i, closing, emphasize=False):
         """
         Returns the placeholder for the parsed embedded Markdown region and
         the index where parsing should continue.
@@ -941,7 +943,7 @@ class CodeElems:
         if end < 0 or 0 <= newline < end:
             return None
 
-        placeholder = cls._store_fragment(wrap(text[i:end]))
+        placeholder = cls._store_fragment((text[i:end], emphasize))
         return placeholder, end + len(closing)
 
     @classmethod
@@ -958,7 +960,7 @@ class CodeElems:
                 result = cls._process_fragment(text, i + len(md), md)
             elif em is not None and text.startswith(em, i):
                 result = cls._process_fragment(
-                    text, i + len(em), em, lambda fragment: f'*{fragment}*')
+                    text, i + len(em), em, emphasize=True)
 
             if result is not None:
                 pieces.append(text[start:i])

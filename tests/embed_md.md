@@ -60,3 +60,13 @@ struct $as-receiver$ {
   }
 };
 ```
+
+## Emphasis with a Leading Underscore
+
+```cpp
+struct $Template$ {
+  int $_0$;
+};
+
+auto interp = $Template${get_result()};
+```

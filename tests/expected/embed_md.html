@@ -704,6 +704,8 @@ background-color: #4b6345;
 <li><a href="#custom-delimiters" id="toc-custom-delimiters"><span class="toc-section-number">1.2</span> Custom Delimiters</a></li>
 <li><a href="#non-embedded-code" id="toc-non-embedded-code"><span class="toc-section-number">1.3</span> Non-Embedded Code</a></li>
 <li><a href="#embedded-markdown-in-c" id="toc-embedded-markdown-in-c"><span class="toc-section-number">1.4</span> Embedded Markdown in C++</a></li>
+<li><a href="#emphasis-with-a-leading-underscore" id="toc-emphasis-with-a-leading-underscore"><span class="toc-section-number">1.5</span> Emphasis with a Leading
+Underscore</a></li>
 </ul></li>
 </ul>
 </div>
@@ -740,6 +742,13 @@ background-color: #4b6345;
 <span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    invoke<span class="op">(</span>f_<span class="op">);</span></span>
 <span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
 <span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span></code></pre></div>
+<h2 data-number="1.5" id="emphasis-with-a-leading-underscore"><span class="header-section-number">1.5</span> Emphasis with a Leading
+Underscore<a href="#emphasis-with-a-leading-underscore" class="self-link"></a></h2>
+<div class="sourceCode" id="cb5"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> <em>Template</em> <span class="op">{</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> <em>_0</em><span class="op">;</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> interp <span class="op">=</span> <em>Template</em><span class="op">{</span>get_result<span class="op">()};</span></span></code></pre></div>
 </div>
 </div>
 <script>
