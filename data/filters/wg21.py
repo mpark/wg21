@@ -20,9 +20,9 @@ document_pattern = r"[PD]([0-9]+)R[0-9]+"
 nonnormative_classes = {'example', 'note'}
 editorial_classes = {'ednote', 'draftnote'}
 note_classes = nonnormative_classes | editorial_classes
+code_modifiers = {'embed_md', 'raw', 'numberLines', 'lineAnchors'}
 
 srefs = {}
-highlight_languages = set()
 
 headers = {}
 refs = {}
@@ -144,9 +144,6 @@ def prepare(doc):
 
     with Path(datadir, 'srefs.json').open() as f:
         srefs.update(json.load(f))
-
-    highlight_languages.update(
-        pf.run_pandoc(args=['--list-highlight-languages']).splitlines())
 
     process_subs(doc, doc.get_metadata('from'))
 
@@ -737,7 +734,7 @@ def code_init(elem, doc):
 
     # As `walk` performs post-order traversal, this is
     # guaranteed to run before the header and divspan handling.
-    if not any(c in highlight_languages for c in elem.classes):
+    if all(c in code_modifiers for c in elem.classes):
         if isinstance(elem, pf.Code):
             c = doc.get_metadata('highlighting.inline-code', 'cpp')
         elif isinstance(elem, pf.CodeBlock):
