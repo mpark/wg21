@@ -329,5 +329,15 @@ Highlighting\hyperref[rust-syntax-highlighting]{}}{rust Syntax Highlighting}}\la
 \end{Highlighting}
 \end{Shaded}
 
+\subsection{\texorpdfstring{External Filter Code
+Block\hyperref[external-filter-code-block]{}}{External Filter Code Block}}\label{external-filter-code-block}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{flowchart LR}
+\NormalTok{  source {-}{-}\textgreater{} paper}
+\end{Highlighting}
+\end{Shaded}
+
 
 \end{document}

@@ -129,3 +129,10 @@ match parse(some_input) {
   Err(err) => // use `err`
 }
 ```
+
+## External Filter Code Block
+
+```mermaid
+flowchart LR
+  source --> paper
+```
