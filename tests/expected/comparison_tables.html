@@ -483,6 +483,8 @@ ellipse { stroke: #e0e0e0; }
 --add-color: #006e28;
 --rm-color: #bf0303;
 --note-color: #0000ff;
+--not-proposed-color: #7151a8;
+--not-proposed-bg-color: rgba(113, 81, 168, 0.06);
 }
 table thead tr {
 border-bottom: 3px solid black;
@@ -532,6 +534,18 @@ color: var(--note-color);
 
 div.sourceCode {
 padding: 0.5em;
+}
+div.sourceCode:has(> pre.not_proposed) {
+padding: 0.65em 0.8em 0.65em 1.1em;
+border-left: 0.25em solid var(--not-proposed-color);
+background-color: var(--not-proposed-bg-color);
+}
+div.sourceCode:has(> pre.not_proposed)::before {
+content: "\2298\2002 Not proposed";
+display: block;
+margin-bottom: 0.8em;
+color: var(--not-proposed-color);
+font: 600 0.95rem/1.2 sans-serif;
 }
 
 .view-controls {
@@ -583,6 +597,8 @@ color-scheme: dark;
 --add-color: #d0fddd;
 --rm-color: #ff9b98;
 --note-color: #6699ff;
+--not-proposed-color: #c2a4f5;
+--not-proposed-bg-color: rgba(194, 164, 245, 0.07);
 }
 table thead tr {
 border-bottom-color: #e0e0e0;

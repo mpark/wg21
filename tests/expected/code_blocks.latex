@@ -123,6 +123,7 @@
 \providecommand{\tightlist}{%
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 \usepackage[normalem]{ulem}
+\usepackage{mdframed}
 \providecommand{\CSLIndent}{}
 \renewcommand{\CSLIndent}[1]{\hfill\break\hspace*{\cslhangindent}\ignorespaces#1}
 
@@ -134,6 +135,24 @@
 \renewcommand{\labelitemii}{---}
 \renewcommand{\labelitemiii}{---}
 \renewcommand{\labelitemiv}{---}
+
+\definecolor{notproposedcolor}{HTML}{7151A8}
+\definecolor{notproposedback}{HTML}{F6F5FA}
+\newmdenv[
+  leftline=true,
+  rightline=false,
+  topline=false,
+  bottomline=false,
+  linewidth=2pt,
+  linecolor=notproposedcolor,
+  backgroundcolor=notproposedback,
+  innerleftmargin=8pt,
+  innerrightmargin=8pt,
+  innertopmargin=7pt,
+  innerbottommargin=7pt,
+  skipabove=\topsep,
+  skipbelow=\topsep
+]{notproposed}
 
 % https://github.com/cplusplus/draft/blob/97b615a5a6ab0598b624ee05402c531d0421cff6/source/layout.tex#L32-L68
 \makeatletter
@@ -339,5 +358,22 @@ Block\hyperref[external-filter-code-block]{}}{External Filter Code Block}}\label
 \end{Highlighting}
 \end{Shaded}
 
+\subsection{\texorpdfstring{Not
+Proposed\hyperref[not-proposed]{}}{Not Proposed}}\label{not-proposed}
+
+\begin{notproposed}
+
+\noindent\textcolor{notproposedcolor}{$\oslash$\hspace{0.65em}\textbf{Not proposed}}\par\smallskip
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{template} \OperatorTok{\textless{}}\KeywordTok{typename}\NormalTok{ T}\OperatorTok{\textgreater{}}
+\KeywordTok{concept}\NormalTok{ tuple\_like }\OperatorTok{=} \KeywordTok{requires} \OperatorTok{\{}
+  \KeywordTok{typename}\NormalTok{ std}\OperatorTok{::}\NormalTok{tuple\_size}\OperatorTok{\textless{}}\NormalTok{T}\OperatorTok{\textgreater{}::}\NormalTok{type}\OperatorTok{;}
+\OperatorTok{\};}
+\end{Highlighting}
+\end{Shaded}
+
+\end{notproposed}
 
 \end{document}

@@ -136,3 +136,12 @@ match parse(some_input) {
 flowchart LR
   source --> paper
 ```
+
+## Not Proposed
+
+```cpp {.not_proposed}
+template <typename T>
+concept tuple_like = requires {
+  typename std::tuple_size<T>::type;
+};
+```

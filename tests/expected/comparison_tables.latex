@@ -134,6 +134,7 @@
 \providecommand{\tightlist}{%
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 \usepackage[normalem]{ulem}
+\usepackage{mdframed}
 \providecommand{\CSLIndent}{}
 \renewcommand{\CSLIndent}[1]{\hfill\break\hspace*{\cslhangindent}\ignorespaces#1}
 
@@ -145,6 +146,24 @@
 \renewcommand{\labelitemii}{---}
 \renewcommand{\labelitemiii}{---}
 \renewcommand{\labelitemiv}{---}
+
+\definecolor{notproposedcolor}{HTML}{7151A8}
+\definecolor{notproposedback}{HTML}{F6F5FA}
+\newmdenv[
+  leftline=true,
+  rightline=false,
+  topline=false,
+  bottomline=false,
+  linewidth=2pt,
+  linecolor=notproposedcolor,
+  backgroundcolor=notproposedback,
+  innerleftmargin=8pt,
+  innerrightmargin=8pt,
+  innertopmargin=7pt,
+  innerbottommargin=7pt,
+  skipabove=\topsep,
+  skipbelow=\topsep
+]{notproposed}
 
 % https://github.com/cplusplus/draft/blob/97b615a5a6ab0598b624ee05402c531d0421cff6/source/layout.tex#L32-L68
 \makeatletter

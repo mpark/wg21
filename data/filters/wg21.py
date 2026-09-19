@@ -20,7 +20,7 @@ document_pattern = r"[PD]([0-9]+)R[0-9]+"
 nonnormative_classes = {'example', 'note'}
 editorial_classes = {'ednote', 'draftnote'}
 note_classes = nonnormative_classes | editorial_classes
-code_modifiers = {'embed_md', 'raw', 'numberLines', 'lineAnchors'}
+code_modifiers = {'embed_md', 'raw', 'numberLines', 'lineAnchors', 'not_proposed'}
 
 srefs = {}
 
@@ -762,11 +762,29 @@ def embed_md_init(elem, doc):
     if em != 'none':
         elem.attributes['em'] = em
 
+def not_proposed(elem, doc):
+    if not (
+        doc.format == 'latex' and
+        isinstance(elem, pf.CodeBlock) and
+        'not_proposed' in elem.classes
+    ):
+        return None
+
+    return pf.Div(
+        pf.RawBlock(r'\begin{notproposed}', 'latex'),
+        pf.RawBlock(
+            r'\noindent\textcolor{notproposedcolor}{'
+            r'$\oslash$\hspace{0.65em}\textbf{Not proposed}}'
+            r'\par\smallskip',
+            'latex'),
+        elem,
+        pf.RawBlock(r'\end{notproposed}', 'latex'))
+
 formatting = [
     sref,
     diff,
     divspan,
-    *[code_init, embed_md_init]
+    *[code_init, embed_md_init, not_proposed]
 ]
 
 class CodeElems:

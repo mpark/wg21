@@ -483,6 +483,8 @@ ellipse { stroke: #e0e0e0; }
 --add-color: #006e28;
 --rm-color: #bf0303;
 --note-color: #0000ff;
+--not-proposed-color: #7151a8;
+--not-proposed-bg-color: rgba(113, 81, 168, 0.06);
 }
 table thead tr {
 border-bottom: 3px solid black;
@@ -532,6 +534,18 @@ color: var(--note-color);
 
 div.sourceCode {
 padding: 0.5em;
+}
+div.sourceCode:has(> pre.not_proposed) {
+padding: 0.65em 0.8em 0.65em 1.1em;
+border-left: 0.25em solid var(--not-proposed-color);
+background-color: var(--not-proposed-bg-color);
+}
+div.sourceCode:has(> pre.not_proposed)::before {
+content: "\2298\2002 Not proposed";
+display: block;
+margin-bottom: 0.8em;
+color: var(--not-proposed-color);
+font: 600 0.95rem/1.2 sans-serif;
 }
 
 .view-controls {
@@ -583,6 +597,8 @@ color-scheme: dark;
 --add-color: #d0fddd;
 --rm-color: #ff9b98;
 --note-color: #6699ff;
+--not-proposed-color: #c2a4f5;
+--not-proposed-bg-color: rgba(194, 164, 245, 0.07);
 }
 table thead tr {
 border-bottom-color: #e0e0e0;
@@ -708,6 +724,7 @@ background-color: #4b6345;
 <code class="sourceCode cpp">rust</code> Syntax Highlighting</a></li>
 <li><a href="#external-filter-code-block" id="toc-external-filter-code-block"><span class="toc-section-number">1.5</span> External Filter Code
 Block</a></li>
+<li><a href="#not-proposed" id="toc-not-proposed"><span class="toc-section-number">1.6</span> Not Proposed</a></li>
 </ul></li>
 </ul>
 </div>
@@ -811,6 +828,11 @@ Block</a></li>
 <h2 data-number="1.5" id="external-filter-code-block"><span class="header-section-number">1.5</span> External Filter Code Block<a href="#external-filter-code-block" class="self-link"></a></h2>
 <pre class="mermaid"><code>flowchart LR
   source --&gt; paper</code></pre>
+<h2 data-number="1.6" id="not-proposed"><span class="header-section-number">1.6</span> Not Proposed<a href="#not-proposed" class="self-link"></a></h2>
+<div class="sourceCode" id="cb5"><pre class="sourceCode cpp not_proposed"><code class="sourceCode cpp"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">template</span> <span class="op">&lt;</span><span class="kw">typename</span> T<span class="op">&gt;</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="kw">concept</span> tuple_like <span class="op">=</span> <span class="kw">requires</span> <span class="op">{</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">typename</span> std<span class="op">::</span>tuple_size<span class="op">&lt;</span>T<span class="op">&gt;::</span>type<span class="op">;</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span></code></pre></div>
 </div>
 </div>
 <script>

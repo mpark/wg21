@@ -996,6 +996,21 @@ int main() {
 ``````
 :::
 
+#### Marking Code as Not Proposed: `.not_proposed`
+
+Add the `.not_proposed` class to code that illustrates an explored design which
+is not part of the paper's proposal. The code retains its normal syntax
+highlighting and embedded Markdown behavior.
+
+``````render
+```cpp {.not_proposed}
+template <typename T>
+concept tuple_like = requires {
+  typename std::tuple_size<T>::type;
+};
+```
+``````
+
 ### Embedded Markdown
 
 Code in C++ proposals often needs small pieces of wording markup inside it.
