@@ -1,0 +1,808 @@
+/* Floating table of contents. On wide viewports, the static "Contents"
+   block becomes a fixed sidebar on the right, scrollspy-highlighted and
+   unfolded along the path to the current section (see toc.js).
+   On narrow viewports it becomes a fixed title bar and modal outline. */
+:root {
+  --toc-width: 19rem;
+  --toc-right: clamp(1rem, 2vw, 2.5rem);
+  --toc-accent: #2878b5;
+  --toc-active-bg: #eaf4fb;
+  --toc-active-text: #175f91;
+  --toc-border: #d9e1e7;
+  --toc-heading: #4d5c68;
+  --toc-hover-bg: #f2f6f8;
+  --toc-hover-border: #bdc9d2;
+  --toc-hover-text: #244d6b;
+  --toc-muted: #66727d;
+  --toc-rail: #dfe6eb;
+  --toc-section-number: #89949d;
+  --toc-scrollbar: #b8c3cc;
+  --toc-surface: rgba(255, 255, 255, 0.96);
+  --toc-panel-shadow:
+    0 0.75rem 2.25rem rgba(30, 55, 75, 0.08),
+    0 0.125rem 0.4rem rgba(30, 55, 75, 0.05);
+  --view-controls-bg: rgba(255, 255, 255, 0.96);
+  --view-controls-border: #b7c0c8;
+  --view-controls-color: #22303c;
+  --view-controls-hover: #f3f6f8;
+  --view-controls-shadow: 0 0.2rem 0.8rem rgba(34, 48, 60, 0.12);
+}
+
+/* Interactive view controls. Disable syntax highlighting, and hide deleted text. */
+.view-controls {
+  position: sticky;
+  top: 0.75rem;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.35rem;
+  width: fit-content;
+  margin-left: auto;
+  margin-bottom: 1rem;
+  padding: 0.45rem 0.8rem;
+  border: 1px solid var(--view-controls-border);
+  border-radius: 999px;
+  background: var(--view-controls-bg);
+  color: var(--view-controls-color);
+  font: 600 0.9rem/1.1 sans-serif;
+  box-shadow: var(--view-controls-shadow);
+}
+
+.view-controls:hover {
+  background: var(--view-controls-hover);
+}
+
+.view-controls label {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.view-controls input {
+  margin: 0;
+}
+
+.view-controls span {
+  white-space: nowrap;
+}
+
+.table-of-contents .toc-progress {
+  display: none;
+}
+
+.toc-mobile-bar,
+.toc-dialog,
+.toc-mobile-title,
+.toc-mobile-trigger,
+.toc-expand-toggle {
+  display: none;
+}
+
+/* Compact navigation for narrower viewports. It is enabled only
+   after the script has built the dialog, leaving the static TOC as a no-JS
+   fallback. */
+@media screen and (max-width: 89.999em) {
+  html,
+  body {
+    max-width: 100%;
+    overflow-x: hidden;
+    overflow-x: clip;
+  }
+
+  .wrapper {
+    max-width: 100%;
+    overflow-x: hidden;
+    overflow-x: clip;
+  }
+
+  .wrapper div.sourceCode {
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  /* Keep wide paper tables usable without allowing them to widen the page. */
+  .wrapper table {
+    display: block;
+    max-width: 100%;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+  }
+
+  .wrapper #title-block-header > table {
+    display: table;
+    overflow: visible;
+  }
+
+  body.toc-ready .table-of-contents {
+    display: none;
+  }
+
+  body.toc-ready :is(h1, h2, h3, h4, h5, h6)[id] {
+    scroll-margin-top: 4.5rem;
+  }
+
+  body.toc-menu-open {
+    overflow: hidden;
+  }
+
+  body.toc-ready .toc-mobile-bar {
+    position: fixed;
+    inset: 0 0 auto;
+    z-index: 1100;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    height: 3.5rem;
+    box-sizing: border-box;
+    padding:
+      0.5rem max(1rem, env(safe-area-inset-right))
+      0.5rem max(1rem, env(safe-area-inset-left));
+    border-bottom: 1px solid var(--toc-border);
+    background: var(--toc-surface);
+    box-shadow: 0 0.25rem 1rem rgba(30, 55, 75, 0.08);
+    backdrop-filter: blur(0.85rem);
+    font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI",
+      sans-serif;
+  }
+
+  .toc-mobile-bar .view-controls {
+    position: static;
+    z-index: auto;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.35rem;
+    width: auto;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    color: var(--toc-muted);
+    box-shadow: none;
+    font: 600 0.72rem/1 ui-sans-serif, -apple-system, BlinkMacSystemFont,
+      "Segoe UI", sans-serif;
+  }
+
+  .toc-mobile-bar .view-controls:hover {
+    background: transparent;
+  }
+
+  .toc-mobile-bar .view-controls label {
+    gap: 0.35rem;
+    padding: 0.45rem 0.55rem;
+    border: 1px solid var(--toc-border);
+    border-radius: 0.6rem;
+    background: transparent;
+    cursor: pointer;
+  }
+
+  .toc-mobile-bar .view-controls label:hover {
+    border-color: var(--toc-hover-border);
+    background: var(--toc-hover-bg);
+    color: var(--toc-hover-text);
+  }
+
+  .toc-mobile-bar .view-controls input {
+    accent-color: var(--toc-accent);
+  }
+
+  .toc-mobile-bar .view-controls input:focus-visible {
+    outline: 2px solid var(--toc-accent);
+    outline-offset: 2px;
+  }
+
+  body[data-syntax-highlighting="off"]
+    .toc-mobile-bar label[for="no-syntax-highlighting-toggle"],
+  body[data-deleted-text="hide"]
+    .toc-mobile-bar label[for="hide-deleted-text-toggle"] {
+    border-color: color-mix(in srgb,
+      var(--toc-accent) 35%, var(--toc-border));
+    background: var(--toc-active-bg);
+    color: var(--toc-active-text);
+  }
+
+  body.toc-ready .toc-mobile-title {
+    display: block;
+    min-width: 0;
+    flex: 1;
+    overflow: hidden;
+    color: var(--toc-heading);
+    font-size: 0.9rem;
+    font-weight: 600;
+    line-height: 1.2;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  body.toc-ready .toc-mobile-trigger {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex: 0 0 auto;
+    padding: 0.45rem 0.65rem;
+    border: 1px solid var(--toc-border);
+    border-radius: 0.6rem;
+    background: transparent;
+    color: var(--toc-heading);
+    font: 600 0.78rem/1 ui-sans-serif, -apple-system, BlinkMacSystemFont,
+      "Segoe UI", sans-serif;
+    cursor: pointer;
+  }
+
+  .toc-mobile-trigger:hover {
+    border-color: var(--toc-hover-border);
+    background: var(--toc-hover-bg);
+  }
+
+  .toc-mobile-trigger:focus-visible,
+  .toc-dialog-close:focus-visible,
+  .toc-dialog a:focus-visible {
+    outline: 2px solid var(--toc-accent);
+    outline-offset: 2px;
+  }
+
+  .toc-menu-icon {
+    position: relative;
+    width: 1rem;
+    height: 0.7rem;
+    flex: 0 0 auto;
+    border-top: 2px solid currentColor;
+    border-bottom: 2px solid currentColor;
+    box-sizing: border-box;
+  }
+
+  .toc-menu-icon::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    border-top: 2px solid currentColor;
+    transform: translateY(-50%);
+  }
+
+  .toc-dialog[open] {
+    position: fixed;
+    inset: 0;
+    z-index: 1200;
+    display: flex;
+    flex-direction: column;
+    width: min(32rem, calc(100vw - 2rem));
+    max-width: none;
+    max-height: min(46rem, calc(100dvh - 2rem));
+    box-sizing: border-box;
+    margin: auto;
+    padding: 0;
+    overflow: hidden;
+    border: 1px solid var(--toc-border);
+    border-radius: 1rem;
+    background: var(--toc-surface);
+    color: var(--toc-muted);
+    box-shadow: 0 1.5rem 5rem rgba(20, 35, 45, 0.28);
+    font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI",
+      sans-serif;
+    text-align: left;
+    hyphens: none;
+  }
+
+  .toc-dialog::backdrop {
+    background: rgba(20, 30, 38, 0.45);
+    backdrop-filter: blur(0.15rem);
+  }
+
+  .toc-dialog-header {
+    display: flex;
+    flex: 0 0 auto;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1rem 1rem 0.9rem 1.15rem;
+    border-bottom: 1px solid var(--toc-border);
+  }
+
+  .toc-dialog-heading {
+    min-width: 0;
+    flex: 1;
+  }
+
+  .toc-dialog-eyebrow {
+    margin: 0 0 0.3rem;
+    color: var(--toc-accent);
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.11em;
+    line-height: 1;
+    text-transform: uppercase;
+  }
+
+  .toc-dialog-title {
+    margin: 0;
+    overflow: hidden;
+    color: var(--toc-heading);
+    font-size: 1rem;
+    font-weight: 650;
+    line-height: 1.25;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .toc-dialog-close {
+    display: grid;
+    width: 2rem;
+    height: 2rem;
+    flex: 0 0 auto;
+    place-items: center;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: transparent;
+    color: var(--toc-muted);
+    font: 400 1.5rem/1 sans-serif;
+    cursor: pointer;
+  }
+
+  .toc-dialog-close:hover {
+    background: var(--toc-hover-bg);
+    color: var(--toc-heading);
+  }
+
+  .toc-dialog-nav {
+    min-height: 0;
+    /* Safari can collapse a zero flex basis inside an auto-height dialog. */
+    flex: 1 1 auto;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding: 0.75rem 0.8rem 1rem;
+    scrollbar-width: thin;
+    scrollbar-color: var(--toc-scrollbar) transparent;
+  }
+
+  .toc-dialog ul {
+    padding-left: 0;
+    margin: 0;
+    list-style: none;
+  }
+
+  .toc-dialog ul ul {
+    position: relative;
+    padding-left: 0.9rem;
+    margin: 0.15rem 0 0.25rem 0.65rem;
+  }
+
+  .toc-dialog ul ul::before {
+    content: "";
+    position: absolute;
+    top: 0.2rem;
+    bottom: 0.2rem;
+    left: 0;
+    width: 1px;
+    background: var(--toc-rail);
+  }
+
+  .toc-dialog li,
+  .toc-dialog li > ul {
+    display: block;
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  .toc-dialog li::before {
+    display: none;
+  }
+
+  .toc-dialog a {
+    display: block;
+    margin: 0.0625rem 0;
+    padding: 0.38rem 0.55rem 0.38rem 0.65rem;
+    border-left: 2px solid transparent;
+    border-radius: 0 0.45rem 0.45rem 0;
+    color: var(--toc-muted);
+    font-size: 0.875rem;
+    line-height: 1.35;
+    text-decoration: none;
+    overflow-wrap: anywhere;
+  }
+
+  .toc-dialog a:hover {
+    color: var(--toc-hover-text);
+    background: var(--toc-hover-bg);
+  }
+
+  .toc-dialog a.active {
+    border-left-color: var(--toc-accent);
+    background: var(--toc-active-bg);
+    color: var(--toc-active-text);
+    font-weight: 600;
+  }
+
+  .toc-dialog .toc-section-number {
+    color: var(--toc-section-number);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .toc-dialog code,
+  .toc-dialog code span {
+    color: inherit !important;
+    background: transparent !important;
+    font-size: 0.96em;
+    font-weight: inherit;
+  }
+}
+
+@media screen and (max-width: 30em) {
+  body.toc-ready {
+    padding-top: 3.25rem;
+  }
+
+  .toc-mobile-trigger-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .toc-mobile-trigger {
+    padding-inline: 0.6rem;
+  }
+
+  .toc-dialog[open] {
+    width: calc(100vw - 1rem);
+    max-height: calc(100dvh - 1rem);
+    border-radius: 0.875rem;
+  }
+}
+
+@media screen and (max-width: 47.999em) {
+  body.toc-ready .toc-mobile-title {
+    display: none;
+  }
+
+  .toc-mobile-bar .view-controls {
+    min-width: 0;
+    flex: 1;
+  }
+
+  .toc-mobile-bar .view-controls label {
+    justify-content: center;
+    min-width: 0;
+    flex: 1;
+  }
+}
+
+@media screen and (max-width: 35.999em) {
+  .toc-mobile-bar .view-controls span {
+    font-size: 0;
+  }
+
+  .toc-mobile-bar label[for="no-syntax-highlighting-toggle"] span::after {
+    content: "No highlight";
+    font-size: 0.72rem;
+  }
+
+  .toc-mobile-bar label[for="hide-deleted-text-toggle"] span::after {
+    content: "Hide deleted";
+    font-size: 0.72rem;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --toc-accent: #62b0eb;
+    --toc-active-bg: rgba(70, 145, 200, 0.16);
+    --toc-active-text: #84c7f5;
+    --toc-border: #3b454e;
+    --toc-heading: #d2d9de;
+    --toc-hover-bg: rgba(255, 255, 255, 0.055);
+    --toc-hover-border: #59636c;
+    --toc-hover-text: #dceaf4;
+    --toc-muted: #abb5bd;
+    --toc-panel-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.28);
+    --toc-rail: #414b54;
+    --toc-section-number: #7f8a93;
+    --toc-scrollbar: #59636c;
+    --toc-surface: rgba(28, 28, 28, 0.96);
+    --view-controls-bg: rgba(37, 37, 37, 0.96);
+    --view-controls-border: #59636c;
+    --view-controls-color: #e0e0e0;
+    --view-controls-hover: #303030;
+    --view-controls-shadow: 0 0.2rem 0.8rem rgba(0, 0, 0, 0.4);
+  }
+}
+@media screen and (min-width: 90em) {
+  .toc-mobile-bar {
+    display: block;
+  }
+
+  /* Shift the main column left to make room for the sidebar. */
+  body.has-toc {
+    margin-right: calc(
+      var(--toc-right) + var(--toc-width) + 2rem
+    );
+  }
+
+  /* Make the view controls a companion card to the table of contents. */
+  body.has-toc .view-controls {
+    position: fixed;
+    top: 1rem;
+    right: var(--toc-right);
+    width: var(--toc-width);
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0.6rem 0.75rem;
+    border-color: var(--toc-border);
+    border-radius: 0.875rem;
+    background: var(--toc-surface);
+    color: var(--toc-muted);
+    box-shadow: var(--toc-panel-shadow);
+    backdrop-filter: blur(0.75rem);
+    font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI",
+      sans-serif;
+    font-size: 0.825rem;
+    font-weight: 400;
+    line-height: 1.38;
+  }
+
+  body.has-toc .view-controls:hover {
+    background: var(--toc-surface);
+  }
+
+  body.has-toc .view-controls label {
+    align-self: stretch;
+    padding: 0.3rem 0.55rem 0.3rem 0.6rem;
+    border-left: 2px solid transparent;
+    border-radius: 0 0.4rem 0.4rem 0;
+    cursor: pointer;
+    transition:
+      background-color 120ms ease,
+      color 120ms ease;
+  }
+
+  body.has-toc .view-controls label:hover {
+    background: var(--toc-hover-bg);
+    color: var(--toc-hover-text);
+  }
+
+  body.has-toc .view-controls input {
+    accent-color: var(--toc-accent);
+  }
+
+  body.has-toc .view-controls input:focus-visible {
+    outline: 2px solid var(--toc-accent);
+    outline-offset: 2px;
+  }
+
+  .table-of-contents {
+    position: fixed;
+    top: 7rem;
+    right: var(--toc-right);
+    width: var(--toc-width);
+    max-height: calc(100vh - 8.5rem);
+    box-sizing: border-box;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    border: 1px solid var(--toc-border);
+    border-radius: 0.875rem;
+    background: var(--toc-surface);
+    box-shadow: var(--toc-panel-shadow);
+    scrollbar-width: thin;
+    scrollbar-color: var(--toc-scrollbar) transparent;
+    font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI",
+      sans-serif;
+    font-size: 0.825rem;
+    line-height: 1.38;
+    text-align: left;
+    hyphens: none;
+    color: var(--toc-muted);
+  }
+
+  .table-of-contents .toc-chrome {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    padding: 0.9rem 0.95rem 0.7rem;
+    border-bottom: 1px solid var(--toc-border);
+    background: var(--toc-surface);
+    backdrop-filter: blur(0.75rem);
+  }
+
+  .table-of-contents .toc-title-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .table-of-contents .table-of-contents-title {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    min-width: 0;
+    flex: 1;
+    font-size: 0.72rem;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+    color: #4d5c68;
+    border-bottom: none !important;
+    margin: 0;
+  }
+
+  .table-of-contents .toc-expand-toggle {
+    display: inline-flex;
+    min-width: 4.7rem;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    padding: 0.3rem 0.45rem;
+    border: 1px solid var(--toc-border);
+    border-radius: 0.45rem;
+    background: transparent;
+    color: var(--toc-muted);
+    font: 600 0.68rem/1 ui-sans-serif, -apple-system, BlinkMacSystemFont,
+      "Segoe UI", sans-serif;
+    cursor: pointer;
+    transition:
+      background-color 120ms ease,
+      border-color 120ms ease,
+      color 120ms ease;
+  }
+
+  .table-of-contents .toc-expand-toggle[hidden] {
+    display: none;
+  }
+
+  .table-of-contents .toc-expand-toggle:hover {
+    border-color: var(--toc-hover-border);
+    background: var(--toc-hover-bg);
+    color: var(--toc-hover-text);
+  }
+
+  .table-of-contents .toc-expand-toggle:focus-visible {
+    outline: 2px solid var(--toc-accent);
+    outline-offset: 2px;
+  }
+
+  .table-of-contents .table-of-contents-title::before {
+    content: "";
+    width: 0.45rem;
+    height: 0.45rem;
+    flex: 0 0 auto;
+    border-radius: 50%;
+    background: var(--toc-accent);
+    box-shadow: 0 0 0 0.2rem color-mix(in srgb,
+      var(--toc-accent) 14%, transparent);
+  }
+
+  .table-of-contents .toc-progress {
+    display: block;
+    height: 0.1875rem;
+    margin-top: 0.75rem;
+    overflow: hidden;
+    border-radius: 999px;
+    background: var(--toc-rail);
+  }
+
+  .table-of-contents .toc-progress-bar {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+    background: var(--toc-accent);
+    transform: scaleX(0);
+    transform-origin: left center;
+  }
+
+  .table-of-contents > ul {
+    padding: 0.65rem 0.75rem 0.8rem;
+    margin: 0;
+  }
+
+  .table-of-contents ul ul {
+    position: relative;
+    padding-left: 0.85rem;
+    margin: 0.15rem 0 0.25rem 0.55rem;
+  }
+
+  .table-of-contents ul ul::before {
+    content: "";
+    position: absolute;
+    top: 0.15rem;
+    bottom: 0.2rem;
+    left: 0;
+    width: 1px;
+    background: var(--toc-rail);
+  }
+
+  /* Fold nested sections only after scrollspy has initialized. */
+  body.toc-ready .table-of-contents li > ul {
+    display: none;
+  }
+
+  body.toc-ready .table-of-contents li.active-path > ul {
+    display: block;
+  }
+
+  body.toc-ready .table-of-contents.toc-expanded li > ul {
+    display: block;
+  }
+
+  .table-of-contents li {
+    margin: 0;
+  }
+
+  .table-of-contents a {
+    display: block;
+    margin: 0.0625rem 0;
+    padding: 0.3rem 0.55rem 0.3rem 0.6rem;
+    border-left: 2px solid transparent;
+    border-radius: 0 0.4rem 0.4rem 0;
+    color: var(--toc-muted);
+    text-decoration: none;
+    overflow-wrap: anywhere;
+    transition:
+      background-color 120ms ease,
+      border-color 120ms ease,
+      color 120ms ease;
+  }
+
+  .table-of-contents a:hover {
+    color: var(--toc-hover-text);
+    background: var(--toc-hover-bg);
+  }
+
+  .table-of-contents a:focus-visible {
+    outline: 2px solid var(--toc-accent);
+    outline-offset: 1px;
+  }
+
+  .table-of-contents a.active {
+    color: var(--toc-active-text);
+    border-left-color: var(--toc-accent);
+    background: var(--toc-active-bg);
+    font-weight: 600;
+  }
+
+  .table-of-contents .toc-section-number {
+    color: var(--toc-section-number);
+    font-weight: 400;
+    font-variant-numeric: tabular-nums;
+    margin-right: 0.2em;
+  }
+
+  .table-of-contents a.active .toc-section-number {
+    color: inherit;
+    opacity: 0.78;
+  }
+
+  /* Syntax highlighting is useful in the paper, but visually noisy in
+     a compact navigation label. */
+  .table-of-contents code,
+  .table-of-contents code span {
+    color: inherit !important;
+    background: transparent !important;
+    font-size: 0.96em;
+    font-weight: inherit;
+  }
+}
+
+@media screen and (min-width: 90em) and (prefers-reduced-motion: reduce) {
+  .table-of-contents a {
+    transition: none;
+  }
+
+  .table-of-contents .toc-expand-toggle {
+    transition: none;
+  }
+}
+
+@media print {
+  .view-controls,
+  .toc-mobile-bar,
+  .toc-dialog {
+    display: none;
+  }
+}

@@ -313,6 +313,9 @@ YAML lists can be used to specify multiple audiences and authors:
 By default, a table of contents is generated. For an example, see the
 [table of contents](#toctitle) of this document.
 
+In HTML output, the table of contents becomes a navigation sidebar on wide
+screens and is available from the document header on narrower screens.
+
 ### Metadata: `toc`
 
 To disable the table of contents entirely, set the `toc` metadata to `false`.

@@ -31,17 +31,35 @@ $if(math)$
   $math$
 $endif$
 </head>
-<body data-syntax-highlighting="on" data-deleted-text="show">
-<form class="view-controls">
-<label for="no-syntax-highlighting-toggle">
-<input id="no-syntax-highlighting-toggle" type="checkbox" />
-<span>No syntax highlighting</span>
-</label>
-<label for="hide-deleted-text-toggle">
-<input id="hide-deleted-text-toggle" type="checkbox" />
-<span>Hide deleted text</span>
-</label>
-</form>
+<body$if(toc)$ class="has-toc"$endif$ data-syntax-highlighting="on" data-deleted-text="show">
+$if(toc)$
+<header class="toc-mobile-bar">
+<div class="toc-mobile-title">$title$</div>
+$view-controls.html()$
+
+<button class="toc-mobile-trigger" type="button"
+        aria-label="Open table of contents" aria-expanded="false"
+        aria-controls="$idprefix$toc-dialog">
+<span class="toc-menu-icon" aria-hidden="true"></span>
+<span class="toc-mobile-trigger-label">Contents</span>
+</button>
+</header>
+<dialog id="$idprefix$toc-dialog" class="toc-dialog" aria-modal="true"
+        aria-labelledby="$idprefix$toc-dialog-title">
+<header class="toc-dialog-header">
+<div class="toc-dialog-heading">
+<div class="toc-dialog-eyebrow">Contents</div>
+<h2 id="$idprefix$toc-dialog-title" class="toc-dialog-title">$title$</h2>
+</div>
+<button class="toc-dialog-close" type="button"
+        aria-label="Close table of contents">&times;</button>
+</header>
+<nav class="toc-dialog-nav" aria-label="Table of contents">
+</nav>
+</dialog>
+$else$
+$view-controls.html()$
+$endif$
 <div class="wrapper">
 $for(include-before)$
 $include-before$
@@ -98,10 +116,18 @@ $endfor$
 $endif$
 <div style="clear:both">
 $if(toc)$
-<div id="$idprefix$TOC" role="doc-toc">
-<h1 id="$idprefix$toctitle">Contents</h1>
-$table-of-contents$
+<nav id="$idprefix$TOC" class="table-of-contents" role="doc-toc"
+     aria-label="Table of contents">
+<div class="toc-chrome">
+<div class="toc-title-row">
+<h1 id="$idprefix$toctitle" class="table-of-contents-title">Contents</h1>
+<button class="toc-expand-toggle" type="button" hidden
+        aria-expanded="false">Expand</button>
 </div>
+<div class="toc-progress" aria-hidden="true"><span class="toc-progress-bar"></span></div>
+</div>
+$table-of-contents$
+</nav>
 $endif$
 $body$
 $for(include-after)$
@@ -122,6 +148,9 @@ hideDeletedTextCheckbox.checked = false;
 hideDeletedTextCheckbox.addEventListener('change', () => {
   body.dataset.deletedText = hideDeletedTextCheckbox.checked ? 'hide' : 'show';
 });
+$if(toc)$
+$toc.js()$
+$endif$
 </script>
 </body>
 </html>

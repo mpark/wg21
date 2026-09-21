@@ -37,6 +37,9 @@ override SRCDEPS := $(addprefix $(DATADIR)/, \
 	syntax/wg21.theme \
 	syntax/wg21.xml \
 	templates/14882.css \
+	templates/toc.css \
+	templates/toc.js \
+	templates/view-controls.html \
 	templates/wg21.css \
 	templates/wg21.html \
 	templates/wg21.latex \
