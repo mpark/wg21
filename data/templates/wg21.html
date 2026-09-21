@@ -23,6 +23,12 @@ $endif$
 $for(css)$
   <link rel="stylesheet" href="$css$" />
 $endfor$
+  <style id="dark-theme-styles" media="screen and (prefers-color-scheme: dark)">
+    $dark.css()$
+  </style>
+  <script>
+    $theme.js()$
+  </script>
   <link rel="icon" href="favicon.ico" />
 $for(header-includes)$
   $header-includes$

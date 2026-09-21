@@ -1,4 +1,19 @@
 <form class="view-controls">
+<fieldset class="theme-switcher">
+<legend>Theme</legend>
+<button type="button" data-theme-value="system" aria-label="Use system theme"
+        aria-pressed="true" title="Use system theme">
+<span class="theme-icon" aria-hidden="true">◐</span><span class="theme-label">System</span>
+</button>
+<button type="button" data-theme-value="light" aria-label="Use light theme"
+        aria-pressed="false" title="Use light theme">
+<span class="theme-icon" aria-hidden="true">☀</span><span class="theme-label">Light</span>
+</button>
+<button type="button" data-theme-value="dark" aria-label="Use dark theme"
+        aria-pressed="false" title="Use dark theme">
+<span class="theme-icon" aria-hidden="true">☾</span><span class="theme-label">Dark</span>
+</button>
+</fieldset>
 <label for="no-syntax-highlighting-toggle">
 <input id="no-syntax-highlighting-toggle" type="checkbox" />
 <span>No syntax highlighting</span>

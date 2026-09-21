@@ -21,6 +21,9 @@ check: actual
 		-o actual/toc_disabled.html --data-dir=$(DATADIR) -M data-dir=$(DATADIR) \
 		-d doc -d formatting; \
 	grep -Fq '<form class="view-controls">' actual/toc_disabled.html; \
+	grep -Fq 'data-theme-value="system"' actual/toc_disabled.html; \
+	grep -Fq 'data-theme-value="light"' actual/toc_disabled.html; \
+	grep -Fq 'data-theme-value="dark"' actual/toc_disabled.html; \
 	! grep -Fq '<nav id="TOC"' actual/toc_disabled.html; \
 	! grep -Fq '<header class="toc-mobile-bar">' actual/toc_disabled.html; \
 	! grep -Fq "document.querySelector('[role=\"doc-toc\"]')" actual/toc_disabled.html
