@@ -784,6 +784,10 @@
     margin: 0;
   }
 
+  .table-of-contents li::before {
+    display: none;
+  }
+
   .table-of-contents a {
     display: block;
     margin: 0.0625rem 0;
