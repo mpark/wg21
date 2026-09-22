@@ -650,6 +650,9 @@ def table(elem, doc):
     if elem.head is not None:
         elem.head.walk(header)
 
+    if doc.format == 'html':
+        return pf.Div(elem, classes=['table-wrapper'])
+
 def caption(elem, doc):
     # Code elements in table captions need to be protected.
     # See https://github.com/jgm/pandoc/pull/11139

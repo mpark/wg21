@@ -641,15 +641,10 @@ max-width: 100%;
 box-sizing: border-box;
 }
 
-.wrapper table {
-display: block;
+.wrapper .table-wrapper {
 max-width: 100%;
 overflow-x: auto;
 overscroll-behavior-inline: contain;
-}
-.wrapper #title-block-header > table {
-display: table;
-overflow: visible;
 }
 body.toc-ready .table-of-contents {
 display: none;
@@ -1567,6 +1562,7 @@ have the same <em>identifier</em>. A <span><span class="rm"><del>label</del></sp
 <span class="rm"><del>in a
 <code class="sourceCode default cpp">goto</code> statement</del></span>
 before its introduction by a <em>labeled-statement</em>.</p>
+<div class="table-wrapper">
 <table>
 <colgroup>
 <col style="width: 14%" />
@@ -1599,6 +1595,7 @@ is thrown</ins></span>.</td>
 </tr>
 </tbody>
 </table>
+</div>
 </div>
 </div>
 <script>

@@ -641,15 +641,10 @@ max-width: 100%;
 box-sizing: border-box;
 }
 
-.wrapper table {
-display: block;
+.wrapper .table-wrapper {
 max-width: 100%;
 overflow-x: auto;
 overscroll-behavior-inline: contain;
-}
-.wrapper #title-block-header > table {
-display: table;
-overflow: visible;
 }
 body.toc-ready .table-of-contents {
 display: none;
@@ -1533,6 +1528,7 @@ Tests</h2>
 </ul>
 </nav>
 <h1 data-number="1" id="comparison-tables"><span class="header-section-number">1</span> Comparison Tables<a href="#comparison-tables" class="self-link"></a></h1>
+<div class="table-wrapper">
 <table class="cmptable">
 <caption><blockquote>
 <p>Put your caption here with some
@@ -1567,6 +1563,8 @@ Tests</h2>
 </tr>
 </tbody>
 </table>
+</div>
+<div class="table-wrapper">
 <table class="cmptable">
 <colgroup>
 <col style="width: 60%" />
@@ -1611,6 +1609,7 @@ Tests</h2>
 </tr>
 </tbody>
 </table>
+</div>
 </div>
 </div>
 <script>

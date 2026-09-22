@@ -160,17 +160,11 @@
     box-sizing: border-box;
   }
 
-  /* Keep wide paper tables usable without allowing them to widen the page. */
-  .wrapper table {
-    display: block;
+  /* Keep wide paper tables usable without changing their table layout. */
+  .wrapper .table-wrapper {
     max-width: 100%;
     overflow-x: auto;
     overscroll-behavior-inline: contain;
-  }
-
-  .wrapper #title-block-header > table {
-    display: table;
-    overflow: visible;
   }
 
   body.toc-ready .table-of-contents {

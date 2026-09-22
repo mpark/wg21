@@ -641,15 +641,10 @@ max-width: 100%;
 box-sizing: border-box;
 }
 
-.wrapper table {
-display: block;
+.wrapper .table-wrapper {
 max-width: 100%;
 overflow-x: auto;
 overscroll-behavior-inline: contain;
-}
-.wrapper #title-block-header > table {
-display: table;
-overflow: visible;
 }
 body.toc-ready .table-of-contents {
 display: none;
@@ -1547,6 +1542,7 @@ class to omit the section number.</li>
 to add the section title.</li>
 </ul>
 <p>Examples:</p>
+<div class="table-wrapper">
 <table>
 <colgroup>
 <col style="width: 58%" />
@@ -1593,7 +1589,9 @@ to add the section title.</li>
 </tr>
 </tbody>
 </table>
+</div>
 <p>Also supported:</p>
+<div class="table-wrapper">
 <table>
 <colgroup>
 <col style="width: 58%" />
@@ -1620,6 +1618,7 @@ to add the section title.</li>
 </tr>
 </tbody>
 </table>
+</div>
 <h1 data-number="2" id="override-stable-name-links"><span class="header-section-number">2</span> Override stable name links<a href="#override-stable-name-links" class="self-link"></a></h1>
 <p>Override <a href="https://isocpp.org">over.match</a> to something
 else.</p>
