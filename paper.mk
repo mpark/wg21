@@ -21,6 +21,9 @@
 #   make p2806r4.html   # builds p2806r4.html from p2806r4.md
 #   make                # also builds p2806r4.html from p2806r4.md
 #
+#   make serve p2806r4.html  # rebuilds and live-reloads p2806r4.html
+#   make serve               # rebuilds and live-reloads p2806r4.html
+#
 # You may also introduce explicit source-to-output mappings.
 #
 # In reflection/Makefile:

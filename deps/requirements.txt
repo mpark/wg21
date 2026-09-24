@@ -1,5 +1,6 @@
 panflute==2.3.1
 beautifulsoup4
+livereload
 lxml
 requests
 pyyaml

@@ -19,10 +19,14 @@
 #   make p2806r4.latex # builds generated/p2806r4.latex from p2806r4.md
 #   make p2806r4.pdf   # builds generated/p2806r4.pdf from p2806r4.md
 #
-#   make               # builds all the papers in HTML format (default)
+#   make               # builds all the papers in DEFAULT_FORMAT (HTML by default)
 #   make html          # builds all the papers in HTML format
 #   make latex         # builds all the papers in LaTeX format
 #   make pdf           # builds all the papers in PDF format
+#
+#   make serve p2806r4.html  # rebuilds and live-reloads generated/p2806r4.html
+#   make serve p2806r4.pdf   # rebuilds generated/p2806r4.pdf
+#   make serve               # rebuilds and serves all papers in DEFAULT_FORMAT
 #
 #   make clean         # deletes generated files
 #
