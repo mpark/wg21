@@ -11,6 +11,9 @@ override PANDOC_DIR := $(DEPSDIR)/pandoc/$(PANDOC_VER)
 override PYTHON_DIR := $(DEPSDIR)/python
 override PYTHON_BIN := $(PYTHON_DIR)/bin/python3
 
+SERVE_HOST ?= 127.0.0.1
+SERVE_PORT ?= 8000
+
 export SHELL := bash
 export PATH := $(PANDOC_DIR):$(PYTHON_DIR)/bin:$(PATH)
 
@@ -53,6 +56,10 @@ $(eval $(and $(DEFAULTS), override SRCDEPS += $(DEFAULTS)))
 
 override GENDEPS := $(PANDOC_DIR) $(PYTHON_DIR) $(addprefix $(DATADIR)/, csl.json srefs.json srefs.defs)
 override DEPS := $(SRCDEPS) $(GENDEPS)
+override WATCHDEPS += $(src) $(addsuffix .md,$(paper_src)) $(SRCDEPS) \
+	$(addprefix $(DATADIR)/, refs.py srefs.py srefs-md.py) \
+	$(DEPSDIR)/install-pandoc.sh $(DEPSDIR)/install-venv.sh \
+	$(DEPSDIR)/requirements.txt $(REQUIREMENTS) $(MAKEFILE_LIST)
 
 $(SRCDEPS): ;
 
@@ -78,3 +85,9 @@ distclean:
 .PHONY: update
 update:
 	@$(MAKE) -W $(DATADIR)/refs.py -W $(DATADIR)/srefs.py $(DATADIR)/csl.json $(DATADIR)/srefs.json $(DATADIR)/srefs.defs
+
+.PHONY: serve
+serve: $(DATADIR)/serve.py $(PYTHON_DIR)
+	@$(PYTHON_BIN) $< \
+		--host="$(SERVE_HOST)" --port="$(SERVE_PORT)" --root="$(OUTDIR)" --watch $(WATCHDEPS) \
+		-- $(MAKE) $(filter-out $@,$(MAKECMDGOALS))

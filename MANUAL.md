@@ -263,6 +263,28 @@ make                # also builds p2996r13.html from reflection.md
 
 See [brevzin/cpp_proposals](https://github.com/brevzin/cpp_proposals) for an example use of this layout.
 
+## Live Server
+
+The framework provides a command to run a live server that can automatically
+rebuild papers and reload them in the browser. Run `make serve` instead of
+`make`, or `make serve <target>` instead of `make <target>`.
+
+```bash
+make serve
+make serve p2806r4.html
+make serve p2996r13.pdf
+```
+
+The live server runs at `http://127.0.0.1:8000` by default with `OUTDIR` as
+the root of the site. For example, `make serve p2806r4.html` makes the paper
+available at `http://127.0.0.1:8000/p2806r4.html` with either layout.
+
+`SERVE_HOST` and `SERVE_PORT` can be overridden by defining them before
+including a layout file (i.e. `flat.mk`/`paper.mk`). If you need them, it is
+recommended to put them in a `local.mk` as described in [Local Configuration].
+
+For PDFs, use a viewer such as Skim that can reload the generated file directly.
+
 # Formatting
 
 This framework provides support for various common elements for C++ proposals.
