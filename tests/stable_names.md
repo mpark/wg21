@@ -1,6 +1,7 @@
 ---
 title: "Stable Reference Tests"
 document: D0000R1
+source: https://github.com/mpark/wg21/blob/master/tests/stable_names.md?plain=1
 date: 2026-01-01
 audience:
   - Library Evolution

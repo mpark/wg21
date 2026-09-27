@@ -2,6 +2,7 @@
 title: "`MPark/WG21` User's Guide"
 subtitle: "Framework for Writing C++ Committee Proposals"
 document: D0000R0
+source: https://github.com/mpark/wg21/blob/master/MANUAL.md?plain=1
 date: today
 audience: WG21
 author:
@@ -309,6 +310,9 @@ author:
 ```
 
 [`date: today` generates today's date in `YYYY-MM-DD` (ISO 8601) format.]{.note}
+
+The optional `source` metadata adds a link to the paper's source file on
+GitHub.
 
 YAML lists can be used to specify multiple audiences and authors:
 
