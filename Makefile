@@ -1,4 +1,5 @@
 ifeq ($(lastword $(MAKEFILE_LIST)),$(firstword $(MAKEFILE_LIST)))
+-include local.mk
 include flat.mk
 
 $(OUTDIR)/MANUAL.render.md: MANUAL.md $(DATADIR)/filters/render.py $(PANDOC_DIR) $(PYTHON_DIR) | $(OUTDIR)

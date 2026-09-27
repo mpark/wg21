@@ -6,5 +6,6 @@ data/annex-f
 deps/pandoc
 deps/python
 generated/
+local.mk
 tests/actual
 tests/paper/actual

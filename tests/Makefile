@@ -43,4 +43,5 @@ actual expected:
 	rm -rf $@
 	@$(MAKE) -f ../flat.mk OUTDIR=$@ html latex
 
+-include ../local.mk
 include ../flat.mk
