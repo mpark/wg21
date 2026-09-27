@@ -633,6 +633,29 @@ font-weight: 600;
 font-size: 0.9rem;
 line-height: 1;
 }
+.document-info {
+display: inline-flex;
+align-items: center;
+gap: 0.3rem;
+}
+.document-link {
+display: inline-block;
+padding: 0.3rem 0.45rem;
+border: 1px solid var(--toc-border);
+border-radius: 0.4rem;
+color: var(--toc-muted);
+font: 600 0.8rem/1 sans-serif;
+text-decoration: none;
+}
+.document-link:hover {
+border-color: var(--toc-hover-border);
+background: var(--toc-hover-bg);
+color: var(--toc-hover-text);
+}
+.document-link:focus-visible {
+outline: 2px solid var(--toc-accent);
+outline-offset: 1px;
+}
 .table-of-contents .toc-progress {
 display: none;
 }
@@ -1506,9 +1529,11 @@ background-color: #4b6345;
   <tr>
     <td>Document #:</td>
     <td>
-      D0000R1
-      [<a href="https://wg21.link/P0000">Latest</a>]
-      [<a href="https://wg21.link/P0000/status">Status</a>]
+      <span class="document-info">
+        <span>D0000R1</span>
+      <a class="document-link" href="https://wg21.link/P0000">Latest</a>
+      <a class="document-link" href="https://wg21.link/P0000/status">Status</a>
+      </span>
     </td>
   </tr>
   <tr>

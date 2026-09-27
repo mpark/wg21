@@ -80,11 +80,13 @@ $endif$
   <tr>
     <td>Document #:</td>
     <td>
-      $document$
+      <span class="document-info">
+        <span>$document$</span>
 $if(number)$
-      [<a href="https://wg21.link/P$number$">Latest</a>]
-      [<a href="https://wg21.link/P$number$/status">Status</a>]
+      <a class="document-link" href="https://wg21.link/P$number$">Latest</a>
+      <a class="document-link" href="https://wg21.link/P$number$/status">Status</a>
 $endif$
+      </span>
     </td>
   </tr>
   <tr>
