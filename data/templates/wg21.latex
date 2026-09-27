@@ -66,7 +66,10 @@ $endif$
   \vskip 1.5em
   \begin{flushright}
     \begin{tabular}{ll}
-Document \#:&$document$\\
+Document \#:&$document$$if(number)$
+  [\href{https://wg21.link/P$number$}{Latest}]
+  [\href{https://wg21.link/P$number$/status}{Status}]$if(source)$
+  [\href{$source$}{Source}]$endif$$endif$\\
 Date:       &\@date\\
 Project:    &Programming Language C++\\
 Audience:   $for(audience)$&$audience$\\$endfor$

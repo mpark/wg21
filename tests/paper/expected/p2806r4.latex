@@ -183,7 +183,8 @@
   \vskip 1.5em
   \begin{flushright}
     \begin{tabular}{ll}
-Document \#:&P2806R4\\
+Document \#:&P2806R4  [\href{https://wg21.link/P2806}{Latest}]
+  [\href{https://wg21.link/P2806/status}{Status}]  [\href{https://github.com/mpark/wg21/blob/master/tests/paper/p2806/do-expr.md?plain=1}{Source}]\\
 Date:       &\@date\\
 Project:    &Programming Language C++\\
 Audience:   &WG21\\

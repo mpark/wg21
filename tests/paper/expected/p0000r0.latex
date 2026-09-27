@@ -105,17 +105,6 @@
 \newcommand{\VariableTok}[1]{#1}
 \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.62,0.41,0.03}{#1}}
 \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.42,0.45,0.49}{\textbf{#1}}}
-\usepackage{longtable,booktabs,array}
-\newcounter{none} % for unnumbered tables
-\usepackage{calc} % for calculating minipage widths
-% Correct order of tables after \paragraph or \subparagraph
-\usepackage{etoolbox}
-\makeatletter
-\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
-\makeatother
-% Allow footnotes in longtable head/foot
-\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
-\makesavenoteenv{longtable}
 \ifLuaTeX
   \usepackage{luacolor}
   \usepackage[soul]{lua-ul}
@@ -177,7 +166,7 @@
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
 \urlstyle{same}
 \hypersetup{
-  pdftitle={Stable Reference Tests},
+  pdftitle={Same-stem Test Paper},
   pdflang={en},
   colorlinks=true,
   linkcolor={blue},
@@ -194,20 +183,19 @@
   \vskip 1.5em
   \begin{flushright}
     \begin{tabular}{ll}
-Document \#:&D0000R1  [\href{https://wg21.link/P0000}{Latest}]
-  [\href{https://wg21.link/P0000/status}{Status}]  [\href{https://github.com/mpark/wg21/blob/master/tests/stable\_names.md?plain=1}{Source}]\\
+Document \#:&P0000R0  [\href{https://wg21.link/P0000}{Latest}]
+  [\href{https://wg21.link/P0000/status}{Status}]  [\href{https://github.com/mpark/wg21/blob/master/tests/paper/p0000/p0000r0.md?plain=1}{Source}]\\
 Date:       &\@date\\
 Project:    &Programming Language C++\\
-Audience:   &Library Evolution\\
+Audience:   &WG21\\
 Reply-to:   \@author
     \end{tabular}
   \end{flushright}
 }
 \makeatother
 
-\title{Stable Reference Tests}
-\author{&Test
-Author\\&<\href{mailto:test@example.com}{\nolinkurl{test@example.com}}>\\}
+\title{Same-stem Test Paper}
+\author{&Test Author\\}
 \date{2026-01-01}
 
 \begin{document}
@@ -216,88 +204,12 @@ Author\\&<\href{mailto:test@example.com}{\nolinkurl{test@example.com}}>\\}
 
 {
 \hypersetup{linkcolor=black}
-\setcounter{tocdepth}{2}
+\setcounter{tocdepth}{3}
 \hypertarget{toctitle}{\label{toctitle}}
 \tableofcontents
 }
-\section{\texorpdfstring{Stable
-Names\hyperref[stable-names]{}}{Stable Names}}\label{stable-names}
+\section{\texorpdfstring{Introduction\hyperref[introduction]{}}{Introduction}}\label{introduction}
 
-Stable names are written as
-\VERB|\OperatorTok{[}\NormalTok{basic}\OperatorTok{.}\NormalTok{life}\OperatorTok{]\{.}\NormalTok{sref}\OperatorTok{\}}|,
-and render as {6.8.4 Lifetime
-\href{https://eel.is/c++draft/basic.life}{{[}basic.life{]}}}.
-
-\begin{itemize}
-\tightlist
-\item
-  Add the \VERB|\OperatorTok{{-}}| or
-  \VERB|\OperatorTok{.}\NormalTok{unnumbered}| class to omit the section
-  number.
-\item
-  Add the \VERB|\OperatorTok{.}\NormalTok{title}| class to add the
-  section title.
-\end{itemize}
-
-Examples:
-
-{\def\LTcaptype{none} % do not increment counter
-\begin{longtable}[]{@{}
-  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5811}}
-  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.4189}}@{}}
-\toprule\noalign{}
-\begin{minipage}[b]{\linewidth}\raggedright
-\centering\arraybackslash\textbf{Markdown Source}
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-\centering\arraybackslash\textbf{Rendered Output}
-\end{minipage} \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-\VERB|\NormalTok{[basic.life]}| &
-\href{https://eel.is/c++draft/basic.life}{{[}basic.life{]}} \\
-\VERB|\NormalTok{[basic.life]/1}| &
-\href{https://eel.is/c++draft/basic.life\#1}{{[}basic.life{]}/1} \\
-\VERB|\NormalTok{[basic.life]/2.1}| &
-\href{https://eel.is/c++draft/basic.life\#2.1}{{[}basic.life{]}/2.1} \\
-\VERB|\NormalTok{[basic.life]\{.sref\}}| & {6.8.4 Lifetime
-\href{https://eel.is/c++draft/basic.life}{{[}basic.life{]}}} \\
-\VERB|\NormalTok{[basic.life]\{.sref\}/1}| & {6.8.4 Lifetime
-\href{https://eel.is/c++draft/basic.life\#1}{{[}basic.life{]}/1}} \\
-\VERB|\NormalTok{[basic.life]\{.sref .title\}}| & {6.8.4 Lifetime
-\href{https://eel.is/c++draft/basic.life}{{[}basic.life{]}}} \\
-\VERB|\NormalTok{[basic.life]\{.sref .title\}/1}| & {6.8.4 Lifetime
-\href{https://eel.is/c++draft/basic.life\#1}{{[}basic.life{]}/1}} \\
-\end{longtable}
-}
-
-Also supported:
-
-{\def\LTcaptype{none} % do not increment counter
-\begin{longtable}[]{@{}
-  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5811}}
-  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.4189}}@{}}
-\toprule\noalign{}
-\begin{minipage}[b]{\linewidth}\raggedright
-\centering\arraybackslash\textbf{Markdown Source}
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-\centering\arraybackslash\textbf{Rendered Output}
-\end{minipage} \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-\VERB|\NormalTok{[basic.life\#1]\{.sref\}}| & {6.8.4 Lifetime
-\href{https://eel.is/c++draft/basic.life\#1}{{[}basic.life{]}/1}} \\
-\VERB|\NormalTok{[basic.life]\{{-} .sref .title\}}| & {Lifetime
-\href{https://eel.is/c++draft/basic.life}{{[}basic.life{]}}} \\
-\end{longtable}
-}
-
-\section{\texorpdfstring{Override stable name
-links\hyperref[override-stable-name-links]{}}{Override stable name links}}\label{override-stable-name-links}
-
-Override \href{https://isocpp.org}{over.match} to something else.
+This is a same-stem paper-layout test.
 
 \end{document}

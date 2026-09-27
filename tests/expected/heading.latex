@@ -183,7 +183,8 @@
   \vskip 1.5em
   \begin{flushright}
     \begin{tabular}{ll}
-Document \#:&D0000R1\\
+Document \#:&D0000R1  [\href{https://wg21.link/P0000}{Latest}]
+  [\href{https://wg21.link/P0000/status}{Status}]  [\href{https://github.com/mpark/wg21/blob/master/tests/heading.md?plain=1}{Source}]\\
 Date:       &\@date\\
 Project:    &Programming Language C++\\
 Audience:   &Library Evolution\\

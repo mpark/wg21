@@ -12,6 +12,9 @@ actual expected:
 	@$(MAKE) -C p0000
 	cp p0000/p0000r0.html $@/p0000r0.html
 	@$(MAKE) -C p0000 clean
+	@$(MAKE) -C p0000 DEFAULT_FORMAT=latex
+	cp p0000/p0000r0.latex $@/p0000r0.latex
+	@$(MAKE) -C p0000 clean
 	@$(MAKE) -C p2806
 	cp p2806/p2806r4.html $@/p2806r4.html
 	@$(MAKE) -C p2806 clean
