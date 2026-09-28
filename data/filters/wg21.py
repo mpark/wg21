@@ -117,7 +117,47 @@ def process_subs(elem, input_format):
         for add, item in zip(adds, convert_fragments(fragments, input_format)):
             add.content = item.content
 
+def collapse_blocks(blocks):
+    content = []
+    i = 0
+    while i < len(blocks):
+        heading = blocks[i]
+        if not (isinstance(heading, pf.Header) and 'collapsed' in heading.classes):
+            content.append(heading)
+            i += 1
+            continue
+
+        heading.classes.remove('collapsed')
+
+        # Headings and their sections are siblings in Pandoc's AST.
+        end = i + 1
+        while end < len(blocks):
+            if (isinstance(blocks[end], pf.Header) and
+                    blocks[end].level <= heading.level):
+                break
+            end += 1
+
+        heading.content.insert(0, pf.Span(classes=['collapse-marker']))
+        section = collapse_blocks(blocks[i + 1:end])
+        content.extend([
+            pf.RawBlock('<details class="collapsed">', 'html'),
+            pf.RawBlock('<summary>', 'html'),
+            heading,
+            pf.RawBlock('</summary>', 'html'),
+            *section,
+            pf.RawBlock('</details>', 'html'),
+        ])
+        i = end
+    return content
+
+def collapse_sections(elem, _):
+    if isinstance(elem, (pf.Doc, pf.Div)):
+        elem.content = collapse_blocks(elem.content)
+
 def prepare(doc):
+    if doc.format == 'html':
+        doc.walk(collapse_sections)
+
     if doc.get_metadata('date') == 'today':
         import datetime
         doc.metadata['date'] = datetime.date.today().isoformat()

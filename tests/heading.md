@@ -12,7 +12,43 @@ toc: true
 toc-depth: 3
 ---
 
+# Revision History {- .unlisted .collapsed}
+
+## R0 → R1 {- .unlisted}
+
+The revision history is collapsed in HTML output.
+
+# Numbered Collapsed Section {.collapsed}
+
+## Nested Top-Level Section {- .unlisted}
+
+The disclosure marker precedes a top-level section number.
+
 # Headings
+
+## Numbered Collapsed Subsection {.collapsed}
+
+### Nested Subsection {- .unlisted}
+
+The disclosure marker precedes a subsection number.
+
+## Unlisted Collapsed Subsection {- .unlisted .collapsed}
+
+### Nested Unlisted Subsection {- .unlisted}
+
+An unlisted subsection uses the triangle in place of a section number.
+
+## Third-Level Headings
+
+### Numbered Collapsed H3 {.collapsed}
+
+#### Nested H4 {- .unlisted}
+
+Collapsed sections also work below the subsection level.
+
+### Following H3 {- .unlisted}
+
+This heading is outside the collapsed H3 section.
 
 ## Automatic Header Links {#auto-header-links}
 

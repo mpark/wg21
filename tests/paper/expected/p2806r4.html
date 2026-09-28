@@ -475,6 +475,37 @@ color: var(--rm-color);
 .draftnote {
 color: var(--note-color);
 }
+details.collapsed > summary {
+list-style: none;
+cursor: pointer;
+}
+details.collapsed > summary::-webkit-details-marker {
+display: none;
+}
+details.collapsed > summary .collapse-marker {
+--collapse-marker-offset: 0.15em;
+display: inline-block;
+width: 0;
+margin-right: 0.5em;
+height: 0;
+border-top: 0.3em solid transparent;
+border-bottom: 0.3em solid transparent;
+border-left: 0.45em solid currentColor;
+transform: translateX(var(--collapse-marker-offset));
+transform-origin: 0.15em center;
+vertical-align: 0.1em;
+}
+details.collapsed > summary .collapse-marker:first-child {
+--collapse-marker-offset: 0.075em;
+width: calc(35pt - 0.45em);
+margin-right: 0.25em;
+}
+details.collapsed[open] > summary .collapse-marker {
+transform: translateX(var(--collapse-marker-offset)) rotate(90deg);
+}
+details.collapsed > summary > :is(h1, h2, h3, h4, h5, h6) {
+margin-bottom: 0;
+}
 
 div.sourceCode {
 padding: 0.5em;

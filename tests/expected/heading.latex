@@ -209,7 +209,55 @@ Author\\&<\href{mailto:test@example.com}{\nolinkurl{test@example.com}}>\\}
 \hypertarget{toctitle}{\label{toctitle}}
 \tableofcontents
 }
+\section*{\texorpdfstring{Revision
+History\hyperref[revision-history]{}}{Revision History}}\label{revision-history}
+
+\subsection*{\texorpdfstring{R0 →
+R1\hyperref[r0-r1]{}}{R0 → R1}}\label{r0-r1}
+
+The revision history is collapsed in HTML output.
+
+\section{\texorpdfstring{Numbered Collapsed
+Section\hyperref[numbered-collapsed-section]{}}{Numbered Collapsed Section}}\label{numbered-collapsed-section}
+
+\subsection*{\texorpdfstring{Nested Top-Level
+Section\hyperref[nested-top-level-section]{}}{Nested Top-Level Section}}\label{nested-top-level-section}
+
+The disclosure marker precedes a top-level section number.
+
 \section{\texorpdfstring{Headings\hyperref[headings]{}}{Headings}}\label{headings}
+
+\subsection{\texorpdfstring{Numbered Collapsed
+Subsection\hyperref[numbered-collapsed-subsection]{}}{Numbered Collapsed Subsection}}\label{numbered-collapsed-subsection}
+
+\subsubsection*{\texorpdfstring{Nested
+Subsection\hyperref[nested-subsection]{}}{Nested Subsection}}\label{nested-subsection}
+
+The disclosure marker precedes a subsection number.
+
+\subsection*{\texorpdfstring{Unlisted Collapsed
+Subsection\hyperref[unlisted-collapsed-subsection]{}}{Unlisted Collapsed Subsection}}\label{unlisted-collapsed-subsection}
+
+\subsubsection*{\texorpdfstring{Nested Unlisted
+Subsection\hyperref[nested-unlisted-subsection]{}}{Nested Unlisted Subsection}}\label{nested-unlisted-subsection}
+
+An unlisted subsection uses the triangle in place of a section number.
+
+\subsection{\texorpdfstring{Third-Level
+Headings\hyperref[third-level-headings]{}}{Third-Level Headings}}\label{third-level-headings}
+
+\subsubsection{\texorpdfstring{Numbered Collapsed
+H3\hyperref[numbered-collapsed-h3]{}}{Numbered Collapsed H3}}\label{numbered-collapsed-h3}
+
+\paragraph*{\texorpdfstring{Nested
+H4\hyperref[nested-h4]{}}{Nested H4}}\label{nested-h4}
+
+Collapsed sections also work below the subsection level.
+
+\subsubsection*{\texorpdfstring{Following
+H3\hyperref[following-h3]{}}{Following H3}}\label{following-h3}
+
+This heading is outside the collapsed H3 section.
 
 \subsection{\texorpdfstring{Automatic Header
 Links\hyperref[auto-header-links]{}}{Automatic Header Links}}\label{auto-header-links}

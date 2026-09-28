@@ -475,6 +475,37 @@ color: var(--rm-color);
 .draftnote {
 color: var(--note-color);
 }
+details.collapsed > summary {
+list-style: none;
+cursor: pointer;
+}
+details.collapsed > summary::-webkit-details-marker {
+display: none;
+}
+details.collapsed > summary .collapse-marker {
+--collapse-marker-offset: 0.15em;
+display: inline-block;
+width: 0;
+margin-right: 0.5em;
+height: 0;
+border-top: 0.3em solid transparent;
+border-bottom: 0.3em solid transparent;
+border-left: 0.45em solid currentColor;
+transform: translateX(var(--collapse-marker-offset));
+transform-origin: 0.15em center;
+vertical-align: 0.1em;
+}
+details.collapsed > summary .collapse-marker:first-child {
+--collapse-marker-offset: 0.075em;
+width: calc(35pt - 0.45em);
+margin-right: 0.25em;
+}
+details.collapsed[open] > summary .collapse-marker {
+transform: translateX(var(--collapse-marker-offset)) rotate(90deg);
+}
+details.collapsed > summary > :is(h1, h2, h3, h4, h5, h6) {
+margin-bottom: 0;
+}
 
 div.sourceCode {
 padding: 0.5em;
@@ -1553,10 +1584,16 @@ background-color: #4b6345;
 <div class="toc-progress" aria-hidden="true"><span class="toc-progress-bar"></span></div>
 </div>
 <ul>
-<li><a href="#headings" id="toc-headings"><span class="toc-section-number">1</span> Headings</a>
+<li><a href="#numbered-collapsed-section" id="toc-numbered-collapsed-section"><span class="toc-section-number">1</span> <span class="collapse-marker"></span>Numbered Collapsed Section</a></li>
+<li><a href="#headings" id="toc-headings"><span class="toc-section-number">2</span> Headings</a>
 <ul>
-<li><a href="#auto-header-links" id="toc-auto-header-links"><span class="toc-section-number">1.1</span> Automatic Header Links</a></li>
-<li><a href="#inline-code-in-headers-int-x-y" id="toc-inline-code-in-headers-int-x-y"><span class="toc-section-number">1.2</span> Inline Code in Headers:
+<li><a href="#numbered-collapsed-subsection" id="toc-numbered-collapsed-subsection"><span class="toc-section-number">2.1</span> <span class="collapse-marker"></span>Numbered Collapsed Subsection</a></li>
+<li><a href="#third-level-headings" id="toc-third-level-headings"><span class="toc-section-number">2.2</span> Third-Level Headings</a>
+<ul>
+<li><a href="#numbered-collapsed-h3" id="toc-numbered-collapsed-h3"><span class="toc-section-number">2.2.1</span> <span class="collapse-marker"></span>Numbered Collapsed H3</a></li>
+</ul></li>
+<li><a href="#auto-header-links" id="toc-auto-header-links"><span class="toc-section-number">2.3</span> Automatic Header Links</a></li>
+<li><a href="#inline-code-in-headers-int-x-y" id="toc-inline-code-in-headers-int-x-y"><span class="toc-section-number">2.4</span> Inline Code in Headers:
 <code class="sourceCode cpp"><span class="dt">int</span></code>,
 <code class="sourceCode cpp">x <span class="op">&amp;</span> y</code></a></li>
 <li><a href="#disabled-numbering" id="toc-disabled-numbering">Disabled
@@ -1564,11 +1601,53 @@ Numbering</a></li>
 </ul></li>
 </ul>
 </nav>
-<h1 data-number="1" id="headings"><span class="header-section-number">1</span> Headings<a href="#headings" class="self-link"></a></h1>
-<h2 data-number="1.1" id="auto-header-links"><span class="header-section-number">1.1</span> Automatic Header Links<a href="#auto-header-links" class="self-link"></a></h2>
+<details class="collapsed">
+<summary>
+<h1 class="unnumbered unlisted" id="revision-history"><span class="collapse-marker"></span>Revision History<a href="#revision-history" class="self-link"></a></h1>
+</summary>
+<h2 class="unnumbered unlisted" id="r0-r1">R0 → R1<a href="#r0-r1" class="self-link"></a></h2>
+<p>The revision history is collapsed in HTML output.</p>
+</details>
+<details class="collapsed">
+<summary>
+<h1 data-number="1" id="numbered-collapsed-section"><span class="header-section-number">1</span> <span class="collapse-marker"></span>Numbered Collapsed Section<a href="#numbered-collapsed-section" class="self-link"></a></h1>
+</summary>
+<h2 class="unnumbered unlisted" id="nested-top-level-section">Nested
+Top-Level Section<a href="#nested-top-level-section" class="self-link"></a></h2>
+<p>The disclosure marker precedes a top-level section number.</p>
+</details>
+<h1 data-number="2" id="headings"><span class="header-section-number">2</span> Headings<a href="#headings" class="self-link"></a></h1>
+<details class="collapsed">
+<summary>
+<h2 data-number="2.1" id="numbered-collapsed-subsection"><span class="header-section-number">2.1</span> <span class="collapse-marker"></span>Numbered Collapsed Subsection<a href="#numbered-collapsed-subsection" class="self-link"></a></h2>
+</summary>
+<h3 class="unnumbered unlisted" id="nested-subsection">Nested
+Subsection<a href="#nested-subsection" class="self-link"></a></h3>
+<p>The disclosure marker precedes a subsection number.</p>
+</details>
+<details class="collapsed">
+<summary>
+<h2 class="unnumbered unlisted" id="unlisted-collapsed-subsection"><span class="collapse-marker"></span>Unlisted Collapsed Subsection<a href="#unlisted-collapsed-subsection" class="self-link"></a></h2>
+</summary>
+<h3 class="unnumbered unlisted" id="nested-unlisted-subsection">Nested
+Unlisted Subsection<a href="#nested-unlisted-subsection" class="self-link"></a></h3>
+<p>An unlisted subsection uses the triangle in place of a section
+number.</p>
+</details>
+<h2 data-number="2.2" id="third-level-headings"><span class="header-section-number">2.2</span> Third-Level Headings<a href="#third-level-headings" class="self-link"></a></h2>
+<details class="collapsed">
+<summary>
+<h3 data-number="2.2.1" id="numbered-collapsed-h3"><span class="header-section-number">2.2.1</span> <span class="collapse-marker"></span>Numbered Collapsed H3<a href="#numbered-collapsed-h3" class="self-link"></a></h3>
+</summary>
+<h4 class="unnumbered unlisted" id="nested-h4">Nested H4<a href="#nested-h4" class="self-link"></a></h4>
+<p>Collapsed sections also work below the subsection level.</p>
+</details>
+<h3 class="unnumbered unlisted" id="following-h3">Following H3<a href="#following-h3" class="self-link"></a></h3>
+<p>This heading is outside the collapsed H3 section.</p>
+<h2 data-number="2.3" id="auto-header-links"><span class="header-section-number">2.3</span> Automatic Header Links<a href="#auto-header-links" class="self-link"></a></h2>
 <p>Automatic header links are written as <code class="sourceCode markdown">[](#auto-header-links)</code>, and render as
 <a href="#auto-header-links">Automatic Header Links</a>.</p>
-<h2 data-number="1.2" id="inline-code-in-headers-int-x-y"><span class="header-section-number">1.2</span> Inline Code in Headers:
+<h2 data-number="2.4" id="inline-code-in-headers-int-x-y"><span class="header-section-number">2.4</span> Inline Code in Headers:
 <code class="sourceCode cpp"><span class="dt">int</span></code>,
 <code class="sourceCode cpp">x <span class="op">&amp;</span> y</code><a href="#inline-code-in-headers-int-x-y" class="self-link"></a></h2>
 <p>This heading checks highlighted inline code in section titles.</p>

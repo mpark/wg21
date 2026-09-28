@@ -445,6 +445,24 @@ exclude it from the table of contents, using the Pandoc extension: [`header_attr
 # Miscelleneous {- @==.unlisted==@}
 ```
 
+### Collapsed Sections: `.collapsed`
+
+Add the `.collapsed` class to a heading to collapse its section in HTML output,
+using the Pandoc extension [`header_attributes`]:
+
+::: render
+```
+## Revision History {- .unlisted .collapsed}
+
+### R0 → R1 {- .unlisted}
+
+- Added a feature.
+```
+:::
+
+The section extends through the next heading at the same or higher level. Other
+output formats render the complete section normally.
+
 ### Implicit Header References
 
 ::: render
