@@ -102,7 +102,7 @@ You can have both in a single project.
 Use [`flat.mk`](https://github.com/mpark/wg21/blob/master/flat.mk) for all the papers that
 live at the top-level directory. The outputs are written to a common output directory.
 
-```text
+```
 wg21-papers/
 |-- wg21 (submodule)
 |-- Makefile
@@ -172,7 +172,7 @@ See [mpark/wg21-papers](https://github.com/mpark/wg21-papers) for an example use
 Use [`paper.mk`](https://github.com/mpark/wg21/blob/master/paper.mk) for each
 paper in its own directory. Outputs are always written in that paper directory.
 
-```text
+```
 wg21-papers/
 |-- wg21 (submodule)
 |-- p2806/
@@ -213,7 +213,7 @@ include ../wg21/paper.mk
 
 To share the same setting across the different papers, create a top-level `config.mk`:
 
-```text
+```
 wg21-papers/
 |-- wg21 (submodule)
 |-- @==config.mk==@
