@@ -35,6 +35,8 @@ check: actual
 	grep -Fq 'aria-controls="paper-toc-dialog"' actual/id_prefix.html; \
 	grep -Fq 'id="paper-heading"' actual/id_prefix.html; \
 	grep -Fq 'href="#paper-heading"' actual/id_prefix.html
+	# Running live server tests...
+	@$(PYTHON_BIN) test_serve.py
 	# Running paper.mk tests...
 	@$(MAKE) -C paper check
 

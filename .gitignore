@@ -7,5 +7,6 @@ deps/pandoc
 deps/python
 generated/
 local.mk
+__pycache__/
 tests/actual
 tests/paper/actual

@@ -266,9 +266,9 @@ See [brevzin/cpp_proposals](https://github.com/brevzin/cpp_proposals) for an exa
 
 ## Live Server
 
-The framework provides a command to run a live server that can automatically
-rebuild papers and reload them in the browser. Run `make serve` instead of
-`make`, or `make serve <target>` instead of `make <target>`.
+The framework provides a live server that renders and automatically rebuilds
+papers. HTML papers also reload automatically in the browser. Run `make serve`
+instead of `make`, or `make serve <target>` instead of `make <target>`.
 
 ```bash
 make serve
@@ -276,15 +276,21 @@ make serve p2806r4.html
 make serve p2996r13.pdf
 ```
 
-The live server runs at `http://127.0.0.1:8000` by default with `OUTDIR` as
-the root of the site. For example, `make serve p2806r4.html` makes the paper
-available at `http://127.0.0.1:8000/p2806r4.html` with either layout.
+`make serve` builds the same targets as the corresponding command without
+`serve` and serves their HTML and PDF outputs.
+
+Open `http://127.0.0.1:8000` in a browser. The root redirects to the paper when
+one paper is served, or displays an index when multiple papers are served. Each
+paper remains available at a path relative to `OUTDIR`, such as
+`http://127.0.0.1:8000/p2806r4.html`.
 
 `SERVE_HOST` and `SERVE_PORT` can be overridden by defining them before
 including a layout file (i.e. `flat.mk`/`paper.mk`). If you need them, it is
 recommended to put them in a `local.mk` as described in [Local Configuration].
 
-For PDFs, use a viewer such as Skim that can reload the generated file directly.
+PDF papers are watched, rebuilt, and available at their normal URL, but they
+do not receive browser live-reload behavior. Use a viewer such as Skim that
+can reload the generated file directly.
 
 # Formatting
 
