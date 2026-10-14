@@ -17,15 +17,24 @@ from serve import PaperServer, serve_targets
 
 class ServeTest(unittest.TestCase):
     @mock.patch('serve.subprocess.run')
-    def test_ignores_continued_commands(self, run):
+    def test_output_options(self, run):
         run.return_value.stdout = (
-            'pandoc input.md \\\n'
-            '  -o ignored.html; \\\n'
-            'pandoc input.md -o generated/paper.html\n'
-            'pandoc input.md -o generated/paper.pdf\n')
+            'pandoc input.md -o generated/short.html\n'
+            'pandoc input.md --output generated/long.html\n'
+            'pandoc input.md --output=generated/equals.pdf\n')
         self.assertEqual(
             serve_targets('generated', ['make']),
-            ['paper.html', 'paper.pdf'])
+            ['equals.pdf', 'long.html', 'short.html'])
+
+    @mock.patch('serve.subprocess.run')
+    def test_continued_command(self, run):
+        run.return_value.stdout = (
+            'pandoc input.md \\\n'
+            '  --standalone \\\n'
+            '  --output=generated/paper.html\n')
+        self.assertEqual(
+            serve_targets('generated', ['make']),
+            ['paper.html'])
 
     def test_legacy_direct_rule_as_default_goal(self):
         directory = Path(__file__).parent / 'paper' / 'p2806'

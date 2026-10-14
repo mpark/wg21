@@ -50,6 +50,15 @@ li::marker { content: "—  "; }
 </html>'''
 
 
+def pandoc_output(tokens):
+    for index, token in enumerate(tokens):
+        if token in ('-o', '--output'):
+            return tokens[index + 1] if index + 1 < len(tokens) else None
+        if token.startswith('--output='):
+            return token.removeprefix('--output=')
+    return None
+
+
 def serve_targets(root, make_cmd):
     """Discover served artifacts without depending on a particular Make layout.
 
@@ -62,13 +71,14 @@ def serve_targets(root, make_cmd):
 
     root = Path(root).resolve()
     targets = set()
-    for line in result.stdout.splitlines():
-        if not line.startswith('pandoc ') or line.rstrip().endswith('\\'):
+    for line in result.stdout.replace('\\\n', ' ').splitlines():
+        if not line.startswith('pandoc '):
             continue
         tokens = shlex.split(line)
-        if '-o' not in tokens:
+        output = pandoc_output(tokens)
+        if output is None:
             continue
-        target = Path(tokens[tokens.index('-o') + 1]).resolve()
+        target = Path(output).resolve()
         if target.suffix in ('.html', '.pdf') and root in target.parents:
             # Only advertise files that the configured static root can serve.
             targets.add(target.relative_to(root).as_posix())
