@@ -158,6 +158,71 @@ def collapse_sections(elem, _):
     if isinstance(elem, (pf.Doc, pf.Div)):
         elem.content = collapse_blocks(elem.content)
 
+def slide_title_box(doc):
+    def values(name):
+        value = doc.get_metadata(name)
+        return value if isinstance(value, list) else ([] if value is None else [value])
+
+    def inlines(value):
+        if not isinstance(value, dict):
+            return [pf.Str(str(value))]
+        content = [pf.Str(value.get('name', ''))]
+        if email := value.get('email'):
+            content.extend([
+                pf.LineBreak(),
+                pf.Str('<'),
+                pf.Link(pf.Str(email), url=f'mailto:{email}'),
+                pf.Str('>'),
+            ])
+        return content
+
+    def row(label, content):
+        return pf.Span(
+            pf.Span(pf.Str(label), classes=['title-label']),
+            pf.Span(*content, classes=['title-value']),
+            classes=['title-row'])
+
+    def value(items):
+        content = []
+        for item in items:
+            if content:
+                content.append(pf.LineBreak())
+            content.extend(inlines(item))
+        return content
+
+    rows = [
+        row('Date:', value(values('date'))),
+        row('Project:', value(['Programming Language C++'])),
+    ]
+    if document := doc.get_metadata('document'):
+        document_value = [pf.Str(str(document))]
+        if number := re.match(document_pattern, str(document).upper()):
+            number = number.group(1)
+            for label, suffix in [('Latest', ''), ('Status', '/status')]:
+                document_value.extend([
+                    pf.Space(),
+                    pf.Link(
+                        pf.Str(label),
+                        url=f'https://wg21.link/P{number}{suffix}',
+                        classes=['document-link']),
+                ])
+        rows.insert(0, row('Document #:', document_value))
+    if audience := values('audience'):
+        rows.append(row('Audience:', value(audience)))
+    if author := values('author'):
+        rows.append(row('Reply-to:', value(author)))
+        # Reveal's stock template expects author names rather than the
+        # structured name/email entries used by the paper templates.
+        doc.metadata['author'] = pf.MetaList(*(
+            pf.MetaInlines(pf.Str(item.get('name', '')))
+            if isinstance(item, dict) else pf.MetaInlines(pf.Str(str(item)))
+            for item in author))
+    if institute := values('institute'):
+        rows.append(row('Institute:', value(institute)))
+
+    doc.metadata['institute'] = pf.MetaInlines(
+        pf.Span(*rows, classes=['title-info']))
+
 def prepare(doc):
     process_subs(doc, doc.get_metadata('from'))
 
@@ -166,6 +231,7 @@ def prepare(doc):
         doc.metadata['date'] = datetime.date.today().isoformat()
 
     if doc.format == 'revealjs':
+        slide_title_box(doc)
         return
 
     if doc.format == 'html':

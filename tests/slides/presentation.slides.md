@@ -1,8 +1,12 @@
 ---
 title: Slides Test
 subtitle: Presentation Subtitle
-author: Slide Author
+author:
+  - name: Slide Author
+    email: <slides@example.com>
+document: D1234R5
 date: today
+audience: WG21
 highlighting:
   keywords:
     cpp: match

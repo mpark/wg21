@@ -1,5 +1,6 @@
 OUTDIR := ../actual
 output := $(OUTDIR)/presentation.slides.html
+no_document_output := $(OUTDIR)/no-document.slides.html
 
 include ../../flat.mk
 
@@ -8,10 +9,18 @@ check:
 	@$(MAKE) clean
 	@$(MAKE) html
 	@test ! -e $(output)
+	@test ! -e $(no_document_output)
 	@$(MAKE) slides
 	@grep -Fq '<title>Slides Test</title>' $(output)
 	@grep -Fq '<p class="subtitle">Presentation Subtitle</p>' $(output)
 	@grep -Fq '<p class="author">Slide Author</p>' $(output)
+	@grep -Fq '<span class="title-value">D1234R5 ' $(output)
+	@grep -Fq 'href="https://wg21.link/P1234" class="document-link">Latest</a>' $(output)
+	@grep -Fq 'href="https://wg21.link/P1234/status" class="document-link">Status</a>' $(output)
+	@grep -Fq '<span class="title-value">WG21</span>' $(output)
+	@grep -Fq '&lt;<a href="mailto:slides@example.com">slides@example.com</a>&gt;' $(output)
+	@grep -Fq 'class="title-info"' $(no_document_output)
+	@! grep -Fq 'Document #:' $(no_document_output)
 	@grep -Eq '<p class="date">[0-9]{4}-[0-9]{2}-[0-9]{2}</p>' $(output)
 	@grep -Fq '<div class="reveal">' $(output)
 	@grep -Fq 'Reveal.initialize' $(output)
