@@ -64,6 +64,7 @@ src := $(filter-out CHANGELOG.md LICENSE.md README.md, $(wildcard *.md))
 html_targets := $(src:.md=.html)
 pdf_targets := $(src:.md=.pdf)
 latex_targets := $(src:.md=.latex)
+targets := $(html_targets) $(pdf_targets) $(latex_targets)
 
 .PHONY: all html pdf latex
 all: $(DEFAULT_FORMAT)
@@ -72,21 +73,6 @@ pdf: $(pdf_targets)
 latex: $(latex_targets)
 
 include $(dir $(lastword $(MAKEFILE_LIST)))base.mk
-
-targets := $(html_targets) $(pdf_targets) $(latex_targets)
-
-.PHONY: clean
-clean:
-	rm -f $(addprefix $(OUTDIR)/,$(targets))
-
-ifneq ($(OUTDIR),.)
-$(OUTDIR):
-	mkdir -p $@
-
-# Specify the source to generated output mapping, e.g. `p2688r0.html` to `generated/p2688r0.html`
-.PHONY: $(targets)
-$(targets): %: $(OUTDIR)/%
-endif
 
 # Automatic rules to handle, e.g. `p2688r0.html : p2688r0.md`.
 $(OUTDIR)/%.html: %.md $(DEPS) | $(OUTDIR)

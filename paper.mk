@@ -61,6 +61,7 @@ DEFAULT_FORMAT ?= html
 
 paper_id := $(word 1,$(subst :, ,$(PAPER_RULE)))
 paper_src := $(word 2,$(subst :, ,$(PAPER_RULE)))
+targets := $(addprefix $(paper_id).,html pdf latex)
 
 .PHONY: all html pdf latex
 all: $(DEFAULT_FORMAT)
@@ -70,10 +71,6 @@ latex: $(paper_id).latex
 
 include $(dir $(lastword $(MAKEFILE_LIST)))base.mk
 
-.PHONY: clean
-clean:
-	rm -f $(paper_id).html $(paper_id).pdf $(paper_id).latex
-
-$(paper_id).html $(paper_id).pdf $(paper_id).latex: $(paper_src).md $(DEPS)
+$(targets): $(paper_src).md $(DEPS)
 	$(PANDOC)
 endif

@@ -94,3 +94,16 @@ serve: $(DATADIR)/serve.py $(PYTHON_DIR)
 	@$(PYTHON_BIN) $< \
 		--host="$(SERVE_HOST)" --port="$(SERVE_PORT)" --root="$(OUTDIR)" --watch $(WATCHDEPS) \
 		-- $(MAKE) $(filter-out $@,$(MAKECMDGOALS))
+
+.PHONY: clean
+clean:
+	rm -f $(addprefix $(OUTDIR)/,$(targets))
+
+ifneq ($(OUTDIR),.)
+$(OUTDIR):
+	mkdir -p $@
+
+# Map output names such as `p2688r0.html` to `generated/p2688r0.html`.
+.PHONY: $(targets)
+$(targets): %: $(OUTDIR)/%
+endif
