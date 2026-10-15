@@ -16,6 +16,7 @@ from pathlib import Path
 from urllib.parse import quote
 
 from livereload import Server
+from livereload.handlers import StaticFileHandler
 from tornado.web import RequestHandler
 
 INDEX_HTML_TEMPLATE = '''<!doctype html>
@@ -101,12 +102,23 @@ class RootHandler(RequestHandler):
         self.write(INDEX_HTML_TEMPLATE.replace('$papers$', links))
 
 
+class ReloadableStaticFileHandler(StaticFileHandler):
+    """Keep HTML in one chunk so livereload can inject into a large head."""
+
+    @classmethod
+    def get_content(cls, path, start=None, end=None):
+        if Path(path).suffix == '.html' and start is None and end is None:
+            return Path(path).read_bytes()
+        return super().get_content(path, start, end)
+
+
 class PaperServer(Server):
     """Add a root page for the artifacts selected by Make."""
 
     def __init__(self, targets):
         super().__init__()
         self.targets = targets
+        self.SFH = ReloadableStaticFileHandler
 
     def get_web_handlers(self, script):
         handlers = [

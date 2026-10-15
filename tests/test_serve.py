@@ -2,6 +2,7 @@
 
 import os
 import sys
+import tempfile
 import unittest
 import warnings
 from pathlib import Path
@@ -9,10 +10,18 @@ from unittest import mock
 
 from tornado.testing import AsyncHTTPTestCase, ExpectLog
 from tornado.web import Application
+from livereload.server import LiveScriptInjector
 
 sys.path.insert(0, str(Path(__file__).parents[1] / 'data'))
 
 from serve import PaperServer, serve_targets
+
+
+RELOAD_SCRIPT = b'<script>reload</script>'
+
+
+class ReloadScriptInjector(LiveScriptInjector):
+    script = RELOAD_SCRIPT
 
 
 class ServeTest(unittest.TestCase):
@@ -50,9 +59,19 @@ class ServeTest(unittest.TestCase):
 
 class PaperServerTest(AsyncHTTPTestCase):
     def get_app(self):
+        self.directory = tempfile.TemporaryDirectory()
+        html = b'<html><head>' + b' ' * (64 * 1024) + b'</head></html>'
+        Path(self.directory.name, 'citations.html').write_bytes(html)
+
         server = PaperServer(['citations.html'])
-        server.root = str(Path(__file__).parent / 'expected')
-        return Application(server.get_web_handlers(b''))
+        server.root = self.directory.name
+        return Application(
+            server.get_web_handlers(RELOAD_SCRIPT),
+            transforms=[ReloadScriptInjector])
+
+    def tearDown(self):
+        super().tearDown()
+        self.directory.cleanup()
 
     def test_only_selected_target_is_served(self):
         response = self.fetch('/', follow_redirects=False)
@@ -63,6 +82,13 @@ class PaperServerTest(AsyncHTTPTestCase):
             self.assertEqual(self.fetch('/citations.html').code, 200)
         with ExpectLog('tornado.access', '404 GET'):
             self.assertEqual(self.fetch('/code_blocks.html').code, 404)
+
+    def test_livereload_is_injected_after_a_large_head(self):
+        with warnings.catch_warnings():
+            warnings.simplefilter('ignore', DeprecationWarning)
+            response = self.fetch('/citations.html')
+        self.assertEqual(response.code, 200)
+        self.assertEqual(response.body.count(RELOAD_SCRIPT), 1)
 
 
 if __name__ == '__main__':
