@@ -3,6 +3,11 @@ check: actual
 	@diff -ruN expected actual \
 		&& printf '\033[32mpaper.mk tests passed.\033[0m\n' \
 		|| { printf '\033[31mpaper.mk tests failed: actual output differs from expected.\033[0m\n'; exit 1; }
+	@$(MAKE) -C p2806 clean
+	@$(MAKE) -C p2806 slides
+	@test -e p2806/p2806r4.slides.html
+	@test ! -e p2806/do-expr.slides.html
+	@$(MAKE) -C p2806 clean
 
 .PHONY: actual expected
 actual expected:

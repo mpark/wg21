@@ -1,0 +1,40 @@
+OUTDIR := ../actual
+output := $(OUTDIR)/presentation.slides.html
+
+include ../../flat.mk
+
+.PHONY: check
+check:
+	@$(MAKE) clean
+	@$(MAKE) html
+	@test ! -e $(output)
+	@$(MAKE) slides
+	@grep -Fq '<title>Slides Test</title>' $(output)
+	@grep -Fq '<p class="subtitle">Presentation Subtitle</p>' $(output)
+	@grep -Fq '<p class="author">Slide Author</p>' $(output)
+	@grep -Eq '<p class="date">[0-9]{4}-[0-9]{2}-[0-9]{2}</p>' $(output)
+	@grep -Fq '<div class="reveal">' $(output)
+	@grep -Fq 'Reveal.initialize' $(output)
+	@grep -Fq "slideNumber: 'c/t'" $(output)
+	@grep -Fq '<section id="overview" class="title-slide slide level1">' $(output)
+	@grep -Fq '<section id="shared-formatting" class="slide level2">' $(output)
+	@grep -Fq '<section id="proposal" class="title-slide slide level1">' $(output)
+	@grep -Fq '<aside class="notes">' $(output)
+	@grep -Fq 'code span.kw {' $(output)
+	@grep -Fq -- '--add-color: #006e28;' $(output)
+	@grep -Fq '<span class="kw">match</span>' $(output)
+	@grep -Fq '<em>value</em>' $(output)
+	@grep -Fq '<div class="add">' $(output)
+	@grep -Fq '<del>old</del>' $(output)
+	@grep -Fq '<ins>new</ins>' $(output)
+	@grep -Fq 'href="https://eel.is/c++draft/basic.scope"' $(output)
+	@grep -Fq 'href="https://eel.is/c++draft/basic.life"' $(output)
+	@grep -Fq 'href="https://wg21.link/p2688r5"' $(output)
+	@grep -Fq 'Pattern Matching:' $(output)
+	@grep -Fq '<h1 class="unnumbered">References</h1>' $(output)
+	@! grep -Fq 'class="self-link"' $(output)
+	@grep -Fq '<div class="table-wrapper">' $(output)
+	@grep -Fq '<table class="cmptable">' $(output)
+	@grep -Fq 'id="pnum-1"' $(output)
+	@grep -Fq 'id="note-1" class="note" data-num="1"' $(output)
+	@! grep -Fq 'deps/revealjs' $(output)

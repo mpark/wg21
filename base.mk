@@ -95,6 +95,8 @@ serve: $(DATADIR)/serve.py $(PYTHON_DIR)
 		--host="$(SERVE_HOST)" --port="$(SERVE_PORT)" --root="$(OUTDIR)" --watch $(WATCHDEPS) \
 		-- $(MAKE) $(filter-out $@,$(MAKECMDGOALS))
 
+include $(ROOTDIR)slides.mk
+
 .PHONY: clean
 clean:
 	rm -f $(addprefix $(OUTDIR)/,$(targets))

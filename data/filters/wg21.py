@@ -29,6 +29,10 @@ refs = {}
 pnum_count = 0
 nonnormative_count = { c : 0 for c in nonnormative_classes }
 
+# Reveal.js renders slide content as HTML while remaining a distinct format.
+def render_format(output_format):
+    return 'html' if output_format == 'revealjs' else output_format
+
 def prepend_elem(elem, *prefix):
     assert(all(isinstance(e, pf.Inline) for e in prefix))
 
@@ -155,12 +159,17 @@ def collapse_sections(elem, _):
         elem.content = collapse_blocks(elem.content)
 
 def prepare(doc):
-    if doc.format == 'html':
-        doc.walk(collapse_sections)
+    process_subs(doc, doc.get_metadata('from'))
 
     if doc.get_metadata('date') == 'today':
         import datetime
         doc.metadata['date'] = datetime.date.today().isoformat()
+
+    if doc.format == 'revealjs':
+        return
+
+    if doc.format == 'html':
+        doc.walk(collapse_sections)
 
     document = doc.get_metadata('document')
     number = re.match(document_pattern, document.upper())
@@ -176,8 +185,6 @@ def prepare(doc):
         output_format='markdown')
     doc.metadata['pagetitle'] = title   # HTML
     doc.metadata['title-meta'] = title  # PDF
-
-    process_subs(doc, doc.get_metadata('from'))
 
 def soul(elem, doc):
     # Pandoc 3.x uses the soul package to do strikeouts with \st, underlines
@@ -413,7 +420,7 @@ def divspan(elem, doc):
         label = [pf.Str(name.title())]
         if num is not None:
             label.append(pf.Space())
-            if doc.format == 'html':
+            if render_format(doc.format) == 'html':
                 if not elem.identifier:
                     nonnormative_count[name] += 1
                     elem.identifier = f'{name}-{nonnormative_count[name]}'
@@ -449,7 +456,7 @@ def divspan(elem, doc):
 
         if doc.format == 'latex':
             return pf.RawInline(f'\\pnum{{{num}}}', 'latex')
-        elif doc.format == 'html':
+        elif render_format(doc.format) == 'html':
             global pnum_count
             pnum_count += 1
             anchor_id = f'pnum-{pnum_count}'
@@ -659,7 +666,7 @@ def cmptable(table, doc):
         **kwargs)
 
 def header(elem, doc):
-    if not isinstance(elem, pf.Header):
+    if doc.format == 'revealjs' or not isinstance(elem, pf.Header):
         return None
 
     if elem.identifier == 'bibliography':
@@ -686,7 +693,7 @@ def table(elem, doc):
     if elem.head is not None:
         elem.head.walk(header)
 
-    if doc.format == 'html':
+    if render_format(doc.format) == 'html':
         return pf.Div(elem, classes=['table-wrapper'])
 
 def caption(elem, doc):
@@ -724,7 +731,8 @@ def citation_link(elem, doc):
     return elem
 
 def automatic_header_link(elem, doc):
-    if not (isinstance(elem, pf.Link) and
+    if doc.format == 'revealjs' or not (
+           isinstance(elem, pf.Link) and
            elem.url.startswith('#') and
            ('self-link' not in elem.classes) and
            pf.stringify(elem) == ""):
@@ -819,6 +827,7 @@ def not_proposed(elem, doc):
         elem,
         pf.RawBlock(r'\end{notproposed}', 'latex'))
 
+# WG21 formatting shared by documents and presentations.
 formatting = [
     sref,
     diff,
@@ -896,22 +905,24 @@ class CodeElems:
 
     @classmethod
     def _convert_blocks(cls, blocks, token, doc):
+        output_format = render_format(doc.format)
+
         def intersperse(lst, item):
             result = [item] * (len(lst) * 2 - 1)
             result[0::2] = lst
             return result
 
         text = pf.convert_text(
-            intersperse(blocks, pf.Plain(pf.RawInline(token, doc.format))),
+            intersperse(blocks, pf.Plain(pf.RawInline(token, output_format))),
             input_format='panflute',
-            output_format=doc.format,
+            output_format=output_format,
             extra_args=[
                 '--data-dir', doc.get_metadata('data-dir'),
                 '--wrap', 'none',
                 '-d', 'formatting',
                 *([] if cls.keyword_defaults is None else ['-d', cls.keyword_defaults])])
 
-        if doc.format == 'latex':
+        if output_format == 'latex':
             # The normal text mode such as "template<class" gets translated
             # to "template\textless class" rather than "text\textless{}class".
             text = text.replace(r'\textless ', r'\textless{}') \
@@ -921,7 +932,7 @@ class CodeElems:
                        .replace(r'\textbar ', r'\textbar{}') \
                        .replace(r'\textquotesingle ', r'\textquotesingle{}')
 
-        sep = f'\n\n{token}\n\n' if doc.format == 'latex' else f'\n{token}\n'
+        sep = f'\n\n{token}\n\n' if output_format == 'latex' else f'\n{token}\n'
         return text, sep
 
     @classmethod
@@ -1030,6 +1041,7 @@ class CodeElems:
 
     @classmethod
     def run(cls, doc, keyword_defaults):
+        output_format = render_format(doc.format)
         keyword_languages = doc.get_metadata('highlighting.keywords', {})
         elems = []
         containers = []
@@ -1044,13 +1056,13 @@ class CodeElems:
 
             elems.append(elem)
             container = (
-                pf.RawInline('', doc.format)
+                pf.RawInline('', output_format)
                 if isinstance(elem, pf.Code)
-                else pf.RawBlock('', doc.format))
+                else pf.RawBlock('', output_format))
             containers.append(container)
             return container
 
-        doc.walk(code, stop_if=lambda elem: doc.format == 'latex' and isinstance(elem, pf.Header))
+        doc.walk(code, stop_if=lambda elem: output_format == 'latex' and isinstance(elem, pf.Header))
         if not elems:
             return
 

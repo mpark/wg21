@@ -8,6 +8,13 @@ $(OUTDIR)/MANUAL.render.md: MANUAL.md $(DATADIR)/filters/render.py $(PANDOC_DIR)
 $(OUTDIR)/MANUAL.html $(OUTDIR)/MANUAL.latex $(OUTDIR)/MANUAL.pdf: $(OUTDIR)/MANUAL.render.md $(DEPS) | $(OUTDIR)
 	$(PANDOC)
 
+$(OUTDIR)/MANUAL.slides.render.md: MANUAL.slides.md $(DATADIR)/filters/render.py $(PANDOC_DIR) $(PYTHON_DIR) | $(OUTDIR)
+	pandoc $< -o $@ --standalone --filter $(DATADIR)/filters/render.py
+
+$(OUTDIR)/MANUAL.slides.html: $(OUTDIR)/MANUAL.slides.render.md $(COMMONDEPS) $(slide_deps) $(PANDOC_DIR) $(REVEALJS_DIR) | $(OUTDIR)
+	pandoc $(DATADIR)/srefs.defs $< -o $@ --data-dir=$(DATADIR) -M data-dir=$(DATADIR) -d slides -d formatting \
+		-M revealjs-url=$(REVEALJS_DIR)
+
 .PHONY: check
 check:
 	@$(MAKE) -C tests check

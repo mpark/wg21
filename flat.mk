@@ -60,7 +60,9 @@ endif
 DEFAULTS ?= $(wildcard defaults.yaml)
 REQUIREMENTS ?= $(wildcard requirements.txt)
 
-src := $(filter-out CHANGELOG.md LICENSE.md README.md, $(wildcard *.md))
+src := $(filter-out \
+	CHANGELOG.md LICENSE.md README.md %.slides.md, \
+	$(wildcard *.md))
 html_targets := $(src:.md=.html)
 pdf_targets := $(src:.md=.pdf)
 latex_targets := $(src:.md=.latex)

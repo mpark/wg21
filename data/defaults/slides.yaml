@@ -1,0 +1,22 @@
+defaults:
+  - ${.}/common.yaml
+
+to: revealjs
+self-contained: true
+slide-level: 2
+
+css:
+  - templates/wg21.css
+
+resource-path:
+  - .
+  - ${USERDATA}
+
+metadata:
+  theme: white
+  transition: none
+  slideNumber: "'c/t'"
+  center: false
+  width: 1600
+  height: 900
+  hash: true

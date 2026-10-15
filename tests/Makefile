@@ -39,6 +39,8 @@ check: actual
 	@$(PYTHON_BIN) test_serve.py
 	# Running paper.mk tests...
 	@$(MAKE) -C paper check
+	# Running slides.mk tests...
+	@$(MAKE) -C slides check
 
 .PHONY: actual expected
 actual expected:

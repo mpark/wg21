@@ -266,9 +266,10 @@ See [brevzin/cpp_proposals](https://github.com/brevzin/cpp_proposals) for an exa
 
 ## Live Server
 
-The framework provides a live server that renders and automatically rebuilds
-papers. HTML papers also reload automatically in the browser. Run `make serve`
-instead of `make`, or `make serve <target>` instead of `make <target>`.
+The framework provides a live server that builds and automatically rebuilds
+papers and presentations. HTML output also reloads automatically in the
+browser. Run `make serve` instead of `make`, or `make serve <target>` instead
+of `make <target>`.
 
 ```bash
 make serve
@@ -279,9 +280,9 @@ make serve p2996r13.pdf
 `make serve` builds the same targets as the corresponding command without
 `serve` and serves their HTML and PDF outputs.
 
-Open `http://127.0.0.1:8000` in a browser. The root redirects to the paper when
-one paper is served, or displays an index when multiple papers are served. Each
-paper remains available at a path relative to `OUTDIR`, such as
+Open `http://127.0.0.1:8000` in a browser. The root redirects to the output when
+one file is served, or displays an index when multiple files are served. Each
+file remains available at a path relative to `OUTDIR`, such as
 `http://127.0.0.1:8000/p2806r4.html`.
 
 `SERVE_HOST` and `SERVE_PORT` can be overridden by defining them before
@@ -291,6 +292,71 @@ recommended to put them in a `local.mk` as described in [Local Configuration].
 PDF papers are watched, rebuilt, and available at their normal URL, but they
 do not receive browser live-reload behavior. Use a viewer such as Skim that
 can reload the generated file directly.
+
+# Slides
+
+With either project layout, a Markdown source whose name ends in `.slides.md` is
+automatically recognized as a [Reveal.js] presentation.
+
+For example, `p2688r6.slides.md` produces `p2688r6.slides.html`. The output
+is written to the same location as other HTML output: under `generated/`
+with the flat layout, or alongside the source with the per-paper layout.
+
+With an explicit mapping such as `PAPER_RULE := p2996r13:reflection`, a
+companion `reflection.slides.md` produces `p2996r13.slides.html`.
+
+A level-one heading starts a section, and a level-two heading starts a slide
+within that section. The `title`, `subtitle`, `author`, and `date` metadata form
+the title slide.
+
+A minimal presentation looks like this:
+
+```markdown
+---
+title: Pattern Matching
+subtitle: A Design for C++
+author: Michael Park
+date: today
+---
+
+# Motivation
+
+## Values and Declarations
+
+- Value patterns compare.
+- Declaration patterns bind.
+
+::: notes
+Explain how these two kinds of patterns differ before showing their syntax.
+:::
+```
+
+The `notes` fenced div adds speaker notes to its slide. Press `S` while viewing
+the presentation to open the Reveal.js speaker view.
+
+See [`MANUAL.slides.md`](https://github.com/mpark/wg21/blob/master/MANUAL.slides.md)
+for a complete example and a guide to building presentations with the
+framework.
+
+Build one presentation, all presentations, or start the live server with:
+
+```bash
+make p2688r6.slides.html
+make serve p2688r6.slides.html
+
+make slides
+make serve slides
+```
+
+WG21 authoring features such as [modifying text], [comparison tables],
+[stable names], [citations], [embedded Markdown], and [new keywords] also work
+in slides.
+
+[Reveal.js] is downloaded only when a presentation is built. The framework pins
+and verifies its version, and embeds its resources into the generated HTML, so
+neither Node.js nor `npm` is required and the presentation is a standalone file.
+
+[Reveal.js]: https://revealjs.com/
 
 # Formatting
 
