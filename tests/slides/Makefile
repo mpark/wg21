@@ -1,6 +1,8 @@
 OUTDIR := ../actual
 output := $(OUTDIR)/presentation.slides.html
 no_document_output := $(OUTDIR)/no-document.slides.html
+title_preview_markdown := $(OUTDIR)/title-preview.render.md
+title_preview_output := $(OUTDIR)/title-preview.html
 
 include ../../flat.mk
 
@@ -50,3 +52,10 @@ check:
 	@grep -Fq 'id="pnum-1"' $(output)
 	@grep -Fq 'id="note-1" class="note" data-num="1"' $(output)
 	@! grep -Fq 'deps/revealjs' $(output)
+	@pandoc fixtures/title-preview.md -o $(title_preview_markdown) --standalone \
+		--filter ../../data/filters/render.py
+	@pandoc $(title_preview_markdown) -o $(title_preview_output) \
+		--data-dir=../../data -M data-dir=../../data -d slides -d formatting \
+		-M revealjs-url=$(REVEALJS_DIR)
+	@grep -Fq 'class="title-preview"' $(title_preview_output)
+	@grep -Fq 'class="title-info"' $(title_preview_output)

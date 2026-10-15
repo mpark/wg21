@@ -36,8 +36,8 @@
 
 .reveal #title-slide.present,
 .reveal.overview #title-slide {
-  display: flex !important;
-  flex-direction: column;
+  display: grid !important;
+  grid-template-rows: 1fr auto auto 2fr;
 }
 
 .reveal #title-slide > * {
@@ -50,51 +50,34 @@
 }
 
 .reveal #title-slide .title {
-  margin-top: auto;
+  grid-row: 2;
   margin-bottom: 0.35em;
 }
 
-.reveal #title-slide .author {
-  margin-top: auto;
-  margin-bottom: 0.15em;
-}
-
-.reveal #title-slide.present:has(.title-info),
-.reveal.overview #title-slide:has(.title-info) {
-  display: grid !important;
-  grid-template-rows: 1fr auto auto 2fr;
-}
-
-.reveal #title-slide:has(.title-info) .title {
-  grid-row: 2;
-  margin-top: 0;
-}
-
-.reveal #title-slide:has(.title-info) .subtitle {
+.reveal #title-slide .subtitle {
   grid-row: 3;
-  margin-bottom: 0;
 }
 
-.reveal #title-slide:has(.title-info) > :is(.author, .date) {
+.reveal #title-slide > :is(.author, .date) {
   display: none;
 }
 
-.reveal #title-slide .institute:has(.title-info) {
+.reveal #title-slide .institute {
   position: absolute;
-  right: 2.5em;
-  bottom: 2.5em;
+  right: 4em;
+  bottom: 4em;
   font-size: 0.8em;
   line-height: 1.35;
   text-align: left;
 }
 
-.reveal #title-slide .title-info {
+.reveal .title-info {
   display: grid;
   grid-template-columns: max-content auto;
   column-gap: 0.6em;
 }
 
-.reveal #title-slide .title-row {
+.reveal .title-row {
   display: contents;
 }
 
@@ -175,6 +158,10 @@
   width: auto;
 }
 
+.reveal .table-wrapper {
+  margin-top: var(--r-block-margin);
+}
+
 .reveal table {
   border: 1px solid var(--r-main-color);
   font-size: 0.76em;
@@ -188,6 +175,9 @@
 }
 
 .reveal .slide-number {
+  right: auto;
+  left: 50%;
+  transform: translateX(-50%);
   background: transparent;
   color: var(--r-main-color);
   font: 15px Arial, Helvetica, sans-serif;

@@ -11,9 +11,13 @@ $(OUTDIR)/MANUAL.html $(OUTDIR)/MANUAL.latex $(OUTDIR)/MANUAL.pdf: $(OUTDIR)/MAN
 $(OUTDIR)/MANUAL.slides.render.md: MANUAL.slides.md $(DATADIR)/filters/render.py $(PANDOC_DIR) $(PYTHON_DIR) | $(OUTDIR)
 	pandoc $< -o $@ --standalone --filter $(DATADIR)/filters/render.py
 
-$(OUTDIR)/MANUAL.slides.html: $(OUTDIR)/MANUAL.slides.render.md $(COMMONDEPS) $(slide_deps) $(PANDOC_DIR) $(REVEALJS_DIR) | $(OUTDIR)
-	pandoc $(DATADIR)/srefs.defs $< -o $@ --data-dir=$(DATADIR) -M data-dir=$(DATADIR) -d slides -d formatting \
-		-M revealjs-url=$(REVEALJS_DIR)
+manual_slides_css := $(DATADIR)/templates/slides-guide.css
+override WATCHDEPS += $(manual_slides_css)
+
+$(OUTDIR)/MANUAL.slides.html: $(OUTDIR)/MANUAL.slides.render.md \
+		$(COMMONDEPS) $(slide_deps) $(manual_slides_css) \
+		$(PANDOC_DIR) $(REVEALJS_DIR) | $(OUTDIR)
+	$(PANDOC_SLIDES) --css=$(manual_slides_css)
 
 .PHONY: check
 check:

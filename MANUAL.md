@@ -306,33 +306,9 @@ With an explicit mapping such as `PAPER_RULE := p2996r13:reflection`, a
 companion `reflection.slides.md` produces `p2996r13.slides.html`.
 
 A level-one heading starts a section, and a level-two heading starts a slide
-within that section. The `title`, `subtitle`, `author`, and `date` metadata form
-the title slide.
-
-A minimal presentation looks like this:
-
-```markdown
----
-title: Pattern Matching
-subtitle: A Design for C++
-author: Michael Park
-date: today
----
-
-# Motivation
-
-## Values and Declarations
-
-- Value patterns compare.
-- Declaration patterns bind.
-
-::: notes
-Explain how these two kinds of patterns differ before showing their syntax.
-:::
-```
-
-The `notes` fenced div adds speaker notes to its slide. Press `S` while viewing
-the presentation to open the Reveal.js speaker view.
+within that section. The title slide uses `title` and `subtitle` along with a
+paper-style box for `date`, `audience`, and `author`. The optional `document`
+metadata adds the document number and links.
 
 See [`MANUAL.slides.md`](https://github.com/mpark/wg21/blob/master/MANUAL.slides.md)
 for a complete example and a guide to building presentations with the

@@ -1,0 +1,62 @@
+.reveal .title-preview {
+  display: grid;
+  grid-template-rows: 1fr auto auto 1fr auto;
+  height: 100%;
+}
+
+.reveal .title-preview :is(h1, p) {
+  margin: 0;
+}
+
+.reveal .title-preview :is(.title, .subtitle) {
+  text-align: center;
+}
+
+.reveal .title-preview .title {
+  grid-row: 2;
+}
+
+.reveal .title-preview .subtitle {
+  grid-row: 3;
+}
+
+.reveal .title-preview .institute {
+  grid-row: 5;
+  justify-self: end;
+  margin: 0 2em 1.5em 0;
+  font-size: 0.55em;
+  line-height: 1.35;
+  text-align: left;
+}
+
+.reveal .render > .table-wrapper > table > tbody > tr > td {
+  vertical-align: middle;
+}
+
+.reveal .render > .table-wrapper > table > tbody > tr > td > div,
+.reveal .render > .table-wrapper > table > tbody > tr > td > div > :only-child {
+  margin: 0;
+}
+
+/* The Markdown prepass infers widths from cell contents. Keep slide previews
+   evenly split regardless of how much source or rendered markup they contain. */
+.reveal .render.slide > .table-wrapper > table {
+  width: 100% !important;
+}
+
+.reveal .render.slide > .table-wrapper > table > colgroup > col {
+  width: 50% !important;
+}
+
+.reveal .slide-preview {
+  aspect-ratio: 16 / 9;
+  border: 1px solid #d9e1e7;
+  box-sizing: border-box;
+  font-size: 0.65em;
+  padding: 1em;
+}
+
+.reveal .section-slide .slide-preview {
+  display: grid;
+  place-items: center;
+}
