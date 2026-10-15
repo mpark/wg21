@@ -83,7 +83,7 @@ $(DATADIR)/srefs.defs: $(DATADIR)/srefs-md.py $(DATADIR)/srefs.json $(PYTHON_DIR
 
 .PHONY: distclean
 distclean:
-	rm -rf $(DEPSDIR)/pandoc $(DEPSDIR)/python $(GENDEPS)
+	rm -rf $(DEPSDIR)/pandoc $(DEPSDIR)/python $(DEPSDIR)/revealjs $(GENDEPS)
 
 .PHONY: update
 update:

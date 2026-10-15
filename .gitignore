@@ -5,6 +5,7 @@ data/srefs.defs
 data/annex-f
 deps/pandoc
 deps/python
+deps/revealjs
 generated/
 local.mk
 __pycache__/
