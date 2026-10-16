@@ -5,7 +5,11 @@ to: revealjs
 self-contained: true
 slide-level: 2
 
+# Enable Reveal's line numbers and stepping. Pandoc still owns highlighting,
+# but its Reveal template requires a bundled Highlight.js theme.
 variables:
+  highlight-js: true
+  highlightjs-theme: monokai
   header-includes: '<link rel="icon" href="favicon.ico">'
 css:
   - templates/wg21.css

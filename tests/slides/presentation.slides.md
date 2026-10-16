@@ -25,8 +25,28 @@ This wording is added.
 Replace [old](new){.sub}. See [basic.scope], [basic.life]{.sref}, and
 [@P2688R5]{.title}.
 
-```cpp
+```{.cpp numberLines="1|2" startFrom=7}
 match ($value$) {}
+return;
+```
+
+```{.javascript numberLines="1-2|3"}
+const one = 1;
+const two = 2;
+console.log(one + two);
+```
+
+```{.default .raw}
+Plain code.
+```
+
+```{.default .raw .numberLines startFrom=9}
+Numbered plain code.
+```
+
+```{.text numberLines="1|2" startFrom=7}
+First line of text.
+Second line of text.
 ```
 
 ::: notes

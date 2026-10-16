@@ -14,7 +14,7 @@ import tempfile
 import yaml
 from contextlib import contextmanager
 from pathlib import Path
-from xml.sax.saxutils import escape
+from xml.sax.saxutils import escape, quoteattr
 
 document_pattern = r"[PD]([0-9]+)R[0-9]+"
 nonnormative_classes = {'example', 'note'}
@@ -1043,6 +1043,44 @@ class CodeElems:
 
         return converted
 
+    @staticmethod
+    def _preserve_reveal_code(text, elem):
+        # `hljs` enables Reveal's stepped-code layout, while `nohighlight` and
+        # `data-noescape` keep it from replacing Pandoc's embedded markup.
+        attributes = {'data-noescape': ''}
+        attributes.update(
+            (name, value) for name, value in elem.attributes.items()
+            if name.startswith('data-'))
+        attributes = ''.join(
+            f' {name}={quoteattr(value)}'
+            for name, value in attributes.items())
+        classes = 'nohighlight' + (
+            ' hljs' if 'data-line-numbers' in elem.attributes else '')
+        if '<code class="' in text:
+            return text.replace(
+                '<code class="',
+                f'<code{attributes} class="{classes} ',
+                1)
+
+        assert '<code>' in text
+        return text.replace(
+            '<code>', f'<code{attributes} class="{classes}">', 1)
+
+    @staticmethod
+    def _normalize_reveal_line_numbers(elem):
+        line_numbers = elem.attributes.pop('numberLines', None)
+        numbered = 'numberLines' in elem.classes
+        if line_numbers is None and not numbered:
+            return
+
+        if numbered:
+            elem.classes.remove('numberLines')
+        start_from = elem.attributes.pop('startFrom', None)
+        elem.attributes['data-line-numbers'] = (
+            '' if line_numbers is None else line_numbers)
+        if start_from is not None:
+            elem.attributes['data-ln-start-from'] = start_from
+
     @classmethod
     def _store_fragment(cls, fragment):
         idx = cls.fragment_idx.get(fragment)
@@ -1115,7 +1153,9 @@ class CodeElems:
             if not isinstance(elem, (pf.Code, pf.CodeBlock)):
                 return None
 
-            if (elem.attributes.get('md') is None and
+            if (not (doc.format == 'revealjs' and
+                     isinstance(elem, pf.CodeBlock)) and
+                elem.attributes.get('md') is None and
                 elem.attributes.get('em') is None and
                 not any(c in keyword_languages for c in elem.classes)):
                 return None
@@ -1138,6 +1178,8 @@ class CodeElems:
             elem.text for elem in elems)
 
         for elem in elems:
+            if doc.format == 'revealjs' and isinstance(elem, pf.CodeBlock):
+                cls._normalize_reveal_line_numbers(elem)
             md = elem.attributes.pop('md', None)
             em = elem.attributes.pop('em', None)
             elem.text = cls._replace_fragments_with_placeholders(elem.text, md, em)
@@ -1164,7 +1206,9 @@ class CodeElems:
         results = text.split(sep)
         assert(len(results) == len(elems))
 
-        for container, result in zip(containers, results):
+        for elem, container, result in zip(elems, containers, results):
+            if doc.format == 'revealjs' and isinstance(elem, pf.CodeBlock):
+                result = cls._preserve_reveal_code(result, elem)
             container.text = result
 
 def finalize(doc):

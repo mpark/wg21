@@ -121,15 +121,22 @@
   box-shadow: none;
   box-sizing: border-box;
   margin: 0.35em 0;
-  padding: 0.45em 0.55em;
+  padding: 0;
   width: 100%;
 }
 
+/* Reveal stacks stepped copies of code, so their padding must match. */
 .reveal pre code {
   font-size: 0.86em;
   line-height: 1.18;
   max-height: 670px;
-  padding: 0;
+  padding: 0.45em 0.55em;
+}
+
+/* Prevent earlier steps from showing through the current code layer. */
+.reveal pre code.hljs {
+  background: inherit;
+  color: inherit;
 }
 
 .reveal :not(pre) > code {
@@ -162,16 +169,19 @@
   margin-top: var(--r-block-margin);
 }
 
-.reveal table {
+.reveal .table-wrapper > table {
   border: 1px solid var(--r-main-color);
   font-size: 0.76em;
   width: 100%;
 }
 
-.reveal th,
-.reveal td {
+.reveal .table-wrapper > table > :is(thead, tbody, tfoot) > tr > :is(th, td) {
   padding: 0.3em 0.45em;
   vertical-align: top;
+}
+
+.reveal .hljs-ln tr {
+  border: 0;
 }
 
 .reveal .slide-number {
