@@ -25,6 +25,7 @@ check:
 	@! grep -Fq 'Document #:' $(no_document_output)
 	@grep -Eq '<p class="date">[0-9]{4}-[0-9]{2}-[0-9]{2}</p>' $(output)
 	@grep -Fq '<div class="reveal">' $(output)
+	@grep -Fq 'data:image/vnd.microsoft.icon;base64,' $(output)
 	@grep -Fq 'Reveal.initialize' $(output)
 	@grep -Fq "slideNumber: 'c/t'" $(output)
 	@grep -Fq -- '--r-background-color: #fff;' $(output)

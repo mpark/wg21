@@ -15,6 +15,7 @@ endif
 targets += $(slide_targets)
 slide_deps := $(addprefix $(DATADIR)/, \
 	defaults/slides.yaml \
+	favicon.ico \
 	templates/slides.css)
 
 override WATCHDEPS += $(slide_sources) $(slide_deps)

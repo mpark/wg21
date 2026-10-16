@@ -5,6 +5,8 @@ to: revealjs
 self-contained: true
 slide-level: 2
 
+variables:
+  header-includes: '<link rel="icon" href="favicon.ico">'
 css:
   - templates/wg21.css
   - templates/slides.css
