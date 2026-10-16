@@ -45,6 +45,7 @@ override SRCDEPS := $(COMMONDEPS) $(addprefix $(DATADIR)/, \
 	syntax/highlighting-macros.yaml \
 	templates/14882.css \
 	templates/dark.css \
+	templates/paper.css \
 	templates/theme.js \
 	templates/toc.css \
 	templates/toc.js \

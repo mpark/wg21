@@ -7,13 +7,14 @@ slide-level: 2
 
 css:
   - templates/wg21.css
+  - templates/slides.css
 
 resource-path:
   - .
   - ${USERDATA}
 
 metadata:
-  theme: white
+  theme: serif
   transition: none
   slideNumber: "'c/t'"
   center: false

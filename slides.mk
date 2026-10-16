@@ -2,7 +2,6 @@
 
 slide_sources := $(wildcard *.slides.md)
 paper_slide_source := $(wildcard $(addsuffix .slides.md,$(paper_src)))
-ifneq ($(slide_sources),)
 
 override REVEALJS_VER := 5.2.1
 override REVEALJS_SHA256 := 359b575dd51bbda32f89b2fd4c7dc46ad7389a805572158916c29252f7a27333
@@ -15,10 +14,8 @@ slide_targets += $(paper_id).slides.html
 endif
 targets += $(slide_targets)
 slide_deps := $(addprefix $(DATADIR)/, \
-	csl.json \
 	defaults/slides.yaml \
-	srefs.defs \
-	srefs.json)
+	templates/slides.css)
 
 override WATCHDEPS += $(slide_sources) $(slide_deps)
 
@@ -30,7 +27,7 @@ endef
 .PHONY: slides
 slides: $(addprefix $(OUTDIR)/,$(slide_targets))
 
-$(OUTDIR)/%.slides.html: %.slides.md $(COMMONDEPS) $(slide_deps) $(PANDOC_DIR) $(REVEALJS_DIR) | $(OUTDIR)
+$(OUTDIR)/%.slides.html: %.slides.md $(COMMONDEPS) $(slide_deps) $(GENDEPS) $(REVEALJS_DIR) | $(OUTDIR)
 	$(PANDOC_SLIDES)
 
 ifneq ($(paper_slide_source),)
@@ -40,6 +37,6 @@ endif
 
 $(REVEALJS_DIR): $(DEPSDIR)/install-revealjs.sh
 	REVEALJS_VER=$(REVEALJS_VER) \
-		REVEALJS_SHA256=$(REVEALJS_SHA256) \
-		REVEALJS_DIR=$(REVEALJS_DIR) $<
-endif
+	REVEALJS_SHA256=$(REVEALJS_SHA256) \
+	REVEALJS_DIR=$(REVEALJS_DIR) \
+		$<

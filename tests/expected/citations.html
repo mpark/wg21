@@ -450,6 +450,30 @@ color-scheme: light;
 --not-proposed-color: #7151a8;
 --not-proposed-bg-color: rgba(113, 81, 168, 0.06);
 }
+.document-info {
+display: inline-flex;
+align-items: center;
+gap: 0.3rem;
+}
+.document-link {
+display: inline-block;
+padding: 0 0.4em;
+border: 1px solid var(--toc-border, #d9e1e7);
+border-radius: 0.4rem;
+color: var(--toc-muted, #66727d);
+font: 600 0.8em/1 sans-serif;
+text-decoration: none;
+vertical-align: middle;
+}
+.document-link:hover {
+border-color: var(--toc-hover-border, #bdc9d2);
+background: var(--toc-hover-bg, #f2f6f8);
+color: var(--toc-hover-text, #244d6b);
+}
+.document-link:focus-visible {
+outline: 2px solid var(--toc-accent, #2878b5);
+outline-offset: 1px;
+}
 table thead tr {
 border-bottom: 3px solid black;
 border-bottom-style: double;
@@ -459,14 +483,6 @@ border-bottom: 1px solid black;
 }
 .cmptable {
 width: 100%;
-}
-
-#title-block-header > table {
-border: none;
-float: right;
-}
-#title-block-header > table tbody tr {
-border-bottom: none;
 }
 
 ins, del {
@@ -494,6 +510,31 @@ color: var(--rm-color);
 .ednote,
 .draftnote {
 color: var(--note-color);
+}
+
+div.sourceCode {
+padding: 0.5em;
+}
+div.sourceCode:has(> pre.not_proposed) {
+padding: 0.65em 0.8em 0.65em 1.1em;
+border-left: 0.25em solid var(--not-proposed-color);
+background-color: var(--not-proposed-bg-color);
+}
+div.sourceCode:has(> pre.not_proposed)::before {
+content: "\2298\2002 Not proposed";
+display: block;
+margin-bottom: 0.8em;
+color: var(--not-proposed-color);
+font: 600 0.95rem/1.2 sans-serif;
+}
+</style>
+  <style type="text/css">
+#title-block-header > table {
+border: none;
+float: right;
+}
+#title-block-header > table tbody tr {
+border-bottom: none;
 }
 details.collapsed > summary {
 list-style: none;
@@ -525,22 +566,6 @@ transform: translateX(var(--collapse-marker-offset)) rotate(90deg);
 }
 details.collapsed > summary > :is(h1, h2, h3, h4, h5, h6) {
 margin-bottom: 0;
-}
-
-div.sourceCode {
-padding: 0.5em;
-}
-div.sourceCode:has(> pre.not_proposed) {
-padding: 0.65em 0.8em 0.65em 1.1em;
-border-left: 0.25em solid var(--not-proposed-color);
-background-color: var(--not-proposed-bg-color);
-}
-div.sourceCode:has(> pre.not_proposed)::before {
-content: "\2298\2002 Not proposed";
-display: block;
-margin-bottom: 0.8em;
-color: var(--not-proposed-color);
-font: 600 0.95rem/1.2 sans-serif;
 }
 body[data-syntax-highlighting="off"] code.sourceCode:not(.diff) span:not(.add, .rm, .co, .cv, .do, .in) {
 color: inherit !important;
@@ -663,29 +688,6 @@ font-weight: 600;
 .theme-icon {
 font-size: 0.9rem;
 line-height: 1;
-}
-.document-info {
-display: inline-flex;
-align-items: center;
-gap: 0.3rem;
-}
-.document-link {
-display: inline-block;
-padding: 0.3rem 0.45rem;
-border: 1px solid var(--toc-border);
-border-radius: 0.4rem;
-color: var(--toc-muted);
-font: 600 0.8rem/1 sans-serif;
-text-decoration: none;
-}
-.document-link:hover {
-border-color: var(--toc-hover-border);
-background: var(--toc-hover-bg);
-color: var(--toc-hover-text);
-}
-.document-link:focus-visible {
-outline: 2px solid var(--toc-accent);
-outline-offset: 1px;
 }
 .table-of-contents .toc-progress {
 display: none;

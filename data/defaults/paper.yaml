@@ -8,6 +8,7 @@ self-contained: true
 css:
   - templates/14882.css
   - templates/wg21.css
+  - templates/paper.css
   - templates/toc.css
 
 pdf-engine: xelatex

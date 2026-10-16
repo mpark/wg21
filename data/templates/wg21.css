@@ -8,6 +8,34 @@
   --not-proposed-bg-color: rgba(113, 81, 168, 0.06);
 }
 
+.document-info {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.document-link {
+  display: inline-block;
+  padding: 0 0.4em;
+  border: 1px solid var(--toc-border, #d9e1e7);
+  border-radius: 0.4rem;
+  color: var(--toc-muted, #66727d);
+  font: 600 0.8em/1 sans-serif;
+  text-decoration: none;
+  vertical-align: middle;
+}
+
+.document-link:hover {
+  border-color: var(--toc-hover-border, #bdc9d2);
+  background: var(--toc-hover-bg, #f2f6f8);
+  color: var(--toc-hover-text, #244d6b);
+}
+
+.document-link:focus-visible {
+  outline: 2px solid var(--toc-accent, #2878b5);
+  outline-offset: 1px;
+}
+
 table thead tr {
   border-bottom: 3px solid black;
   border-bottom-style: double;
@@ -19,17 +47,6 @@ table tbody tr {
 
 .cmptable {
   width: 100%;
-}
-
-/* Handle document information table in title header */
-
-#title-block-header > table {
-  border: none;
-  float: right;
-}
-
-#title-block-header > table tbody tr {
-  border-bottom: none;
 }
 
 /* Make the thickness of strikeout and underline consistent in different contexts */
@@ -67,43 +84,6 @@ code.diff span.st {
   color: var(--note-color);
 }
 
-details.collapsed > summary {
-  list-style: none;
-  cursor: pointer;
-}
-
-details.collapsed > summary::-webkit-details-marker {
-  display: none;
-}
-
-details.collapsed > summary .collapse-marker {
-  --collapse-marker-offset: 0.15em;
-  display: inline-block;
-  width: 0;
-  margin-right: 0.5em;
-  height: 0;
-  border-top: 0.3em solid transparent;
-  border-bottom: 0.3em solid transparent;
-  border-left: 0.45em solid currentColor;
-  transform: translateX(var(--collapse-marker-offset));
-  transform-origin: 0.15em center;
-  vertical-align: 0.1em;
-}
-
-details.collapsed > summary .collapse-marker:first-child {
-  --collapse-marker-offset: 0.075em;
-  width: calc(35pt - 0.45em);
-  margin-right: 0.25em;
-}
-
-details.collapsed[open] > summary .collapse-marker {
-  transform: translateX(var(--collapse-marker-offset)) rotate(90deg);
-}
-
-details.collapsed > summary > :is(h1, h2, h3, h4, h5, h6) {
-  margin-bottom: 0;
-}
-
 /* Leave room for underline/strikeout decorations in code blocks. */
 div.sourceCode {
   padding: 0.5em;
@@ -121,15 +101,4 @@ div.sourceCode:has(> pre.not_proposed)::before {
   margin-bottom: 0.8em;
   color: var(--not-proposed-color);
   font: 600 0.95rem/1.2 sans-serif;
-}
-
-body[data-syntax-highlighting="off"] code.sourceCode:not(.diff) span:not(.add, .rm, .co, .cv, .do, .in) {
-  color: inherit !important;
-  font-style: inherit !important;
-  font-weight: inherit !important;
-  text-decoration: inherit !important;
-}
-
-body[data-deleted-text="hide"] .rm del {
-  display: none !important;
 }

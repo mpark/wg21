@@ -1,0 +1,155 @@
+:root {
+  --r-background-color: #fff;
+  --r-main-font: serif;
+  --r-main-font-size: 36px;
+  --r-main-color: #111;
+  --r-block-margin: 0.45em;
+  --r-heading-margin: 0 0 0.5em;
+  --r-heading-font: var(--r-main-font);
+  --r-heading-color: var(--r-main-color);
+  --r-heading-line-height: 1.05;
+  --r-heading-font-weight: 600;
+  --r-heading1-size: 2em;
+  --r-heading2-size: 1.65em;
+  --r-heading3-size: 1.15em;
+  --r-code-font: "SFMono-Regular", Menlo, Consolas, monospace;
+  --r-link-color: #4183c4;
+  --r-link-color-dark: #376fa7;
+  --r-link-color-hover: #75a8d7;
+}
+
+.reveal .slides {
+  text-align: left;
+}
+
+.reveal #title-slide,
+.reveal section.slide {
+  box-sizing: border-box;
+  padding: 1em 1.25em;
+}
+
+.reveal #title-slide,
+.reveal section.title-slide {
+  height: 100%;
+  padding: 2em;
+}
+
+.reveal #title-slide.present,
+.reveal.overview #title-slide {
+  display: flex !important;
+  flex-direction: column;
+}
+
+.reveal #title-slide > * {
+  margin: 0;
+}
+
+.reveal #title-slide .title,
+.reveal #title-slide .subtitle {
+  text-align: center;
+}
+
+.reveal #title-slide .title {
+  margin-top: auto;
+  margin-bottom: 0.35em;
+}
+
+.reveal #title-slide .author {
+  margin-top: auto;
+  margin-bottom: 0.15em;
+}
+
+.reveal section.title-slide.present,
+.reveal.overview section.title-slide {
+  display: grid !important;
+  place-items: center;
+}
+
+.reveal section.title-slide h1 {
+  margin: 0;
+  text-align: center;
+}
+
+.reveal ul,
+.reveal ol {
+  margin-top: 0.25em;
+}
+
+.reveal ul {
+  list-style: none;
+  padding-left: 1.5em;
+}
+
+.reveal ul > li {
+  list-style: none;
+}
+
+.reveal ul > li::before {
+  content: "\2014";
+  position: absolute;
+  margin-left: -1.5em;
+}
+
+.reveal li {
+  margin: 0.22em 0;
+}
+
+.reveal pre {
+  background: #f6f8fa;
+  box-shadow: none;
+  box-sizing: border-box;
+  margin: 0.35em 0;
+  padding: 0.45em 0.55em;
+  width: 100%;
+}
+
+.reveal pre code {
+  font-size: 0.86em;
+  line-height: 1.18;
+  max-height: 670px;
+  padding: 0;
+}
+
+.reveal :not(pre) > code {
+  font-size: 0.9em;
+}
+
+.reveal code:not(.sourceCode) {
+  color: #00607c;
+}
+
+.reveal .columns {
+  align-items: flex-start;
+  gap: 1.3em;
+}
+
+.reveal .columns pre code {
+  font-size: 0.72em;
+}
+
+.reveal blockquote {
+  border-left: 0.14em solid var(--r-link-color);
+  box-shadow: none;
+  font-style: normal;
+  margin: 0.75em 0;
+  padding: 0.05em 0 0.05em 0.7em;
+  width: auto;
+}
+
+.reveal table {
+  border: 1px solid var(--r-main-color);
+  font-size: 0.76em;
+  width: 100%;
+}
+
+.reveal th,
+.reveal td {
+  padding: 0.3em 0.45em;
+  vertical-align: top;
+}
+
+.reveal .slide-number {
+  background: transparent;
+  color: var(--r-main-color);
+  font: 15px Arial, Helvetica, sans-serif;
+}
