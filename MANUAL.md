@@ -293,47 +293,6 @@ PDF papers are watched, rebuilt, and available at their normal URL, but they
 do not receive browser live-reload behavior. Use a viewer such as Skim that
 can reload the generated file directly.
 
-# Slides
-
-With either project layout, a Markdown source whose name ends in `.slides.md` is
-automatically recognized as a [Reveal.js] presentation.
-
-For example, `p2688r6.slides.md` produces `p2688r6.slides.html`. The output
-is written to the same location as other HTML output: under `generated/`
-with the flat layout, or alongside the source with the per-paper layout.
-
-With an explicit mapping such as `PAPER_RULE := p2996r13:reflection`, a
-companion `reflection.slides.md` produces `p2996r13.slides.html`.
-
-A level-one heading starts a section, and a level-two heading starts a slide
-within that section. The title slide uses `title` and `subtitle` along with a
-paper-style box for `date`, `audience`, and `author`. The optional `document`
-metadata adds the document number and links.
-
-See [`MANUAL.slides.md`](https://github.com/mpark/wg21/blob/master/MANUAL.slides.md)
-for a complete example and a guide to building presentations with the
-framework.
-
-Build one presentation, all presentations, or start the live server with:
-
-```bash
-make p2688r6.slides.html
-make serve p2688r6.slides.html
-
-make slides
-make serve slides
-```
-
-WG21 authoring features such as [modifying text], [comparison tables],
-[stable names], [citations], [embedded Markdown], and [new keywords] also work
-in slides.
-
-[Reveal.js] is downloaded only when a presentation is built. The framework pins
-and verifies its version, and embeds its resources into the generated HTML, so
-neither Node.js nor `npm` is required and the presentation is a standalone file.
-
-[Reveal.js]: https://revealjs.com/
-
 # Formatting
 
 This framework provides support for various common elements for C++ proposals.
@@ -1653,6 +1612,47 @@ references:
 ```
 
 This produces a bibliography entry `[Patterns]` in [References](#bibliography).
+
+# Slides
+
+With either project layout, a Markdown source whose name ends in `.slides.md` is
+automatically recognized as a [Reveal.js] presentation.
+
+For example, `p2688r6.slides.md` produces `p2688r6.slides.html`. The output
+is written to the same location as other HTML output: under `generated/`
+with the flat layout, or alongside the source with the per-paper layout.
+
+With an explicit mapping such as `PAPER_RULE := p2996r13:reflection`, a
+companion `reflection.slides.md` produces `p2996r13.slides.html`.
+
+A level-one heading starts a section, and a level-two heading starts a slide
+within that section. The title slide uses `title` and `subtitle` along with a
+paper-style box for `date`, `audience`, and `author`. The optional `document`
+metadata adds the document number and links.
+
+See [`MANUAL.slides.md`](https://github.com/mpark/wg21/blob/master/MANUAL.slides.md)
+for a complete example and a guide to building presentations with the
+framework.
+
+Build one presentation, all presentations, or start the live server with:
+
+```bash
+make p2688r6.slides.html
+make serve p2688r6.slides.html
+
+make slides
+make serve slides
+```
+
+WG21 authoring features such as [modifying text], [comparison tables],
+[stable names], [citations], [embedded Markdown], and [new keywords] also work
+in slides.
+
+[Reveal.js] is downloaded only when a presentation is built. The framework pins
+and verifies its version, and embeds its resources into the generated HTML, so
+neither Node.js nor `npm` is required and the presentation is a standalone file.
+
+[Reveal.js]: https://revealjs.com/
 
 # Configurations
 
