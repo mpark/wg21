@@ -1,22 +1,14 @@
+defaults:
+  - ${.}/common.yaml
+
 number-sections: true
 table-of-contents: true
 self-contained: true
-
-from: markdown+mark  # +mark for == syntax for highlighted text
-
-bibliography: csl.json
 
 css:
   - templates/14882.css
   - templates/wg21.css
   - templates/toc.css
-
-csl: wg21
-
-filters:
-  - citetitle.py
-  - citeproc
-  - wg21.py
 
 pdf-engine: xelatex
 
@@ -24,7 +16,6 @@ template: wg21
 
 metadata-files:
   - ${USERDATA}/metadata.yaml
-  - ${USERDATA}/syntax/highlighting-css.yaml
   - ${USERDATA}/syntax/highlighting-macros.yaml
 
 # Used for various resources

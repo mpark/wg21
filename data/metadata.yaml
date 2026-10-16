@@ -13,8 +13,6 @@ geometry:
   - bottom=2.5cm
 
 block-headings: true
-link-citations: true
-reference-section-title: References
 strikeout: true
 
 citecolor: blue
@@ -27,11 +25,6 @@ lang: en
 uccolor: '898887'
 addcolor: '006e28'
 rmcolor: 'bf0303'
-
-embedded-md-code-classes:
-  - cpp
-  - default
-  - diff
 
 number-srefs: true
 

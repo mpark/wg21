@@ -3,3 +3,10 @@ html-math-method:
 
 syntax-definition: ${USERDATA}/syntax/wg21.xml
 syntax-highlighting: ${USERDATA}/syntax/wg21.theme
+
+metadata:
+  from: markdown+mark
+  embedded-md-code-classes:
+    - cpp
+    - default
+    - diff

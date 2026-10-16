@@ -177,14 +177,6 @@ def prepare(doc):
     doc.metadata['pagetitle'] = title   # HTML
     doc.metadata['title-meta'] = title  # PDF
 
-    datadir = doc.get_metadata('data-dir')
-
-    with Path(datadir, 'defaults', 'doc.yaml').open() as f:
-        doc.metadata['from'] = yaml.safe_load(f)['from']
-
-    with Path(datadir, 'srefs.json').open() as f:
-        srefs.update(json.load(f))
-
     process_subs(doc, doc.get_metadata('from'))
 
 def soul(elem, doc):
@@ -211,6 +203,10 @@ def soul(elem, doc):
 def sref(elem, doc):
     if not (isinstance(elem, (pf.Link, pf.Span)) and 'sref' in elem.classes):
         return None
+
+    if not srefs:
+        with Path(doc.get_metadata('data-dir'), 'srefs.json').open() as f:
+            srefs.update(json.load(f))
 
     target = pf.stringify(elem)
     # Support paragraph numbers (deprecated): e.g. [basic.scope.scope#2.1]{.sref}

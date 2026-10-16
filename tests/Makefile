@@ -7,19 +7,19 @@ check: actual
 	# Running warning tests...
 	@output="$$(pandoc $(DATADIR)/srefs.defs warnings/missing_citation.md \
 		-o /dev/null -t html --data-dir=$(DATADIR) -M data-dir=$(DATADIR) \
-		-d doc -d formatting 2>&1)"; \
+		-d paper -d formatting 2>&1)"; \
 	printf '%s\n' "$$output"; \
 	printf '%s\n' "$$output" | grep -Fq 'Tip: run `make update` to refresh it'
 	@output="$$(pandoc $(DATADIR)/srefs.defs warnings/missing_revision.md \
 		-o /dev/null -t html --data-dir=$(DATADIR) -M data-dir=$(DATADIR) \
-		-d doc -d formatting 2>&1)"; \
+		-d paper -d formatting 2>&1)"; \
 	printf '%s\n' "$$output"; \
 	printf '%s\n' "$$output" | grep -Fq 'citation P2806 requires a revision. (e.g. `[@P2806R0]`)'; \
 	! printf '%s\n' "$$output" | grep -Fq 'make update'
 	# Running table-of-contents option tests...
 	@pandoc $(DATADIR)/srefs.defs options/toc_disabled.md \
 		-o actual/toc_disabled.html --data-dir=$(DATADIR) -M data-dir=$(DATADIR) \
-		-d doc -d formatting; \
+		-d paper -d formatting; \
 	grep -Fq '<form class="view-controls">' actual/toc_disabled.html; \
 	grep -Fq 'data-theme-value="system"' actual/toc_disabled.html; \
 	grep -Fq 'data-theme-value="light"' actual/toc_disabled.html; \
@@ -29,7 +29,7 @@ check: actual
 	! grep -Fq "document.querySelector('[role=\"doc-toc\"]')" actual/toc_disabled.html
 	@pandoc $(DATADIR)/srefs.defs options/id_prefix.md \
 		-o actual/id_prefix.html --data-dir=$(DATADIR) -M data-dir=$(DATADIR) \
-		-d doc -d formatting --id-prefix=paper-; \
+		-d paper -d formatting --id-prefix=paper-; \
 	grep -Fq '<nav id="paper-TOC"' actual/id_prefix.html; \
 	grep -Fq '<dialog id="paper-toc-dialog"' actual/id_prefix.html; \
 	grep -Fq 'aria-controls="paper-toc-dialog"' actual/id_prefix.html; \

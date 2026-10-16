@@ -21,7 +21,7 @@ override define PANDOC
 $(eval override FILES := $(filter %.md, $^))
 $(eval override SUGGESTION := $(shell $(PYTHON_BIN) $(DATADIR)/suggest-target.py '$@'))
 $(if $(FILES),,$(error No Markdown input found for target '$@'$(if $(SUGGESTION),. $(SUGGESTION))))
-$(eval override CMD := pandoc $(DATADIR)/srefs.defs $(FILES) -o $@ --data-dir=$(DATADIR) -M data-dir=$(DATADIR) -d doc -d formatting)
+$(eval override CMD := pandoc $(DATADIR)/srefs.defs $(FILES) -o $@ --data-dir=$(DATADIR) -M data-dir=$(DATADIR) -d paper -d formatting)
 $(eval $(and $(DEFAULTS), override CMD += -d $(DEFAULTS)))
 $(if $(filter %.html, $@),
   $(eval override TOCDEPTH := $(shell $(PYTHON_BIN) $(DATADIR)/toc-depth.py < $(firstword $(FILES))))
@@ -29,23 +29,26 @@ $(if $(filter %.html, $@),
 $(CMD)
 endef
 
-override SRCDEPS := $(addprefix $(DATADIR)/, \
+override COMMONDEPS := $(addprefix $(DATADIR)/, \
 	csl/wg21.csl \
-	defaults/doc.yaml \
+	defaults/common.yaml \
 	defaults/formatting.yaml \
 	filters/citetitle.py \
 	filters/wg21.py \
 	syntax/highlighting-css.yaml \
-	syntax/highlighting-macros.yaml \
 	syntax/wg21.theme \
 	syntax/wg21.xml \
+	templates/wg21.css)
+
+override SRCDEPS := $(COMMONDEPS) $(addprefix $(DATADIR)/, \
+	defaults/paper.yaml \
+	syntax/highlighting-macros.yaml \
 	templates/14882.css \
 	templates/dark.css \
 	templates/theme.js \
 	templates/toc.css \
 	templates/toc.js \
 	templates/view-controls.html \
-	templates/wg21.css \
 	templates/wg21.html \
 	templates/wg21.latex \
 	favicon.ico \

@@ -1,0 +1,16 @@
+from: markdown+mark  # +mark for == syntax for highlighted text
+
+bibliography: csl.json
+csl: wg21
+
+filters:
+  - citetitle.py
+  - citeproc
+  - wg21.py
+
+metadata-files:
+  - ${USERDATA}/syntax/highlighting-css.yaml
+
+metadata:
+  link-citations: true
+  reference-section-title: References
