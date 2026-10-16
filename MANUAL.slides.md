@@ -43,7 +43,8 @@ Added in C++23
 
 ## Flat Project Layout
 
-- For `<paper>.md`, create a `<paper>.slides.md` in the top-level directory.
+- With the [flat project layout], create a `<paper>.slides.md` alongside
+  `<paper>.md` in the top-level directory.
 - Outputs are written under `generated/`.
 
 ```{.embed_md}
@@ -61,13 +62,14 @@ wg21-papers/
 make p2688r6.slides.html        # Build one presentation.
 make slides                     # Build all presentations.
 
-make serve p2688r6.slides.html  # Live server and rebuild one presentation
-make serve slides               # Live server and rebuild all presentations
+make serve p2688r6.slides.html  # Launch live server for one presentation
+make serve slides               # Launch live server for all presentations
 ```
 
 ## Per-Paper Project Layout
 
-- For `<paper>.md`, create a `<paper>.slides.md` in the paper directory.
+- With the [per-paper project layout], create a `<paper>.slides.md` alongside
+  `<paper>.md` in the paper directory.
 - Outputs are written in that paper directory.
 
 ```{.embed_md}
@@ -83,16 +85,17 @@ wg21-papers/
 
 ```bash
 cd p2688
-make p2688r6.slides.html
-make slides
+make p2688r6.slides.html        # Build one presentation.
+make slides                     # Build all presentations.
 
-make serve p2688r6.slides.html
-make serve slides
+make serve p2688r6.slides.html  # Launch live server for one presentation
+make serve slides               # Launch live server for all presentations
 ```
 
 ## Explicit Source-to-Output Mapping
 
-- In the per-paper layout, `PAPER_RULE` maps a source stem to a paper number.
+- In the [per-paper project layout], `PAPER_RULE` maps a source stem to a paper
+  number.
 - A companion `<source>.slides.md` produces `<paper>.slides.html`.
 
 :::::: columns
@@ -121,12 +124,18 @@ With this setup, you can run:
 
 ```bash
 cd reflection
-make p2996r13.slides.html  # Builds from `reflection.slides.md`
+make p2996r13.slides.html        # Build one presentation.
+make slides                      # Build all presentations.
+
+make serve p2996r13.slides.html  # Launch live server for one presentation
+make serve slides                # Launch live server for all presentations
 ```
 
 # Pandoc / Reveal.js Basics
 
 ## Presentation Title
+
+Use the same [title metadata] as papers.
 
 ::: {.render .slide .title-slide}
 ```yaml
@@ -143,9 +152,9 @@ author:
 ```
 :::
 
-This is the exact same title block format as for papers.
-
 ## Section Title
+
+A [level-one heading][Headings] starts a section with a title slide.
 
 ::: {.render .slide .section-slide}
 ``````
@@ -153,9 +162,9 @@ This is the exact same title block format as for papers.
 ``````
 :::
 
-A level-one heading starts a section with a title slide.
-
 ## Content Slides
+
+A level-two heading starts a slide within the current section:
 
 ::: {.render .slide}
 ``````
@@ -169,13 +178,13 @@ Lower-level headings remain within the current slide.
 ``````
 :::
 
-- A level-two heading starts a slide within the current section.
 - Lower-level headings remain within the current slide.
 - A horizontal rule starts a slide without a heading.
 
 ## Incremental Content
 
-An `incremental` fenced div reveals its list items one at a time:
+An [`incremental` fenced div][Incremental Lists] reveals its list items one at
+a time:
 
 ::: {.render .slide}
 ``````
@@ -191,9 +200,26 @@ An `incremental` fenced div reveals its list items one at a time:
 ``````
 :::
 
-A paragraph containing `. . .` inserts a pause between arbitrary blocks.
+## Inserting Pauses
+
+A [`. . .`][Inserting Pauses] within a slide hides the blocks that follow it
+until the next advance:
+
+::: {.render .slide}
+``````
+## Choosing an Approach
+
+Start with the simplest design.
+
+. . .
+
+Add complexity only when evidence requires it.
+``````
+:::
 
 ## Columns
+
+The [`columns` and `column` fenced divs][Columns] create a multi-column slide.
 
 ::: {.render .slide}
 ``````
@@ -218,9 +244,81 @@ std::expected<T, E> parse(input);
 ``````
 :::
 
-Pandoc's `columns` and `column` fenced divs create a multi-column slide.
+## Code Line Numbers
+
+Use the same [code block] syntax as papers.
+
+The `.numberLines` class displays line numbers, and the `startFrom` attribute
+sets the first displayed number.
+
+::: {.render .slide}
+``````
+## Parsing Input
+
+```{.cpp .numberLines startFrom=7}
+auto parse(std::string_view input)
+    -> std::expected<value, $parse_error$> {
+  if (input.empty())
+    return std::unexpected(parse_error::empty_input);
+  return value{input};
+}
+```
+``````
+:::
+
+See [Line Numbers & Highlights] in the Reveal.js documentation.
+
+## Code Line Highlighting
+
+For slides, the `numberLines` attribute highlights and steps through lines.
+
+It can be a single line like `2`, a range like `4-5`, or a comma-delimited
+group like `2,4-5`.
+
+These are one-based positions within the block, independent of the displayed
+`startFrom` value.
+
+::: {.render .slide}
+``````
+## Parsing Input
+
+```{.cpp numberLines="2,4-5" startFrom=7}
+auto parse(std::string_view input)
+    -> std::expected<value, $parse_error$> {
+  if (input.empty())
+    return std::unexpected(parse_error::empty_input);
+  return value{input};
+}
+```
+``````
+:::
+
+See [Line Numbers & Highlights] in the Reveal.js documentation.
+
+## Stepped Code Highlighting
+
+Separate each step with `|` to animate the highlights.
+
+::: {.render .slide}
+``````
+## Parsing Input
+
+```{.cpp numberLines="1-2|3-4|5-6" startFrom=7}
+auto parse(std::string_view input)
+    -> std::expected<value, $parse_error$> {
+  if (input.empty())
+    return std::unexpected(parse_error::empty_input);
+  return value{input};
+}
+```
+``````
+:::
+
+See [Step-by-step Highlights] in the Reveal.js documentation.
 
 ## Speaker Notes
+
+Place a [`notes` fenced div][Speaker Notes] on a slide:
 
 ```markdown
 ::: notes
@@ -228,8 +326,7 @@ Remind the audience why this example matters.
 :::
 ```
 
-- Place a `notes` fenced div on a slide
-- Pressing `S` during the presentation opens the Speaker View.
+Press `S` during the presentation to open the Speaker View.
 
 ::: notes
 This slide has real speaker notes as well as showing their Markdown source.
@@ -238,6 +335,8 @@ This slide has real speaker notes as well as showing their Markdown source.
 # `MPark/WG21` Formatting Examples
 
 ## Wording Changes
+
+The paper framework's [modifying text] syntax works unchanged in slides.
 
 ::: {.render .slide}
 ``````
@@ -250,6 +349,8 @@ This slide has real speaker notes as well as showing their Markdown source.
 :::
 
 ## Embedded Markdown in Code
+
+See [Embedded Markdown] in the user's guide for the complete syntax.
 
 ::: {.render .slide}
 ``````
@@ -266,7 +367,8 @@ void f(@[int i]{.add}@, $T$ value);
 
 ## Comparison Tables
 
-The `cmptable` fenced div places alternatives side by side.
+The [`cmptable` fenced div][Comparison Tables] places alternatives side by
+side.
 
 ::: {.render .slide}
 ``````
@@ -297,6 +399,9 @@ auto result = values
 
 ## Stable Names and Citations
 
+[Stable names] link to the working draft. [Citations] are linked and collected
+into a *References* slide.
+
 ::: {.render .slide}
 ``````
 ## Committee References
@@ -306,7 +411,21 @@ auto result = values
 ``````
 :::
 
-Paper citations are linked and collected into a *References* slide.
-
 [Pandoc Slideshows]: https://pandoc.org/MANUAL.html#slide-shows
 [Reveal.js]: https://revealjs.com/
+[Incremental Lists]: https://pandoc.org/MANUAL.html#incremental-lists
+[Inserting Pauses]: https://pandoc.org/MANUAL.html#inserting-pauses
+[Columns]: https://pandoc.org/MANUAL.html#columns
+[Speaker Notes]: https://pandoc.org/MANUAL.html#speaker-notes
+[flat project layout]: https://mpark.github.io/wg21/MANUAL.html#flat-project-layout
+[per-paper project layout]: https://mpark.github.io/wg21/MANUAL.html#per-paper-project-layout
+[title metadata]: https://mpark.github.io/wg21/MANUAL.html#title
+[Headings]: https://mpark.github.io/wg21/MANUAL.html#headings
+[code block]: https://mpark.github.io/wg21/MANUAL.html#code-block
+[modifying text]: https://mpark.github.io/wg21/MANUAL.html#modifying-text
+[Embedded Markdown]: https://mpark.github.io/wg21/MANUAL.html#embedded-markdown
+[Comparison Tables]: https://mpark.github.io/wg21/MANUAL.html#comparison-tables
+[Stable names]: https://mpark.github.io/wg21/MANUAL.html#stable-names
+[Citations]: https://mpark.github.io/wg21/MANUAL.html#citations
+[Line Numbers & Highlights]: https://revealjs.com/code/#line-numbers-highlights
+[Step-by-step Highlights]: https://revealjs.com/code/#step-by-step-highlights
