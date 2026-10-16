@@ -40,7 +40,7 @@ jobs:
         uses: actions/configure-pages@v5
       - name: Stage Pages site
         run: |
-          make MANUAL.html MANUAL.pdf
+          make MANUAL.html MANUAL.pdf MANUAL.slides.html
           cp generated/MANUAL.html generated/index.html
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
