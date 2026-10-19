@@ -39,6 +39,7 @@ Run this as a Markdown-to-Markdown prepass. The rendered side is emitted as raw
 Markdown so the normal MPark/WG21 pipeline can process framework constructs.
 """
 
+import copy
 import datetime
 
 import panflute as pf
@@ -69,11 +70,53 @@ def render(elem, doc):
         return None
 
     def cell(text):
-        return pf.TableCell(pf.Plain(pf.Str(text)), alignment='AlignCenter')
+        return pf.TableCell(
+            pf.Plain(pf.Span(
+                pf.Str(text), attributes={'data-id': text})),
+            alignment='AlignCenter')
 
-    colspec = [('AlignDefault', 'ColWidthDefault')]
+    def render_table(rows):
+        return pf.Table(
+            pf.TableBody(*rows),
+            head=pf.TableHead(pf.TableRow(
+                cell('Markdown Source'), cell('Rendered Output'))),
+            colspec=[('AlignDefault', 'ColWidthDefault')]*2)
+
     slide_preview = 'slide' in elem.classes
     title_preview = 'title-slide' in elem.classes
+
+    if isinstance(elem, pf.Div) and 'animation' in elem.classes:
+        guide_header, *description, example = elem.content
+        assert isinstance(guide_header, pf.Header)
+        assert isinstance(example, pf.CodeBlock)
+
+        slides = []
+        for block in pf.convert_text(example.text):
+            if isinstance(block, pf.Header) and block.level == 2:
+                slides.append([block])
+            else:
+                assert slides
+                slides[-1].append(block)
+        assert len(slides) > 1
+
+        result = []
+        for i, slide in enumerate(slides):
+            header = copy.deepcopy(guide_header)
+            header.attributes.update(slide[0].attributes)
+            if i:
+                header.identifier += f'-{i}'
+            source = pf.CodeBlock(
+                example.text, classes=['raw', 'default'])
+            slide[0].identifier += '-preview'
+            slide[0].attributes.clear()
+            preview = pf.Div(*slide, classes=['slide-preview'])
+            row = pf.TableRow(
+                pf.TableCell(source), pf.TableCell(preview))
+            result.extend([
+                header,
+                *copy.deepcopy(description),
+                pf.Div(render_table([row]), classes=['render', 'slide'])])
+        return result
 
     def rendered(elem):
         block = (title_slide_preview(elem.text)
@@ -107,12 +150,7 @@ def render(elem, doc):
     if not rows:
         return None
 
-    table = pf.Table(
-        pf.TableBody(*rows),
-        head=pf.TableHead(
-            pf.TableRow(cell('Markdown Source'), cell('Rendered Output'))),
-        colspec=colspec*2)
-    return pf.Div(table, classes=list(elem.classes))
+    return pf.Div(render_table(rows), classes=list(elem.classes))
 
 if __name__ == '__main__':
     pf.run_filter(render)

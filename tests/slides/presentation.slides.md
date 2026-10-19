@@ -53,6 +53,19 @@ Second line of text.
 Speaker notes for the shared-formatting slide.
 :::
 
+## Animated Code {data-auto-animate= data-auto-animate-duration=0.5}
+
+```{.cpp .numberLines data-id="code-animation"}
+int one = 1;
+```
+
+## Animated Code {data-auto-animate= data-auto-animate-duration=0.5}
+
+```{.cpp .numberLines data-id="code-animation"}
+int one = 1;
+int two = 2;
+```
+
 # Proposal
 
 ## Comparison Table

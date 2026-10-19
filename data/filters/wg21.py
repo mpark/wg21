@@ -1044,7 +1044,7 @@ class CodeElems:
         return converted
 
     @staticmethod
-    def _preserve_reveal_code(text, elem):
+    def _preserve_reveal_code(text, elem, data_id):
         # `hljs` enables Reveal's stepped-code layout, while `nohighlight` and
         # `data-noescape` keep it from replacing Pandoc's embedded markup.
         attributes = {'data-noescape': ''}
@@ -1056,6 +1056,9 @@ class CodeElems:
             for name, value in attributes.items())
         classes = 'nohighlight' + (
             ' hljs' if 'data-line-numbers' in elem.attributes else '')
+        if data_id is not None:
+            text = text.replace(
+                '<pre', f'<pre data-id={quoteattr(data_id)}', 1)
         if '<code class="' in text:
             return text.replace(
                 '<code class="',
@@ -1177,9 +1180,13 @@ class CodeElems:
         cls.placeholder_prefix = cls._compute_unique_placeholder(
             elem.text for elem in elems)
 
+        reveal_data_ids = []
         for elem in elems:
             if doc.format == 'revealjs' and isinstance(elem, pf.CodeBlock):
                 cls._normalize_reveal_line_numbers(elem)
+                reveal_data_ids.append(elem.attributes.pop('data-id', None))
+            else:
+                reveal_data_ids.append(None)
             md = elem.attributes.pop('md', None)
             em = elem.attributes.pop('em', None)
             elem.text = cls._replace_fragments_with_placeholders(elem.text, md, em)
@@ -1206,9 +1213,10 @@ class CodeElems:
         results = text.split(sep)
         assert(len(results) == len(elems))
 
-        for elem, container, result in zip(elems, containers, results):
+        for elem, container, result, data_id in zip(
+                elems, containers, results, reveal_data_ids):
             if doc.format == 'revealjs' and isinstance(elem, pf.CodeBlock):
-                result = cls._preserve_reveal_code(result, elem)
+                result = cls._preserve_reveal_code(result, elem, data_id)
             container.text = result
 
 def finalize(doc):

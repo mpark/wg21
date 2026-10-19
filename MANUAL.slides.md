@@ -248,8 +248,8 @@ std::expected<T, E> parse(input);
 
 Use the same [code block] syntax as papers.
 
-The `.numberLines` class displays line numbers, and the `startFrom` attribute
-sets the first displayed number.
+The `.numberLines`{.default} class displays line numbers. The
+`startFrom`{.default} attribute sets the first displayed number.
 
 ::: {.render .slide}
 ``````
@@ -270,13 +270,14 @@ See [Line Numbers & Highlights] in the Reveal.js documentation.
 
 ## Code Line Highlighting
 
-For slides, the `numberLines` attribute highlights and steps through lines.
+For slides, the `numberLines`{.default} attribute highlights and steps through
+lines.
 
-It can be a single line like `2`, a range like `4-5`, or a comma-delimited
-group like `2,4-5`.
+It can be a single line like `2`{.default}, a range like `4-5`{.default}, or a
+comma-delimited group like `2,4-5`{.default}.
 
 These are one-based positions within the block, independent of the displayed
-`startFrom` value.
+`startFrom`{.default} value.
 
 ::: {.render .slide}
 ``````
@@ -297,7 +298,7 @@ See [Line Numbers & Highlights] in the Reveal.js documentation.
 
 ## Stepped Code Highlighting
 
-Separate each step with `|` to animate the highlights.
+Separate each step with `|`{.default} to animate the highlights.
 
 ::: {.render .slide}
 ``````
@@ -315,6 +316,46 @@ auto parse(std::string_view input)
 :::
 
 See [Step-by-step Highlights] in the Reveal.js documentation.
+
+::: {.render .slide .animation}
+## Reveal.js Auto-Animation
+
+- Place `data-auto-animate=`{.default} on adjacent headings and
+  `data-id`{.default} on corresponding code blocks.
+- See [Auto-Animate Settings] for the other
+  `data-auto-animate-*`{.default} options.
+
+``````
+## Rectangle {data-auto-animate=}
+
+```{.cpp .numberLines data-id="code-animation"}
+struct rectangle {
+  double width, height;
+};
+```
+
+## Rectangle {data-auto-animate=}
+
+```{.cpp .numberLines data-id="code-animation"}
+struct rectangle {
+  double width, height;
+
+  constexpr auto area() const { return width * height; }
+};
+```
+
+## Rectangle {data-auto-animate=}
+
+```{.cpp .numberLines data-id="code-animation"}
+struct rectangle {
+  double width, height;
+
+  constexpr auto area() const { return width * height; }
+  constexpr auto perimeter() const { return 2 * (width + height); }
+};
+```
+``````
+:::
 
 ## Speaker Notes
 
@@ -429,3 +470,4 @@ into a *References* slide.
 [Citations]: https://mpark.github.io/wg21/MANUAL.html#citations
 [Line Numbers & Highlights]: https://revealjs.com/code/#line-numbers-highlights
 [Step-by-step Highlights]: https://revealjs.com/code/#step-by-step-highlights
+[Auto-Animate Settings]: https://revealjs.com/auto-animate/#animation-settings
