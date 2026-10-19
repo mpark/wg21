@@ -6,6 +6,7 @@ author:
     email: <slides@example.com>
 document: D1234R5
 date: today
+project: Programming Language C
 audience: WG21
 highlighting:
   keywords:

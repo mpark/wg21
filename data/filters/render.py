@@ -40,7 +40,6 @@ Markdown so the normal MPark/WG21 pipeline can process framework constructs.
 """
 
 import copy
-import datetime
 
 import panflute as pf
 
@@ -49,8 +48,6 @@ from wg21 import slide_title_box
 
 def title_slide_preview(text):
     doc = pf.convert_text(text, standalone=True)
-    if doc.get_metadata('date') == 'today':
-        doc.metadata['date'] = datetime.date.today().isoformat()
     slide_title_box(doc)
 
     def inlines(name):

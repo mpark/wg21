@@ -71,7 +71,9 @@ Document \#:&$document$$if(number)$
   [\href{https://wg21.link/P$number$/status}{Status}]$if(source)$
   [\href{$source$}{Source}]$endif$$endif$\\
 Date:       &\@date\\
-Project:    &Programming Language C++\\
+$if(project)$
+Project:    &$project$\\
+$endif$
 Audience:   $for(audience)$&$audience$\\$endfor$
 $if(revises)$
 Revises:    &$revises$\\

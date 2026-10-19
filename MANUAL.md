@@ -318,6 +318,19 @@ author:
 
 [`date: today` generates today's date in `YYYY-MM-DD` (ISO 8601) format.]{.note}
 
+By default, `Programming Language C++`{.default} is used as the `project`.
+A specific project can be specified like so:
+
+```yaml
+project: "Programming Language C"
+```
+
+Set it to `false` to omit the project entirely:
+
+```yaml
+project: false
+```
+
 The optional `source` metadata adds a link to the paper's source file on
 GitHub.
 

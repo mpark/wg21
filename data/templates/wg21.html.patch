@@ -23,7 +23,7 @@ index 7dfa95e..0b55daa 100644
  $for(header-includes)$
    $header-includes$
  $endfor$
-@@ -30,41 +34,97 @@ $if(math)$
+@@ -30,41 +34,99 @@ $if(math)$
    $math$
  $endif$
  </head>
@@ -76,10 +76,12 @@ index 7dfa95e..0b55daa 100644
 +    <td>Date:</td>
 +    <td>$date$</td>
 +  </tr>
++$if(project)$
 +  <tr>
 +    <td style="vertical-align:top">Project:</td>
-+    <td>Programming Language C++</td>
++    <td>$project$</td>
 +  </tr>
++$endif$
 +  <tr>
 +    <td style="vertical-align:top">Audience:</td>
 +    <td>

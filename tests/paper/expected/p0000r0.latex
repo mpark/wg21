@@ -186,7 +186,6 @@
 Document \#:&P0000R0  [\href{https://wg21.link/P0000}{Latest}]
   [\href{https://wg21.link/P0000/status}{Status}]  [\href{https://github.com/mpark/wg21/blob/master/tests/paper/p0000/p0000r0.md?plain=1}{Source}]\\
 Date:       &\@date\\
-Project:    &Programming Language C++\\
 Audience:   &WG21\\
 Reply-to:   \@author
     \end{tabular}

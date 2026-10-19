@@ -3,6 +3,7 @@
 ---
 title: Title Preview
 date: today
+project: true
 author: Slide Author
 ---
 ```

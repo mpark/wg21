@@ -158,7 +158,17 @@ def collapse_sections(elem, _):
     if isinstance(elem, (pf.Doc, pf.Div)):
         elem.content = collapse_blocks(elem.content)
 
+def _prepare_title_metadata(doc):
+    if doc.get_metadata('date') == 'today':
+        import datetime
+        doc.metadata['date'] = datetime.date.today().isoformat()
+
+    if doc.get_metadata('project', True) is True:
+        doc.metadata['project'] = 'Programming Language C++'
+
 def slide_title_box(doc):
+    _prepare_title_metadata(doc)
+
     def values(name):
         value = doc.get_metadata(name)
         return value if isinstance(value, list) else ([] if value is None else [value])
@@ -190,10 +200,9 @@ def slide_title_box(doc):
             content.extend(inlines(item))
         return content
 
-    rows = [
-        row('Date:', value(values('date'))),
-        row('Project:', value(['Programming Language C++'])),
-    ]
+    rows = [row('Date:', value(values('date')))]
+    if project := doc.get_metadata('project'):
+        rows.append(row('Project:', value([project])))
     if document := doc.get_metadata('document'):
         document_value = [pf.Str(str(document))]
         if number := re.match(document_pattern, str(document).upper()):
@@ -226,13 +235,11 @@ def slide_title_box(doc):
 def prepare(doc):
     process_subs(doc, doc.get_metadata('from'))
 
-    if doc.get_metadata('date') == 'today':
-        import datetime
-        doc.metadata['date'] = datetime.date.today().isoformat()
-
     if doc.format == 'revealjs':
         slide_title_box(doc)
         return
+
+    _prepare_title_metadata(doc)
 
     if doc.format == 'html':
         doc.walk(collapse_sections)

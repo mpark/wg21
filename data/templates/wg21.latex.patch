@@ -10,7 +10,7 @@ index e993af1..d03b446 100644
  $if(pdf-trailer-id)$
 
  \ifXeTeX
-@@ -58,6 +59,26 @@ $if(pdf-trailer-id)$
+@@ -58,6 +59,28 @@ $if(pdf-trailer-id)$
  \fi
  $endif$
 
@@ -23,7 +23,9 @@ index e993af1..d03b446 100644
 +    \begin{tabular}{ll}
 +Document \#:&$document$\\
 +Date:       &\@date\\
-+Project:    &Programming Language C++\\
++$if(project)$
++Project:    &$project$\\
++$endif$
 +Audience:   $for(audience)$&$audience$\\$endfor$
 +$if(revises)$
 +Revises:    &$revises$\\
@@ -37,7 +39,7 @@ index e993af1..d03b446 100644
  $if(title)$
  \title{$title$$if(thanks)$\thanks{$thanks$}$endif$}
  $endif$
-@@ -70,7 +91,7 @@ $if(subtitle)$
+@@ -70,7 +93,7 @@ $if(subtitle)$
  \makeatother
  \subtitle{$subtitle$}
  $endif$
@@ -46,7 +48,7 @@ index e993af1..d03b446 100644
  \date{$date$}
 
  \begin{document}
-@@ -78,6 +99,7 @@ $if(has-frontmatter)$
+@@ -78,6 +101,7 @@ $if(has-frontmatter)$
  \frontmatter
  $endif$
  $if(title)$
@@ -54,7 +56,7 @@ index e993af1..d03b446 100644
  \maketitle
  $if(abstract)$
  \begin{abstract}
-@@ -101,6 +123,7 @@ $if(toccolor)$
+@@ -101,6 +125,7 @@ $if(toccolor)$
  $endif$
  $endif$
  \setcounter{tocdepth}{$toc-depth$}
