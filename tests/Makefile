@@ -27,6 +27,12 @@ check: actual
 	! grep -Fq '<nav id="TOC"' actual/toc_disabled.html; \
 	! grep -Fq '<header class="toc-mobile-bar">' actual/toc_disabled.html; \
 	! grep -Fq "document.querySelector('[role=\"doc-toc\"]')" actual/toc_disabled.html
+	# Running embedded Markdown option tests...
+	@pandoc $(DATADIR)/srefs.defs options/embedded_md.md \
+		-o actual/embedded_md_options.html --data-dir=$(DATADIR) -M data-dir=$(DATADIR) \
+		-d paper -d formatting; \
+	grep -Fq '<span class="add"><ins>enabled</ins></span>' actual/embedded_md_options.html; \
+	grep -Fq '@[disabled]{.add}@' actual/embedded_md_options.html
 	@pandoc $(DATADIR)/srefs.defs options/id_prefix.md \
 		-o actual/id_prefix.html --data-dir=$(DATADIR) -M data-dir=$(DATADIR) \
 		-d paper -d formatting --id-prefix=paper-; \

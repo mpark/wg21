@@ -1791,9 +1791,10 @@ Currently, only `cpp` is supported.
 
 ## Embedded Markdown by Default Code Classes
 
-[Embedded Markdown] is enabled by default for `cpp` and `default`{.default} code elements.
+[Embedded Markdown] is enabled by default for `cpp`, `default`{.default}, and
+`diff` code elements.
 
-While the [`.embed_md`](#embed_md) class should be suffcient for most use cases
+While the [`.embed_md`](#embed_md) class should be sufficient for most use cases
 to enable embedded Markdown as needed, if you want to change the default, you
 can set the `embedded-md-code-classes` YAML metadata. For example:
 
@@ -1816,9 +1817,8 @@ author:
 ---
 ```
 
-This is an **override** for the existing list of `cpp` and `default`{.default},
-so if it's desired to keep `cpp` and `default`{.default} to have embedded Markdown
-enabled by default, they must be listed again.
+This is an **override** for the existing list, so any defaults you want to keep
+must be listed again.
 
 ## Numbering of Explicit Stable Names {#numbering-stable-names}
 

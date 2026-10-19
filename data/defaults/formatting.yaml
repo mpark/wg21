@@ -6,7 +6,3 @@ syntax-highlighting: ${USERDATA}/syntax/wg21.theme
 
 metadata:
   from: markdown+mark
-  embedded-md-code-classes:
-    - cpp
-    - default
-    - diff

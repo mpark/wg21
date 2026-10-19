@@ -862,7 +862,8 @@ def embed_md_init(elem, doc):
     if not isinstance(elem, (pf.Code, pf.CodeBlock)):
         return None
 
-    implicit_classes = doc.get_metadata('embedded-md-code-classes')
+    implicit_classes = doc.get_metadata(
+        'embedded-md-code-classes', ['cpp', 'default', 'diff'])
     enabled = (
         'raw' not in elem.classes and
         ('embed_md' in elem.classes or
