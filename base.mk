@@ -53,7 +53,7 @@ override SRCDEPS := $(COMMONDEPS) $(addprefix $(DATADIR)/, \
 	templates/wg21.html \
 	templates/wg21.latex \
 	favicon.ico \
-	metadata.yaml \
+	metadata/paper.yaml \
 	suggest-target.py \
 	toc-depth.py)
 $(eval $(and $(DEFAULTS), override SRCDEPS += $(DEFAULTS)))

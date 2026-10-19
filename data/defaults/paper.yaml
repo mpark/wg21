@@ -16,7 +16,7 @@ pdf-engine: xelatex
 template: wg21
 
 metadata-files:
-  - ${USERDATA}/metadata.yaml
+  - paper.yaml
   - ${USERDATA}/syntax/highlighting-macros.yaml
 
 # Used for various resources
