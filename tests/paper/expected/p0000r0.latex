@@ -166,7 +166,7 @@
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
 \urlstyle{same}
 \hypersetup{
-  pdftitle={Same-stem Test Paper},
+  pdftitle={Same-stem `Test` Paper},
   pdflang={en},
   colorlinks=true,
   linkcolor={blue},
@@ -193,7 +193,8 @@ Reply-to:   \@author
 }
 \makeatother
 
-\title{Same-stem Test Paper}
+\title{Same-stem\\
+\VERB|\NormalTok{Test}| Paper}
 \author{&Test Author\\}
 \date{2026-01-01}
 

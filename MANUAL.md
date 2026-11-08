@@ -318,6 +318,18 @@ author:
 
 [`date: today` generates today's date in `YYYY-MM-DD` (ISO 8601) format.]{.note}
 
+Use `|-`{.default} and Markdown's trailing `\`{.default} for explicit line breaks
+in the title:
+
+```yaml
+title: |-
+  First line\
+  Second line
+```
+
+Line breaks are kept in the displayed title and become spaces in browser and
+PDF metadata.
+
 By default, `Programming Language C++`{.default} is used as the `project`.
 A specific project can be specified like so:
 

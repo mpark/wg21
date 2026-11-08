@@ -255,7 +255,7 @@ def prepare(doc):
     title = pf.convert_text(
         pf.Plain(*doc.metadata['title'].content),
         input_format='panflute',
-        output_format='markdown')
+        output_format='markdown+hard_line_breaks').replace('\n', ' ')
     doc.metadata['pagetitle'] = title   # HTML
     doc.metadata['title-meta'] = title  # PDF
 
