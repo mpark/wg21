@@ -267,7 +267,7 @@ See [brevzin/cpp_proposals](https://github.com/brevzin/cpp_proposals) for an exa
 ## Live Server
 
 The framework provides a live server that builds and automatically rebuilds
-papers and presentations. HTML output also reloads automatically in the
+papers and slides. HTML output also reloads automatically in the
 browser. Run `make serve` instead of `make`, or `make serve <target>` instead
 of `make <target>`.
 
@@ -1641,7 +1641,7 @@ This produces a bibliography entry `[Patterns]` in [References](#bibliography).
 # Slides
 
 With either project layout, a Markdown source whose name ends in `.slides.md` is
-automatically recognized as a [Reveal.js] presentation.
+automatically recognized as [Reveal.js] slides.
 
 For example, `p2688r6.slides.md` produces `p2688r6.slides.html`. The output
 is written to the same location as other HTML output: under `generated/`
@@ -1656,10 +1656,10 @@ paper-style box for `date`, `audience`, and `author`. The optional `document`
 metadata adds the document number and links.
 
 See [`MANUAL.slides.md`](https://github.com/mpark/wg21/blob/master/MANUAL.slides.md)
-for a complete example and a guide to building presentations with the
+for a complete example and a guide to building slides with the
 framework.
 
-Build one presentation, all presentations, or start the live server with:
+Build specific slides, all slides, or start the live server with:
 
 ```bash
 make p2688r6.slides.html
@@ -1673,9 +1673,9 @@ WG21 authoring features such as [modifying text], [comparison tables],
 [stable names], [citations], [embedded Markdown], and [new keywords] also work
 in slides.
 
-[Reveal.js] is downloaded only when a presentation is built. The framework pins
+[Reveal.js] is downloaded only when slides are built. The framework pins
 and verifies its version, and embeds its resources into the generated HTML, so
-neither Node.js nor `npm` is required and the presentation is a standalone file.
+neither Node.js nor `npm` is required, and each HTML file is standalone.
 
 [Reveal.js]: https://revealjs.com/
 

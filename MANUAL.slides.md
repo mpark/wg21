@@ -59,11 +59,11 @@ wg21-papers/
 ```
 
 ```bash
-make p2688r6.slides.html        # Build one presentation.
-make slides                     # Build all presentations.
+make p2688r6.slides.html        # Build these slides.
+make slides                     # Build all slides.
 
-make serve p2688r6.slides.html  # Launch live server for one presentation
-make serve slides               # Launch live server for all presentations
+make serve p2688r6.slides.html  # Launch live server for these slides
+make serve slides               # Launch live server for all slides
 ```
 
 ## Per-Paper Project Layout
@@ -85,11 +85,11 @@ wg21-papers/
 
 ```bash
 cd p2688
-make p2688r6.slides.html        # Build one presentation.
-make slides                     # Build all presentations.
+make p2688r6.slides.html        # Build these slides.
+make slides                     # Build all slides.
 
-make serve p2688r6.slides.html  # Launch live server for one presentation
-make serve slides               # Launch live server for all presentations
+make serve p2688r6.slides.html  # Launch live server for these slides
+make serve slides               # Launch live server for all slides
 ```
 
 ## Explicit Source-to-Output Mapping
@@ -124,16 +124,16 @@ With this setup, you can run:
 
 ```bash
 cd reflection
-make p2996r13.slides.html        # Build one presentation.
-make slides                      # Build all presentations.
+make p2996r13.slides.html        # Build these slides.
+make slides                      # Build all slides.
 
-make serve p2996r13.slides.html  # Launch live server for one presentation
-make serve slides                # Launch live server for all presentations
+make serve p2996r13.slides.html  # Launch live server for these slides
+make serve slides                # Launch live server for all slides
 ```
 
 # Pandoc / Reveal.js Basics
 
-## Presentation Title
+## Title Metadata
 
 Use the same [title metadata] as papers.
 
@@ -188,7 +188,7 @@ a time:
 
 ::: {.render .slide}
 ``````
-## Building a Presentation
+## Building Slides
 
 ::: incremental
 
@@ -367,7 +367,7 @@ Remind the audience why this example matters.
 :::
 ```
 
-Press `S` during the presentation to open the Speaker View.
+Press `S` while viewing the slides to open the Speaker View.
 
 ::: notes
 This slide has real speaker notes as well as showing their Markdown source.

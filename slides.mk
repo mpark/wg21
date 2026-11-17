@@ -1,4 +1,4 @@
-# Reveal.js presentations built from sources named `*.slides.md`.
+# Reveal.js slides built from sources named `*.slides.md`.
 
 slide_sources := $(wildcard *.slides.md)
 paper_slide_source := $(wildcard $(addsuffix .slides.md,$(paper_src)))
