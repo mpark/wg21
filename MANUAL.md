@@ -150,13 +150,14 @@ include wg21/flat.mk
 You may also build all papers at once:
 
 ```bash
-make       # builds all papers in HTML format (default)
+make       # builds all papers in HTML format (default) and all slides
 make html  # builds all papers in HTML format
 make latex # builds all papers in LaTeX format
 make pdf   # builds all papers in PDF format
 ```
 
-To change the bare `make` command default, set `DEFAULT_FORMAT=<html|pdf|latex>`
+Bare `make` builds all slides along with papers in `DEFAULT_FORMAT`.
+To change the default paper format, set `DEFAULT_FORMAT=<html|pdf|latex>`
 (`html` by default) in `Makefile` before including `flat.mk`. For example:
 
 ```makefile {.embed_md}
@@ -202,7 +203,7 @@ make p2806r4.html  # builds p2806r4.html from p2806r4.md
 make               # also builds p2806r4.html from p2806r4.md
 ```
 
-To change the bare `make` command default, set `DEFAULT_FORMAT=<html|pdf|latex>`
+To change the default paper format, set `DEFAULT_FORMAT=<html|pdf|latex>`
 (`html` by default) before including `paper.mk`:
 
 ```makefile {.embed_md}

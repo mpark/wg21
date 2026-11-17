@@ -19,10 +19,10 @@
 #
 #   cd p2806
 #   make p2806r4.html   # builds p2806r4.html from p2806r4.md
-#   make                # also builds p2806r4.html from p2806r4.md
+#   make                # builds p2806r4.html and any slides
 #
 #   make serve p2806r4.html  # rebuilds and live-reloads p2806r4.html
-#   make serve               # rebuilds and live-reloads p2806r4.html
+#   make serve               # rebuilds and live-reloads the paper and slides
 #
 # You may also introduce explicit source-to-output mappings.
 #
@@ -35,7 +35,7 @@
 #
 #   cd reflection
 #   make p2996r13.html  # builds p2996r13.html from reflection.md
-#   make                # also builds p2996r13.html from reflection.md
+#   make                # builds p2996r13.html and any slides
 
 OUTDIR := .
 
@@ -65,7 +65,7 @@ paper_targets := $(addprefix $(paper_id).,html pdf latex)
 targets := $(paper_targets)
 
 .PHONY: all html pdf latex
-all: $(DEFAULT_FORMAT)
+all: $(DEFAULT_FORMAT) slides
 html: $(paper_id).html
 pdf: $(paper_id).pdf
 latex: $(paper_id).latex

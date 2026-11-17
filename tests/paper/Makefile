@@ -7,6 +7,7 @@ check: actual
 	@$(MAKE) -C p2806 slides
 	@test -e p2806/p2806r4.slides.html
 	@test ! -e p2806/do-expr.slides.html
+	@test ! -e p2806/p2806r4.html
 	@$(MAKE) -C p2806 clean
 
 .PHONY: actual expected
@@ -21,6 +22,8 @@ actual expected:
 	cp p0000/p0000r0.latex $@/p0000r0.latex
 	@$(MAKE) -C p0000 clean
 	@$(MAKE) -C p2806
+	@test -e p2806/p2806r4.slides.html
+	@test ! -e p2806/do-expr.slides.html
 	cp p2806/p2806r4.html $@/p2806r4.html
 	@$(MAKE) -C p2806 clean
 	@$(MAKE) -C p2806 DEFAULT_FORMAT=latex

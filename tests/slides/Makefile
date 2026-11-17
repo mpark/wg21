@@ -12,7 +12,7 @@ check:
 	@$(MAKE) html
 	@test ! -e $(output)
 	@test ! -e $(no_document_output)
-	@$(MAKE) slides
+	@$(MAKE)
 	@grep -Fq '<title>Slides Test</title>' $(output)
 	@grep -Fq '<p class="subtitle">Presentation Subtitle</p>' $(output)
 	@grep -Fq '<p class="author">Slide Author</p>' $(output)

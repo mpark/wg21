@@ -19,14 +19,14 @@
 #   make p2806r4.latex # builds generated/p2806r4.latex from p2806r4.md
 #   make p2806r4.pdf   # builds generated/p2806r4.pdf from p2806r4.md
 #
-#   make               # builds all the papers in DEFAULT_FORMAT (HTML by default)
+#   make               # builds papers in DEFAULT_FORMAT and all slides
 #   make html          # builds all the papers in HTML format
 #   make latex         # builds all the papers in LaTeX format
 #   make pdf           # builds all the papers in PDF format
 #
 #   make serve p2806r4.html  # rebuilds and live-reloads generated/p2806r4.html
 #   make serve p2806r4.pdf   # rebuilds generated/p2806r4.pdf
-#   make serve               # rebuilds and serves all papers in DEFAULT_FORMAT
+#   make serve               # rebuilds and serves the default targets
 #
 #   make clean         # deletes generated files
 #
@@ -38,7 +38,7 @@
 #
 #   - DEFAULT_FORMAT := <html|pdf|latex>
 #
-#     Default format built by `make` with no explicit target.
+#     Default paper format built by `make` with no explicit target.
 #
 #   - DEFAULTS := <path/to/defaults.yaml>
 #
@@ -69,7 +69,7 @@ latex_targets := $(src:.md=.latex)
 targets := $(html_targets) $(pdf_targets) $(latex_targets)
 
 .PHONY: all html pdf latex
-all: $(DEFAULT_FORMAT)
+all: $(DEFAULT_FORMAT) slides
 html: $(html_targets)
 pdf: $(pdf_targets)
 latex: $(latex_targets)

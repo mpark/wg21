@@ -45,14 +45,20 @@ class ServeTest(unittest.TestCase):
             serve_targets('generated', ['make']),
             ['paper.html'])
 
-    def test_legacy_direct_rule_as_default_goal(self):
+    def test_make_targets(self):
         directory = Path(__file__).parent / 'paper' / 'p2806'
         previous = Path.cwd()
         try:
             os.chdir(directory)
-            self.assertEqual(
-                serve_targets('.', ['make', 'LEGACY=1']),
-                ['p2806r4.html'])
+            for goals, expected in [
+                ([], ['p2806r4.html', 'p2806r4.slides.html']),
+                (['DEFAULT_FORMAT=pdf'], ['p2806r4.pdf', 'p2806r4.slides.html']),
+                (['LEGACY=1'], ['p2806r4.html']),
+                (['html'], ['p2806r4.html']),
+                (['slides'], ['p2806r4.slides.html']),
+            ]:
+                with self.subTest(goals=goals):
+                    self.assertEqual(serve_targets('.', ['make', *goals]), expected)
         finally:
             os.chdir(previous)
 
