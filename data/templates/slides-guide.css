@@ -31,11 +31,16 @@
 
 .reveal .render > .table-wrapper > table > tbody > tr > td {
   vertical-align: middle;
+
+  & > div,
+  & > div > :only-child {
+    margin: 0;
+  }
 }
 
-.reveal .render > .table-wrapper > table > tbody > tr > td > div,
-.reveal .render > .table-wrapper > table > tbody > tr > td > div > :only-child {
-  margin: 0;
+/* Keep the full Markdown source at its original, compact size. */
+.reveal .render pre.raw {
+  font-size: 0.473em;
 }
 
 /* The Markdown prepass infers widths from cell contents. Keep slide previews

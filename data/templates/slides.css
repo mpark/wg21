@@ -120,6 +120,7 @@
   background: #f6f8fa;
   box-shadow: none;
   box-sizing: border-box;
+  font-size: 0.65em;
   margin: 0.35em 0;
   padding: 0;
   width: 100%;
@@ -127,7 +128,6 @@
 
 /* Reveal stacks stepped copies of code, so their padding must match. */
 .reveal pre code {
-  font-size: 0.86em;
   line-height: 1.18;
   max-height: 670px;
   padding: 0.45em 0.55em;
@@ -152,8 +152,8 @@
   gap: 1.3em;
 }
 
-.reveal .columns pre code {
-  font-size: 0.72em;
+.reveal .columns pre {
+  font-size: 0.54em;
 }
 
 .reveal blockquote {

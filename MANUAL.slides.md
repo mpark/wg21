@@ -47,6 +47,8 @@ Added in C++23
   `<paper>.md` in the top-level directory.
 - Outputs are written under `generated/`.
 
+:::::: columns
+::: {.column width="50%"}
 ```{.embed_md}
 wg21-papers/
 |-- wg21/ (submodule)
@@ -57,14 +59,18 @@ wg21-papers/
     |-- p2688r6.html
     `-- @==p2688r6.slides.html==@
 ```
+:::
 
+::: {.column width="50%"}
 ```bash
 make p2688r6.slides.html        # Build these slides.
 make slides                     # Build all slides.
 
-make serve p2688r6.slides.html  # Launch live server for these slides
-make serve slides               # Launch live server for all slides
+make serve p2688r6.slides.html  # Serve these slides.
+make serve slides               # Serve all slides.
 ```
+:::
+::::::
 
 ## Per-Paper Project Layout
 
@@ -72,6 +78,8 @@ make serve slides               # Launch live server for all slides
   `<paper>.md` in the paper directory.
 - Outputs are written in that paper directory.
 
+:::::: columns
+::: {.column width="50%"}
 ```{.embed_md}
 wg21-papers/
 |-- wg21/ (submodule)
@@ -82,15 +90,19 @@ wg21-papers/
     |-- p2688r6.html
     `-- @==p2688r6.slides.html==@
 ```
+:::
 
+::: {.column width="50%"}
 ```bash
 cd p2688
 make p2688r6.slides.html        # Build these slides.
 make slides                     # Build all slides.
 
-make serve p2688r6.slides.html  # Launch live server for these slides
-make serve slides               # Launch live server for all slides
+make serve p2688r6.slides.html  # Serve these slides.
+make serve slides               # Serve all slides.
 ```
+:::
+::::::
 
 ## Explicit Source-to-Output Mapping
 
@@ -117,19 +129,17 @@ wg21-papers/
 @==PAPER_RULE := p2996r13:reflection==@
 include ../wg21/paper.mk
 ```
-:::
-::::::
-
-With this setup, you can run:
 
 ```bash
 cd reflection
 make p2996r13.slides.html        # Build these slides.
 make slides                      # Build all slides.
 
-make serve p2996r13.slides.html  # Launch live server for these slides
-make serve slides                # Launch live server for all slides
+make serve p2996r13.slides.html  # Serve these slides.
+make serve slides                # Serve all slides.
 ```
+:::
+::::::
 
 # Pandoc / Reveal.js Basics
 
